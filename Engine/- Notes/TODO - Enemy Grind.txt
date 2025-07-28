@@ -1,0 +1,143 @@
+﻿
+
+1 - MonoBehavior movement
+	- Simple movement
+		OK - Straight line
+		OK - Walk and fall
+		OK - Walk and turn on ledges
+		- Walk just on walls or ceiling
+	- Straight bouncer
+		OK - Mirror angle bounce
+		1 - 90 degree bounce (30 degrees turn into 60)
+		- Add random angle on bounce
+		- Aim at player on bounce
+	- Gravity bouncer
+		OK - Keep bounce height
+		OK - Fixed height bounce
+		- Lose height on each bounce
+		- Test gravity force values and jump speeds
+		- Jump on air (double jump / swim)
+		- Reverse gravity (dive)
+	OK - Homing accelleration (clamp directional speed)
+	OK - Crawler
+		- Climber (crawl up, fall down)
+	1 - Sine wave
+		- Horizontal / Vertical
+		- Test frequencies / amplitudes
+	1 - Circle
+		- Turn degrees per frame
+		- Go aroung specific point/object
+	- Spiral?
+	1 - Swing
+	- Zigzag
+		- Diagonal
+		- Diagonal + orthogonal
+	- Mixed on different axis
+		- Y falls straight (fixed speed), X has homming accelleration
+		- Y has gravity, X has homming accelleration
+	- Add acceleration/slow down and other dynamic changes to movement
+	- Mixed movement
+		- Climb and fall
+	
+2 - Shot types (Idle shooters)
+	3 - Aim  at player
+		- Round to nearest 45/30/15 degrees
+		- Add random angle (choose spread)
+	- All directions
+		- Orthogonal
+		- diagonal
+		1 - 8 directions
+		- 16 directions
+		1 - 6 directions (including "up and down" OR "left and right")
+	- Fork
+		1 - 3 directions, 5 directions, 2 directions
+		- Aim or not
+		- Middle direction horizontal or vertical (or other)
+	1 - Front+Back / Sides
+	1 - Gravity
+		- Reach player on chosen time or has fixed speed
+	- Boomerang
+		1 - Aim at player (on go or return)
+		- Return to shooter
+	- Instant (laser/beam/thunder)
+	- Shot effects/properties
+		- Speed, size, gravity, homing, bounce, explode, spawn lesser shots
+		- Other properties from enemies
+	- Complex/mixed movement
+		- Slow down and disappear/explode
+	- Destructible or not
+	- Rapid fire
+		1 - Flame thrower
+		- Burst (downwell)
+	- Mixed group
+		- Different speeds
+		- Wave sequence
+		- Shotgun (multiple shots at once with different speeds/angles)
+		- Alternating patterns (shoot 3 fork then 2)
+	- Blast in relative position (front, back, sides, etc)
+		- Blast player position after delay
+	- Spawn shot from elsewhere
+		- Make shot fall on player, etc
+	- 2 timed shots
+		- Change behavior on wall (mad grinder, football)
+		- Change behavior on time (baseball)
+	1 - Limited ammo (change behavior after shot limit)
+	- Shockwave
+		 
+3 - Monobehavior shooters
+	- Straight movement, shoot on perpendicular
+	- Follow player, leave trail
+	- Cannopeller (Y follow player, x fixed, shoot with low gravity)
+
+4 - DualBehavior with idle
+	- Teleport
+		1 - Near / behind player
+		1 - Random position
+	- Dash
+		1 - Aim at player (round degrees or not)
+		- Tween types (linear, ease in, ease out, ease in out)
+
+5 - Triggers / AI
+	- Time
+	- Player position (near, alligned)
+	- Touch wall
+	- Touch special tile (fire, etc)
+	- Hurt / Death
+	- Change behavior permanently / temporarily / during trigger
+
+- Spawn
+	- From screen scroll
+	- From top/bottom
+	- From back
+	- Near player
+	- From spawner
+	- 
+
+- Death / Hurt
+	1 - Explode
+	- Shoot
+	- Spawn
+	- Die on walls
+	- Die on time
+
+- Shield / Body
+	- Shields
+		- Frontal shield
+		- Area shield
+		- On/Off shield
+	- Area damage (damage area bigger than hurt area)
+	- Weak point
+	- Resize body
+	- Multiple bodies (shield/body/damage are separate)
+	- Melee attack
+	- Split body on death (bunby tank, mm10 amoeba, mm9 baloon, etc)
+	- Bypass body on specific condition
+	- Barrier
+
+- Interactions
+	1 - Destroy tiles
+	- Has stair
+	- Suck/Repel player
+	- Push player to specific direction (right/forward)
+	1 - Items (steal, drop)
+	- Dont despawn on screen scroll (like tackle fire)

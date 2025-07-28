@@ -1,0 +1,5 @@
+﻿
+TODO: Include this on the installer:
+- The shaders require libmojoshader_64.dll, which needs the MSVCR120.dll. This dll comes with the Visual C++ 2013 Redistributable.
+    - If the buildof the game is 64 bits, include vcredist_x64.exe and run it during installation. Steam may handle this (must choose what redistributables to install)
+	

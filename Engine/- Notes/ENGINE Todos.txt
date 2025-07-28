@@ -1,0 +1,20 @@
+﻿Reorganize:
+Make physics a static class
+Game specific stuff
+	Later - HUD (player HP, etc)
+	- Special states (slide, topdown walk, etc)
+	Later - Global Values (not implemented yet - bolts, lives, etc)
+	- GenerateEntityList()
+	- Component templates (AddMmdbEnemyComponents)
+	- Verify GameSpecificSettings.CurrentGame uses
+Turn into options, instead of conditional compilation:
+	BufferDamage/ApplyBufferedDamage (should be an auto property of entities that have iFrames - friendly take the smallest damage, foes take the biggest)
+	// Only transition up with state climb
+	// Update some player properties
+
+	- Destroying tiles shouldn't potentially destroy tiles in the save file
+	- Be able to deactivate entity respawning without deleting them from layout
+
+Menu improvements:
+	- Refresh IntendedX/Y when pressing "against a wall"
+	- Option to warp

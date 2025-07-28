@@ -1,0 +1,6 @@
+﻿
+01/10/2024 to 25/10/2024
+    - Implement basic mechanics for MMDB 
+    - Implement basic mechanics for MOLE
+    - Fix engine todos (especially Game Specific stuff)
+    - Do a TODO sweep pass

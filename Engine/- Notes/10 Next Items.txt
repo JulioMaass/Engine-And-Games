@@ -1,0 +1,52 @@
+﻿
+- Implement enemy shots system
+- Implement 10 simple and fun prototype enemies
+	- Features: Can have 2 states and 1 shot
+
+	Enemy ideas:
+OK	1 - Bulb Jumper
+		- Jumps and shoots crawlers
+		- Variant: Tries to fall on player instead of fixed jump
+OK	2 - Jump Shooter
+		- Jumps and shoots at player at max height
+Doing	3 - Triple Gravity Shooter (like MMRNR volcano)
+		- Shoots 3 bullets that fall down (in sequence)
+	4 - Split Shooter (Crawler)
+		- Shoots a bullet that slows down and splits into 4 bullets (aims at player)
+	5 - Homing Shooter (Walker)
+		- Walker, shoots up, homing bullets
+	6 - Dash and Multishot
+		- Dashes towards player and shoots 4 bullets (alternating directions)
+	7 - Shoot and Chase
+		- Shoots at player and chases him (tries to stay at 3 tiles up+back from player)
+	8 - Teleport and Melee Attack
+		- Teleports to player and melee attacks from behind
+	9 - Bouncy cannon (straight bullet)
+		- Shoots a bullet that bounces on walls
+	10 - Bouncy cannon (jumping bombs)
+		- Shoots bombs forward, they bounce at the same height and can be destroyed by player
+	11 - Walk chaser
+		- Follows player with low friction
+	12 - Sine wave chaser
+		- Follows player horizontally, while waving vertically
+	13 - Cornerer
+		- Slowly jumps towars player, then shoots at him in a shotgun pattern
+
+AFTER DOING 10 ITEMS, PUBLISH ON TWITTER/YOUTUBE/DISCORD
+
+Next:
+	- MMDB: Implement 5 enemies
+	- MOLE: Implement 5 enemies
+	- MMDB: Implement 5 enemies
+	- MOLE: Implement 5 enemies
+	- MMDB: Implement 5 gimmicks/hazards
+	- MOLE: Implement 5 gimmicks/hazards
+	- MMDB: Implement 5 abilities
+	- MOLE: Implement 5 abilities
+
+
+Priority:
+	- Make prototype loop of both games, until fun is found
+		- Enemy engine
+		- Ability engine
+		- Level engine (randomizer and/or editor)

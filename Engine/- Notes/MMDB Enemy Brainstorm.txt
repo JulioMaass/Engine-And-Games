@@ -1,0 +1,35 @@
+﻿
+12 ideas per stage
+
+Police Stage
+	- Helicopter flies on top and shoots down at player
+	- Shotgun police officer (shoots in 3 directions at player)
+	- Police car drives by and shoots at player
+	- Robber (takes items and walk/fall/jump)
+Remote Stage
+	- Sine wave, horizontal homming (satellite)
+	- Shot circles around enemy
+	- Boomerang shooter (standing, may aim to hit on go or back)
+	- Dash towards player and shoot in 4 directions (alternate between orthogonal and diagonal?)
+Jungle Stage
+	- Monkey jumps from tree to tree and throws fruit (limited ammo in each tree). Or shoot 3 times and jump down on player instead?
+	- Gravity shooter (seed turns into plant trap)
+Gas Stage
+	- Drills/Bombs destroy tiles
+	- Chase player slowly, explode when destroyed/hit wall, explosion shoots in 8 directions
+	- Go straight horizontally, flamethrower up and down
+Ocean Stage
+	- Homing fish (acceleration homing)
+	- Shoot in 6 directions (alternate between 2 patterns - include vertical; include horizontal)
+	- Come straight from front/back
+Vacuum Stage
+	- Spinning blade shooter (bounce at 90 degree)
+	- Shoot 3 gravity shots (3 distances)
+Ghost Stage
+	- Teleport behind player and attack melee / short shot
+	- Teleport to random location and shoot at player
+	- Pumpkins from the background fly up then dash towards player and explode
+Chain Stage
+	- Swing (enemy swing ball / enemy itself is swinging)
+	- 3 dashes in player direction, pause (telegraph, 8 direction rounding)
+	- Bulb Jumper

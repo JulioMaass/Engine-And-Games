@@ -1,0 +1,21 @@
+﻿using Candle.GameSpecific.Entities.MenuItems;
+using Engine.ECS.Components.MenuHandling;
+using Engine.Helpers;
+using Engine.Types;
+
+namespace Candle.GameSpecific.Entities.MenuLayouts;
+
+public class MenuLayoutMain : MenuLayout
+{
+    public MenuLayoutMain()
+    {
+        var array = Extensions.NewTransposedArray(new[,]
+        {
+            { typeof(MenuItemStageIntro) },
+        });
+        var position = IntVector2.New(100, 100);
+        var spacing = IntVector2.New(20, 10);
+        var menuArea = new MenuArea(array, position, spacing);
+        MenuAreas.Add(menuArea);
+    }
+}

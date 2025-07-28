@@ -1,0 +1,148 @@
+﻿
+====================================== OCTOBER ===========================================================
+
+14/10/2024 to 18/10/2024: Do 2 groups per day
+
+HUD
+	- Health HUD
+	- Equipment system?
+
+Combat
+	- Melee attack system (slash keeps same distance from player)
+		- Slow down on attack (like wonderboy/zelda)
+	- Enemy iframes? (During knockback?)
+	- Combo?
+	- Enemy unpredictability (chase player, random walk or stop)
+
+Stage
+	- Transitions to new floors (fade to black, fade in)
+		- Transitions to North, South, East, West (fade?)
+
+Visuals
+	- Tiles bigger than 16x16
+	- Auto tiling for destructibles
+	- Depth sorting
+
+Main loop
+	- Loot
+	- Upgrades
+	- XP?
+	Core and Loop
+	- Grind Blocks and/or Enemies
+	- Get more powerful and open up access to more locations
+
+Enemies
+	- Take damage from enemy
+	- Enemy walk randomly when player is unreachable
+	- Enemy should'nt enter walls when can't go anywhere
+	- Implement ~10 enemies (rough sketches)
+
+Basic abilities
+	- Slash (destroy 1 tile only) 
+		- Charge?
+		- Combo?
+		- Knockback?
+	- Dodge roll
+	- Bomb
+	- Drill
+	- Kick/Punch/Throw Bombs? (Slash, Baseball Bat, Hookshot Grab?)
+
+Physics
+	- Normal speed when going diagonal against a wall
+	- Dodge tiles? (like SBM4 add this as an engine option)
+
+====================================== LATER ===========================================================
+
+
+Upgrades / Items Brainstorm
+	- More max health
+	- Bazooka
+	- More bombs
+	- Gun?
+	- Insta gun (like MMBN shots)
+	- Hookshot
+	- Drill
+	- Vampire (heal on kill)
+	- Teleport
+	- Temporary boost (speed, damage, etc)
+	- Jump
+	- Hyper Dash (dash through blocks)
+	- Hyper Bomb (bigger explosion)
+	- Special bombs (Remote, Collision)
+	- Screen nuke
+	- Potion (heal)
+	Check other ideas from MMDB, Wonder Boy Magic, 
+
+Enemy Types Brainstorm
+	- Melee (chase player, random walk or stop)
+	- Ranged
+	- Exploding (kamikaze or explode on death)	
+	- Flying (Go through walls)
+	- Spawner (multiply or spawns other enemies)
+	- Fast
+	- Slow
+	- Bulky
+	- Digger
+	- Teleporting
+	- Armored (takes less damage)
+	- Shielded (takes no damage from front)
+	- Jumper (jumps over tiles)
+	- Mimic (looks like a destructible - or come out of it)
+	- Splitter (splits into smaller enemies)
+	- Dasher (charges at player)
+	- Sniper (shoots from far away)
+	- Area of effect (shoots in an area)
+	- Homing (shoots homing destructible projectiles)
+	- Orbiter 
+	- Aggro (Changes behavior when player is near, or other situations)
+	- X (shoots in an X pattern)
+	- All directions (shoots in all directions)
+	- Random (shoots in random directions)
+	- Laser (shoots a laser)
+	- Fire (leaves fire on the ground)
+	- Teleport (teleports to a random location)
+	- Quick (shoots quickly)
+	- Bouncing (shoots bouncing projectiles)
+	- Chain (shoots a chain of projectiles)
+	- Zigzag (shoots in a zigzag pattern)
+	Check ideas from Bomberman
+
+Hazards / Gimmicks Brainstorm
+	- Mines / Hidden Bombs
+	- Spikes
+	- Turrets
+	- Traps
+	- Spawners
+	- Fire
+	- Key doors
+	- Explosive barrels
+	- Teleporters
+	- Pits
+	- Zappers
+	- Conveyor belts
+	- Buttons
+	Check ideas from Bomberman Battle
+
+Must Haves
+	- Powers
+	- Grinding
+	- Pretty
+	- Dumb story
+	- Specific lore
+	- Nice to playtest alone (roguelikish?)
+
+Inspiration
+	Bomberman, Toejam & Earl
+	Minish Cap, Link's Awakening, Wonder Boy
+	Spelunky, Downwell, Steamworld Dig
+	Nuclear Throne, Fire and Brimstone
+	Stardew Mines, Motherload
+
+Ideas
+	Bomberman
+		+ Destroy blocks as side effects of abilities
+		+ Destroy a lot of blocks at once
+		+ Destroy blocks to find items
+		+ Need to kill all enemies
+	Spelunky
+		- Hard to get good stages with good items (or damsel + sacrifice, etc)

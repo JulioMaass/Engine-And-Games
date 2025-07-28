@@ -1,0 +1,30 @@
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Components.MenuHandling;
+using Engine.ECS.Entities.EntityCreation;
+using Engine.ECS.Entities.Shared.MenuItemTemplates;
+using Engine.Types;
+using SpaceMiner.GameSpecific.Entities.Shooters;
+
+namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+
+public class MenuItemBlaster : Entity
+{
+    public MenuItemBlaster()
+    {
+        EntityKind = EntityKind.Menu;
+        AddBasicComponents();
+        MenuItem = new(this);
+
+        // Basic, Sprite, EntityKind
+        AddSpriteCenteredOrigin("WeaponBlaster", 32);
+        AddEquipmentItemStats(EquipGroup.Weapon);
+        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterBlaster);
+        EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1; // Turns on the blast
+
+        ItemPrice = new ItemPrice(this);
+        ItemPrice.AddPrice((ResourceType.OreRed, 25));
+
+        MenuItem.Label = "Blaster";
+        AddSpaceMinerEquipmentItemComponents();
+    }
+}

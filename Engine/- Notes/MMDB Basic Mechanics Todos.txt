@@ -1,0 +1,161 @@
+﻿
+====================================== OCTOBER ===========================================================
+
+07/10/2024 to 11/10/2024: Do 2 groups per day
+
+08/10/2024
+
+	Stage Priority:
+		OK - Stage Select
+		- Pause menu
+		- Be able to choose tileset for each stage
+
+	MMDB code to improve:
+		- Bulb uses AiControl?
+		- Check what needs to be in StageManager and StageEditor (swap code that dont make sense)
+
+09/10/2024
+
+	Basic Mechanics
+		- Check spike system
+
+	Items
+		- Item drops
+		- Ammo
+		- Bolts (currency)
+		- Lives
+		- E-Tanks
+
+10/10/2024
+	 
+	Player Mechanics
+		- Resize MM hitbox on slide
+			- Shouldn't go to hurt state if sliding on tight spaces
+		- 2nd buster (implement legacy buster types? MMV, MM8, MMIV, etc)
+		- Fall on 1 tile holes 
+			- Also check falling off from moving platforms and conveyor belts
+
+====================================== LATER ===========================================================
+
+Stage Mechanics
+	- Implement water, bubbles, splash (also flush and pools?)
+	- Physics system (block stacks, etc)
+	- Be able to make seamless transitions between stages
+	- Be able to go indoors
+
+Special Mechanics
+	- Basic adaptor
+	- Vehicles / Ride Armor
+
+Sounds
+	- Landing sound
+	- Charging sound and fade (?)
+	- Boss gate
+	- Shot reflect
+	- Charged shot
+	- Damage enemy
+	- Death
+	- Enemy shoot
+	- Energy fill
+	- Get bolt
+	- Get life
+	- Menu select
+	- Menu start
+	- Pause
+	- Splash
+	- Take damage
+	- Teleport in/out
+
+Music
+	- Main menu, options menu, stage select, stage intro, boss music, 
+	- Choose/change instruments using layered music
+
+New Systems
+	- Dialog box system (with portraits and yes/no options)
+	- Animation system (walk in boss rooms, etc)
+		- Cutscenes (may happen without player on screen)
+	- Shop system
+	- Training room (spawn enemies, etc)
+	- Random stage generator
+
+Enemies
+	- State management
+		- How to handle simple 2-state enemies?
+		- How to handle complex states, like Sniper Joe shooting 3 times?
+		- State loopers (3+ states that simply loop - may have triggers to loop, like a suzy touching the ground)
+		- State decision trees (mostly bosses)
+	- Classic enemies (make colored variants for different behaviors)
+		OK - Telly
+			- Telly Spawner
+		OK - Suzy
+		Finnish - Spine
+		Check - Bulb Jumper (add crawling shot)
+		- Cannopeller
+		- Shield Attacker
+		- Met Shooter
+		- Met Jumper
+		- Bunby Tank
+		- Sniper Joe
+		- Batton
+	- New enemies with basic AI types
+		- Exploding Telly
+		- Accelerating Telly/Suzy
+		...
+	- Basic midboss (big suzy)
+		- Gate in/out
+	- Basic bosses (Funk and Disco)
+		- Health bar
+		- Boss iframes
+		- Change music
+
+Gimmicks
+	- Trigger platforms in any direction (solid or solid top)
+	- Swing platforms
+	- Conveyor belts (check walking bact into it when it pushes you off platform - also for moving platfroms)
+	- Floating platforms
+	- Yoku blocks (push MM up a bit on spawn, otherwise they are just solid when not colliding)
+
+Multiplayer?
+
+Controls
+	- Controls buffer system (pressing jump/slide before landing, etc)
+	- Weapon wheel
+	- L/R weapon swap
+	- Down+jump to slide (also make menu option)
+	- 2nd jump button (or any button)
+	- Cancel/Confirm buttons
+	- Make separate file for button bindings (in case it needs to be deleted)
+	- Make mouse work on menus
+
+Menus
+	- Stage select
+	- Pause menu
+	- Gamepad support
+	- Change key/gamepad bindings
+	- Weapon get screen
+	- Boss intro screen
+	- Game over screen
+	- Options menu accessible from pausing (inherits from main menu)
+
+Game screen
+	- Make resizing window work
+	- Both resized window and fullscreen should be able to stretch image or keep aspect ratio from options
+	- Stretched image should account for sub pixels (check site on favorits to see how to do it)
+
+Visuals
+	- BG objects
+	- Paralax
+	- Animated BGs
+	- Particles
+	- Shader effects?
+
+Special Options (for later - see what I want to actually implement)
+	- Item get freeze
+	- CRT filter
+	- Frame skip / Slow down game (or increase to 144 frames using tweening)
+	- Pixel perfect or not
+	- Replay system (just images or save inputs?)
+	- Speedrun timer
+	- Boss rush mode
+	- Save/Load state system
+	

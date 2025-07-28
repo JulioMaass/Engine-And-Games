@@ -1,0 +1,56 @@
+﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Entities.EntityCreation;
+using Engine.ECS.Entities.Shared;
+using Microsoft.Xna.Framework;
+using SpaceMiner.GameSpecific.Entities.Ores;
+
+namespace SpaceMiner.GameSpecific.Entities.Asteroids;
+
+public class AsteroidRedBlast : Entity
+{
+    public AsteroidRedBlast()
+    {
+        EntityKind = EntityKind.Enemy;
+
+        // Basic, Sprite, EntityKind
+        AddBasicComponents();
+        AddSpriteFullImageCenteredOrigin("AsteroidRed");
+        AddCenteredOutlinedCollisionBox();
+        AddSpaceMinerEnemyComponents(10, 1);
+        AddSolidBehavior();
+        //SpawnManager.DespawnOnScreenExit = false;
+        AddItemDropper(
+            (typeof(OreRed), 1)
+        );
+
+        AddMoveSpeed(1f);
+        Speed.Acceleration = 0.08f;
+        Speed.MaxSpeed = 2f;
+        AddMoveDirection();
+        //AddDeathHandler(new BehaviorAddScore(1));+
+
+        //// Shooter Manager
+        //Shooter = new Shooter(this);
+        //Shooter.AddShootAction(() => Shooter.ShootAtPlayer());
+        //Shooter.RelativeSpawnPosition = IntVector2.New(0, 0);
+        //Shooter.ShotType = typeof(ShooterEnemyShot);
+        //Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2f);
+
+        var duration = 30;
+        var damage = 1;
+        var size = 48;
+        var color = new Color(255, 0, 0, 255);
+        AddDeathHandler(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.EnemyShot, AlignmentType.Hostile, duration, damage, size, color));
+
+        // States
+        AddStateManager();
+        // Auto States
+        var state = NewState()
+            .AddToAutomaticStatesList();
+    }
+
+    protected override void CustomUpdate()
+    {
+    }
+}
