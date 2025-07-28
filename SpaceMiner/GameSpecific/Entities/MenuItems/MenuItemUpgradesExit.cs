@@ -1,7 +1,4 @@
-﻿using Engine.ECS.Components.MenuHandling;
-using Engine.ECS.Components.PositionHandling;
-using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Entities.Shared.MenuItemTemplates;
+﻿using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.GameModes;

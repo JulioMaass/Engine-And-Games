@@ -1,7 +1,5 @@
 ﻿using Engine.ECS.Components.ItemsHandling;
-using Engine.ECS.Components.MenuHandling;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Entities.Shared.MenuItemTemplates;
 using Engine.Types;
 
 namespace SpaceMiner.GameSpecific.Entities.MenuItems;
