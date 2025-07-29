@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components.ControlHandling.States;
+using Engine.ECS.Components.Spawning;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
@@ -102,6 +103,8 @@ public class StatePlayerControl : State
             var frameOffset = (int)((Math.Sin((GlobalManager.Values.Timer + initialFrame) / 3f) + 0.75) / 2 * 3) + addedFrame;
             entity.StateManager.CurrentState.Frame = frameOffset;
             entity.FrameHandler.SetFrame(frameOffset);
+            entity.FrameHandler.CheckDurationEnd();
+            entity.StateManager.CurrentState.UpdateAnimationFrame();
             entity.SetDrawOrder(drawOrder);
             var xSpeed = ((float)GetRandom.UnseededInt(500) / 1000 - 0.25f); // from -0.25 to 0.25
             entity.Speed.AddXSpeed(Owner.Facing.X * xSpeed);
