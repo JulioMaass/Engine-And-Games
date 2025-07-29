@@ -120,7 +120,7 @@ public class SpaceMinerMainLoop : GameLoop
     private void UpdateAllEntities()
     {
         UpdateEntitiesOfType(EntityKind.Decoration);
-        UpdateEntitiesOfType(EntityKind.DecorationVfx);
+        UpdateEntitiesOfType(EntityKind.DecorationVfx); // Needs to be after player to make the flame work properly?!
         UpdateEntitiesOfType(EntityKind.Gimmick);
         UpdateEntitiesOfType(EntityKind.Player);
         UpdateEntitiesOfType(EntityKind.PlayerShot);

@@ -34,13 +34,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameSpecific\CANDLE\" />
-    <Folder Include="GameSpecific\MMDB\" />
-    <Folder Include="GameSpecific\MOLE\" />
-    <Folder Include="GameSpecific\SHOOTER\" />
-    <Folder Include="GameSpecific\SPACEMINER\" />
-  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />

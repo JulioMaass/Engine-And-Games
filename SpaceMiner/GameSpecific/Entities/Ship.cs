@@ -15,7 +15,7 @@ public class Ship : Entity
         EntityKind = EntityKind.Player;
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSprite("SpaceMinerPlayer", 16, 16, 8, 8);
+        AddSpriteFullImageCenteredOrigin("SpaceMinerPlayer");
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10);
@@ -38,4 +38,5 @@ public class Ship : Entity
         var state = NewState(new StatePlayerControl());
         StateManager.AutomaticStatesList.Add(state);
     }
+
 }
