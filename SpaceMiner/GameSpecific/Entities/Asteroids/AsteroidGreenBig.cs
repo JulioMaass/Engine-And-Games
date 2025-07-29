@@ -11,8 +11,9 @@ public class AsteroidGreenBig : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteFullImageCenteredOrigin("AsteroidGreenBig");
-        AddCenteredOutlinedCollisionBox();
+        AddSpriteCenteredOrigin("AsteroidGreen", 48);
+        AddSpriteVariation(4, 1);
+        AddCenteredCollisionBox(24);
         AddSpaceMinerEnemyComponents(20, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;

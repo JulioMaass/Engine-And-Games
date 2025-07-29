@@ -33,6 +33,7 @@ public class Sprite : Component
     public bool HudSprite { get; set; } = false;
     public (int DirectionsAmount, int FrameOffset) DirectionOffset { get; set; } // Ex.: (8, 3) means that the sprite sheet has 8 directions, and each direction sheet starts 3 frames after the other
     public bool ApplyJitterCorrection { get; set; } // Only use for entities that move at speeds similar to player/camera speed, and don't have complex physics (carry/push) Ex.: Suzy moving at 1.5 speed, slow shots, etc
+    public int VariationOffset { get; set; }
 
     public Sprite(Entity owner, string textureName, IntVector2 size, IntVector2 origin, IntVector2 spriteSheetOrigin = default)
     {
@@ -156,11 +157,13 @@ public class Sprite : Component
     private int GetSpriteId()
     {
         var spriteId = OwnerState.GetSpriteId();
-        // apply special offsets (secondary state, direction)
+        // apply special offsets (secondary state, direction, variation)
         if (Owner.StateManager.CurrentSecondaryState != null)
             spriteId += Owner.StateManager.CurrentSecondaryState.SpriteIdOffset;
         if (DirectionOffset.DirectionsAmount > 0)
             spriteId += Owner.MoveDirection.GetRoundedIndex(DirectionOffset.DirectionsAmount) * DirectionOffset.FrameOffset;
+        if (VariationOffset > 0)
+            spriteId += VariationOffset;
         return spriteId;
     }
 

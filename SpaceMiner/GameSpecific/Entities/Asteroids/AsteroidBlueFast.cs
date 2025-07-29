@@ -11,8 +11,9 @@ public class AsteroidBlueFast : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteFullImageCenteredOrigin("AsteroidBlue");
-        AddCenteredOutlinedCollisionBox();
+        AddSpriteCenteredOrigin("AsteroidBlue", 32);
+        AddSpriteVariation(4, 1);
+        AddCenteredCollisionBox(16);
         AddSpaceMinerEnemyComponents(10, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;

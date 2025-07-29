@@ -15,8 +15,9 @@ public class AsteroidRedBlast : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteFullImageCenteredOrigin("AsteroidRed");
-        AddCenteredOutlinedCollisionBox();
+        AddSpriteCenteredOrigin("AsteroidRed", 32);
+        AddSpriteVariation(4, 1);
+        AddCenteredCollisionBox(16);
         AddSpaceMinerEnemyComponents(10, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;

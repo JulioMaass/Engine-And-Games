@@ -5,6 +5,7 @@ using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Components.PhysicsHandling;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.Graphics;
@@ -204,6 +205,13 @@ public abstract partial class Entity
         var w = Drawer.TextureDictionary[textureName].Width;
         var h = Drawer.TextureDictionary[textureName].Height;
         AddSprite(textureName, w, h, w / 2, h / 2);
+    }
+
+    public void AddSpriteVariation(int totalVariations, int variationOffset)
+    {
+        if (Sprite == null)
+            throw new InvalidOperationException("Sprite must be initialized before adding variations.");
+        Sprite.VariationOffset = GetRandom.UnseededInt(totalVariations) * variationOffset;
     }
 
     // Palette
