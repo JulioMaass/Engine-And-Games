@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PhysicsHandling;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 
@@ -14,11 +15,13 @@ public class OreBlue : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteFullImageCenteredOrigin("OreBlue");
+        AddSpriteCenteredOrigin("OreBlue", 8);
+        AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(8);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         AddItemComponents(ResourceType.OreBlue, 1);
+        BloomSource = new BloomSource(this, 0.85f);
 
         //MenuItem = new MenuItem(this);
         //MenuItem.Label = "Wax Ball";

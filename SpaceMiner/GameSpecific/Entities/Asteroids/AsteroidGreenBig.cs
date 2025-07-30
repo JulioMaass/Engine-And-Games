@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.VisualsHandling;
+using Engine.ECS.Entities.EntityCreation;
 using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
@@ -20,6 +21,8 @@ public class AsteroidGreenBig : Entity
         AddItemDropper(
             (typeof(OreGreen), 1)
         );
+
+        BloomSource = new BloomSource(this, 0.65f);
 
         AddMoveSpeed(1f);
         Speed.Acceleration = 0.08f;

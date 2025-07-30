@@ -5,7 +5,9 @@ using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.GameModes;
 using Engine.Managers.GlobalManagement;
+using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
+using SpaceMiner.GameSpecific.Entities;
 using SpaceMiner.GameSpecific.Entities.Asteroids;
 using System;
 using System.Collections.Generic;
@@ -20,8 +22,10 @@ public class SpaceMinerMainLoop : GameLoop
 
     public override void GameSpecificSetup()
     {
-        //LightingManager.IsOn = true;
+        BloomManager.IsOn = true;
+        Drawer.BackgroundColor = new(7, 14, 27, 255);
         SetTimer();
+        GenerateInitialStars();
     }
 
     private void SetTimer()
@@ -31,10 +35,24 @@ public class SpaceMinerMainLoop : GameLoop
         //    Timer = 60 * 60 * 20; // 20 minutes
     }
 
+    private void GenerateInitialStars()
+    {
+        if (Timer != 0)
+            return;
+        var amount = StageManager.CurrentRoom.SizeInPixels.Y / 10;
+        for (var i = 0; i < amount; i++)
+        {
+            (int x1, int x2) rangeX = (StageManager.CurrentRoom.PositionInPixels.X, StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X);
+            var yPosition = StageManager.CurrentRoom.PositionInPixels.Y + i * 10;
+            EntityManager.CreateEntityAt(typeof(Star), (GetRandom.UnseededInt(rangeX.x1, rangeX.x2), yPosition));
+        }
+    }
+
     public override void Update()
     {
         // Game specific code
         CheckToSpawnAsteroids();
+        CheckToGenerateStars();
 
         // Player respawning and entity despawning
         StageManager.CheckToRespawnPlayer();
@@ -115,6 +133,15 @@ public class SpaceMinerMainLoop : GameLoop
             asteroid.MoveDirection.Angle = 60000 + GetRandom.UnseededInt(0, 60000);
             asteroid.Speed.SetMoveSpeedToCurrentDirection();
         }
+    }
+
+    private void CheckToGenerateStars()
+    {
+        if (Timer % (30) != 0)
+            return;
+        (int x1, int x2) rangeX = (StageManager.CurrentRoom.PositionInPixels.X, StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X);
+        var yPosition = StageManager.CurrentRoom.PositionInPixels.Y;
+        EntityManager.CreateEntityAt(typeof(Star), (GetRandom.UnseededInt(rangeX.x1, rangeX.x2), yPosition));
     }
 
     private void UpdateAllEntities()

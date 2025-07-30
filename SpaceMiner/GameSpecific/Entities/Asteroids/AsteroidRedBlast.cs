@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
 using Microsoft.Xna.Framework;
@@ -24,6 +25,8 @@ public class AsteroidRedBlast : Entity
         AddItemDropper(
             (typeof(OreRed), 1)
         );
+
+        BloomSource = new BloomSource(this, 0.8f);
 
         AddMoveSpeed(1f);
         Speed.Acceleration = 0.08f;

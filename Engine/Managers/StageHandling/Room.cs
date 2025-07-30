@@ -236,11 +236,11 @@ public class Room
         if (StageEditor.IsOn)
             DrawEmptyBackground();
         else
-            DrawBlackBackground();
+            DrawBackgroundColor();
     }
 
-    public void DrawBlackBackground() =>
-        Drawer.DrawRectangle(PositionInPixels, SizeInPixels, CustomColor.Black);
+    public void DrawBackgroundColor() =>
+        Drawer.DrawRectangle(PositionInPixels, SizeInPixels, Drawer.BackgroundColor);
 
     public void DrawEmptyBackground()
     {

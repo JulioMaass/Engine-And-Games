@@ -35,9 +35,9 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
     }
 
 
-    private static RenderTarget2D NewRenderTarget(int w, int h) =>
+    public static RenderTarget2D NewRenderTarget(int w, int h) =>
         new(Graphics.GraphicsDevice, w, h);
-    private static RenderTarget2D NewRenderTarget(IntVector2 size) =>
+    public static RenderTarget2D NewRenderTarget(IntVector2 size) =>
         NewRenderTarget(size.Width, size.Height);
 
     public static void UpdateScreenRender(IntVector2 size)
@@ -80,6 +80,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         GameLoopManager.Draw();
         SpriteBatch.End();
 
+        BloomManager.DrawBloom();
         LightingManager.ApplyLighting();
     }
 
@@ -106,6 +107,9 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         Graphics.GraphicsDevice.SetRenderTarget(null);
         SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         SpriteBatch.Draw(GameScreenRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), CustomColor.White);
+        SpriteBatch.End();
+        BloomManager.DrawRender();
+        SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         if (!StageEditor.IsOn)
             SpriteBatch.Draw(HudRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), CustomColor.White);
         else

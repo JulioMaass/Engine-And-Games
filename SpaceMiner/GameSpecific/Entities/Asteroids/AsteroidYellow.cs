@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
@@ -23,6 +24,8 @@ public class AsteroidYellow : Entity
         AddItemDropper(
             (typeof(OreYellow), 1)
         );
+
+        BloomSource = new BloomSource(this, 0.80f);
 
         AddMoveSpeed(1f);
         Speed.Acceleration = 0.08f;

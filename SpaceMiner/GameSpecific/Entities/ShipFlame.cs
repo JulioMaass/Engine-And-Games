@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.VisualsHandling;
+using Engine.ECS.Entities.EntityCreation;
 
 namespace SpaceMiner.GameSpecific.Entities;
 
@@ -14,6 +15,7 @@ public class ShipFlame : Engine.ECS.Entities.EntityCreation.Entity
         AddVfxComponents(4);
 
         AddSpeed(0f, 2f);
+        BloomSource = new BloomSource(this, 0.65f);
 
         // States
         AddStateManager();

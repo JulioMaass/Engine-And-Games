@@ -48,6 +48,7 @@ public abstract partial class Entity
     public Sprite Sprite { get; protected set; }
     public Palette Palette { get; protected set; }
     public LightSource LightSource { get; protected set; }
+    public BloomSource BloomSource { get; protected set; }
     public DeathHandler DeathHandler { get; protected set; }
     public Paralax Paralax { get; protected set; }
     public LayerId LayerId { get; protected set; }

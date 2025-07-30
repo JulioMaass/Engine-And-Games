@@ -1,5 +1,4 @@
-﻿using Engine.GameSpecific;
-using Engine.Helpers;
+﻿using Engine.Helpers;
 using Engine.Main;
 using Engine.Types;
 using Microsoft.Xna.Framework;
@@ -27,7 +26,7 @@ public static class Drawer
     private static float DefaultRotation { get; set; } = 0.0f;
     private static Vector2 DefaultRotationOrigin { get; set; } = new(0, 0);
     private static float DefaultDepth { get; set; } = 0.0f;
-
+    public static Color BackgroundColor { get; set; } = CustomColor.Black;
 
     public static void Initialize()
     {
@@ -53,6 +52,8 @@ public static class Drawer
         // Shaders
         PaletteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/PaletteShader");
         AreaLightShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/AreaLightShader");
+        BloomManager.BloomEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomShader");
+        BloomManager.BloomMaskEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomMaskShader");
     }
 
     private static void LoadTextures(string folder)
@@ -120,11 +121,10 @@ public static class Drawer
         Video.SpriteBatch.Draw(texture, position, sourceRectangle, color, DefaultRotation, DefaultRotationOrigin, 1, effects, DefaultDepth);
     }
 
-    public static void DrawTextureRectangleAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 stretchedSize, bool flipped = false, Color color = default)
+    public static void DrawTextureRectangleAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 stretchedSize, Color color, bool flipped = false)
     {
         var effects = SpriteEffects.None;
         if (flipped) effects = SpriteEffects.FlipHorizontally;
-        if (color == default) color = DefaultColor;
 
         if (stretchedSize == IntVector2.Zero)
             stretchedSize = sourceRectangle.Size;
@@ -166,7 +166,7 @@ public static class Drawer
             for (var y = 0; y < sizeInTiles.Height; y++)
             {
                 var pixelPosition = (IntVector2.New(x, y) + positionInTiles) * Settings.TileSize * scale;
-                DrawTextureRectangleAt(texture, texture.Bounds, pixelPosition, Settings.TileSize * scale);
+                DrawTextureRectangleAt(texture, texture.Bounds, pixelPosition, Settings.TileSize * scale, CustomColor.White);
             }
         }
     }

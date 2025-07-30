@@ -3,9 +3,9 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers.Graphics;
 using Engine.Types;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Color = Microsoft.Xna.Framework.Color;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Engine.ECS.Components.VisualsHandling;
@@ -55,6 +55,7 @@ public class Sprite : Component
         var flipSprite = GetFlipping();
         var position = GetPosition(flipSprite) + offset;
         var sourceRectangle = Drawer.GetSourceRectangleFromId(Texture, SpriteSheetOrigin, Size, spriteId);
+        var color = CalculateSpriteColor();
         if (!HudSprite
             && !Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, sourceRectangle.Size))
             && Owner.EntityKind != EntityKind.Paralax)
@@ -64,8 +65,24 @@ public class Sprite : Component
         else
         {
             var jitterCorrection = GetJitterCorrection();
-            Drawer.DrawTextureRectangleAt(Texture, sourceRectangle, position + jitterCorrection, StretchedSize, flipSprite, Color);
+            Drawer.DrawTextureRectangleAt(Texture, sourceRectangle, position + jitterCorrection, StretchedSize, color, flipSprite);
         }
+    }
+
+    public Color CalculateSpriteColor()
+    {
+        var color = Color;
+        if (!BloomManager.DrawingBloom)
+            return color;
+
+        if (Owner.BloomSource != null)
+        {
+            var bloomOscillation = (float)Math.Sin(Owner.FrameHandler.CurrentFrame / 10f) / 40f;
+            color *= Owner.BloomSource.Intensity + bloomOscillation;
+        }
+        else
+            color = CustomColor.Black;
+        return color;
     }
 
     private Vector2 GetJitterCorrection() // To avoid jitter when both camera and entity are moving at fractional speeds
