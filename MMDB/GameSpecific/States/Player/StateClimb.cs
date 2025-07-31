@@ -119,7 +119,7 @@ public class StateClimb : State
         var loopedAnimationFrame = AnimationFrame % (SpritePattern.Count * 2);
         if (loopedAnimationFrame >= SpritePattern.Count)
             offset.X = 1;
-        if (Owner.Sprite.IsFlipped)
+        if (Owner.Sprite.FlippedFacing)
             offset *= -1;
 
         return offset;

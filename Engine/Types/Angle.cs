@@ -3,6 +3,7 @@ using Engine.Helpers;
 using Engine.Main;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace Engine.Types;
 
@@ -44,6 +45,8 @@ public struct Angle
     // Instance
     public Angle GetAngleTurnedTo(int intendedAngle, int turnSpeed)
     {
+        if (turnSpeed == 0)
+            Debugger.Break(); // Turn speed is not set
         return GetAngleTurnedTo(Value, intendedAngle, turnSpeed);
     }
 
@@ -196,5 +199,10 @@ public struct Angle
         var stepSize = 360000f / possibleAngles; // 90
         var offsetAngle = (Value + 360000 - angleOffset + stepSize / 2) % 360000; // 345 + 360 - 30 + 90 / 2 = 720 = 0
         return (int)Math.Floor(offsetAngle / stepSize); // 0 / 90 = 0
+    }
+
+    public float GetAsRadian()
+    {
+        return (float)DegreesToRadian(Value);
     }
 }

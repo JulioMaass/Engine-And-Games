@@ -22,10 +22,10 @@ public static class Drawer
     public static Effect AreaLightShader { get; private set; }
 
     // Default values for drawing
-    private static Color DefaultColor { get; set; } = CustomColor.White;
-    private static float DefaultRotation { get; set; } = 0.0f;
-    private static Vector2 DefaultRotationOrigin { get; set; } = new(0, 0);
-    private static float DefaultDepth { get; set; } = 0.0f;
+    private static Color DefaultColor { get; } = CustomColor.White;
+    private static float DefaultRotation { get; }
+    private static Vector2 DefaultRotationOrigin { get; } = new(0, 0);
+    public static float DefaultDepth { get; } = 0.0f;
     public static Color BackgroundColor { get; set; } = CustomColor.Black;
 
     public static void Initialize()
@@ -77,13 +77,13 @@ public static class Drawer
         Video.SpriteBatch.Draw(WhitePixel, new IntRectangle(position, size), color);
     }
 
-    public static void DrawCircle(IntVector2 position, int radius)
+    public static void DrawCircle(IntVector2 position, int radius, Color color)
     {
         Video.SpriteBatch.Draw(
             TextureDictionary.GetValueOrDefault("MegaCircle"),
             new IntRectangle(position - radius / 2, radius, radius),
             new IntRectangle(0, 0, 1000, 1000),
-            DefaultColor,
+            color,
             DefaultRotation,
             DefaultRotationOrigin,
             SpriteEffects.None,
@@ -121,7 +121,7 @@ public static class Drawer
         Video.SpriteBatch.Draw(texture, position, sourceRectangle, color, DefaultRotation, DefaultRotationOrigin, 1, effects, DefaultDepth);
     }
 
-    public static void DrawTextureRectangleAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 stretchedSize, Color color, bool flipped = false)
+    public static void DrawTextureRectangleStretchedAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 stretchedSize, bool flipped = false)
     {
         var effects = SpriteEffects.None;
         if (flipped) effects = SpriteEffects.FlipHorizontally;
@@ -130,13 +130,7 @@ public static class Drawer
             stretchedSize = sourceRectangle.Size;
         var destinationRectangle = new IntRectangle(position, stretchedSize);
 
-        Video.SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, color, DefaultRotation, DefaultRotationOrigin, effects, DefaultDepth);
-    }
-
-    public static void DrawFullTextureAt(Texture2D texture, IntVector2 position)
-    {
-        var sourceRectangle = new IntRectangle(IntVector2.Zero, texture.GetSize());
-        DrawTextureRectangleAt(texture, sourceRectangle, position);
+        Video.SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, DefaultColor, DefaultRotation, DefaultRotationOrigin, effects, DefaultDepth);
     }
 
     public static IntRectangle GetSourceRectangleFromId(Texture2D texture, IntVector2 spriteSheetOrigin, IntVector2 size, int id)
@@ -166,7 +160,7 @@ public static class Drawer
             for (var y = 0; y < sizeInTiles.Height; y++)
             {
                 var pixelPosition = (IntVector2.New(x, y) + positionInTiles) * Settings.TileSize * scale;
-                DrawTextureRectangleAt(texture, texture.Bounds, pixelPosition, Settings.TileSize * scale, CustomColor.White);
+                DrawTextureRectangleStretchedAt(texture, texture.Bounds, pixelPosition, Settings.TileSize * scale);
             }
         }
     }

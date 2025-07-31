@@ -13,12 +13,19 @@ namespace Engine.ECS.Components.VisualsHandling;
 public class Sprite : Component
 {
     public Texture2D Texture { get; private set; }
-    public bool IsFlipped => Owner.Facing.X == -1;
+
+    // Flipping
+    public bool FlippedFacing => Owner.Facing.X == -1;
+    public bool IsFlipped => OwnerState.GetFlipAnimation() != FlippedFacing && !AutoRotation; // XOR
 
     // Sizes
+    public bool Resizable { get; set; }
     public IntVector2 Size { get; set; }
     public IntVector2 StretchedSize { get; set; }
     public IntVector2 FinalSize => StretchedSize == default ? Size : StretchedSize; // If StretchedSize is not set, use Size
+
+    // Rotation
+    public bool AutoRotation { get; set; }
 
     // Origin
     public IntVector2 Origin { get; set; }
@@ -52,10 +59,8 @@ public class Sprite : Component
 
     public void DrawId(int spriteId, IntVector2 offset = default)
     {
-        var flipSprite = GetFlipping();
-        var position = GetPosition(flipSprite) + offset;
+        var position = GetPosition() + offset;
         var sourceRectangle = Drawer.GetSourceRectangleFromId(Texture, SpriteSheetOrigin, Size, spriteId);
-        var color = CalculateSpriteColor();
         if (!HudSprite
             && !Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, sourceRectangle.Size))
             && Owner.EntityKind != EntityKind.Paralax)
@@ -65,11 +70,27 @@ public class Sprite : Component
         else
         {
             var jitterCorrection = GetJitterCorrection();
-            Drawer.DrawTextureRectangleAt(Texture, sourceRectangle, position + jitterCorrection, StretchedSize, color, flipSprite);
+            DrawSpriteTexture(sourceRectangle, position + jitterCorrection);
         }
     }
 
-    public Color CalculateSpriteColor()
+    private void DrawSpriteTexture(IntRectangle sourceRectangle, IntVector2 position)
+    {
+        var effects = SpriteEffects.None;
+        if (IsFlipped)
+            effects = SpriteEffects.FlipHorizontally;
+        var destinationRectangle = new IntRectangle(position + FinalOrigin, FinalSize);
+        Video.SpriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, CalculateSpriteColor(), GetRotation(), Origin, effects, Drawer.DefaultDepth);
+    }
+
+    private float GetRotation()
+    {
+        if (AutoRotation)
+            return Owner.MoveDirection.Angle.GetAsRadian();
+        return 0f;
+    }
+
+    private Color CalculateSpriteColor()
     {
         var color = Color;
         if (!BloomManager.DrawingBloom)
@@ -155,18 +176,12 @@ public class Sprite : Component
         Drawer.DrawRectangle(OwnerPosition, (1, 1), CustomColor.White);
     }
 
-    public bool GetFlipping()
-    {
-        var flipAnimation = OwnerState.GetFlipAnimation();
-        return flipAnimation != IsFlipped; // XOR
-    }
-
-    private IntVector2 GetPosition(bool isFlipped)
+    private IntVector2 GetPosition()
     {
         var position = OwnerPosition - FinalOrigin;
         if (Owner.Paralax != null)
             position += Owner.Paralax.GetParalaxOffset();
-        if (isFlipped)
+        if (IsFlipped)
             position.X = OwnerPosition.X + FinalOrigin.X - FinalSize.Width;
         return position + OwnerState.GetAnimationOffset();
     }

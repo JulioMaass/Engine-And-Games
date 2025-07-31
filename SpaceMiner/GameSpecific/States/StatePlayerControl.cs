@@ -1,5 +1,4 @@
 ﻿using Engine.ECS.Components.ControlHandling.States;
-using Engine.ECS.Components.Spawning;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
@@ -64,6 +63,10 @@ public class StatePlayerControl : State
             Owner.Shooter.CheckToShoot();
             BufferedAttack = false;
         }
+
+        // Missile
+        if (Owner.PlayerControl.Button2Press)
+            Owner.ShooterSecondary.CheckToShoot();
     }
 
     public override void PostProcessingBehavior()

@@ -59,6 +59,14 @@ public abstract class AngleComponent : Component
         Angle = Angle.GetDirectionToTile(Owner, target);
     }
 
+    public void TurnTowards(Entity target)
+    {
+        if (target == null)
+            return;
+        var targetAngle = Angle.GetDirection(Owner, target);
+        TurnTowardsAngle(targetAngle.Value);
+    }
+
     public void TurnTowardsAngle(int intendedAngle)
     {
         Angle = Angle.GetAngleTurnedTo(intendedAngle, Owner.Speed.TurnSpeed);

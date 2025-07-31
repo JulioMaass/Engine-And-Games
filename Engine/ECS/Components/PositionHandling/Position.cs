@@ -25,4 +25,13 @@ public class Position : Component
     {
         Pixel = IntVector2.New(Pixel.X, y);
     }
+
+    public int GetDistanceTo(Entity entity) =>
+        IntVector2.GetDistance(Pixel, entity.Position.Pixel);
+
+    public int GetDistanceTo(Position position) =>
+        IntVector2.GetDistance(Pixel, position.Pixel);
+
+    public int GetDistanceTo(IntVector2 position) =>
+        IntVector2.GetDistance(Pixel, position);
 }

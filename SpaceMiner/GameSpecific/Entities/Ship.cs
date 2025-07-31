@@ -28,6 +28,7 @@ public class Ship : Entity
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         Shooter = new ShipShooterBasic(this);
+        ShooterSecondary = new ShipShooterMissile(this);
         AddShootDirection(270000);
 
         AddItemGetter();

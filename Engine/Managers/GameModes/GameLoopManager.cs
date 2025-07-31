@@ -99,7 +99,7 @@ public static class GameLoopManager
         foreach (var entity in EntityManager.GetAllEntities())
         {
             entity.CollisionBox?.DrawBox();
-            entity.Sprite.DrawOrigin();
+            entity.Sprite?.DrawOrigin();
         }
 
         // Entity layouts

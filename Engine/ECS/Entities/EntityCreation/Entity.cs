@@ -63,6 +63,7 @@ public abstract partial class Entity
     // Control components (player/AI)
     public PlayerControl PlayerControl { get; protected set; }
     public AiControl AiControl { get; protected set; }
+    public TargetPool TargetPool { get; set; }
     public StateManager StateManager { get; protected set; }
 
     // Item components
@@ -82,6 +83,7 @@ public abstract partial class Entity
 
     // Shooting components
     public Shooter Shooter { get; set; }
+    public Shooter ShooterSecondary { get; set; }
     public ChargeManager ChargeManager { get; protected set; }
     public WeaponManager WeaponManager { get; protected set; }
     public ShotProperties ShotProperties { get; protected set; }

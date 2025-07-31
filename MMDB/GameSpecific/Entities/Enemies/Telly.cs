@@ -18,7 +18,7 @@ public class Telly : Entity
         // Enemy specific components
         AddMoveDirection();
         AddMoveSpeed(1.0f);
-        AddTurnSpeed(2);
+        AddTurnSpeed(2000);
 
         // States
         AddStateManager();

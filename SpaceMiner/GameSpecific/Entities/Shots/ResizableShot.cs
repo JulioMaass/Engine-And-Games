@@ -13,6 +13,7 @@ public class ResizableShot : Entity
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("MegaCircle");
         Sprite.SetColor(255, 127, 0, 255);
+        Sprite.Resizable = true;
         AddSolidBehavior();
         AddCenteredOutlinedCollisionBox();
 

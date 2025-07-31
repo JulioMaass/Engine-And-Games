@@ -2,12 +2,12 @@
 using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.ECS.Entities.Shared;
 using Engine.Helpers;
 using Engine.Types;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using Engine.ECS.Entities.Shared;
 
 namespace Engine.ECS.Components.ShootingHandling;
 
@@ -67,7 +67,7 @@ public class Shooter : Component
         shot.DamageDealer.AddExtraDamage((int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage));
 
         // Size
-        if (ShotSize != 0)
+        if (ShotSize != 0 && shot.Sprite.Resizable)
         {
             var size = ShotSize + Owner.StatsManager.GetAddedStats(stats => stats.ExtraSize) * SizeScaling;
             shot.Sprite.StretchedSize = new IntVector2(size, size);
@@ -106,6 +106,11 @@ public class Shooter : Component
         var shot = NewShot();
         shot.Facing.CopyFacingAndMirrorDirection(Owner);
         return shot;
+    }
+
+    public void NewShotInShootDirection()
+    {
+        NewShotMovingToDirection(Owner.ShootDirection.Angle.Value);
     }
 
     public Entity NewShotMovingToDirection(int angle, int spawnOffset = 0)

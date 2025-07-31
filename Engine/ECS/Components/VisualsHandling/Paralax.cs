@@ -80,7 +80,7 @@ public class Paralax : Component
 
     private void Draw(IntRectangle sourceRectangle)
     {
-        var flipSprite = Owner.Sprite.GetFlipping();
+        var flipSprite = Owner.Sprite.IsFlipped;
         var repetitionsAmount = GetRepetitionsAmount();
         for (var x = 0; x < repetitionsAmount.X; x++)
         {

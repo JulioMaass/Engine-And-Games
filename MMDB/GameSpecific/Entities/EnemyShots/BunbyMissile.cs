@@ -19,7 +19,7 @@ public class BunbyMissile : Entity
         // TODO: Make it destructible
         // Enemy specific components
         AddMoveDirection();
-        AddTurnSpeed(2); // TODO: 1.5f turn speed
+        AddTurnSpeed(2000); // TODO: 1.5f turn speed
 
         // States
         AddStateManager();
