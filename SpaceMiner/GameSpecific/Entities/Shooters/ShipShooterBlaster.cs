@@ -18,7 +18,7 @@ public class ShipShooterBlaster : Shooter
         EntityKind = EntityKind.PlayerShot;
         // Blue
         AutoFireRate = 45;
-        ShotSpeed = 5.0f;
+        ShotSpeed = 6.0f;
         // Green
         BaseDamage = 5;
         ShotSize = 8;

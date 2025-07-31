@@ -29,6 +29,16 @@ public static class GetRandom // TODO: Should have an option inside the GameSpec
         return UnseededRandom.Next(min, max);
     }
 
+    public static float UnseededFloat(float max) // 0.0f to _max
+    {
+        return (float)UnseededRandom.NextDouble() * max;
+    }
+
+    public static float UnseededFloat(float min, float max) // _min to _max
+    {
+        return (float)UnseededRandom.NextDouble() * (max - min) + min;
+    }
+
     public static bool UnseededBool() // true or false
     {
         return UnseededRandom.Next(2) == 0;

@@ -15,7 +15,7 @@ public class AsteroidGreenBig : Entity
         AddSpriteCenteredOrigin("AsteroidGreen", 48);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(24);
-        AddSpaceMinerEnemyComponents(20, 1);
+        AddSpaceMinerEnemyComponents(100, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         AddItemDropper(
@@ -24,7 +24,7 @@ public class AsteroidGreenBig : Entity
 
         BloomSource = new BloomSource(this, 0.65f);
 
-        AddMoveSpeed(1f);
+        AddRandomMoveSpeed(0.3f, 0.5f);
         Speed.Acceleration = 0.08f;
         Speed.MaxSpeed = 8f;
         AddMoveDirection();

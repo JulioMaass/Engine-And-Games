@@ -132,6 +132,12 @@ public abstract partial class Entity
         Speed.MoveSpeed = speed;
     }
 
+    public void AddRandomMoveSpeed(float minSpeed, float maxSpeed)
+    {
+        Speed ??= new(this);
+        Speed.MoveSpeed = GetRandom.UnseededFloat(minSpeed, maxSpeed);
+    }
+
     public void AddDashSpeed(float speed)
     {
         Speed ??= new(this);

@@ -88,7 +88,7 @@ public class SpaceMinerMainLoop : GameLoop
     private void CheckToSpawnAsteroids()
     {
         var level = Math.Min(Timer / (30 * 60) + 1, 10); // Goes from 1 to 10
-        var spawnRate = 11 - level;
+        var spawnRate = (11 - level) * 4;
 
         // Re-roll list on level up
         if (Timer % (30 * 60) == 0)
@@ -101,6 +101,13 @@ public class SpaceMinerMainLoop : GameLoop
                 typeof(AsteroidRedBlast),
             };
             CurrentAsteroidTypes.Clear();
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
+            CurrentAsteroidTypes.Add(typeof(Asteroid));
             CurrentAsteroidTypes.Add(typeof(Asteroid));
             var specialTypesTotal = level / 4 + 2;
             for (var i = 0; i < specialTypesTotal; i++)
@@ -118,15 +125,15 @@ public class SpaceMinerMainLoop : GameLoop
             var yPosition = StageManager.CurrentRoom.PositionInPixels.Y;
             var asteroid = EntityManager.CreateEntityAt(asteroidType, (GetRandom.UnseededInt(rangeX.x1, rangeX.x2), yPosition));
 
-            // Level up buffs
-            var buffedHp = asteroid.DamageTaker.CurrentHp.MaxAmount * (1 + level / 2);
-            asteroid.AddDamageTaker(buffedHp);
-            var buffedSpeed = asteroid.Speed.MoveSpeed * (1 + (level - 1) * 0.125f);
-            asteroid.Speed.MoveSpeed = buffedSpeed;
-            // Exponential (after level 10)
-            var uncappedLevel = Timer / (30 * 60) + 1;
-            var levelsPastTen = Math.Max(1, uncappedLevel - 9);
-            asteroid.AddDamageTaker(buffedHp * levelsPastTen);
+            //// Level up buffs
+            //var buffedHp = asteroid.DamageTaker.CurrentHp.MaxAmount * (1 + level / 2);
+            //asteroid.AddDamageTaker(buffedHp);
+            //var buffedSpeed = asteroid.Speed.MoveSpeed * (1 + (level - 1) * 0.125f);
+            //asteroid.Speed.MoveSpeed = buffedSpeed;
+            //// Exponential (after level 10)
+            //var uncappedLevel = Timer / (30 * 60) + 1;
+            //var levelsPastTen = Math.Max(1, uncappedLevel - 9);
+            //asteroid.AddDamageTaker(buffedHp * levelsPastTen);
 
             // Set asteroid to move
             asteroid.AddMoveDirection();

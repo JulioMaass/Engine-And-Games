@@ -18,7 +18,7 @@ public class ShipShooterSlugger : Shooter
         EntityKind = EntityKind.PlayerShot;
         // Blue
         AutoFireRate = 60;
-        ShotSpeed = 3.5f;
+        ShotSpeed = 4.5f;
         // Green
         BaseDamage = 20;
         ShotSize = 16;

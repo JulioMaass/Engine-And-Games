@@ -13,16 +13,16 @@ public class Asteroid : Entity
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("Asteroid");
         AddCenteredOutlinedCollisionBox();
-        AddSpaceMinerEnemyComponents(10, 1);
+        AddSpaceMinerEnemyComponents(30, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         AddItemDropper(
             (typeof(OreGray), 1)
         );
 
-        AddMoveSpeed(1f);
+        AddRandomMoveSpeed(1.25f, 2.0f);
         Speed.Acceleration = 0.08f;
-        Speed.MaxSpeed = 1f;
+        Speed.MaxSpeed = 8f;
         AddMoveDirection();
         //AddDeathHandler(new BehaviorAddScore(1));
 

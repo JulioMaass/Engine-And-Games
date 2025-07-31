@@ -12,16 +12,16 @@ public class AsteroidShard : Entity
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("AsteroidShard");
         AddCenteredOutlinedCollisionBox();
-        AddSpaceMinerEnemyComponents(3, 1);
+        AddSpaceMinerEnemyComponents(25, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         //AddItemDropper(
         //    (typeof(ShooterMachineGunItem), 9)
         //);
 
-        AddMoveSpeed(1f);
+        AddRandomMoveSpeed(0.8f, 1.0f);
         Speed.Acceleration = 0.08f;
-        Speed.MaxSpeed = 2f;
+        Speed.MaxSpeed = 8f;
         AddMoveDirection();
         //AddDeathHandler(new BehaviorAddScore(1));
 

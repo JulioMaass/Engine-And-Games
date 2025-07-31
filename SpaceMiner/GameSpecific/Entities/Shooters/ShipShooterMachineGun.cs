@@ -18,7 +18,7 @@ public class ShipShooterMachineGun : Shooter
         EntityKind = EntityKind.PlayerShot;
         // Blue
         AutoFireRate = 5;
-        ShotSpeed = 5.5f;
+        ShotSpeed = 6.5f;
         // Green
         BaseDamage = 4;
         ShotSize = 6;

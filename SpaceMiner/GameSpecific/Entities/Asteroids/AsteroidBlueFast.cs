@@ -15,7 +15,7 @@ public class AsteroidBlueFast : Entity
         AddSpriteCenteredOrigin("AsteroidBlue", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
-        AddSpaceMinerEnemyComponents(10, 1);
+        AddSpaceMinerEnemyComponents(50, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         AddItemDropper(
@@ -24,9 +24,9 @@ public class AsteroidBlueFast : Entity
 
         BloomSource = new BloomSource(this, 0.75f);
 
-        AddMoveSpeed(2f);
+        AddRandomMoveSpeed(0.75f, 1.0f);
         Speed.Acceleration = 0.08f;
-        Speed.MaxSpeed = 3.5f;
+        Speed.MaxSpeed = 8f;
         AddMoveDirection();
         //AddDeathHandler(new BehaviorAddScore(1));
 

@@ -20,7 +20,7 @@ public class OreRed : Entity
         AddCenteredCollisionBox(8);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
-        AddItemComponents(ResourceType.OreRed, 1);
+        AddItemComponents(ResourceType.OreRed, 10);
         BloomSource = new BloomSource(this, 0.8f);
 
         //MenuItem = new MenuItem(this);

@@ -20,7 +20,7 @@ public class OreGray : Entity
         AddCenteredCollisionBox(8);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
-        AddItemComponents(ResourceType.OreGray, 1);
+        AddItemComponents(ResourceType.OreGray, 10);
         BloomSource = new BloomSource(this, 1.0f);
 
         //MenuItem = new MenuItem(this);
