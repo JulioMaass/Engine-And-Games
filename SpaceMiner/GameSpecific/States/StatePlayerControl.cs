@@ -51,6 +51,11 @@ public class StatePlayerControl : State
             Owner.Speed.SetXSpeed(Owner.Speed.MoveSpeed);
         else
             Owner.Speed.SetXSpeed(0);
+        if (Owner.Speed.X != 0 && Owner.Speed.Y != 0)
+        {
+            Owner.Speed.SetXSpeed(Owner.Speed.X * 0.70710678118f);
+            Owner.Speed.SetYSpeed(Owner.Speed.Y * 0.70710678118f);
+        }
 
         // Attack
         AttackFrame--;
