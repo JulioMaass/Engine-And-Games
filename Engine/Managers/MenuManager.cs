@@ -1,9 +1,9 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.Types;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Engine.Managers;
@@ -43,27 +43,65 @@ public static class MenuManager
         CurrentMenuLayout = (MenuLayout)Activator.CreateInstance(LayoutDirectoryList.Last());
         if (CurrentMenuLayout == null) return;
 
-        // Create each menu area
+        foreach (var menuArea in CurrentMenuLayout.MenuAreas)
+            menuArea.GenerateMenuItems();
+    }
+
+    public static void CheckToSwapMenuArea(Type newMenuAreaType)
+    {
+        var currentArea = CurrentMenuLayout.MenuAreas.FirstOrDefault(area => CurrentMenuLayout.SwappableAreaTypes.Contains(area.GetType()));
+        if (currentArea == null)
+            Debugger.Break(); // Current area should be one of the target types
+        if (currentArea!.GetType() == newMenuAreaType)
+            return;
+        SwapMenuArea(currentArea.GetType(), newMenuAreaType);
+    }
+
+    private static void SwapMenuArea(Type swapOutType, Type swapInType)
+    {
+        var swapOutMenuArea = DeleteMenuArea(swapOutType);
+        var swapInMenuArea = GenerateMenuArea(swapInType);
+
         foreach (var menuArea in CurrentMenuLayout.MenuAreas)
         {
-            // Create each menu item in the area grid
-            for (var x = 0; x < menuArea.MenuItemTypes.GetLength(0); x++)
-            {
-                for (var y = 0; y < menuArea.MenuItemTypes.GetLength(1); y++)
-                {
-                    var menuItemType = menuArea.MenuItemTypes[x, y];
-                    if (menuItemType == null) continue;
-                    var menuItemPosition = menuArea.Position + IntVector2.New(x * menuArea.Spacing.X, y * menuArea.Spacing.Y);
-                    var menuItemEntity = EntityManager.CreateEntityAt(menuItemType, menuItemPosition);
-                    menuItemEntity.MenuItem.OwningMenuArea = menuArea;
-                    AvailableMenuItems.Add(menuItemEntity);
-                    menuArea.MenuItemEntities[x, y] = menuItemEntity;
-                }
-            }
+            SwapAreaReferences(menuArea.AllowedAreasUp, swapOutMenuArea, swapInMenuArea);
+            SwapAreaReferences(menuArea.AllowedAreasDown, swapOutMenuArea, swapInMenuArea);
+            SwapAreaReferences(menuArea.AllowedAreasLeft, swapOutMenuArea, swapInMenuArea);
+            SwapAreaReferences(menuArea.AllowedAreasRight, swapOutMenuArea, swapInMenuArea);
+        }
+
+        swapInMenuArea.AllowedAreasUp.AddRange(swapOutMenuArea.AllowedAreasUp);
+        swapInMenuArea.AllowedAreasDown.AddRange(swapOutMenuArea.AllowedAreasDown);
+        swapInMenuArea.AllowedAreasLeft.AddRange(swapOutMenuArea.AllowedAreasLeft);
+        swapInMenuArea.AllowedAreasRight.AddRange(swapOutMenuArea.AllowedAreasRight);
+    }
+
+    private static MenuArea DeleteMenuArea(Type areaType)
+    {
+        var menuArea = CurrentMenuLayout.MenuAreas.FirstOrDefault(area => area.GetType() == areaType);
+        menuArea!.DeleteMenuItems();
+        CurrentMenuLayout.MenuAreas.Remove(menuArea);
+        return menuArea;
+    }
+
+    private static MenuArea GenerateMenuArea(Type areaType)
+    {
+        var menuArea = (MenuArea)Activator.CreateInstance(areaType);
+        menuArea!.GenerateMenuItems();
+        CurrentMenuLayout.MenuAreas.Add(menuArea);
+        return menuArea;
+    }
+
+    private static void SwapAreaReferences(List<MenuArea> areasInDirection, MenuArea swapOutMenuArea, MenuArea swapInMenuArea)
+    {
+        if (areasInDirection.Contains(swapOutMenuArea))
+        {
+            areasInDirection.Remove(swapOutMenuArea);
+            areasInDirection.Add(swapInMenuArea);
         }
     }
 
-    private static void ClearMenuItems()
+    public static void ClearMenuItems()
     {
         if (AvailableMenuItems == null) return;
         foreach (var item in AvailableMenuItems)
@@ -109,7 +147,7 @@ public static class MenuManager
 
     private static void MoveSelection(int yDir, int xDir)
     {
-        var allowedDirectionAreas = new List<MenuLayout.MenuArea>();
+        var allowedDirectionAreas = new List<MenuArea>();
 
         // Add the area that the selected item belongs to
         var currentArea = SelectedItem.MenuItem.OwningMenuArea;
