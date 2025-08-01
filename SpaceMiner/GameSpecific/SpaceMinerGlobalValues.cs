@@ -13,6 +13,9 @@ public class SpaceMinerGlobalValues : Values
         Resources.AddNew(ResourceType.OreRed, 999999, 0);
         Resources.AddNew(ResourceType.OreYellow, 999999, 0);
 
+        Resources.AddNew(ResourceType.MissileAtomic, 999999, 0);
+        Resources.AddNew(ResourceType.MissileHoming, 999999, 0);
+
         //foreach (var resource in Resources.List)
         //    resource.Amount = 999999;
     }

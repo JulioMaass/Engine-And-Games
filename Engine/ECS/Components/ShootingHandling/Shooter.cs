@@ -4,6 +4,7 @@ using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
 using Engine.Helpers;
+using Engine.Managers.GlobalManagement;
 using Engine.Types;
 using Microsoft.Xna.Framework;
 using System;
@@ -19,6 +20,9 @@ public class Shooter : Component
     private Action ShootAction { get; set; } // Keep this private so that it can only be called using CheckToShoot
     public IntVector2 RelativeSpawnPosition { get; set; }
     private IntVector2 SpawnPosition => Owner.Position.Pixel + RelativeSpawnPosition.MirrorX(Owner.Facing.IsXMirrored);
+    // Ammo
+    public ResourceType AmmoType { get; set; } = ResourceType.None;
+    public int AmmoCost { get; set; }
 
     // Properties
     // Blue
@@ -46,6 +50,12 @@ public class Shooter : Component
 
     public void CheckToShoot()
     {
+        if (AmmoType != ResourceType.None)
+        {
+            if (!GlobalManager.Values.Resources.HasResource(AmmoType, AmmoCost))
+                return;
+            GlobalManager.Values.Resources.AddAmount(AmmoType, -AmmoCost);
+        }
         if (Owner.FrameHandler.CurrentFrame > 1) // Avoid shooting on spawn frame
             ShootAction.Invoke();
     }

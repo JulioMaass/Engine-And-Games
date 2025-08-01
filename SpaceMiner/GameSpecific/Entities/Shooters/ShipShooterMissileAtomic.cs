@@ -5,17 +5,20 @@ using SpaceMiner.GameSpecific.Entities.Shots;
 
 namespace SpaceMiner.GameSpecific.Entities.Shooters;
 
-public class ShipShooterMissile : Shooter
+public class ShipShooterMissileAtomic : Shooter
 {
-    public ShipShooterMissile(Entity owner) : base(owner)
+    public ShipShooterMissileAtomic(Entity owner) : base(owner)
     {
         Owner = owner;
         AddShootAction(NewShotInShootDirection);
         RelativeSpawnPosition = IntVector2.New(0, 0);
 
+        // Ammo
+        AmmoType = ResourceType.MissileAtomic;
+        AmmoCost = 1;
+
         // Shot Properties
-        ShotType = typeof(HomingMissile);
+        ShotType = typeof(AtomicMissile);
         EntityKind = EntityKind.PlayerShot;
-        AutoFireRate = 20;
     }
 }

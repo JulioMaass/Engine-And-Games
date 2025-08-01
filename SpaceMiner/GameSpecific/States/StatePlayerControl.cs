@@ -71,7 +71,7 @@ public class StatePlayerControl : State
 
         // Missile
         if (Owner.PlayerControl.Button2Press)
-            Owner.ShooterSecondary.CheckToShoot();
+            Owner.SecondaryShooter?.CheckToShoot();
     }
 
     public override void PostProcessingBehavior()

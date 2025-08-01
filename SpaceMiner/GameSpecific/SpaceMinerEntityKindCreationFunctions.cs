@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Engine.ECS.Components.CombatHandling;
+﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
@@ -7,6 +6,7 @@ using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.Graphics;
 using Engine.Types;
+using System.Linq;
 
 namespace SpaceMiner.GameSpecific;
 
@@ -81,6 +81,45 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Equip item
+            player.EquipmentHolder.EquipItem(GetType());
+        };
+    }
+
+    public void AddSpaceMinerMissileItemComponents()
+    {
+        // ReSharper disable once ComplexConditionExpression
+        MenuItem.Draw = () =>
+        {
+            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), CustomColor.White);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), CustomColor.White);
+
+            var price = ItemPrice.PriceList.FirstOrDefault();
+            var resourceCost = price.ResourceCosts.FirstOrDefault();
+            var priceString = resourceCost.ResourceType.ToString().Substring(3) + " " + resourceCost.Amount;
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), CustomColor.White);
+        };
+
+        MenuItem.OnSelectDraw = () =>
+        {
+            var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-16, 6), CustomColor.White);
+        };
+
+        MenuItem.OnSelect = () =>
+        {
+            // Get item price
+            var itemPrice = ItemPrice.PriceList.FirstOrDefault();
+            if (itemPrice == null)
+                return;
+
+            // Check if player has enough resources to buy the item
+            if (!ItemPrice.CanBuy(0))
+                return;
+            ItemPrice.SubtractResources(0);
+
+            // Equip item
+            var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
+            player!.ItemGetter.GetItem(this);
             player.EquipmentHolder.EquipItem(GetType());
         };
     }

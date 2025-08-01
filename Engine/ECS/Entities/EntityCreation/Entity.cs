@@ -83,7 +83,7 @@ public abstract partial class Entity
 
     // Shooting components
     public Shooter Shooter { get; set; }
-    public Shooter ShooterSecondary { get; set; }
+    public Shooter SecondaryShooter { get; set; }
     public ChargeManager ChargeManager { get; protected set; }
     public WeaponManager WeaponManager { get; protected set; }
     public ShotProperties ShotProperties { get; protected set; }

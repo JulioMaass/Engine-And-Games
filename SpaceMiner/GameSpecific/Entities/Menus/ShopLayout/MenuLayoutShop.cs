@@ -2,6 +2,8 @@
 using Engine.Managers.Graphics;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.MissilesArea;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.OptionsArea;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.TabsArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using System;

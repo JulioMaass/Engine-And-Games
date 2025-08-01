@@ -39,6 +39,7 @@ public class Resource // Used to pass integers by reference
 
 public enum ResourceType
 {
+    None,
     // Universal
     Hp,
     Score,
@@ -58,4 +59,6 @@ public enum ResourceType
     OreGreen,
     OreBlue,
     OreYellow,
+    MissileAtomic,
+    MissileHoming,
 }

@@ -28,12 +28,12 @@ public class Ship : Entity
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         Shooter = new ShipShooterBasic(this);
-        ShooterSecondary = new ShipShooterMissile(this);
         AddShootDirection(270000);
 
         AddItemGetter();
         EquipmentHolder = new(this, true);
         EquipmentHolder.AddEquipmentGroup(EquipGroup.Weapon, true);
+        EquipmentHolder.AddEquipmentGroup(EquipGroup.SecondaryWeapon, true);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

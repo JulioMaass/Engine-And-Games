@@ -39,6 +39,7 @@ public class EquipmentItemStats : Component
 public enum EquipGroup
 {
     Weapon,
+    SecondaryWeapon,
     Armor,
     Foot
 }

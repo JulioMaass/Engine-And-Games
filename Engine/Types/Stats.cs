@@ -15,6 +15,7 @@ public class Stats
 
     // Shot Modifiers
     public Type Shooter { get; set; } // TODO: Enforce that this is a Shooter
+    public Type SecondaryShooter { get; set; }
     public float ExtraAttackSpeed { get; set; }
     public float ExtraSpeed { get; set; }
     public int ExtraShots { get; set; }

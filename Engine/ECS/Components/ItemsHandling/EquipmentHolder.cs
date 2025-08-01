@@ -59,6 +59,8 @@ public class EquipmentHolder : Component // TODO: This is entity bound, so char 
         // Set shooter stats
         if (stats.Shooter != null)
             Owner.Shooter = Activator.CreateInstance(stats.Shooter, Owner) as Shooter;
+        if (stats.SecondaryShooter != null)
+            Owner.SecondaryShooter = Activator.CreateInstance(stats.SecondaryShooter, Owner) as Shooter;
     }
 
     public int GetEquipmentItemCount(Type itemType)

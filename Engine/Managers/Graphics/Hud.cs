@@ -63,6 +63,11 @@ public static class Hud
                     new IntVector2(2, 26), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Yellow: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreYellow),
                     new IntVector2(2, 34), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Atomic: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileAtomic),
+                    new IntVector2(2, 42), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Homing: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileHoming),
+                    new IntVector2(2, 50), Color.White);
+
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
                     new IntVector2(440, 2), Color.White);
                 //Video.DrawStringWithOutline(Drawer.PicoFont, "Time: " + ((SpaceMinerMainLoop)GameLoopManager.GameMainLoop).Timer / 60,
