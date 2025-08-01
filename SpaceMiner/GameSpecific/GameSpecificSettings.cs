@@ -1,9 +1,8 @@
 ﻿using Engine.GameSpecific;
 using Engine.Main;
-using Engine.Managers;
 using Engine.Types;
-using Microsoft.Xna.Framework.Input;
 using SpaceMiner.GameSpecific.Entities;
+using SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
 using SpaceMiner.GameSpecific.Tilesets;
 
 namespace SpaceMiner.GameSpecific;
@@ -13,7 +12,7 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
     public override void Initialize()
     {
         CurrentGame = GameId.SpaceMiner;
-        InitialMenu = typeof(Entities.MenuLayouts.MenuLayoutMain);
+        InitialMenu = typeof(MenuLayoutMain);
         //PauseMenu = typeof(Entities.MenuLayouts.MenuLayoutPauseMenu);
 
         Settings.TileSize = IntVector2.New(16, 16);

@@ -1,9 +1,8 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.Helpers;
 using Engine.Types;
-using SpaceMiner.GameSpecific.Entities.MenuItems;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuLayouts;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
 public class MenuAreaUpgrades : MenuArea
 {

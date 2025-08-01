@@ -2,25 +2,25 @@
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
-public class MenuItemSocketRed : Entity
+public class MenuItemSocketYellow : Entity
 {
-    public MenuItemSocketRed()
+    public MenuItemSocketYellow()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("UpgradeRed", 16);
+        AddSpriteCenteredOrigin("UpgradeYellow", 16);
         AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1;
+        EquipmentItemStats.EquipmentStats.ExtraShots = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreRed, 25, 75, 150, 300);
+        ItemPrice.AddPrices(ResourceType.OreYellow, 20, 50, 150, 300);
 
-        MenuItem.Label = "Blast";
+        MenuItem.Label = "Multi";
         AddSpaceMinerEquipmentItemComponents();
     }
 }

@@ -2,7 +2,7 @@
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
 public class MenuItemSocketGreen : Entity
 {

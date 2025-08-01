@@ -1,27 +1,26 @@
 ﻿using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
-using SpaceMiner.GameSpecific.Entities.Shooters;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
-public class MenuItemShotgun : Entity
+public class MenuItemSocketRed : Entity
 {
-    public MenuItemShotgun()
+    public MenuItemSocketRed()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("WeaponShotgun", 32);
+        AddSpriteCenteredOrigin("UpgradeRed", 16);
         AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterShotgun);
+        EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreYellow, 15));
+        ItemPrice.AddPrices(ResourceType.OreRed, 25, 75, 150, 300);
 
-        MenuItem.Label = "Shotgun";
+        MenuItem.Label = "Blast";
         AddSpaceMinerEquipmentItemComponents();
     }
 }

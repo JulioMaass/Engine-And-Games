@@ -1,17 +1,16 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.Helpers;
 using Engine.Types;
-using SpaceMiner.GameSpecific.Entities.MenuItems;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuLayouts;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 
-public class MenuAreaMissiles : MenuArea
+public class MenuAreaWeapons : MenuArea
 {
-    public MenuAreaMissiles()
+    public MenuAreaWeapons()
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemMachineGun), typeof(MenuItemShotgun) },
+            { typeof(MenuItemMachineGun), typeof(MenuItemShotgun), typeof(MenuItemSlugger), typeof(MenuItemBlaster) },
         });
         Position = IntVector2.New(64, 64);
         Spacing = IntVector2.New(64 + 32, 32 + 32);

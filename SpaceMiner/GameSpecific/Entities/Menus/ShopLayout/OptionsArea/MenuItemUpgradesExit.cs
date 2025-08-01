@@ -4,7 +4,7 @@ using Engine.Managers;
 using Engine.Managers.GameModes;
 using Engine.Managers.Graphics;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.OptionsArea;
 
 public class MenuItemUpgradesExit : Entity
 {

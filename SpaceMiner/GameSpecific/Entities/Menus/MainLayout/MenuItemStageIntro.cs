@@ -2,7 +2,7 @@
 using Engine.Managers.GameModes;
 using Engine.Managers.StageHandling;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
 
 public class MenuItemStageIntro : Entity
 {

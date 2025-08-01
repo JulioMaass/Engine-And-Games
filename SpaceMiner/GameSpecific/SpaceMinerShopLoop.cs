@@ -1,6 +1,6 @@
 ﻿using Engine.Managers;
 using Engine.Managers.GameModes;
-using SpaceMiner.GameSpecific.Entities.MenuLayouts;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout;
 
 namespace SpaceMiner.GameSpecific;
 

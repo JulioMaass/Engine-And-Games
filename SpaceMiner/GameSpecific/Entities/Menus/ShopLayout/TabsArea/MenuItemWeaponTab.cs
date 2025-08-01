@@ -1,7 +1,7 @@
 ﻿using Engine.Managers;
-using SpaceMiner.GameSpecific.Entities.MenuLayouts;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.TabsArea;
 
 public class MenuItemWeaponTab : Entity
 {

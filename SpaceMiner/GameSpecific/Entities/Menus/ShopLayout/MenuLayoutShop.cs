@@ -1,9 +1,12 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.Managers.Graphics;
 using Engine.Types;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.MissilesArea;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using System;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuLayouts;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout;
 
 public class MenuLayoutShop : MenuLayout
 {

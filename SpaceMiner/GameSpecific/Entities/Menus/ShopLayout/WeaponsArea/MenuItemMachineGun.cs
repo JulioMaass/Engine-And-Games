@@ -3,25 +3,25 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Shooters;
 
-namespace SpaceMiner.GameSpecific.Entities.MenuItems;
+namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 
-public class MenuItemSlugger : Entity
+public class MenuItemMachineGun : Entity
 {
-    public MenuItemSlugger()
+    public MenuItemMachineGun()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("WeaponSlugger", 32);
+        AddSpriteCenteredOrigin("WeaponMachineGun", 32);
         AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterSlugger);
+        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterMachineGun);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreGreen, 25));
+        ItemPrice.AddPrice((ResourceType.OreBlue, 10));
 
-        MenuItem.Label = "Slugger";
+        MenuItem.Label = "Machine";
         AddSpaceMinerEquipmentItemComponents();
     }
 }
