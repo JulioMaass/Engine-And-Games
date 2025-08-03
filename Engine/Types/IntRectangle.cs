@@ -13,9 +13,11 @@ public struct IntRectangle
     public int Width { get; private set; }
     public int Height { get; private set; }
     public int Left => X;
-    public int Right => X + Width - 1;
     public int Top => Y;
+    public int Right => X + Width - 1; // For int collision calculation
     public int Bottom => Y + Height - 1;
+    public int DrawingRight => X + Width; // For drawing purposes, to include the last pixel
+    public int DrawingBottom => Y + Height;
 
     public IntVector2 Position
     {
