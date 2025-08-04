@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace SpaceMiner.GameSpecific.Entities.Vfx;
 
-public class VfxBlastCircle : Entity
+public class VfxSmokeCircle : Entity
 {
-    public VfxBlastCircle()
+    public VfxSmokeCircle()
     {
         EntityKind = EntityKind.Vfx;
 
@@ -21,12 +21,11 @@ public class VfxBlastCircle : Entity
         //Sprite.Color = CustomColor.White;
         //Sprite.StretchedSize = (32, 32);
         VfxAnimation = new(this);
-        VfxAnimation.SetInitialSize(32);
-        VfxAnimation.SetSpeed(3);
-        VfxAnimation.SetAcceleration(-1f);
-        VfxAnimation.SetColors(2, CustomColor.PicoWhite, CustomColor.PicoYellow,
-            CustomColor.PicoOrange, CustomColor.Pico25, CustomColor.Pico20, CustomColor.Pico21);
-        DrawOrder = 1;
+        VfxAnimation.SetInitialSize(16);
+        VfxAnimation.SetSpeed(-0.75f);
+        //VfxAnimation.SetAcceleration(-0.2f);
+        VfxAnimation.SetColors(4,CustomColor.Pico25, CustomColor.Pico20, CustomColor.Pico20, CustomColor.Pico21);
+        DrawOrder = 0;
 
         // State
         AddStateManager();

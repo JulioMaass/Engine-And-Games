@@ -27,7 +27,7 @@ public class Asteroid : Entity
         Speed.MaxSpeed = 8f;
         AddMoveDirection();
         //AddDeathHandler(new BehaviorAddScore(1));
-        AddDeathHandler(new BehaviorCreateEntity(typeof(VfxBlastEmitter)));
+        AddDeathHandler(new BehaviorCreateEntities(typeof(VfxSmokeEmitter), typeof(VfxBlastEmitter)));
 
         //// Shooter Manager
         //Shooter = new Shooter(this);
