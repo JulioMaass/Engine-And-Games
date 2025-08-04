@@ -20,6 +20,8 @@ public class VfxEmitter : Component
     public int EmissionFrames { get; set; }
     public int EmissionsPerFrame { get; set; }
     public int Distance { get; set; }
+    // Movement
+    public float DistanceToSpeedMultiplier { get; set; } // How much speed to apply based on distance
 
     public VfxEmitter(Entity owner, Type vfxType, int emissionFrames, int emissionsPerFrame, int distance)
     {
@@ -39,11 +41,20 @@ public class VfxEmitter : Component
                 var relativePosition = new IntVector2(GetRandom.UnseededInt(-Distance, Distance), GetRandom.UnseededInt(-Distance, Distance));
                 while (IntVector2.GetDistance(IntVector2.Zero, relativePosition) > Distance)
                     relativePosition = new IntVector2(GetRandom.UnseededInt(-Distance, Distance), GetRandom.UnseededInt(-Distance, Distance));
-                EntityManager.CreateEntityAt(VfxType, Owner.Position.Pixel + relativePosition);
+                var entity = EntityManager.CreateEntityAt(VfxType, Owner.Position.Pixel + relativePosition);
+                SetSpeedFromDistance(entity, relativePosition);
             }
             Frame++;
         }
         else
             EntityManager.DeleteEntity(Owner); // TODO: This should be optional (entity may be permanent)
+    }
+
+    private void SetSpeedFromDistance(Entity entity, IntVector2 distance)
+    {
+        var moveDirection = Angle.GetAngleFromDistanceCoordinates(distance);
+        var moveSpeed = IntVector2.GetDistance(IntVector2.Zero, distance) * DistanceToSpeedMultiplier;
+        entity.AddMoveDirection(moveDirection.Value);
+        entity.AddMoveSpeed(moveSpeed);
     }
 }
