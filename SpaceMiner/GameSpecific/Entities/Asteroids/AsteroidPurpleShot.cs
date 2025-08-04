@@ -1,25 +1,27 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Entities.EntityCreation;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidShard : Entity
+public class AsteroidPurpleShot : Entity
 {
-    public AsteroidShard()
+    public AsteroidPurpleShot()
     {
         EntityKind = EntityKind.Enemy;
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteFullImageCenteredOrigin("AsteroidShard");
+        AddSpriteFullImageCenteredOrigin("PurpleShot");
         AddCenteredOutlinedCollisionBox();
-        AddSpaceMinerEnemyComponents(25, 1);
+        AddAlignment(AlignmentType.Hostile);
+        AddDamageDealer(1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         //AddItemDropper(
         //    (typeof(ShooterMachineGunItem), 9)
         //);
 
-        AddRandomMoveSpeed(1.5f, 2.0f);
+        AddRandomMoveSpeed(2.0f, 2.5f);
         Speed.Acceleration = 0.08f;
         Speed.MaxSpeed = 8f;
         AddMoveDirection();

@@ -66,6 +66,7 @@ public static class GameLoopManager
 
         DrawBackground();
         DrawAllLayers();
+        DrawSpriteVfxs();
         StageEditor.Draw();
         DrawMasks();
     }
@@ -93,6 +94,19 @@ public static class GameLoopManager
             .ThenBy(entity => entity.DrawOrder)
             .ToList()
             .ForEach(entity => entity.Draw());
+    }
+
+    private static void DrawSpriteVfxs()
+    {
+        EntityManager.GetAllEntities()
+            .OrderBy(entity => entity.LayerId)
+            .ThenBy(entity => entity.EntityKind)
+            .ThenBy(entity => entity.DrawOrder)
+            .ToList()
+            .ForEach(entity =>
+            {
+                entity.SpriteVfxs?.Draw();
+            });
     }
 
     private static void DrawMasks()

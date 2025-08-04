@@ -9,10 +9,10 @@ using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Components.Spawning;
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Systems.Physics;
+using Engine.Managers;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using System.Diagnostics;
-using Engine.Managers;
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
@@ -49,6 +49,7 @@ public abstract partial class Entity
 
     // Visual components
     public Sprite Sprite { get; protected set; }
+    public SpriteVfxs SpriteVfxs { get; protected set; }
     public Palette Palette { get; protected set; }
     public WhiteShader WhiteShader { get; protected set; }
     public LightSource LightSource { get; protected set; }
@@ -132,7 +133,7 @@ public abstract partial class Entity
         ChargeManager?.Update();
         Paralax?.Update();
         VfxEmitter?.Update();
-        VfxAnimation?.Update(); 
+        VfxAnimation?.Update();
         // Control and State
         FrameHandler.CheckDurationEnd();
         PlayerControl?.Update();

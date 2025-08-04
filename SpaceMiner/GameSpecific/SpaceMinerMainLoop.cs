@@ -88,17 +88,25 @@ public class SpaceMinerMainLoop : GameLoop
     {
         var level = Math.Min(Timer / (30 * 60) + 1, 10); // Goes from 1 to 10
         var spawnRate = (11 - level) * 4;
+        var asteroidTier = (level - 1) / 3 + 1;
 
         // Re-roll list on level up
         if (Timer % (30 * 60) == 0)
         {
             var specialAsteroidTypes = new List<Type>
             {
+                // Tier 1
                 typeof(AsteroidBlueFast),
                 typeof(AsteroidGreenBig),
                 typeof(AsteroidYellow),
-                typeof(AsteroidRedBlast),
             };
+            if (asteroidTier >= 2)
+            {
+                // Tier 2
+                specialAsteroidTypes.Add(typeof(AsteroidRedBlast));
+                specialAsteroidTypes.Add(typeof(AsteroidPurple));
+                specialAsteroidTypes.Add(typeof(AsteroidOrangeHoming));
+            }
             CurrentAsteroidTypes.Clear();
             CurrentAsteroidTypes.Add(typeof(Asteroid));
             CurrentAsteroidTypes.Add(typeof(Asteroid));

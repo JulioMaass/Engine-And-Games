@@ -59,6 +59,8 @@ public enum ResourceType
     OreGreen,
     OreBlue,
     OreYellow,
+    OreOrange,
+    OrePurple,
     MissileAtomic,
     MissileHoming,
 }

@@ -1,38 +1,37 @@
-﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Components.VisualsHandling;
+using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Entities.Shared;
-using Microsoft.Xna.Framework;
+using Engine.Helpers;
 using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidRedBlast : Entity
+public class AsteroidPurple : Entity
 {
-    public AsteroidRedBlast()
+    public AsteroidPurple()
     {
         EntityKind = EntityKind.Enemy;
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteCenteredOrigin("AsteroidRed", 32);
+        AddSpriteCenteredOrigin("AsteroidPurple", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
         AddSpaceMinerEnemyComponents(50, 1);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         AddItemDropper(
-            (typeof(OreRed), 1)
+            (typeof(OrePurple), 1)
         );
 
-        BloomSource = new BloomSource(this, 0.8f);
+        BloomSource = new BloomSource(this, 0.80f);
 
         AddRandomMoveSpeed(0.4f, 0.6f);
         Speed.Acceleration = 0.08f;
         Speed.MaxSpeed = 8f;
         AddMoveDirection();
-        //AddDeathHandler(new BehaviorAddScore(1));+
+        //AddDeathHandler(new BehaviorAddScore(1));
 
         //// Shooter Manager
         //Shooter = new Shooter(this);
@@ -41,20 +40,26 @@ public class AsteroidRedBlast : Entity
         //Shooter.ShotType = typeof(ShooterEnemyShot);
         //Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2f);
 
-        var duration = 30;
-        var damage = 1;
-        var size = 48;
-        var color = new Color(255, 0, 0, 255);
-        AddDeathHandler(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.EnemyShot, AlignmentType.Neutral, duration, damage, size, color));
-
         // States
         AddStateManager();
         // Auto States
         var state = NewState()
             .AddToAutomaticStatesList();
-    }
 
-    protected override void CustomUpdate()
-    {
+        var deathBehavior = new BehaviorCustom(
+            () =>
+            {
+                var splitRotation = GetRandom.UnseededInt(360000);
+                for (var i = 0; i < 4; i++)
+                {
+                    var angle = GetRandom.UnseededInt(90000) + i * 90000 + splitRotation;
+                    var asteroid = EntityManager.CreateEntityAt(typeof(AsteroidPurpleShot), Position.Pixel);
+                    asteroid.AddMoveDirection(angle);
+                    asteroid.Speed.SetMoveSpeedToCurrentDirection();
+                }
+            }
+        );
+
+        AddDeathHandler(deathBehavior);
     }
 }

@@ -54,19 +54,23 @@ public static class Hud
             else if (GameManager.GameSpecificSettings.CurrentGame == GameId.SpaceMiner)
             {
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Gray: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreGray),
-                    new IntVector2(2, 2), Color.White);
+                    new IntVector2(2, 2 + 8 * 0), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Blue: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreBlue),
-                    new IntVector2(2, 10), Color.White);
+                    new IntVector2(2, 2 + 8 * 1), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Green: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreGreen),
-                    new IntVector2(2, 18), Color.White);
+                    new IntVector2(2, 2 + 8 * 2), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Red: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreRed),
-                    new IntVector2(2, 26), Color.White);
+                    new IntVector2(2, 2 + 8 * 3), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Yellow: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreYellow),
-                    new IntVector2(2, 34), Color.White);
+                    new IntVector2(2, 2 + 8 * 4), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Orange: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreOrange),
+                    new IntVector2(2, 2 + 8 * 5), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Purple: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OrePurple),
+                    new IntVector2(2, 2 + 8 * 6), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Atomic: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileAtomic),
-                    new IntVector2(2, 42), Color.White);
+                    new IntVector2(2, 2 + 8 * 7), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Homing: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileHoming),
-                    new IntVector2(2, 50), Color.White);
+                    new IntVector2(2, 2 + 8 * 8), Color.White);
 
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
                     new IntVector2(440, 2), Color.White);

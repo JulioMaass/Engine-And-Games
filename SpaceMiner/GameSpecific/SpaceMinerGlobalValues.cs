@@ -12,6 +12,8 @@ public class SpaceMinerGlobalValues : Values
         Resources.AddNew(ResourceType.OreGreen, 999999, 0);
         Resources.AddNew(ResourceType.OreRed, 999999, 0);
         Resources.AddNew(ResourceType.OreYellow, 999999, 0);
+        Resources.AddNew(ResourceType.OreOrange, 999999, 0);
+        Resources.AddNew(ResourceType.OrePurple, 999999, 0);
 
         Resources.AddNew(ResourceType.MissileAtomic, 999999, 0);
         Resources.AddNew(ResourceType.MissileHoming, 999999, 0);

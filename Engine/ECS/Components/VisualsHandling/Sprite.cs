@@ -3,10 +3,9 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers.Graphics;
 using Engine.Types;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using Color = Microsoft.Xna.Framework.Color;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Engine.ECS.Components.VisualsHandling;
 

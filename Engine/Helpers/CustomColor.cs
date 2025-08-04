@@ -107,4 +107,9 @@ public static class CustomColor
         var a = (byte)(color1.A * (1 - mix) + color2.A * mix);
         return new Color(r, g, b, a);
     }
+
+    public static Color ColorWithAlpha(Color color, float alpha)
+    {
+        return new Color(color.R, color.G, color.B, (byte)(color.A * alpha));
+    }
 }
