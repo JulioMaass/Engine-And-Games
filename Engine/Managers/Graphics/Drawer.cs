@@ -19,6 +19,7 @@ public static class Drawer
 
     // Shaders
     public static Effect PaletteShader { get; private set; }
+    public static Effect WhiteShader { get; private set; }
     public static Effect AreaLightShader { get; private set; }
 
     // Default values for drawing
@@ -51,6 +52,7 @@ public static class Drawer
 
         // Shaders
         PaletteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/PaletteShader");
+        WhiteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/WhiteShader");
         AreaLightShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/AreaLightShader");
         BloomManager.BloomEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomShader");
         BloomManager.BloomMaskEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomMaskShader");

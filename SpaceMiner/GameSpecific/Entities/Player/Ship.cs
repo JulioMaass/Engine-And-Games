@@ -16,6 +16,7 @@ public class Ship : Entity
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("SpaceMinerPlayer");
+        WhiteShader = new(this);
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10);

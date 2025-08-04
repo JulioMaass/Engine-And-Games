@@ -50,6 +50,7 @@ public abstract partial class Entity
     // Visual components
     public Sprite Sprite { get; protected set; }
     public Palette Palette { get; protected set; }
+    public WhiteShader WhiteShader { get; protected set; }
     public LightSource LightSource { get; protected set; }
     public BloomSource BloomSource { get; protected set; }
     public DeathHandler DeathHandler { get; protected set; }
@@ -160,8 +161,10 @@ public abstract partial class Entity
             return;
 
         Palette?.SetPalette();
+        WhiteShader?.Set();
         Sprite?.Draw();
         PaletteManager.ResetPalette();
+        WhiteShaderManager.Reset();
     }
 }
 
