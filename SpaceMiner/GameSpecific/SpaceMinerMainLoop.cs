@@ -7,8 +7,8 @@ using Engine.Managers.GameModes;
 using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
-using SpaceMiner.GameSpecific.Entities;
 using SpaceMiner.GameSpecific.Entities.Asteroids;
+using SpaceMiner.GameSpecific.Entities.Background;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,10 +72,9 @@ public class SpaceMinerMainLoop : GameLoop
         CollisionHandler.EntitiesCollideWithTiles();
         ApplyBufferedDamage();
 
-        // Update all entities
-        UpdateAllEntities();
-
         CheckToGoToShop();
+
+        UpdateAllEntities();
     }
 
     private void CheckToGoToShop()
@@ -149,21 +148,6 @@ public class SpaceMinerMainLoop : GameLoop
         (int x1, int x2) rangeX = (StageManager.CurrentRoom.PositionInPixels.X, StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X);
         var yPosition = StageManager.CurrentRoom.PositionInPixels.Y;
         EntityManager.CreateEntityAt(typeof(Star), (GetRandom.UnseededInt(rangeX.x1, rangeX.x2), yPosition));
-    }
-
-    private void UpdateAllEntities()
-    {
-        UpdateEntitiesOfType(EntityKind.Decoration);
-        UpdateEntitiesOfType(EntityKind.DecorationVfx); // Needs to be after player to make the flame work properly?!
-        UpdateEntitiesOfType(EntityKind.Gimmick);
-        UpdateEntitiesOfType(EntityKind.Player);
-        UpdateEntitiesOfType(EntityKind.PlayerShot);
-        UpdateEntitiesOfType(EntityKind.Boss);
-        UpdateEntitiesOfType(EntityKind.Enemy);
-        UpdateEntitiesOfType(EntityKind.EnemyShot);
-        UpdateEntitiesOfType(EntityKind.Item);
-        UpdateEntitiesOfType(EntityKind.Vfx);
-        UpdateEntitiesOfType(EntityKind.Paralax);
     }
 
     private void ApplyBufferedDamage()

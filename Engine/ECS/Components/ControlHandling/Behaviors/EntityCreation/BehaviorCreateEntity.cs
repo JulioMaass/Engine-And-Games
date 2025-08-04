@@ -2,7 +2,7 @@
 using Engine.Types;
 using System;
 
-namespace Engine.ECS.Components.ControlHandling.Behaviors;
+namespace Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 
 public class BehaviorCreateEntity : Behavior
 {

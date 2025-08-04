@@ -1,5 +1,7 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
+using Engine.ECS.Entities.EntityCreation;
 using SpaceMiner.GameSpecific.Entities.Ores;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
@@ -25,6 +27,7 @@ public class Asteroid : Entity
         Speed.MaxSpeed = 8f;
         AddMoveDirection();
         //AddDeathHandler(new BehaviorAddScore(1));
+        AddDeathHandler(new BehaviorCreateEntity(typeof(VfxBlastEmitter)));
 
         //// Shooter Manager
         //Shooter = new Shooter(this);

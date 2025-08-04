@@ -35,19 +35,6 @@ public class MmdbMainLoop : GameLoop
             entity.Gravity?.Apply(); // TODO - BUG - MMDB: Move this elsewhere? Check if jump height is correct after moving this line
     }
 
-    private void UpdateAllEntities()
-    {
-        UpdateEntitiesOfType(EntityKind.Gimmick);
-        UpdateEntitiesOfType(EntityKind.Player);
-        UpdateEntitiesOfType(EntityKind.PlayerShot);
-        UpdateEntitiesOfType(EntityKind.Boss);
-        UpdateEntitiesOfType(EntityKind.Enemy);
-        UpdateEntitiesOfType(EntityKind.EnemyShot);
-        UpdateEntitiesOfType(EntityKind.Item);
-        UpdateEntitiesOfType(EntityKind.Vfx);
-        UpdateEntitiesOfType(EntityKind.Paralax);
-    }
-
     private void ApplyBufferedDamage()
     {
         foreach (var entity in EntityManager.GetAllEntities())

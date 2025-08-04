@@ -6,7 +6,7 @@ using SpaceMiner.GameSpecific.Entities.Shooters;
 using SpaceMiner.GameSpecific.States;
 
 
-namespace SpaceMiner.GameSpecific.Entities;
+namespace SpaceMiner.GameSpecific.Entities.Player;
 
 public class Ship : Entity
 {

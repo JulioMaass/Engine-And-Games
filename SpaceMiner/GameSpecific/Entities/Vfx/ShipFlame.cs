@@ -1,9 +1,9 @@
 ﻿using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
 
-namespace SpaceMiner.GameSpecific.Entities;
+namespace SpaceMiner.GameSpecific.Entities.Vfx;
 
-public class ShipFlame : Engine.ECS.Entities.EntityCreation.Entity
+public class ShipFlame : Entity
 {
     public ShipFlame()
     {

@@ -1,8 +1,8 @@
 ﻿using Engine.GameSpecific;
 using Engine.Main;
 using Engine.Types;
-using SpaceMiner.GameSpecific.Entities;
 using SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
+using SpaceMiner.GameSpecific.Entities.Player;
 using SpaceMiner.GameSpecific.Tilesets;
 
 namespace SpaceMiner.GameSpecific;

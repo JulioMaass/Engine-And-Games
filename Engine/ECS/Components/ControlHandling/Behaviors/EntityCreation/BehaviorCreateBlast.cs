@@ -5,7 +5,7 @@ using Engine.Types;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace Engine.ECS.Components.ControlHandling.Behaviors;
+namespace Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 
 public class BehaviorCreateBlast : Behavior
 {

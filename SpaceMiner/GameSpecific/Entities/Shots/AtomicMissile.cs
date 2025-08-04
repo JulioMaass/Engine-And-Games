@@ -1,5 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
 using Engine.Helpers;

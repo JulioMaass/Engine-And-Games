@@ -3,7 +3,7 @@ using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
 using Microsoft.Xna.Framework;
-using SpaceMiner.GameSpecific.Entities;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 using System;
 using System.Linq;
 

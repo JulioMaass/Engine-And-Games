@@ -1,7 +1,7 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;

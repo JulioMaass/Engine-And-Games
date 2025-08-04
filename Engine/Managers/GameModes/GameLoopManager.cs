@@ -6,6 +6,7 @@ using Engine.Managers.Graphics;
 using Engine.Managers.StageEditing;
 using Engine.Managers.StageHandling;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Engine.Managers.GameModes;
@@ -48,6 +49,9 @@ public static class GameLoopManager
 
         // Run gameplay loop
         GameCurrentLoop.Update();
+        var notUpdatedEntities = EntityManager.GetAllEntities().Where(entity => entity.Updated == false).ToList();
+        if (EntityManager.GetAllEntities().Any(entity => entity.Updated == false))
+            Debugger.Break(); // All entities should be updated after creation, before being drawn
 
         // Check to trigger transitions
         StageManager.UpdatePlayerRoom();

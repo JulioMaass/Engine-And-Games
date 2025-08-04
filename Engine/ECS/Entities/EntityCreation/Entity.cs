@@ -12,6 +12,8 @@ using Engine.ECS.Systems.Physics;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using System.Diagnostics;
+using Engine.Managers;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
 
@@ -25,6 +27,7 @@ public abstract partial class Entity
 
     // Component enforcer
     public ComponentEnforcer ComponentEnforcer { get; protected set; }
+    public bool Updated { get; set; } // Used to check if entity was updated before the end of its first frame. Entities that are created and not updated may cause issues.
 
     // Spawning
     public SpawnManager SpawnManager { get; protected set; }
@@ -51,6 +54,8 @@ public abstract partial class Entity
     public BloomSource BloomSource { get; protected set; }
     public DeathHandler DeathHandler { get; protected set; }
     public Paralax Paralax { get; protected set; }
+    public VfxEmitter VfxEmitter { get; protected set; }
+    public VfxAnimation VfxAnimation { get; protected set; }
     public LayerId LayerId { get; protected set; }
     public int DrawOrder { get; protected set; } // Draw priority inside a layer
 
@@ -118,28 +123,35 @@ public abstract partial class Entity
 
     public void Update()
     {
+        if (CodeBreaker.UpdateBreakEntityName == GetType().Name)
+            Debugger.Break();
         CustomUpdate();
 
         // Special Components
         ChargeManager?.Update();
         Paralax?.Update();
+        VfxEmitter?.Update();
+        VfxAnimation?.Update(); 
         // Control and State
         FrameHandler.CheckDurationEnd();
         PlayerControl?.Update();
         AiControl?.Update();
-        StateManager.Update();
+        StateManager?.Update();
         // Physics
         // TODO: 1st: Calculate each object's intended origin and destiny.
         // TODO: 2nd: Check for collisions and resolve them (Including pushing and carrying).
         Physics?.Update();
         // State Pos Processing
-        StateManager.PostProcessing();
+        StateManager?.PostProcessing();
+        Updated = true;
     }
 
     protected virtual void CustomUpdate() { }
 
     public void Draw() // TODO - ARCHITECTURE: Simplify this method // TODO - DEBUG: Show total calls per frame and list of entities drawn
     {
+        if (CodeBreaker.DrawBreakEntityName == GetType().Name)
+            Debugger.Break();
         if (Sprite == null)
             return;
         if (Sprite.IsVisible == false)

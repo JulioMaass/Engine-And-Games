@@ -2,7 +2,7 @@
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
 
-namespace SpaceMiner.GameSpecific.Entities;
+namespace SpaceMiner.GameSpecific.Entities.Background;
 
 public class Star : Entity
 {
