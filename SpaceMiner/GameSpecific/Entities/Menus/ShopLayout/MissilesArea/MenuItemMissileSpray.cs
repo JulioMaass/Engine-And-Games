@@ -5,24 +5,24 @@ using SpaceMiner.GameSpecific.Entities.Shooters;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.MissilesArea;
 
-public class MenuItemMissileAtomic : Entity
+public class MenuItemMissileSpray : Entity
 {
-    public MenuItemMissileAtomic()
+    public MenuItemMissileSpray()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("MissileAtomic", 32);
+        AddSpriteCenteredOrigin("MissileSpray", 32);
         AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
-        EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileAtomic);
+        EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileSpray);
 
-        AddItemComponents(ResourceType.MissileAtomic, 5);
+        AddItemComponents(ResourceType.MissileSpray, 5);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreRed, 10);
+        ItemPrice.AddPrices(ResourceType.OreYellow, 10);
 
-        MenuItem.Label = "Atomic";
+        MenuItem.Label = "Spray";
         AddSpaceMinerMissileItemComponents();
     }
 }

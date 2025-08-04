@@ -63,4 +63,6 @@ public enum ResourceType
     OrePurple,
     MissileAtomic,
     MissileHoming,
+    MissileSpray,
+    MissileDrill,
 }

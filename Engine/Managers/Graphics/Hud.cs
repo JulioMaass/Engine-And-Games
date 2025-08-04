@@ -71,6 +71,10 @@ public static class Hud
                     new IntVector2(2, 2 + 8 * 7), Color.White);
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Homing: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileHoming),
                     new IntVector2(2, 2 + 8 * 8), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Spray: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileSpray),
+                    new IntVector2(2, 2 + 8 * 9), Color.White);
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Drill: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileDrill),
+                    new IntVector2(2, 2 + 8 * 10), Color.White);
 
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
                     new IntVector2(440, 2), Color.White);

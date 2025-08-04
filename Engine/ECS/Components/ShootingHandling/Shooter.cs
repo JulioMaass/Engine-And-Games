@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
@@ -8,7 +9,6 @@ using Engine.Types;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 
 namespace Engine.ECS.Components.ShootingHandling;
 
