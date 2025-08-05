@@ -43,7 +43,7 @@ public class AsteroidRedBlast : Entity
 
         var duration = 30;
         var damage = 1;
-        var size = 48;
+        var size = 64;
         var color = new Color(255, 0, 0, 255);
         AddDeathHandler(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.EnemyShot, AlignmentType.Neutral, duration, damage, size, color));
 

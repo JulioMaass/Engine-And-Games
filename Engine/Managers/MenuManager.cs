@@ -41,7 +41,8 @@ public static class MenuManager
         ClearMenuItems();
         AvailableMenuItems = new EntityList();
         CurrentMenuLayout = (MenuLayout)Activator.CreateInstance(LayoutDirectoryList.Last());
-        if (CurrentMenuLayout == null) return;
+        if (CurrentMenuLayout == null)
+            return;
 
         foreach (var menuArea in CurrentMenuLayout.MenuAreas)
             menuArea.GenerateMenuItems();

@@ -39,9 +39,6 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         // ReSharper disable once ComplexConditionExpression
         MenuItem.Draw = () =>
         {
-            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), CustomColor.White);
-
             // Get item price
             var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
             var ownedAmount = player!.EquipmentHolder.GetEquipmentItemCount(GetType());
@@ -57,7 +54,13 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                     priceString = priceString + resourceCost.Amount + " ";
                 }
             }
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), CustomColor.White);
+            var color = CustomColor.White;
+            if (!ItemPrice.CanBuy(ownedAmount))
+                color = CustomColor.Gray;
+
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
+            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), color);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
         };
 
         MenuItem.OnSelectDraw = () =>
@@ -90,13 +93,16 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         // ReSharper disable once ComplexConditionExpression
         MenuItem.Draw = () =>
         {
-            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), CustomColor.White);
-
             var price = ItemPrice.PriceList.FirstOrDefault();
             var resourceCost = price.ResourceCosts.FirstOrDefault();
             var priceString = resourceCost.ResourceType.ToString().Substring(3) + " " + resourceCost.Amount;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), CustomColor.White);
+
+            var color = CustomColor.White;
+            if (!ItemPrice.CanBuy(0))
+                color = CustomColor.Gray;
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
+            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), color);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
         };
 
         MenuItem.OnSelectDraw = () =>
