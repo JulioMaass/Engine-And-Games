@@ -5,9 +5,9 @@ using SpaceMiner.GameSpecific.Entities.Shots;
 
 namespace SpaceMiner.GameSpecific.Entities.Shooters;
 
-public class ShipShooterShotgun : Shooter
+public class ShipShooterPuncher : Shooter
 {
-    public ShipShooterShotgun(Entity owner) : base(owner)
+    public ShipShooterPuncher(Entity owner) : base(owner)
     {
         Owner = owner;
         AddShootAction(ShootWithStatsModifiers);
@@ -17,22 +17,22 @@ public class ShipShooterShotgun : Shooter
         ShotType = typeof(ResizableShot);
         EntityKind = EntityKind.PlayerShot;
         // Blue
-        AutoFireRate = 30;
+        AutoFireRate = 20;
         ShotSpeed = 5.5f;
         // Green
-        BaseDamage = 20;
+        BaseDamage = 10;
         ShotSize = 8;
-        SizeScaling = 4;
+        SizeScaling = 3;
         // Yellow
-        AmountOfShots = 3;
-        SpreadAngle = 15000;
+        SpreadAngle = 45000 / 2;
+        ExtraSpawnPoints = 2;
+        ExtraSpawnAngleAndDistance = new IntVector2(45000, 16);
         // Red
-        BlastBaseSize = 18;
-        BlastSizeScaling = 4;
+        BlastBaseSize = 16;
+        BlastSizeScaling = 6;
         BlastBaseDamage = 10;
         BlastDamageScaling = 10;
-        BlastDuration = 20;
+        BlastDuration = 10;
         // Other
-        ShotDuration = 30;
     }
 }

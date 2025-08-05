@@ -20,7 +20,7 @@ public class ShipShooterSlugger : Shooter
         AutoFireRate = 60;
         ShotSpeed = 4.5f;
         // Green
-        BaseDamage = 20;
+        BaseDamage = 40;
         ShotSize = 16;
         SizeScaling = 6;
         // Yellow

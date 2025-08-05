@@ -33,8 +33,13 @@ public class Shooter : Component
     public int ShotSize { get; set; }
     public int SizeScaling { get; set; }
     // Yellow
+    // Multi angle
     public int AmountOfShots { get; set; } = 1;
     public int SpreadAngle { get; set; } = 45000;
+    // Multi spawn
+    public int ExtraSpawnPoints { get; set; }
+    public (int Angle, int Distance) ExtraSpawnAngleAndDistance { get; set; }
+    private IntVector2 _extraSpawnPoint;
     // Red
     public int BlastBaseSize { get; set; }
     public int BlastSizeScaling { get; set; }
@@ -83,6 +88,9 @@ public class Shooter : Component
             shot.Sprite.StretchedSize = new IntVector2(size, size);
             shot.AddCenteredOutlinedCollisionBox();
         }
+
+        // Multi Positioning
+        shot.Position.Pixel += _extraSpawnPoint;
 
         // Speed
         var speed = ShotSpeed == 0
@@ -174,9 +182,7 @@ public class Shooter : Component
     public void ShootSpread(int middleAngle, int angleBetweenShots, int spawnOffset = 0)
     {
         var amountOfShots = AmountOfShots * (Owner.StatsManager.GetAddedStats(stats => stats.ExtraShots) + 1);
-        var initialAngle = middleAngle - (amountOfShots - 1) / 2 * angleBetweenShots;
-        if (amountOfShots % 2 == 0)
-            initialAngle -= angleBetweenShots / 2;
+        var initialAngle = GetInitialAngle(middleAngle, angleBetweenShots, amountOfShots);
         for (var i = 0; i < amountOfShots; i++)
         {
             var shot = NewShotMovingToDirection(initialAngle + i * angleBetweenShots, spawnOffset);
@@ -184,11 +190,32 @@ public class Shooter : Component
         }
     }
 
+    public int GetInitialAngle(int middleAngle, int angleBetweenShots, int amountOfShots)
+    {
+        var initialAngle = middleAngle - (amountOfShots - 1) / 2 * angleBetweenShots;
+        if (amountOfShots % 2 == 0)
+            initialAngle -= angleBetweenShots / 2;
+        return initialAngle;
+    }
+
     public void ShootWithStatsModifiers()
     {
         var inaccuracyAngle = GetInaccuracyAngle();
         var shotAngle = Owner.ShootDirection.Angle.Value + inaccuracyAngle.Value;
-        ShootSpread(shotAngle, SpreadAngle);
+        if (ExtraSpawnPoints == 0)
+            ShootSpread(shotAngle, SpreadAngle);
+        else
+            ShootFromExtraSpawnPoints(shotAngle);
+    }
+
+    private void ShootFromExtraSpawnPoints(int shotAngle)
+    {
+        var initialAngle = GetInitialAngle(shotAngle, ExtraSpawnAngleAndDistance.Angle, ExtraSpawnPoints + 1);
+        for (var i = 0; i < ExtraSpawnPoints + 1; i++)
+        {
+            _extraSpawnPoint = Angle.GetVectorLength(initialAngle + i * ExtraSpawnAngleAndDistance.Angle) * ExtraSpawnAngleAndDistance.Distance;
+            ShootSpread(shotAngle, SpreadAngle);
+        }
     }
 
     private Angle GetInaccuracyAngle()

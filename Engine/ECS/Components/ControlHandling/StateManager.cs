@@ -23,7 +23,7 @@ public class StateManager : Component
     public (State State, int InitialFrame) DefaultState { get; set; } // If it needs to run a state and all of them failed to be set, this one will be set
     public State PreviousState { get; private set; }
     public State CurrentState { get; private set; }
-
+    // Secondary states
     public List<SecondaryState> SecondaryStateList { get; } = new();
     public SecondaryState CurrentSecondaryState { get; private set; }
 

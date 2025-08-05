@@ -20,7 +20,7 @@ public class ShipShooterBlaster : Shooter
         AutoFireRate = 45;
         ShotSpeed = 6.0f;
         // Green
-        BaseDamage = 5;
+        BaseDamage = 30;
         ShotSize = 8;
         SizeScaling = 3;
         // Yellow
@@ -28,7 +28,7 @@ public class ShipShooterBlaster : Shooter
         // Red
         BlastBaseSize = 48;
         BlastSizeScaling = 8;
-        BlastBaseDamage = 15;
+        BlastBaseDamage = 70;
         BlastDamageScaling = 10;
         BlastDuration = 30;
         // Other

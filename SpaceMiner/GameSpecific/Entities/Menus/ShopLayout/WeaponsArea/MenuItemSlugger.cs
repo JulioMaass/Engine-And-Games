@@ -19,7 +19,7 @@ public class MenuItemSlugger : Entity
         EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterSlugger);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreGreen, 25));
+        ItemPrice.AddPrice((ResourceType.OreGreen, 250));
 
         MenuItem.Label = "Slugger";
         AddSpaceMinerEquipmentItemComponents();

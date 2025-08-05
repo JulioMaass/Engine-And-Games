@@ -20,7 +20,7 @@ public class ShipShooterMachineGun : Shooter
         AutoFireRate = 5;
         ShotSpeed = 6.5f;
         // Green
-        BaseDamage = 4;
+        BaseDamage = 8;
         ShotSize = 6;
         SizeScaling = 2;
         // Yellow

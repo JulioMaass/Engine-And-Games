@@ -19,7 +19,7 @@ public class MenuItemSocketGreen : Entity
         EquipmentItemStats.EquipmentStats.ExtraSize = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 30, 50, 150, 400);
+        ItemPrice.AddPrices(ResourceType.OreGreen, 300, 500, 1500, 4000);
 
         MenuItem.Label = "Power";
         AddSpaceMinerEquipmentItemComponents();

@@ -5,23 +5,23 @@ using SpaceMiner.GameSpecific.Entities.Shooters;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 
-public class MenuItemShotgun : Entity
+public class MenuItemWarper : Entity
 {
-    public MenuItemShotgun()
+    public MenuItemWarper()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("WeaponShotgun", 32);
+        AddSpriteCenteredOrigin("WeaponWarper", 32);
         AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterShotgun);
+        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterWarper);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreYellow, 150));
+        ItemPrice.AddPrice((ResourceType.OreBlue, 250));
 
-        MenuItem.Label = "Shotgun";
+        MenuItem.Label = "Warper";
         AddSpaceMinerEquipmentItemComponents();
     }
 }

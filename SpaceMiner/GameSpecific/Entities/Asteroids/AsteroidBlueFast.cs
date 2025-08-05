@@ -1,6 +1,6 @@
-﻿using Engine.ECS.Components.VisualsHandling;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.Managers.StageHandling;
 using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
@@ -44,24 +44,7 @@ public class AsteroidBlueFast : Entity
         AddStateManager();
         // Auto States
         var state = NewState()
+            .AddBehavior(new BehaviorWarp(this, 2))
             .AddToAutomaticStatesList();
-    }
-
-    protected override void CustomUpdate()
-    {
-        if (Teleports >= 2)
-            return;
-
-        if (Position.Pixel.X < StageManager.CurrentRoom.PositionInPixels.X)
-            Position.SetPixelX(StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X);
-        if (Position.Pixel.X > StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X)
-            Position.SetPixelX(StageManager.CurrentRoom.PositionInPixels.X);
-        if (Position.Pixel.Y < StageManager.CurrentRoom.PositionInPixels.Y)
-            Position.SetPixelY(StageManager.CurrentRoom.PositionInPixels.Y + StageManager.CurrentRoom.SizeInPixels.Y);
-        if (Position.Pixel.Y > StageManager.CurrentRoom.PositionInPixels.Y + StageManager.CurrentRoom.SizeInPixels.Y)
-        {
-            Position.SetPixelY(StageManager.CurrentRoom.PositionInPixels.Y);
-            Teleports++;
-        }
     }
 }

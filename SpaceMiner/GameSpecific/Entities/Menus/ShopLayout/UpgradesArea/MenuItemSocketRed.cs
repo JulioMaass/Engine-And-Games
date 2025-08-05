@@ -18,7 +18,7 @@ public class MenuItemSocketRed : Entity
         EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreRed, 25, 75, 150, 300);
+        ItemPrice.AddPrices(ResourceType.OreRed, 250, 750, 1500, 3000);
 
         MenuItem.Label = "Blast";
         AddSpaceMinerEquipmentItemComponents();
