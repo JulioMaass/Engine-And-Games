@@ -15,7 +15,7 @@ public class AsteroidYellow : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteCenteredOrigin("AsteroidYellow", 32);
+        AddSpriteCenteredOrigin("AsteroidTiersTest", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
         AddSpaceMinerEnemyComponents(50, 1);
