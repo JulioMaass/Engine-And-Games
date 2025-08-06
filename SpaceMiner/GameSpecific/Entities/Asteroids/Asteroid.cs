@@ -15,26 +15,14 @@ public class Asteroid : Entity
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("Asteroid");
         AddCenteredOutlinedCollisionBox();
-        AddSpaceMinerEnemyComponents(30, 1);
+        AddSpaceMinerEnemyComponents(30, 50);
         AddSolidBehavior();
-        //SpawnManager.DespawnOnScreenExit = false;
-        AddItemDropper(
-            (typeof(OreGray), 1)
-        );
+        AddItemDropper(typeof(OreGray), 3, 8);
 
-        AddRandomMoveSpeed(1.25f, 2.0f);
-        Speed.Acceleration = 0.08f;
+        AddRandomMoveSpeed(1.25f, 1.75f);
         Speed.MaxSpeed = 8f;
         AddMoveDirection();
         AddDeathHandler(new BehaviorCreateEntity(typeof(VfxDebris)));
-        //AddDeathHandler(new BehaviorCreateEntities(typeof(VfxSmokeEmitter), typeof(VfxBlastEmitter)));
-
-        //// Shooter Manager
-        //Shooter = new Shooter(this);
-        //Shooter.AddShootAction(() => Shooter.ShootAtPlayer());
-        //Shooter.RelativeSpawnPosition = IntVector2.New(0, 0);
-        //Shooter.ShotType = typeof(ShooterEnemyShot);
-        //Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2f);
 
         // States
         AddStateManager();

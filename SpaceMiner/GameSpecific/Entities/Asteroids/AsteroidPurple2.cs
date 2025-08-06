@@ -2,24 +2,21 @@
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
+using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidPurple : Asteroid
+public class AsteroidPurple2 : AsteroidPurple
 {
-    public AsteroidPurple()
+    public AsteroidPurple2()
     {
         // Sprite
-        AddSpriteCenteredOrigin("AsteroidPurple", 32);
-        AddSpriteVariation(4, 1);
-        AddCenteredCollisionBox(16);
-        BloomSource = new BloomSource(this, 0.80f);
+        Sprite.SpriteSheetOrigin = IntVector2.New(0, 32);
 
         // Properties
-        AddSpaceMinerEnemyComponents(50, 50);
-        AddItemDropper(8, (typeof(OrePurple), 1), (typeof(OreGray), 2));
-        AddRandomMoveSpeed(0.4f, 0.6f);
+        AddSpaceMinerEnemyComponents(200, 50);
+        AddItemDropper(typeof(OrePurple), 10, 8);
 
         var deathBehavior = new BehaviorCustom(
             () =>

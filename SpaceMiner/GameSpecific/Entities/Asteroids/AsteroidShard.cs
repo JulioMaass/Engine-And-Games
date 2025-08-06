@@ -12,7 +12,7 @@ public class AsteroidShard : Entity
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("AsteroidShard");
         AddCenteredOutlinedCollisionBox();
-        AddSpaceMinerEnemyComponents(25, 1);
+        AddSpaceMinerEnemyComponents(25, 50);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         //AddItemDropper(

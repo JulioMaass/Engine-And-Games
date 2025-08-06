@@ -75,7 +75,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         DamageDealer.SetPiecingType(PiercingType.PierceAll);
 
         // Item components
-        AddItemDropper((typeof(HpSmall), 1));
+        AddItemDropper(typeof(HpSmall));
 
         // Visuals
         AddDeathHandler(new BehaviorCreateEntity(typeof(ExplosionSmall)));

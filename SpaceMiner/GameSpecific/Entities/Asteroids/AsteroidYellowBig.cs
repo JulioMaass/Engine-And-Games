@@ -1,25 +1,20 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
-using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
-using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidPurple : Asteroid
+public class AsteroidYellowBig : AsteroidYellow
 {
-    public AsteroidPurple()
+    public AsteroidYellowBig()
     {
         // Sprite
-        AddSpriteCenteredOrigin("AsteroidPurple", 32);
-        AddSpriteVariation(4, 1);
-        AddCenteredCollisionBox(16);
-        BloomSource = new BloomSource(this, 0.80f);
+        AddSpriteCenteredOrigin("AsteroidYellow2", 48);
+        AddCenteredCollisionBox(24);
 
         // Properties
-        AddSpaceMinerEnemyComponents(50, 50);
-        AddItemDropper(8, (typeof(OrePurple), 1), (typeof(OreGray), 2));
-        AddRandomMoveSpeed(0.4f, 0.6f);
+        AddSpaceMinerEnemyComponents(100, 50);
+        ItemDropper = null;
 
         var deathBehavior = new BehaviorCustom(
             () =>
@@ -28,7 +23,7 @@ public class AsteroidPurple : Asteroid
                 for (var i = 0; i < 4; i++)
                 {
                     var angle = GetRandom.UnseededInt(90000) + i * 90000 + splitRotation;
-                    var asteroid = EntityManager.CreateEntityAt(typeof(AsteroidPurpleShot), Position.Pixel);
+                    var asteroid = EntityManager.CreateEntityAt(typeof(AsteroidYellow), Position.Pixel);
                     asteroid.AddMoveDirection(angle);
                     asteroid.Speed.SetMoveSpeedToCurrentDirection();
                 }

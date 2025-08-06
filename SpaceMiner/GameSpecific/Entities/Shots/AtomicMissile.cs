@@ -17,7 +17,7 @@ public class AtomicMissile : Entity
         AddSpriteFullImageCenteredOrigin("Missile");
         Sprite.AutoRotation = true;
         AddSolidBehavior();
-        AddCenteredCollisionBox(8);
+        AddCenteredCollisionBox(64);
 
         AddMoveDirection();
         AddMoveSpeed(4.5f);

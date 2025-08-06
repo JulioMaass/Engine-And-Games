@@ -4,13 +4,10 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.GameModes;
-using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
-using SpaceMiner.GameSpecific.Entities.Asteroids;
 using SpaceMiner.GameSpecific.Entities.Background;
-using System;
-using System.Collections.Generic;
+using SpaceMiner.GameSpecific.Managers;
 using System.Linq;
 
 namespace SpaceMiner.GameSpecific;
@@ -18,7 +15,6 @@ namespace SpaceMiner.GameSpecific;
 public class SpaceMinerMainLoop : GameLoop
 {
     public int Timer;
-    public List<Type> CurrentAsteroidTypes { get; } = new();
 
     public override void GameSpecificSetup()
     {
@@ -51,7 +47,8 @@ public class SpaceMinerMainLoop : GameLoop
     public override void Update()
     {
         // Game specific code
-        CheckToSpawnAsteroids();
+        AsteroidSpawner.Update();
+        //CheckToSpawnAsteroids();
         CheckToGenerateStars();
 
         // Player respawning and entity despawning
@@ -75,77 +72,16 @@ public class SpaceMinerMainLoop : GameLoop
         CheckToGoToShop();
 
         UpdateAllEntities();
+        Timer++;
     }
 
     private void CheckToGoToShop()
     {
-        if (Timer % (30 * 60) == 0) // 30 * 60 = Every 30 seconds
+        if (Timer % (60 * 60) == 0) // 60 * 60 = Every 60 seconds
+        {
             GameLoopManager.SetGameLoop(new SpaceMinerShopLoop());
-        Timer++;
-    }
-
-    private void CheckToSpawnAsteroids()
-    {
-        var level = Math.Min(Timer / (30 * 60) + 1, 10); // Goes from 1 to 10
-        var spawnRate = (11 - level) * 4;
-        var asteroidTier = (level - 1) / 3 + 1;
-
-        // Re-roll list on level up
-        if (Timer % (30 * 60) == 0)
-        {
-            var specialAsteroidTypes = new List<Type>
-            {
-                // Tier 1
-                typeof(AsteroidBlueFast),
-                typeof(AsteroidGreenBig),
-                typeof(AsteroidYellow),
-            };
-            if (asteroidTier >= 2)
-            {
-                // Tier 2
-                specialAsteroidTypes.Add(typeof(AsteroidRedBlast));
-                specialAsteroidTypes.Add(typeof(AsteroidPurple));
-                specialAsteroidTypes.Add(typeof(AsteroidOrangeHoming));
-            }
-            CurrentAsteroidTypes.Clear();
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            CurrentAsteroidTypes.Add(typeof(Asteroid));
-            var specialTypesTotal = level / 4 + 2;
-            for (var i = 0; i < specialTypesTotal; i++)
-                CurrentAsteroidTypes.Add(specialAsteroidTypes.GetRandom());
-        }
-
-        if (GlobalManager.Values.Timer % spawnRate == 0)
-        {
-            (int x1, int x2) rangeX = (StageManager.CurrentRoom.PositionInPixels.X, StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X);
-
-            // Randomly select an asteroid type from the list
-            var asteroidType = CurrentAsteroidTypes.GetRandom();
-
-            // Spawn asteroid in a random position in the top of the current room
-            var yPosition = StageManager.CurrentRoom.PositionInPixels.Y;
-            var asteroid = EntityManager.CreateEntityAt(asteroidType, (GetRandom.UnseededInt(rangeX.x1, rangeX.x2), yPosition));
-
-            //// Level up buffs
-            //var buffedHp = asteroid.DamageTaker.CurrentHp.MaxAmount * (1 + level / 2);
-            //asteroid.AddDamageTaker(buffedHp);
-            //var buffedSpeed = asteroid.Speed.MoveSpeed * (1 + (level - 1) * 0.125f);
-            //asteroid.Speed.MoveSpeed = buffedSpeed;
-            //// Exponential (after level 10)
-            //var uncappedLevel = Timer / (30 * 60) + 1;
-            //var levelsPastTen = Math.Max(1, uncappedLevel - 9);
-            //asteroid.AddDamageTaker(buffedHp * levelsPastTen);
-
-            // Set asteroid to move
-            asteroid.AddMoveDirection();
-            asteroid.MoveDirection.Angle = 60000 + GetRandom.UnseededInt(0, 60000);
-            asteroid.Speed.SetMoveSpeedToCurrentDirection();
+            if (Timer != 0)
+                AsteroidSpawner.LevelUp();
         }
     }
 

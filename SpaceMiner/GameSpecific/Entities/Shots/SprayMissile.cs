@@ -23,7 +23,7 @@ public class SprayMissile : Entity
         AddMoveSpeed(4.5f);
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10, PiercingType.PierceNone);
-        DamageDealer.AddOnHitBehavior(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.PlayerShot, AlignmentType.Friendly, 15, 100, 32, CustomColor.PicoBlue));
+        DamageDealer.AddOnHitBehavior(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.PlayerShot, AlignmentType.Friendly, 15, 50, 32, CustomColor.PicoBlue));
 
         // State
         AddStateManager();

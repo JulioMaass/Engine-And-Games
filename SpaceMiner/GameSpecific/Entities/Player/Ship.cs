@@ -20,7 +20,7 @@ public class Ship : Entity
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10);
-        AddDamageTaker(5);
+        AddDamageTaker(250);
         DamageTaker.SetInvincibilityFrames(60);
 
         AddPlayerComponents();

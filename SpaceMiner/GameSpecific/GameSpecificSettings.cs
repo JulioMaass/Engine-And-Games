@@ -3,6 +3,7 @@ using Engine.Main;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
 using SpaceMiner.GameSpecific.Entities.Player;
+using SpaceMiner.GameSpecific.Managers;
 using SpaceMiner.GameSpecific.Tilesets;
 
 namespace SpaceMiner.GameSpecific;
@@ -30,5 +31,7 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
         StageFiles.Add("defaultStageSpaceMiner");
 
         EditorEntityTypes.Add(typeof(Ship));
+
+        AsteroidSpawner.Initialize();
     }
 }

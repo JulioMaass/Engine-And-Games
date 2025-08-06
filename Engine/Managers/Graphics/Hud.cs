@@ -77,7 +77,7 @@ public static class Hud
                     new IntVector2(2, 2 + 8 * 10), Color.White);
 
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
-                    new IntVector2(440, 2), Color.White);
+                    new IntVector2(440, 2 + 8 * 0), Color.White);
                 //Video.DrawStringWithOutline(Drawer.PicoFont, "Time: " + ((SpaceMinerMainLoop)GameLoopManager.GameMainLoop).Timer / 60,
                 //    new IntVector2(440, 10), Color.White);
             }

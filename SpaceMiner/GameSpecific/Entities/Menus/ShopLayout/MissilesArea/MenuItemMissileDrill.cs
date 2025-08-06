@@ -18,9 +18,9 @@ public class MenuItemMissileDrill : Entity
         AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
         EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileDrill);
 
-        AddItemComponents(ResourceType.MissileDrill, 5);
+        AddItemComponents(ResourceType.MissileDrill, 1);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 10);
+        ItemPrice.AddPrices(ResourceType.OreGreen, 5);
 
         MenuItem.Label = "Drill";
         AddSpaceMinerMissileItemComponents();

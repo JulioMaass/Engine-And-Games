@@ -75,6 +75,8 @@ public class Shooter : Component
 
     private void ApplyModifiers(Entity shot)
     {
+        if (Owner.SecondaryShooter == this) return;
+
         // Damage
         if (BaseDamage > 0)
             shot.DamageDealer.BaseDamage = BaseDamage;

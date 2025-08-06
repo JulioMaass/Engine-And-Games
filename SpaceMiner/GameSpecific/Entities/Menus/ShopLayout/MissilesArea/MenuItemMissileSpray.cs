@@ -18,9 +18,9 @@ public class MenuItemMissileSpray : Entity
         AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
         EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileSpray);
 
-        AddItemComponents(ResourceType.MissileSpray, 5);
+        AddItemComponents(ResourceType.MissileSpray, 1);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 10);
+        ItemPrice.AddPrices(ResourceType.OreYellow, 5);
 
         MenuItem.Label = "Spray";
         AddSpaceMinerMissileItemComponents();

@@ -31,7 +31,7 @@ public class Sprite : Component
     private IntVector2 StretchedOrigin => (Vector2)Origin * (Vector2)StretchedSize / (Vector2)Size; // If StretchedSize is not set, use Origin
     public IntVector2 FinalOrigin => StretchedSize == default ? Origin : StretchedOrigin;
 
-    public IntVector2 SpriteSheetOrigin { get; private set; } // Choose position for default/first sprite in sprite sheet
+    public IntVector2 SpriteSheetOrigin { get; set; } // Choose position for default/first sprite in sprite sheet
     public Color Color { get; set; } = CustomColor.White;
     private State OwnerState => Owner.StateManager.GetCurrentStateOrDefault();
     private IntVector2 OwnerPosition => Owner.Position.Pixel;

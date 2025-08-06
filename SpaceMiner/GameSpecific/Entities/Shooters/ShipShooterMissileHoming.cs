@@ -10,8 +10,9 @@ public class ShipShooterMissileHoming : Shooter
     public ShipShooterMissileHoming(Entity owner) : base(owner)
     {
         Owner = owner;
-        AddShootAction(NewShotInShootDirection);
+        AddShootAction(() => ShootSpread(Owner.ShootDirection.Angle.Value, 90000));
         RelativeSpawnPosition = IntVector2.New(0, 0);
+        AmountOfShots = 4;
 
         // Ammo
         AmmoType = ResourceType.MissileHoming;

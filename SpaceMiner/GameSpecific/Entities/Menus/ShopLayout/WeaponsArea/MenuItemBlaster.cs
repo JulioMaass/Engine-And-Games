@@ -20,7 +20,7 @@ public class MenuItemBlaster : Entity
         EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1; // Turns on the blast
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreRed, 500));
+        ItemPrice.AddPrice((ResourceType.OreRed, 150));
 
         MenuItem.Label = "Blaster";
         AddSpaceMinerEquipmentItemComponents();

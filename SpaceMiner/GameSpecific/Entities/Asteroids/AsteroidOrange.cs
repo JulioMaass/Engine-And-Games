@@ -7,9 +7,9 @@ using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidOrangeHoming : Entity
+public class AsteroidOrange : Asteroid
 {
-    public AsteroidOrangeHoming()
+    public AsteroidOrange()
     {
         EntityKind = EntityKind.Enemy;
 
@@ -18,12 +18,10 @@ public class AsteroidOrangeHoming : Entity
         AddSpriteCenteredOrigin("AsteroidOrange", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
-        AddSpaceMinerEnemyComponents(50, 1);
+        AddSpaceMinerEnemyComponents(50, 50);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
-        AddItemDropper(
-            (typeof(OreOrange), 1)
-        );
+        AddItemDropper(8, (typeof(OreOrange), 1), (typeof(OreGray), 2));
 
         BloomSource = new BloomSource(this, 0.80f);
 

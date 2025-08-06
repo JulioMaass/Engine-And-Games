@@ -18,7 +18,7 @@ public class MenuItemMissileHoming : Entity
         AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
         EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileHoming);
 
-        AddItemComponents(ResourceType.MissileHoming, 10);
+        AddItemComponents(ResourceType.MissileHoming, 1);
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrices(ResourceType.OreOrange, 10);
 

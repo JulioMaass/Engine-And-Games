@@ -19,7 +19,7 @@ public class MenuItemSocketBlue : Entity
         EquipmentItemStats.EquipmentStats.ExtraSpeed = 0.25f;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreBlue, 50, 100, 150, 300, 500, 1000, 1500, 2000);
+        ItemPrice.AddPrices(ResourceType.OreBlue, 100, 150, 250, 500, 750, 1000, 1500, 2000);
 
         MenuItem.Label = "AtSpeed";
         AddSpaceMinerEquipmentItemComponents();

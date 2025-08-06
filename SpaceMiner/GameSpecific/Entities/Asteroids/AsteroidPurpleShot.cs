@@ -7,14 +7,14 @@ public class AsteroidPurpleShot : Entity
 {
     public AsteroidPurpleShot()
     {
-        EntityKind = EntityKind.Enemy;
+        EntityKind = EntityKind.EnemyShot;
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("PurpleShot");
         AddCenteredOutlinedCollisionBox();
         AddAlignment(AlignmentType.Hostile);
-        AddDamageDealer(1);
+        AddDamageDealer(50);
         AddSolidBehavior();
         //SpawnManager.DespawnOnScreenExit = false;
         //AddItemDropper(

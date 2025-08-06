@@ -18,7 +18,7 @@ public class MenuItemSocketYellow : Entity
         EquipmentItemStats.EquipmentStats.ExtraShots = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 200, 500, 1500, 3000);
+        ItemPrice.AddPrices(ResourceType.OreYellow, 100, 250, 500, 1000);
 
         MenuItem.Label = "Multi";
         AddSpaceMinerEquipmentItemComponents();

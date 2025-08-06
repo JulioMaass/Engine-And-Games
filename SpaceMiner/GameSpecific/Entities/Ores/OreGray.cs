@@ -17,6 +17,7 @@ public class OreGray : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("OreGray", 8);
         AddSpriteVariation(4, 1);
+        DrawOrder = -1; // Ensure it draws behind other ores
         AddCenteredCollisionBox(8);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 

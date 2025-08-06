@@ -179,12 +179,12 @@ public enum EntityKind // Also works as a draw order
     DecorationVfx,
     Gimmick,
     Item,
-    Boss,
     Enemy,
+    Boss,
     Player,
+    PlayerShot,
     EnemyShot,
     Vfx,
-    PlayerShot,
     // Shared entities
     Menu,
     StageEditing

@@ -1,50 +1,25 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
-using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using SpaceMiner.GameSpecific.Entities.Ores;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
-public class AsteroidYellow : Entity
+public class AsteroidYellow : Asteroid
 {
     public AsteroidYellow()
     {
-        EntityKind = EntityKind.Enemy;
-
-        // Basic, Sprite, EntityKind
-        AddBasicComponents();
-        AddSpriteCenteredOrigin("AsteroidTiersTest", 32);
+        // Sprite
+        AddSpriteCenteredOrigin("AsteroidYellow", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
-        AddSpaceMinerEnemyComponents(50, 1);
-        AddSolidBehavior();
-        //SpawnManager.DespawnOnScreenExit = false;
-        AddItemDropper(
-            (typeof(OreYellow), 1)
-        );
-
         BloomSource = new BloomSource(this, 0.80f);
 
+        // Properties
+        AddSpaceMinerEnemyComponents(50, 50);
+        AddItemDropper(8, (typeof(OreYellow), 1), (typeof(OreGray), 2));
         AddRandomMoveSpeed(0.4f, 0.6f);
-        Speed.Acceleration = 0.08f;
-        Speed.MaxSpeed = 8f;
-        AddMoveDirection();
-        //AddDeathHandler(new BehaviorAddScore(1));
-
-        //// Shooter Manager
-        //Shooter = new Shooter(this);
-        //Shooter.AddShootAction(() => Shooter.ShootAtPlayer());
-        //Shooter.RelativeSpawnPosition = IntVector2.New(0, 0);
-        //Shooter.ShotType = typeof(ShooterEnemyShot);
-        //Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2f);
-
-        // States
-        AddStateManager();
-        // Auto States
-        var state = NewState()
-            .AddToAutomaticStatesList();
 
         var deathBehavior = new BehaviorCustom(
             () =>
@@ -59,7 +34,6 @@ public class AsteroidYellow : Entity
                 }
             }
         );
-
         AddDeathHandler(deathBehavior);
     }
 }

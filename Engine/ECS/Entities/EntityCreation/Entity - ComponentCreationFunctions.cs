@@ -403,11 +403,38 @@ public abstract partial class Entity
     }
 
     // Item Dropper
-    public void AddItemDropper(params (Type itemType, int chance)[] dropTable)
+    public void AddItemDropper(Type itemType) // Always same item, 1 item
+    {
+        ItemDropper = new(this);
+        ItemDropper.DropTable.Add(([itemType], 1));
+    }
+
+    public void AddItemDropper(params (Type itemType, int chance)[] dropTable) // Drop table chances, 1 item
     {
         ItemDropper = new(this);
         foreach (var (itemType, chance) in dropTable)
-            ItemDropper.DropTable.Add((itemType, chance));
+            ItemDropper.DropTable.Add(([itemType], chance));
+    }
+
+    public void AddItemDropper(Type type, int amount, int dropDistance) // Always same item, more quantity
+    {
+        ItemDropper = new(this);
+        ItemDropper.DropDistance = dropDistance;
+        var itemList = new List<Type>();
+        for (var i = 0; i < amount; i++)
+            itemList.Add(type);
+        ItemDropper.DropTable.Add((itemList, 1));
+    }
+
+    public void AddItemDropper(int dropDistance, params (Type type, int amount)[] typeAndAmount) // Always same items, define quantity of each one
+    {
+        ItemDropper = new(this);
+        ItemDropper.DropDistance = dropDistance;
+        var itemList = new List<Type>();
+        foreach (var (type, amount) in typeAndAmount)
+            for (var i = 0; i < amount; i++)
+                itemList.Add(type);
+        ItemDropper.DropTable.Add((itemList, 1));
     }
 
     // Frame Counter

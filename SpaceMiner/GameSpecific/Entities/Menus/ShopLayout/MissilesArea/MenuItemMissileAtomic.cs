@@ -18,9 +18,9 @@ public class MenuItemMissileAtomic : Entity
         AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
         EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileAtomic);
 
-        AddItemComponents(ResourceType.MissileAtomic, 5);
+        AddItemComponents(ResourceType.MissileAtomic, 1);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreRed, 10);
+        ItemPrice.AddPrices(ResourceType.OreRed, 5);
 
         MenuItem.Label = "Atomic";
         AddSpaceMinerMissileItemComponents();

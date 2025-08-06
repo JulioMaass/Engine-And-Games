@@ -4,7 +4,6 @@ using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
-using ShooterGame.GameSpecific;
 
 namespace ShooterGame.GameSpecific.Entities;
 
@@ -21,9 +20,7 @@ public class ShooterEnemy : Entity
         AddShooterEnemyComponents(5, 0);
         AddSolidBehavior();
         SpawnManager.DespawnOnScreenExit = false;
-        AddItemDropper(
-            (typeof(ShooterMachineGunItem), 9)
-        );
+        AddItemDropper(typeof(ShooterMachineGunItem));
 
         Speed.Acceleration = 0.08f;
         Speed.MaxSpeed = 2f;
