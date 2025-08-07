@@ -15,8 +15,8 @@ public class MenuItemMissileSpray : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("MissileSpray", 32);
-        AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
-        EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileSpray);
+        AddEquipmentItemStats(EquipKind.SecondaryWeapon);
+        EquipmentItemStats.Stats.SecondaryShooter = typeof(ShipShooterMissileSpray);
 
         AddItemComponents(ResourceType.MissileSpray, 1);
         ItemPrice = new ItemPrice(this);

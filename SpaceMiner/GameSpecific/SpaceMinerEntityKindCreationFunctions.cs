@@ -1,7 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities;
-using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.Graphics;
@@ -34,14 +33,14 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         AddResourceItemStats(resource, amount);
     }
 
-    public void AddSpaceMinerEquipmentItemComponents()
+    public void AddSpaceMinerUpgradeItemComponents()
     {
         // ReSharper disable once ComplexConditionExpression
         MenuItem.Draw = () =>
         {
             // Get item price
-            var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
-            var ownedAmount = player!.EquipmentHolder.GetEquipmentItemCount(GetType());
+            var type = GetType();
+            var ownedAmount = EntityManager.PlayerEntity.Shooter.EquipmentHolder.GetEquipmentCount(GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
@@ -72,8 +71,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelect = () =>
         {
             // Get item price
-            var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
-            var ownedAmount = player!.EquipmentHolder.GetEquipmentItemCount(GetType());
+            var ownedAmount = EntityManager.PlayerEntity!.Shooter.EquipmentHolder.GetEquipmentCount(GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice == null)
                 return;
@@ -84,7 +82,60 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Equip item
-            player.EquipmentHolder.EquipItem(GetType());
+            EntityManager.PlayerEntity.Shooter.EquipmentHolder.TryToEquipItem(GetType());
+        };
+    }
+
+    public void AddSpaceMinerWeaponItemComponents()
+    {
+        // ReSharper disable once ComplexConditionExpression
+        MenuItem.Draw = () =>
+        {
+            // Get item price
+            var type = GetType();
+            var ownedAmount = EntityManager.PlayerEntity.EquipmentHolder.GetEquipmentCount(GetType());
+            var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
+            string priceString = null;
+            if (itemPrice == null)
+                priceString = "-";
+            else
+            {
+                foreach (var resourceCost in itemPrice.ResourceCosts)
+                {
+                    priceString = priceString + resourceCost.ResourceType.ToString().Substring(3) + " ";
+                    priceString = priceString + resourceCost.Amount + " ";
+                }
+            }
+            var color = CustomColor.White;
+            if (!ItemPrice.CanBuy(ownedAmount))
+                color = CustomColor.Gray;
+
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
+            CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), color);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
+        };
+
+        MenuItem.OnSelectDraw = () =>
+        {
+            var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-16, 6), CustomColor.White);
+        };
+
+        MenuItem.OnSelect = () =>
+        {
+            // Get item price
+            var ownedAmount = EntityManager.PlayerEntity!.EquipmentHolder.GetEquipmentCount(GetType());
+            var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
+            if (itemPrice == null)
+                return;
+
+            // Check if player has enough resources to buy the item
+            if (!ItemPrice.CanBuy(ownedAmount))
+                return;
+            ItemPrice.SubtractResources(ownedAmount);
+
+            // Equip item
+            EntityManager.PlayerEntity.EquipmentHolder.TryToEquipItem(GetType());
         };
     }
 
@@ -124,9 +175,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(0);
 
             // Equip item
-            var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
-            player!.ItemGetter.GetItem(this);
-            player.EquipmentHolder.EquipItem(GetType());
+            EntityManager.PlayerEntity!.ItemGetter.GetItem(this);
+            EntityManager.PlayerEntity.EquipmentHolder.TryToEquipItem(GetType());
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
+using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
@@ -20,6 +21,7 @@ public class Shooter : Component
     private Action ShootAction { get; set; } // Keep this private so that it can only be called using CheckToShoot
     public IntVector2 RelativeSpawnPosition { get; set; }
     private IntVector2 SpawnPosition => Owner.Position.Pixel + RelativeSpawnPosition.MirrorX(Owner.Facing.IsXMirrored);
+    public EquipmentHolder EquipmentHolder { get; set; }
     // Ammo
     public ResourceType AmmoType { get; set; } = ResourceType.None;
     public int AmmoCost { get; set; }
@@ -75,18 +77,16 @@ public class Shooter : Component
 
     private void ApplyModifiers(Entity shot)
     {
-        if (Owner.SecondaryShooter == this) return;
-
         // Damage
         if (BaseDamage > 0)
             shot.DamageDealer.BaseDamage = BaseDamage;
-        var extraDamagePercentage = Owner.StatsManager.GetAddedFloatStats(stats => stats.ExtraDamagePercentage);
+        var extraDamagePercentage = StatsManager.GetAddedFloatStats(EquipmentHolder, stats => stats.ExtraDamagePercentage);
         shot.DamageDealer.AddExtraDamage((int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage));
 
         // Size
         if (ShotSize != 0 && shot.Sprite.Resizable)
         {
-            var size = ShotSize + Owner.StatsManager.GetAddedStats(stats => stats.ExtraSize) * SizeScaling;
+            var size = ShotSize + StatsManager.GetAddedStats(EquipmentHolder, stats => stats.ExtraSize) * SizeScaling;
             shot.Sprite.StretchedSize = new IntVector2(size, size);
             shot.AddCenteredOutlinedCollisionBox();
         }
@@ -98,14 +98,14 @@ public class Shooter : Component
         var speed = ShotSpeed == 0
             ? shot.Speed.MoveSpeed
             : ShotSpeed;
-        speed += Owner.StatsManager.GetAddedFloatStats(stats => stats.ExtraSpeed);
+        speed += StatsManager.GetAddedFloatStats(EquipmentHolder, stats => stats.ExtraSpeed);
         shot.Speed.MoveSpeed = speed;
 
         // Blast
-        var blastLevel = Owner.StatsManager.GetAddedStats(stats => stats.AddedBlastLevel);
+        var blastLevel = StatsManager.GetAddedStats(EquipmentHolder, stats => stats.AddedBlastLevel);
         if (blastLevel > 0)
         {
-            var shotSize = ShotSize + Owner.StatsManager.GetAddedStats(stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
+            var shotSize = ShotSize + StatsManager.GetAddedStats(EquipmentHolder, stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
             var blastSize = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotSize;
             var damage = shot.DamageDealer.Damage + BlastBaseDamage + BlastDamageScaling * (blastLevel - 1);
             var color = new Color(255, 127, 0, 255);
@@ -183,7 +183,7 @@ public class Shooter : Component
 
     public void ShootSpread(int middleAngle, int angleBetweenShots, int spawnOffset = 0)
     {
-        var amountOfShots = AmountOfShots * (Owner.StatsManager.GetAddedStats(stats => stats.ExtraShots) + 1);
+        var amountOfShots = AmountOfShots * (StatsManager.GetAddedStats(EquipmentHolder, stats => stats.ExtraShots) + 1);
         var initialAngle = GetInitialAngle(middleAngle, angleBetweenShots, amountOfShots);
         for (var i = 0; i < amountOfShots; i++)
         {

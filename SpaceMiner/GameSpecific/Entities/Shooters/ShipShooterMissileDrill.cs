@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Components.ShootingHandling;
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Shots;
@@ -12,6 +13,7 @@ public class ShipShooterMissileDrill : Shooter
         Owner = owner;
         AddShootAction(NewShotInShootDirection);
         RelativeSpawnPosition = IntVector2.New(0, 0);
+        EquipmentHolder = new EquipmentHolder(owner, false);
 
         // Ammo
         AmmoType = ResourceType.MissileDrill;

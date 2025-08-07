@@ -14,8 +14,8 @@ public class LeechItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("LeechItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Armor);
-        EquipmentItemStats.EquipmentStats.HealOnKillMultiplier = 2;
+        AddEquipmentItemStats(EquipKind.Armor);
+        EquipmentItemStats.Stats.HealOnKillMultiplier = 2;
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Leech";

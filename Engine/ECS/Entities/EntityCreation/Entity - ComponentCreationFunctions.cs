@@ -31,7 +31,6 @@ public abstract partial class Entity
         AddFrameCounter();
         SpawnManager = new(this);
         ComponentEnforcer = new(this);
-        StatsManager = new(this);
         LayerId = LayerId.ForegroundTiles;
     }
 
@@ -395,11 +394,11 @@ public abstract partial class Entity
         ResourceItemStats.ResourceType = resourceType;
     }
 
-    public void AddEquipmentItemStats(EquipGroup group)
+    public void AddEquipmentItemStats(EquipKind kind)
     {
         EquipmentItemStats ??= new(this);
-        EquipmentItemStats.EquipGroup = group;
-        EquipmentItemStats.EquipmentStats = new Stats();
+        EquipmentItemStats.EquipKind = kind;
+        EquipmentItemStats.Stats = new Stats();
     }
 
     // Item Dropper

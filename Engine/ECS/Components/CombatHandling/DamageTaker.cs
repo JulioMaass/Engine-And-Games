@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities;
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using System;
@@ -37,7 +38,7 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
 
     public void BufferDamage(int amount)
     {
-        amount /= Owner.StatsManager.GetMultipliedStats(stats => stats.DefenseRatio);
+        amount /= StatsManager.GetMultipliedStats(Owner, stats => stats.DefenseRatio);
 
         if (InvincibleOnHit)
             DamageBuffer = DamageBuffer == 0 ?

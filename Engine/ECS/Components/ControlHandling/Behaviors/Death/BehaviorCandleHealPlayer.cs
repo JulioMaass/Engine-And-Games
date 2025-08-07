@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities;
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Entities;
 
 namespace Engine.ECS.Components.ControlHandling.Behaviors.Death; // TODO: Move to game specific folder?
 
@@ -17,7 +18,7 @@ public class BehaviorCandleHealPlayer : Behavior
         if (player == null)
             return;
 
-        var multiplier = player.StatsManager.GetMultipliedStats(stats => stats.HealOnKillMultiplier);
+        var multiplier = StatsManager.GetMultipliedStats(player, stats => stats.HealOnKillMultiplier);
         player.DamageTaker.HealHp(HealAmount * multiplier);
     }
 }

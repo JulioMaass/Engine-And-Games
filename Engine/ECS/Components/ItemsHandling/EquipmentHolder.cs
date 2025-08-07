@@ -1,9 +1,7 @@
 ﻿using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
-using Engine.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,77 +10,69 @@ namespace Engine.ECS.Components.ItemsHandling;
 
 public class EquipmentHolder : Component // TODO: This is entity bound, so char loses abilities on death (change?). If so, make it a global entity (like PermanentItemHolder).
 {
-    public List<EquipmentGroup> EquipmentGroups { get; } = new();
+    public List<EquipmentSlot> EquipmentSlotList { get; } = new();
 
-    public class EquipmentGroup
+    public void AddEquipmentSlot(EquipKind kind, SlotType slotType)
     {
-        public EquipGroup Group { get; set; }
-        public bool CanStack { get; set; }
-        public List<Equipment> Equipments { get; set; } = new();
-    }
-
-    public class Equipment
-    {
-        public Type Type { get; set; }
-        public Stats Stats { get; set; }
-    }
-
-    public void AddEquipmentGroup(EquipGroup group, bool canStack)
-    {
-        if (EquipmentGroups.Any(g => g.Group == group))
-            return;
-        EquipmentGroups.AddAtIndex(new EquipmentGroup { Group = group, CanStack = canStack }, (int)group);
+        EquipmentSlotList.Add(new EquipmentSlot { EquipKind = kind, SlotType = slotType });
     }
 
     public EquipmentHolder(Entity owner, bool equipOnRespawn)
     {
         Owner = owner;
-
-        if (!equipOnRespawn) return;
+        if (!equipOnRespawn)
+            return;
         foreach (var equipmentType in GlobalManager.Values.EquippedItems.ToList().Where(equipmentType => equipmentType != null))
-            EquipItem(equipmentType);
+            TryToEquipItem(equipmentType);
     }
 
-    public void EquipItem(Type itemType)
+    public void TryToEquipItem(Type itemType)
     {
-        var (group, stats) = GetGroupAndStatsFromType(itemType);
-        var equipment = new Equipment { Type = itemType, Stats = stats };
-        var equipmentGroup = EquipmentGroups.FirstOrDefault(g => g.Group == group);
-        if (equipmentGroup == null)
+        // Find slot
+        var slot = GetEquipmentSlotForType(itemType);
+        if (slot == null)
             return;
 
-        if (!equipmentGroup.CanStack)
-            equipmentGroup.Equipments.Clear();
-        equipmentGroup.Equipments.Add(equipment);
+        // Equip item
+        if (slot.SlotType == SlotType.Switch)
+            slot.EquipmentList.Clear();
+        slot.EquipmentList.Add(itemType);
         GlobalManager.Values.UpdateEquippedItems();
 
         // Set shooter stats
-        if (stats.Shooter != null)
-            Owner.Shooter = Activator.CreateInstance(stats.Shooter, Owner) as Shooter;
-        if (stats.SecondaryShooter != null)
-            Owner.SecondaryShooter = Activator.CreateInstance(stats.SecondaryShooter, Owner) as Shooter;
+        var itemEntity = CollectionManager.GetEntityFromType(itemType);
+        if (itemEntity.EquipmentItemStats.Stats.Shooter != null)
+            Owner.Shooter = Activator.CreateInstance(itemEntity.EquipmentItemStats.Stats.Shooter, Owner) as Shooter;
+        if (itemEntity.EquipmentItemStats.Stats.SecondaryShooter != null)
+            Owner.SecondaryShooter = Activator.CreateInstance(itemEntity.EquipmentItemStats.Stats.SecondaryShooter, Owner) as Shooter;
     }
 
-    public int GetEquipmentItemCount(Type itemType)
+    private EquipmentSlot GetEquipmentSlotForType(Type itemType)
     {
-        var (group, _) = GetGroupAndStatsFromType(itemType);
-        var equipmentGroup = EquipmentGroups.FirstOrDefault(g => g.Group == group);
-        if (equipmentGroup == null)
-            return 0;
-        return equipmentGroup.Equipments.Count(e => e.Type == itemType);
+        var group = GetEquipKindFromType(itemType);
+        return EquipmentSlotList.FirstOrDefault(g => g.EquipKind == group);
     }
 
-    public static (EquipGroup, Stats) GetGroupAndStatsFromType(Type itemType)
+    public int GetEquipmentCount(Type itemType)
+    {
+        var slot = GetEquipmentSlotForType(itemType);
+        return slot == null ? 0
+            : slot.EquipmentList.Count(t => t == itemType);
+    }
+
+    public bool IsItemEquipped(Type itemType)
+    {
+        return GetEquipmentCount(itemType) > 0;
+    }
+
+    public static EquipKind GetEquipKindFromType(Type itemType)
     {
         var entity = CollectionManager.GetEntityFromType(itemType);
-        var group = entity.EquipmentItemStats.EquipGroup;
-        var stats = entity.EquipmentItemStats.EquipmentStats;
-        return (group, stats);
+        return entity?.EquipmentItemStats?.EquipKind ?? EquipKind.None;
     }
 
-    public void GetEquipmentItem(Entity item)
+    public List<Type> GetAllItemsEquipped()
     {
-        var itemType = item.GetType();
-        GlobalManager.Values.GetEquipmentItem(itemType);
+        return EquipmentSlotList.SelectMany(slot => slot.EquipmentList).ToList();
     }
 }

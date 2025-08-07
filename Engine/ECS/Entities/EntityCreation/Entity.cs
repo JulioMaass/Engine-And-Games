@@ -80,7 +80,6 @@ public abstract partial class Entity
     public EquipmentItemStats EquipmentItemStats { get; protected set; }
     public ItemDropper ItemDropper { get; protected set; }
     public EquipmentHolder EquipmentHolder { get; protected set; }
-    public StatsManager StatsManager { get; protected set; }
 
     // Time components
     public FrameHandler FrameHandler { get; protected set; }

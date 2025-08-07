@@ -14,13 +14,13 @@ public class MenuItemSocketRed : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeRed", 16);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1;
+        AddEquipmentItemStats(EquipKind.WeaponUpgrade);
+        EquipmentItemStats.Stats.AddedBlastLevel = 1;
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrices(ResourceType.OreRed, 150, 250, 500, 1000);
 
         MenuItem.Label = "Blast";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerUpgradeItemComponents();
     }
 }

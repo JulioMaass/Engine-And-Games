@@ -14,14 +14,14 @@ public class MenuItemSocketBlue : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeBlue", 16);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.ExtraAttackSpeed = 0.5f;
-        EquipmentItemStats.EquipmentStats.ExtraSpeed = 0.25f;
+        AddEquipmentItemStats(EquipKind.WeaponUpgrade);
+        EquipmentItemStats.Stats.ExtraAttackSpeed = 0.5f;
+        EquipmentItemStats.Stats.ExtraSpeed = 0.25f;
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrices(ResourceType.OreBlue, 100, 150, 250, 500, 750, 1000, 1500, 2000);
 
         MenuItem.Label = "AtSpeed";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerUpgradeItemComponents();
     }
 }

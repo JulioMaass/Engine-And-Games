@@ -20,8 +20,8 @@ public class SpaceMinerGlobalValues : Values
         Resources.AddNew(ResourceType.MissileSpray, 10, 0);
         Resources.AddNew(ResourceType.MissileDrill, 10, 0);
 
-        //foreach (var resource in Resources.List)
-        //    resource.Amount = 999999;
+        foreach (var resource in Resources.List)
+            resource.Amount = 999999;
     }
 
     protected override void CustomUpdate()

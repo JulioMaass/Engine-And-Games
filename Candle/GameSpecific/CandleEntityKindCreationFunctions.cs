@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using Candle.GameSpecific.Entities.Currency;
+﻿using Candle.GameSpecific.Entities.Currency;
 using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.Death;
 using Engine.ECS.Entities;
-using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.Graphics;
@@ -59,7 +57,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             var label = MenuItem?.Label;
             if (label != null)
                 Video.SpriteBatch.DrawString(Drawer.MegaManFont, label, Position.Pixel + (0, 18), CustomColor.White);
-            if (EquipmentItemStats.IsEquipped())
+            if (EntityManager.PlayerEntity!.EquipmentHolder.IsItemEquipped(GetType()))
                 Drawer.DrawRectangleOutline(Position.Pixel - 4, (16 + 8, 16 + 8), CustomColor.White);
         };
 
@@ -73,8 +71,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             if (!EquipmentItemStats.IsUnlocked())
                 return;
-            var player = EntityManager.GetFilteredEntitiesFrom(EntityKind.Player).FirstOrDefault();
-            player?.EquipmentHolder.EquipItem(GetType());
+            EntityManager.PlayerEntity?.EquipmentHolder.TryToEquipItem(GetType());
         };
     }
 }

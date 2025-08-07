@@ -15,13 +15,13 @@ public class MenuItemWarper : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponWarper", 32);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterWarper);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(ShipShooterWarper);
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrice((ResourceType.OreBlue, 250));
 
         MenuItem.Label = "Warper";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerWeaponItemComponents();
     }
 }

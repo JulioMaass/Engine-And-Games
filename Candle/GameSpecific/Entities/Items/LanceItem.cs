@@ -15,8 +15,8 @@ public class LanceItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("LanceItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(CandleLanceShooter);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(CandleLanceShooter);
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Lance";

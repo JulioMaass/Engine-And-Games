@@ -15,13 +15,13 @@ public class MenuItemMachineGun : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponMachineGun", 32);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterMachineGun);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(ShipShooterMachineGun);
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrice((ResourceType.OreBlue, 100));
 
         MenuItem.Label = "Machine";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerWeaponItemComponents();
     }
 }

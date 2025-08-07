@@ -15,14 +15,14 @@ public class MenuItemBlaster : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponBlaster", 32);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterBlaster);
-        EquipmentItemStats.EquipmentStats.AddedBlastLevel = 1; // Turns on the blast
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(ShipShooterBlaster);
+        EquipmentItemStats.Stats.AddedBlastLevel = 1; // Turns on the blast
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrice((ResourceType.OreRed, 150));
 
         MenuItem.Label = "Blaster";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerWeaponItemComponents();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components.ControlHandling.States;
+using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
@@ -59,7 +60,7 @@ public class StatePlayerControl : State
 
         // Attack
         AttackFrame--;
-        var fireRate = (int)(Owner.Shooter.AutoFireRate / (1 + Owner.StatsManager.GetAddedFloatStats(stats => stats.ExtraAttackSpeed)));
+        var fireRate = (int)(Owner.Shooter.AutoFireRate / (1 + StatsManager.GetAddedFloatStats(Owner.Shooter.EquipmentHolder, stats => stats.ExtraAttackSpeed)));
         if (Owner.PlayerControl.Button1Hold && AttackFrame <= 10)
             BufferedAttack = true;
         if (AttackFrame <= 0 && BufferedAttack)

@@ -1,5 +1,6 @@
 ﻿using Candle.GameSpecific.Entities.BgObjects;
 using Engine.ECS.Components.ControlHandling.States;
+using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
@@ -49,14 +50,14 @@ public class StatePlayerControl : State
         if (Owner.PlayerControl.Button2Press)
         {
             if (Owner.Physics.SolidCollisionChecking.IsOnTopOfSolid() // On ground
-                || Owner.StatsManager.CheckForUnlock(stats => stats.DoubleJump)) // Double Jump
+                || StatsManager.CheckForUnlock(Owner, stats => stats.DoubleJump)) // Double Jump
                 Owner.Speed.SetYSpeed(-Owner.Speed.JumpSpeed);
         }
         else if (!Owner.PlayerControl.Button2Hold && Owner.Speed.Value.Y < 0)
             Owner.Speed.SetYSpeed(0);
 
         // Dash // TODO: Limit to 1 per jump
-        if (Owner.PlayerControl.Button3Press && Owner.StatsManager.CheckForUnlock(stats => stats.Dash))
+        if (Owner.PlayerControl.Button3Press && StatsManager.CheckForUnlock(Owner, stats => stats.Dash))
             DashFrame = 15;
         if (DashFrame > 0)
         {
@@ -78,7 +79,7 @@ public class StatePlayerControl : State
 
         // Tick life
         var burnSpeed = 60;
-        burnSpeed *= Owner.StatsManager.GetMultipliedStats(stats => stats.BurningRateMultiplier);
+        burnSpeed *= StatsManager.GetMultipliedStats(Owner, stats => stats.BurningRateMultiplier);
         if (GlobalManager.Values.Timer % burnSpeed == 0)
             Owner.DamageTaker.CurrentHp.Amount -= 1;
 

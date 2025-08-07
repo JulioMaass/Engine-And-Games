@@ -15,13 +15,13 @@ public class MenuItemSlugger : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponSlugger", 32);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterSlugger);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(ShipShooterSlugger);
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrice((ResourceType.OreGreen, 100));
 
         MenuItem.Label = "Slugger";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerWeaponItemComponents();
     }
 }

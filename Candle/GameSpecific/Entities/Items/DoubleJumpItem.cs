@@ -14,8 +14,8 @@ public class DoubleJumpItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("DoubleJumpItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Foot);
-        EquipmentItemStats.EquipmentStats.DoubleJump = true;
+        AddEquipmentItemStats(EquipKind.Foot);
+        EquipmentItemStats.Stats.DoubleJump = true;
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Double Jump";

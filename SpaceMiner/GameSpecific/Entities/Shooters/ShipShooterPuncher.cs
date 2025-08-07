@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Components.ShootingHandling;
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Shots;
@@ -12,6 +13,8 @@ public class ShipShooterPuncher : Shooter
         Owner = owner;
         AddShootAction(ShootWithStatsModifiers);
         RelativeSpawnPosition = IntVector2.New(0, 0);
+        EquipmentHolder = new EquipmentHolder(owner, false);
+        EquipmentHolder.AddEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack);
 
         // Shot Properties
         ShotType = typeof(ResizableShot);

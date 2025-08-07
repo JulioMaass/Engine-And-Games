@@ -14,8 +14,8 @@ public class DashItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("DashItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Foot);
-        EquipmentItemStats.EquipmentStats.Dash = true;
+        AddEquipmentItemStats(EquipKind.Foot);
+        EquipmentItemStats.Stats.Dash = true;
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Dash";

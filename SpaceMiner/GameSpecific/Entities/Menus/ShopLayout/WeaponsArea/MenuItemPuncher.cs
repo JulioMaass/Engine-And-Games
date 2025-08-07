@@ -15,13 +15,13 @@ public class MenuItemPuncher : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponPuncher", 32);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(ShipShooterPuncher);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(ShipShooterPuncher);
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrice((ResourceType.OreYellow, 250));
 
         MenuItem.Label = "Puncher";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerWeaponItemComponents();
     }
 }

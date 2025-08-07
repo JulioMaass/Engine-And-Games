@@ -14,8 +14,8 @@ public class SlowburnItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("SlowburnItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Armor);
-        EquipmentItemStats.EquipmentStats.BurningRateMultiplier = 2;
+        AddEquipmentItemStats(EquipKind.Armor);
+        EquipmentItemStats.Stats.BurningRateMultiplier = 2;
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Slowburn";

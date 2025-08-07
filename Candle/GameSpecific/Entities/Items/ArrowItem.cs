@@ -15,8 +15,8 @@ public class ArrowItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("ArrowItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(CandleArrowShooter);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(CandleArrowShooter);
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Arrow";

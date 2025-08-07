@@ -38,18 +38,10 @@ public abstract class Values
     public void UpdateEquippedItems()
     {
         EquippedItems.Clear();
-        foreach (var equipmentGroup in EntityManager.PlayerEntity.EquipmentHolder.EquipmentGroups)
-            foreach (var equipment in equipmentGroup.Equipments)
-                if (equipment.Stats != null)
-                    EquippedItems.Add(equipment.Type);
+        EquippedItems.AddRange(EntityManager.PlayerEntity.EquipmentHolder.GetAllItemsEquipped());
     }
 
-    public void GetEquipmentItem(Type itemType)
-    {
-        AddEquipmentLevel(itemType);
-    }
-
-    private void AddEquipmentLevel(Type itemType)
+    public void AddEquipmentLevel(Type itemType)
     {
         if (!EquipmentItemLevels.Exists(i => i.Type == itemType))
             EquipmentItemLevels.Add((itemType, 0));

@@ -15,8 +15,8 @@ public class MenuItemMissileHoming : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("MissileHoming", 32);
-        AddEquipmentItemStats(EquipGroup.SecondaryWeapon);
-        EquipmentItemStats.EquipmentStats.SecondaryShooter = typeof(ShipShooterMissileHoming);
+        AddEquipmentItemStats(EquipKind.SecondaryWeapon);
+        EquipmentItemStats.Stats.SecondaryShooter = typeof(ShipShooterMissileHoming);
 
         AddItemComponents(ResourceType.MissileHoming, 1);
         ItemPrice = new ItemPrice(this);

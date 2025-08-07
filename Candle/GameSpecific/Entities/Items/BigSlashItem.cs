@@ -15,8 +15,8 @@ public class BigSlashItem : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("BigSlashItem", 16);
         AddCenteredCollisionBox(14);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.Shooter = typeof(CandleSlashShooter);
+        AddEquipmentItemStats(EquipKind.Weapon);
+        EquipmentItemStats.Stats.Shooter = typeof(CandleSlashShooter);
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Sword";

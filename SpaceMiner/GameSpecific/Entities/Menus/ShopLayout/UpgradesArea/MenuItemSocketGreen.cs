@@ -14,14 +14,14 @@ public class MenuItemSocketGreen : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeGreen", 16);
-        AddEquipmentItemStats(EquipGroup.Weapon);
-        EquipmentItemStats.EquipmentStats.ExtraDamagePercentage = 1f;
-        EquipmentItemStats.EquipmentStats.ExtraSize = 1;
+        AddEquipmentItemStats(EquipKind.WeaponUpgrade);
+        EquipmentItemStats.Stats.ExtraDamagePercentage = 1f;
+        EquipmentItemStats.Stats.ExtraSize = 1;
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrices(ResourceType.OreGreen, 150, 300, 500, 1000);
 
         MenuItem.Label = "Power";
-        AddSpaceMinerEquipmentItemComponents();
+        AddSpaceMinerUpgradeItemComponents();
     }
 }
