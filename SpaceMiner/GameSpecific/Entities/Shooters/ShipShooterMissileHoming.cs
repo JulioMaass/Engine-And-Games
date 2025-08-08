@@ -14,7 +14,7 @@ public class ShipShooterMissileHoming : Shooter
         AddShootAction(() => ShootSpread(Owner.ShootDirection.Angle.Value, 90000));
         RelativeSpawnPosition = IntVector2.New(0, 0);
         AmountOfShots = 4;
-        EquipmentHolder = new EquipmentHolder(owner, false);
+        EquipmentHolder = new EquipmentHolder(owner);
 
         // Ammo
         AmmoType = ResourceType.MissileHoming;

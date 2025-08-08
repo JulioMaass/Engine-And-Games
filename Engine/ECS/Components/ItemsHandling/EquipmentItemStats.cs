@@ -15,7 +15,7 @@ public class EquipmentItemStats : Component
     }
 
     public int GetLevel() =>
-        GlobalManager.Values.EquipmentItemLevels.Find(i => i.Type == Owner.GetType()).Level;
+        GlobalManager.Values.MainCharData.Equipment.Find(i => i.Type == Owner.GetType()).Level;
 
     public bool IsUnlocked() =>
         GetLevel() > 0;

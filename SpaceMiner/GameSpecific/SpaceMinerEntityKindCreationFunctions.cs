@@ -3,6 +3,7 @@ using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers;
+using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Types;
 using System.Linq;
@@ -39,8 +40,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.Draw = () =>
         {
             // Get item price
-            var type = GetType();
-            var ownedAmount = EntityManager.PlayerEntity.Shooter.EquipmentHolder.GetEquipmentCount(GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
@@ -71,7 +71,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelect = () =>
         {
             // Get item price
-            var ownedAmount = EntityManager.PlayerEntity!.Shooter.EquipmentHolder.GetEquipmentCount(GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice == null)
                 return;
@@ -82,7 +82,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Equip item
-            EntityManager.PlayerEntity.Shooter.EquipmentHolder.TryToEquipItem(GetType());
+            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
+            GlobalManager.Values.MainCharData.AddEquipmentLevel(GetType());
         };
     }
 
@@ -92,8 +93,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.Draw = () =>
         {
             // Get item price
-            var type = GetType();
-            var ownedAmount = EntityManager.PlayerEntity.EquipmentHolder.GetEquipmentCount(GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
@@ -124,7 +124,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelect = () =>
         {
             // Get item price
-            var ownedAmount = EntityManager.PlayerEntity!.EquipmentHolder.GetEquipmentCount(GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice == null)
                 return;
@@ -134,8 +134,9 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                 return;
             ItemPrice.SubtractResources(ownedAmount);
 
-            // Equip item
-            EntityManager.PlayerEntity.EquipmentHolder.TryToEquipItem(GetType());
+            // Unlock and equip item
+            GlobalManager.Values.MainCharData.AddEquipmentLevel(GetType());
+            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }
 
@@ -176,7 +177,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
 
             // Equip item
             EntityManager.PlayerEntity!.ItemGetter.GetItem(this);
-            EntityManager.PlayerEntity.EquipmentHolder.TryToEquipItem(GetType());
+            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }
 }

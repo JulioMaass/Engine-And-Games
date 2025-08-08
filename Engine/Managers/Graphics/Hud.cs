@@ -48,32 +48,32 @@ public static class Hud
             }
             else if (GameManager.GameSpecificSettings.CurrentGame == GameId.Shooter)
             {
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Score: " + GlobalManager.Values.Resources.GetAmount(ResourceType.Score),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Score: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.Score),
                     new IntVector2(0, 0), Color.White);
             }
             else if (GameManager.GameSpecificSettings.CurrentGame == GameId.SpaceMiner)
             {
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Gray: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreGray),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Gray: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGray),
                     new IntVector2(2, 2 + 8 * 0), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Blue: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreBlue),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Blue: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreBlue),
                     new IntVector2(2, 2 + 8 * 1), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Green: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreGreen),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Green: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGreen),
                     new IntVector2(2, 2 + 8 * 2), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Red: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreRed),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Red: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreRed),
                     new IntVector2(2, 2 + 8 * 3), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Yellow: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreYellow),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Yellow: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreYellow),
                     new IntVector2(2, 2 + 8 * 4), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Orange: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OreOrange),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Orange: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreOrange),
                     new IntVector2(2, 2 + 8 * 5), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Purple: " + GlobalManager.Values.Resources.GetAmount(ResourceType.OrePurple),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Purple: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OrePurple),
                     new IntVector2(2, 2 + 8 * 6), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Atomic: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileAtomic),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Atomic: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileAtomic),
                     new IntVector2(2, 2 + 8 * 7), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Homing: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileHoming),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Homing: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileHoming),
                     new IntVector2(2, 2 + 8 * 8), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Spray: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileSpray),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Spray: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileSpray),
                     new IntVector2(2, 2 + 8 * 9), Color.White);
-                Video.DrawStringWithOutline(Drawer.PicoFont, "Drill: " + GlobalManager.Values.Resources.GetAmount(ResourceType.MissileDrill),
+                Video.DrawStringWithOutline(Drawer.PicoFont, "Drill: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileDrill),
                     new IntVector2(2, 2 + 8 * 10), Color.White);
 
                 Video.DrawStringWithOutline(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,

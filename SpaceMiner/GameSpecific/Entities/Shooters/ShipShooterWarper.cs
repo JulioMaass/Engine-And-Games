@@ -15,8 +15,8 @@ public class ShipShooterWarper : Shooter
         Owner = owner;
         AddShootAction(ShootWithStatsModifiers);
         RelativeSpawnPosition = IntVector2.New(0, 0);
-        EquipmentHolder = new EquipmentHolder(owner, false);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack);
+        EquipmentHolder = new EquipmentHolder(owner);
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack);
 
         // Shot Properties
         ShotType = typeof(ResizableShot);

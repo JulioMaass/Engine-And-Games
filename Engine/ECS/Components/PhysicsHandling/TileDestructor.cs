@@ -36,13 +36,13 @@ public class TileDestructor : Component
         }
     }
 
-    private bool CanDestroy(List<TileProperty> tileProperty)
+    private bool CanDestroy(List<TileProperty> tileProperties)
     {
         if (Strength == Strength.DestroysNone)
             return false;
-        if (Strength == Strength.DestroysWeak && tileProperty.Contains(TileProperty.DestructibleWeak))
+        if (Strength == Strength.DestroysWeak && tileProperties.Contains(TileProperty.DestructibleWeak))
             return true;
-        if (Strength == Strength.DestroysStrong && (tileProperty.Contains(TileProperty.DestructibleStrong) || tileProperty.Contains(TileProperty.DestructibleWeak)))
+        if (Strength == Strength.DestroysStrong && (tileProperties.Contains(TileProperty.DestructibleStrong) || tileProperties.Contains(TileProperty.DestructibleWeak)))
             return true;
         return false;
     }

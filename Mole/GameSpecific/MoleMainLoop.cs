@@ -28,8 +28,8 @@ public class MoleMainLoop : GameLoop
         StageManager.CurrentStage.RespawnPosition = PlayerEntity.Position.Pixel;
 
         // Starting resources
-        GlobalManager.Values.Resources.AddNew(ResourceType.Bombs, 9, 3);
-        GlobalManager.Values.Resources.AddNew(ResourceType.Gold, 99, 0);
+        GlobalManager.Values.MainCharData.Resources.AddNew(ResourceType.Bombs, 9, 3);
+        GlobalManager.Values.MainCharData.Resources.AddNew(ResourceType.Gold, 99, 0);
 
         // Remove all rooms
         foreach (var room in StageManager.CurrentStage.RoomList.ToList())
@@ -174,9 +174,9 @@ public class MoleMainLoop : GameLoop
             var drillShot = EntityManager.CreateEntityAt<BazookaShot>(drillPosition);
             drillShot.Facing.CopyFacingFrom(PlayerEntity);
         }
-        if (PlayerEntity?.PlayerControl.Button4Press == true && GlobalManager.Values.Resources.HasResource(ResourceType.Bombs, 1))
+        if (PlayerEntity?.PlayerControl.Button4Press == true && GlobalManager.Values.MainCharData.Resources.HasResource(ResourceType.Bombs, 1))
         {
-            GlobalManager.Values.Resources.AddAmount(ResourceType.Bombs, -1);
+            GlobalManager.Values.MainCharData.Resources.AddAmount(ResourceType.Bombs, -1);
             var bombPosition = PlayerEntity.Position.Pixel;
             EntityManager.CreateEntityAt<MoleBomb>(bombPosition);
         }

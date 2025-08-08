@@ -36,10 +36,11 @@ public class Candle : Entity
         Shooter = new CandleSmallSlashShooter(this);
 
         AddItemGetter();
-        EquipmentHolder = new(this, true);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.Armor, SlotType.Switch);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.Foot, SlotType.Switch);
+        EquipmentHolder = new(this);
+        EquipmentHolder.CharData.EquipOnRespawn = true;
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Armor, SlotType.Switch);
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Foot, SlotType.Switch);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

@@ -20,12 +20,12 @@ public class ItemGetter : Component
             if (entity.ResourceItemStats.ResourceType == ResourceType.Hp)
                 Owner.DamageTaker.HealHp(entity.ResourceItemStats.Amount);
             else
-                GlobalManager.Values.Resources.AddAmount(entity.ResourceItemStats.ResourceType,
+                GlobalManager.Values.MainCharData.Resources.AddAmount(entity.ResourceItemStats.ResourceType,
                     entity.ResourceItemStats.Amount);
         }
 
         // Get Equipment
         if (entity.EquipmentItemStats?.Stats != null && Owner.EquipmentHolder != null)
-            GlobalManager.Values.AddEquipmentLevel(entity.GetType());
+            GlobalManager.Values.MainCharData.AddEquipmentLevel(entity.GetType());
     }
 }

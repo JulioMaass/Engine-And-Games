@@ -13,6 +13,6 @@ public class BehaviorAddScore : Behavior
 
     public override void Action()
     {
-        GlobalManager.Values.Resources.AddAmount(Types.ResourceType.Score, Amount);
+        GlobalManager.Values.MainCharData.Resources.AddAmount(Types.ResourceType.Score, Amount);
     }
 }

@@ -4,6 +4,7 @@ using Engine.ECS.Components.ControlHandling.Behaviors.Death;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers;
+using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 
 namespace Candle.GameSpecific;
@@ -57,7 +58,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             var label = MenuItem?.Label;
             if (label != null)
                 Video.SpriteBatch.DrawString(Drawer.MegaManFont, label, Position.Pixel + (0, 18), CustomColor.White);
-            if (EntityManager.PlayerEntity!.EquipmentHolder.IsItemEquipped(GetType()))
+            if (GlobalManager.Values.MainCharData.IsItemEquipped(GetType()))
                 Drawer.DrawRectangleOutline(Position.Pixel - 4, (16 + 8, 16 + 8), CustomColor.White);
         };
 
@@ -71,7 +72,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             if (!EquipmentItemStats.IsUnlocked())
                 return;
-            EntityManager.PlayerEntity?.EquipmentHolder.TryToEquipItem(GetType());
+            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }
 }

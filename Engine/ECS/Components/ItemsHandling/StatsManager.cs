@@ -17,11 +17,11 @@ public static class StatsManager
 
         // Get all equipment stats
         if (entity.EquipmentHolder != null)
-            statsList.AddRange(entity.EquipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType));
+            statsList.AddRange(entity.EquipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType));
         if (entity.Shooter?.EquipmentHolder != null)
-            statsList.AddRange(entity.Shooter.EquipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType));
+            statsList.AddRange(entity.Shooter.EquipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType));
         if (entity.SecondaryShooter?.EquipmentHolder != null)
-            statsList.AddRange(entity.SecondaryShooter.EquipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType));
+            statsList.AddRange(entity.SecondaryShooter.EquipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType));
 
         return statsList;
     }
@@ -53,7 +53,7 @@ public static class StatsManager
 
     public static int GetAddedStats(EquipmentHolder equipmentHolder, Func<Stats, int?> propertySelector)
     {
-        return GetAddedStats(equipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
+        return GetAddedStats(equipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
     }
 
     public static int GetAddedStats(List<Stats> statsList, Func<Stats, int?> propertySelector)
@@ -71,7 +71,7 @@ public static class StatsManager
 
     public static float GetAddedFloatStats(EquipmentHolder equipmentHolder, Func<Stats, float?> propertySelector) // Adds all sources of a stat
     {
-        return GetAddedFloatStats(equipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
+        return GetAddedFloatStats(equipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
     }
 
     public static float GetAddedFloatStats(List<Stats> statsList, Func<Stats, float?> propertySelector)
@@ -89,7 +89,7 @@ public static class StatsManager
 
     public static int GetMultipliedStats(EquipmentHolder equipmentHolder, Func<Stats, int?> propertySelector) // Adds all sources of a stat
     {
-        return GetMultipliedStats(equipmentHolder.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
+        return GetMultipliedStats(equipmentHolder.CharData.GetAllItemsEquipped().Select(GetStatsFromType).ToList(), propertySelector);
     }
 
     public static int GetMultipliedStats(List<Stats> statsList, Func<Stats, int?> propertySelector) // Multiplies all sources of a stat

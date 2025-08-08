@@ -59,9 +59,9 @@ public class Shooter : Component
     {
         if (AmmoType != ResourceType.None)
         {
-            if (!GlobalManager.Values.Resources.HasResource(AmmoType, AmmoCost))
+            if (!GlobalManager.Values.MainCharData.Resources.HasResource(AmmoType, AmmoCost))
                 return;
-            GlobalManager.Values.Resources.AddAmount(AmmoType, -AmmoCost);
+            GlobalManager.Values.MainCharData.Resources.AddAmount(AmmoType, -AmmoCost);
         }
         if (Owner.FrameHandler.CurrentFrame > 1) // Avoid shooting on spawn frame
             ShootAction.Invoke();

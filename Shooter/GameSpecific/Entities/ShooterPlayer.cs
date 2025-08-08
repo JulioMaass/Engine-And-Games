@@ -34,7 +34,7 @@ public class ShooterPlayer : Entity
         Shooter = new ShooterPlayerShooter(this);
 
         AddItemGetter();
-        EquipmentHolder = new(this, true);
+        EquipmentHolder = new(this);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

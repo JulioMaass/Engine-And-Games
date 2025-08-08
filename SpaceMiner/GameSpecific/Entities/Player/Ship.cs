@@ -32,9 +32,10 @@ public class Ship : Entity
         AddShootDirection(270000);
 
         AddItemGetter();
-        EquipmentHolder = new(this, false);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
-        EquipmentHolder.AddEquipmentSlot(EquipKind.SecondaryWeapon, SlotType.Switch);
+        EquipmentHolder = new(this);
+        EquipmentHolder.CharData.EquipOnRespawn = true;
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
+        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.SecondaryWeapon, SlotType.Switch);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

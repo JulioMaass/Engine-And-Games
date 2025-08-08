@@ -13,7 +13,7 @@ public class ShipShooterMissileAtomic : Shooter
         Owner = owner;
         AddShootAction(NewShotInShootDirection);
         RelativeSpawnPosition = IntVector2.New(0, 0);
-        EquipmentHolder = new EquipmentHolder(owner, false);
+        EquipmentHolder = new EquipmentHolder(owner);
 
         // Ammo
         AmmoType = ResourceType.MissileAtomic;

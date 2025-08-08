@@ -57,7 +57,7 @@ public class ItemPrice : Component
         var price = GetCurrentPrice(ownedAmount);
         if (price == null)
             return false;
-        return price.ResourceCosts.All(resourceCost => GlobalManager.Values.Resources.HasResource(resourceCost.ResourceType, resourceCost.Amount));
+        return price.ResourceCosts.All(resourceCost => GlobalManager.Values.MainCharData.Resources.HasResource(resourceCost.ResourceType, resourceCost.Amount));
     }
 
     public void SubtractResources(int ownedAmount)
@@ -66,6 +66,6 @@ public class ItemPrice : Component
         if (price == null)
             return;
         foreach (var resourceCost in price.ResourceCosts)
-            GlobalManager.Values.Resources.AddAmount(resourceCost.ResourceType, -resourceCost.Amount);
+            GlobalManager.Values.MainCharData.Resources.AddAmount(resourceCost.ResourceType, -resourceCost.Amount);
     }
 }

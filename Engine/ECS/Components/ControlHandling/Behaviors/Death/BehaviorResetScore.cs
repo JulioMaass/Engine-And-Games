@@ -6,6 +6,6 @@ public class BehaviorResetScore : Behavior
 {
     public override void Action()
     {
-        GlobalManager.Values.Resources.SetAmount(Types.ResourceType.Score, 0);
+        GlobalManager.Values.MainCharData.Resources.SetAmount(Types.ResourceType.Score, 0);
     }
 }

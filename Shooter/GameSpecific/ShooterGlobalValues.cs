@@ -7,7 +7,7 @@ public class ShooterGlobalValues : Values
 {
     protected override void CustomInitialize()
     {
-        Resources.AddNew(ResourceType.Score, 999999, 0);
+        MainCharData.Resources.AddNew(ResourceType.Score, 999999, 0);
     }
 
     protected override void CustomUpdate()

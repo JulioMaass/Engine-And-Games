@@ -7,7 +7,6 @@ public class EquipmentSlot : Component
 {
     public EquipKind EquipKind { get; set; }
     public SlotType SlotType { get; set; }
-    private int StackLimit { get; set; }
     public List<Type> EquipmentList { get; set; } = new();
 }
 

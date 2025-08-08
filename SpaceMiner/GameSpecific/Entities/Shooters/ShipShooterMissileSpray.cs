@@ -14,7 +14,7 @@ public class ShipShooterMissileSpray : Shooter
         AddShootAction(() => ShootSpread(Owner.ShootDirection.Angle.Value, 15000));
         RelativeSpawnPosition = IntVector2.New(0, 0);
         AmountOfShots = 7;
-        EquipmentHolder = new EquipmentHolder(owner, false);
+        EquipmentHolder = new EquipmentHolder(owner);
 
         // Ammo
         AmmoType = ResourceType.MissileSpray;

@@ -1,7 +1,5 @@
-﻿using Engine.ECS.Entities;
-using Engine.Types;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Engine.Managers.GlobalManagement;
 
@@ -9,12 +7,8 @@ public abstract class Values
 {
     public int Timer { get; private set; }
 
-    // Equipment
-    public List<(Type Type, int Level)> EquipmentItemLevels { get; private set; } = new();
-    public List<Type> EquippedItems { get; } = new();
-
-    // Resources
-    public Resources Resources { get; } = new();
+    public List<CharData> CharsData { get; } = [new()]; // Adds 1st char by default
+    public CharData MainCharData => CharsData.FirstOrDefault() ?? new(); // Returns the first char data or a new one if none exist
 
     protected Values()
     {
@@ -34,20 +28,4 @@ public abstract class Values
 
     protected abstract void CustomInitialize();
     protected abstract void CustomUpdate();
-
-    public void UpdateEquippedItems()
-    {
-        EquippedItems.Clear();
-        EquippedItems.AddRange(EntityManager.PlayerEntity.EquipmentHolder.GetAllItemsEquipped());
-    }
-
-    public void AddEquipmentLevel(Type itemType)
-    {
-        if (!EquipmentItemLevels.Exists(i => i.Type == itemType))
-            EquipmentItemLevels.Add((itemType, 0));
-
-        var index = EquipmentItemLevels.FindIndex(i => i.Type == itemType);
-        var item = EquipmentItemLevels[index];
-        EquipmentItemLevels[index] = (item.Type, item.Level + 1);
-    }
 }
