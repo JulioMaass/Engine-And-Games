@@ -14,18 +14,11 @@ public class CharData
     // Equipment
     public List<EquipmentData> Equipment { get; set; } = new();
     public List<EquipmentSlot> EquipmentSlotList { get; } = new();
-    public List<Type> EquippedItems { get; } = new();
     public bool EquipOnRespawn { get; set; }
     // Resources
     public Resources Resources { get; set; } = new();
     // Owner
     private Entity Char => EntityManager.PlayerEntity;
-
-    public void UpdateEquippedItems()
-    {
-        EquippedItems.Clear();
-        EquippedItems.AddRange(EntityManager.PlayerEntity.EquipmentHolder.CharData.GetAllItemsEquipped());
-    }
 
     public void AddEquipmentLevel(Type itemType)
     {
@@ -39,7 +32,7 @@ public class CharData
     {
         var slot = GetEquipmentSlotForType(itemType);
         return slot == null ? 0
-            : slot.EquipmentList.Count(t => t == itemType);
+            : slot.EquipmentList.Count(t => t.Type == itemType);
     }
 
     public bool IsItemEquipped(Type itemType)
@@ -63,16 +56,20 @@ public class CharData
 
     public void TryToEquipItem(Type itemType)
     {
+        // Find item in the owned ones
+        var equipmentData = Equipment.FirstOrDefault(e => e.Type == itemType);
+        if (equipmentData == null)
+            return;
+
         // Find slot
         var slot = GetEquipmentSlotForType(itemType);
         if (slot == null)
             return;
 
-        // Equip item
+        // Equip item on slot
         if (slot.SlotType == SlotType.Switch)
             slot.EquipmentList.Clear();
-        slot.EquipmentList.Add(itemType);
-        GlobalManager.Values.MainCharData.UpdateEquippedItems();
+        slot.EquipmentList.Add(equipmentData);
 
         // Set shooter stats
         var itemEntity = CollectionManager.GetEntityFromType(itemType);
@@ -96,6 +93,6 @@ public class CharData
 
     public List<Type> GetAllItemsEquipped()
     {
-        return EquipmentSlotList.SelectMany(slot => slot.EquipmentList).ToList();
+        return (from slot in EquipmentSlotList from equipment in slot.EquipmentList select equipment.Type).ToList();
     }
 }

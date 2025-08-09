@@ -11,7 +11,7 @@ public class MenuLayoutStageSelect : MenuLayout
     public MenuLayoutStageSelect()
     {
         BackgroundImage = Drawer.TextureDictionary["StageSelect"];
-        StartingCursorItem = 4;
+        StartingCursorItem = typeof(MenuItemStageIntro);
 
         var array = Extensions.NewTransposedArray(new[,]
         {

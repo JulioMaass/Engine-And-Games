@@ -82,8 +82,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Equip item
-            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
             GlobalManager.Values.MainCharData.AddEquipmentLevel(GetType());
+            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }
 

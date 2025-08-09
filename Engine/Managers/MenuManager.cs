@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,16 +15,17 @@ public static class MenuManager
     public static EntityList AvailableMenuItems { get; private set; }
     public static List<Type> LayoutDirectoryList { get; } = new();
     public static MenuLayout CurrentMenuLayout { get; private set; }
-    public static Entity SelectedItem { get; set; }
-    private static int LastIntentionalX { get; set; } // Only changes when moving horizontally (resets when going into/out of sub-menus)
-    private static int LastIntentionalY { get; set; } // Only changes when moving vertically
+    public static Entity SelectedItem { get; private set; }
+    // Navigation untying
+    private static IntVector2 LastIntentionalPosition { get; set; }
+    private static IntVector2 LastMoveDirection { get; set; }
 
     public static void CreateMenu(Type menuType)
     {
         LayoutDirectoryList.Clear();
         LayoutDirectoryList.Add(menuType);
         UpdateAvailableMenuItems();
-        SelectedItem = AvailableMenuItems[CurrentMenuLayout.StartingCursorItem];
+        SetSelectedItem(CurrentMenuLayout.StartingCursorItem);
     }
 
     public static void Clear()
@@ -31,9 +33,7 @@ public static class MenuManager
         ClearMenuItems();
         LayoutDirectoryList.Clear();
         CurrentMenuLayout = null;
-        SelectedItem = null;
-        LastIntentionalX = 0;
-        LastIntentionalY = 0;
+        SetSelectedItem(null);
     }
 
     public static void UpdateAvailableMenuItems()
@@ -48,6 +48,56 @@ public static class MenuManager
             menuArea.GenerateMenuItems();
     }
 
+    public static void ClearMenuItems()
+    {
+        if (AvailableMenuItems == null) return;
+        foreach (var item in AvailableMenuItems)
+            EntityManager.DeleteEntity(item);
+        AvailableMenuItems = null;
+    }
+
+    private static void SetSelectedItem(Entity item, IntVector2 dir) // Updates both LastIntentionalPosition and LastMoveDirection
+    {
+        if (dir.X != 0)
+            LastIntentionalPosition = new IntVector2(item.Position.Pixel.X, LastIntentionalPosition.Y);
+        else if (dir.Y != 0)
+            LastIntentionalPosition = new IntVector2(LastIntentionalPosition.X, item.Position.Pixel.Y);
+        SetSelectedItem(item, true);
+    }
+
+    public static void SetSelectedItem(Entity item, bool trackMoveDirection) // Updates LastMoveDirection
+    {
+        SelectedItem = item;
+        if (trackMoveDirection)
+        {
+            LastMoveDirection = new IntVector2(
+                Math.Sign(item.Position.Pixel.X - SelectedItem.Position.Pixel.X),
+                Math.Sign(item.Position.Pixel.Y - SelectedItem.Position.Pixel.Y));
+            return;
+        }
+        LastIntentionalPosition = item.Position.Pixel;
+        LastMoveDirection = IntVector2.Zero;
+    }
+
+    public static void SetSelectedItem(Type itemType)
+    {
+        if (AvailableMenuItems == null)
+        {
+            ResetSelectedItem();
+            return;
+        }
+        var item = AvailableMenuItems.FirstOrDefault(i => i.GetType() == itemType)
+            ?? AvailableMenuItems.FirstOrDefault();
+        SetSelectedItem(item, false);
+    }
+
+    public static void ResetSelectedItem()
+    {
+        SelectedItem = null;
+        LastIntentionalPosition = IntVector2.Zero;
+        LastMoveDirection = IntVector2.Zero;
+    }
+
     public static void CheckToSwapMenuArea(Type newMenuAreaType)
     {
         var currentArea = CurrentMenuLayout.MenuAreas.FirstOrDefault(area => CurrentMenuLayout.SwappableAreaTypes.Contains(area.GetType()));
@@ -60,67 +110,35 @@ public static class MenuManager
 
     private static void SwapMenuArea(Type swapOutType, Type swapInType)
     {
-        var swapOutMenuArea = DeleteMenuArea(swapOutType);
-        var swapInMenuArea = GenerateMenuArea(swapInType);
-
-        foreach (var menuArea in CurrentMenuLayout.MenuAreas)
-        {
-            SwapAreaReferences(menuArea.AllowedAreasUp, swapOutMenuArea, swapInMenuArea);
-            SwapAreaReferences(menuArea.AllowedAreasDown, swapOutMenuArea, swapInMenuArea);
-            SwapAreaReferences(menuArea.AllowedAreasLeft, swapOutMenuArea, swapInMenuArea);
-            SwapAreaReferences(menuArea.AllowedAreasRight, swapOutMenuArea, swapInMenuArea);
-        }
-
-        swapInMenuArea.AllowedAreasUp.AddRange(swapOutMenuArea.AllowedAreasUp);
-        swapInMenuArea.AllowedAreasDown.AddRange(swapOutMenuArea.AllowedAreasDown);
-        swapInMenuArea.AllowedAreasLeft.AddRange(swapOutMenuArea.AllowedAreasLeft);
-        swapInMenuArea.AllowedAreasRight.AddRange(swapOutMenuArea.AllowedAreasRight);
+        DeleteMenuArea(swapOutType);
+        GenerateMenuArea(swapInType);
     }
 
-    private static MenuArea DeleteMenuArea(Type areaType)
+    private static void DeleteMenuArea(Type areaType)
     {
         var menuArea = CurrentMenuLayout.MenuAreas.FirstOrDefault(area => area.GetType() == areaType);
         menuArea!.DeleteMenuItems();
         CurrentMenuLayout.MenuAreas.Remove(menuArea);
-        return menuArea;
     }
 
-    private static MenuArea GenerateMenuArea(Type areaType)
+    private static void GenerateMenuArea(Type areaType)
     {
         var menuArea = (MenuArea)Activator.CreateInstance(areaType);
         menuArea!.GenerateMenuItems();
         CurrentMenuLayout.MenuAreas.Add(menuArea);
-        return menuArea;
-    }
-
-    private static void SwapAreaReferences(List<MenuArea> areasInDirection, MenuArea swapOutMenuArea, MenuArea swapInMenuArea)
-    {
-        if (areasInDirection.Contains(swapOutMenuArea))
-        {
-            areasInDirection.Remove(swapOutMenuArea);
-            areasInDirection.Add(swapInMenuArea);
-        }
-    }
-
-    public static void ClearMenuItems()
-    {
-        if (AvailableMenuItems == null) return;
-        foreach (var item in AvailableMenuItems)
-            EntityManager.DeleteEntity(item);
-        AvailableMenuItems = null;
     }
 
     public static void Update()
     {
         // Movement
         if (Input.Up.Pressed)
-            MoveSelection(-1, 0);
+            MoveSelection((0, -1));
         else if (Input.Down.Pressed)
-            MoveSelection(1, 0);
+            MoveSelection((0, 1));
         else if (Input.Left.Pressed)
-            MoveSelection(0, -1);
+            MoveSelection((-1, 0));
         else if (Input.Right.Pressed)
-            MoveSelection(0, 1);
+            MoveSelection((1, 0));
 
         // Select and Cancel
         if (Input.Button1.Pressed)
@@ -133,70 +151,120 @@ public static class MenuManager
     {
         if (LayoutDirectoryList.Count <= 1) return;
 
-        var previousMenu = LayoutDirectoryList[^1]; // Get the last item in the list
+        var previousMenuItem = LayoutDirectoryList[^1]; // Get the last item in the list
         LayoutDirectoryList.RemoveAt(LayoutDirectoryList.Count - 1);
         UpdateAvailableMenuItems();
-        SelectedItem = AvailableMenuItems.FirstOrDefault(item => item.MenuItem.ContainedMenuLayoutType == previousMenu);
-        SetSelectedItemAsIntentionalPosition();
+        SetSelectedItem(previousMenuItem);
     }
 
-    public static void SetSelectedItemAsIntentionalPosition()
+    private static void MoveSelection(IntVector2 dir)
     {
-        LastIntentionalX = SelectedItem.Position.Pixel.X;
-        LastIntentionalY = SelectedItem.Position.Pixel.Y;
-    }
+        var itemsInDirection = GetItemsInDirection(dir);
 
-    private static void MoveSelection(int yDir, int xDir)
-    {
-        var allowedDirectionAreas = new List<MenuArea>();
+        // Find items in the same area
+        var itemsInSameArea = AvailableMenuItems
+            .Where(item => item.MenuItem.OwningMenuArea == SelectedItem.MenuItem.OwningMenuArea)
+            .ToEntityList();
+        var itemsToGoTo = itemsInSameArea.Intersect(itemsInDirection).ToEntityList();
 
-        // Add the area that the selected item belongs to
-        var currentArea = SelectedItem.MenuItem.OwningMenuArea;
-        allowedDirectionAreas.Add(currentArea);
+        // If there are no items in the same area, find other areas
+        if (itemsToGoTo.Count == 0)
+        {
+            var areasInDirection = GetNearestAreasInDirection(dir);
+            itemsToGoTo = AvailableMenuItems.Where(item => areasInDirection.Contains(item.MenuItem.OwningMenuArea)).ToEntityList();
+        }
 
-        // Get the areas that are allowed to be navigated to in the direction of the movement
-        if (yDir < 0)
-            allowedDirectionAreas.AddRange(SelectedItem.MenuItem.OwningMenuArea.AllowedAreasUp);
-        else if (yDir > 0)
-            allowedDirectionAreas.AddRange(SelectedItem.MenuItem.OwningMenuArea.AllowedAreasDown);
-        else if (xDir < 0)
-            allowedDirectionAreas.AddRange(SelectedItem.MenuItem.OwningMenuArea.AllowedAreasLeft);
-        else if (xDir > 0)
-            allowedDirectionAreas.AddRange(SelectedItem.MenuItem.OwningMenuArea.AllowedAreasRight);
-
-        // Get the items that are in the allowed areas
-        var allowedItems = AvailableMenuItems.Where(item => allowedDirectionAreas.Contains(item.MenuItem.OwningMenuArea)).ToList();
-
-        // Remove items in the opposite direction of the movement
-        var itemsInDirection = allowedItems
-        .Where(item => (yDir < 0 && item.Position.Pixel.Y < SelectedItem.Position.Pixel.Y) ||
-                          (yDir > 0 && item.Position.Pixel.Y > SelectedItem.Position.Pixel.Y) ||
-                          (xDir < 0 && item.Position.Pixel.X < SelectedItem.Position.Pixel.X) ||
-                          (xDir > 0 && item.Position.Pixel.X > SelectedItem.Position.Pixel.X))
-                            .ToEntityList();
-
-        // Group the filtered items by Y position if moving vertically, or X position if moving horizontally
-        var groupedItems = itemsInDirection.GroupBy(item => yDir != 0 ? item.Position.Pixel.Y : item.Position.Pixel.X).ToList();
-
-        // Get the group with the nearest x (if moving horizontally) or y (if moving vertically)
-        var nearestGroup = xDir > 0 || yDir > 0
-            ? groupedItems.MinBy(group => group.Key)
-            : groupedItems.MaxBy(group => group.Key);
-
-        // Get the item with the nearest Intentional coordinate in the perpendicular axis
-        var selectedItem = xDir != 0
-            ? nearestGroup?.MinBy(item => Math.Abs(item.Position.Pixel.Y - LastIntentionalY))
-            : nearestGroup?.MinBy(item => Math.Abs(item.Position.Pixel.X - LastIntentionalX));
-
-        // Set the selected item
-        if (selectedItem == null)
+        // Navigate to item
+        var nearestItems = GetNearestItemsInDirection(itemsToGoTo, dir);
+        var newSelectedItem = GetItemNearestToPosition(nearestItems, LastIntentionalPosition);
+        if (newSelectedItem == null)
             return;
-        SelectedItem = selectedItem;
+        SetSelectedItem(newSelectedItem, dir);
+    }
 
-        // Update the last intentional coordinate
-        if (yDir != 0)
-            LastIntentionalY = SelectedItem.Position.Pixel.Y;
-        if (xDir != 0)
-            LastIntentionalX = SelectedItem.Position.Pixel.X;
+    private static EntityList GetItemsInDirection(IntVector2 dir)
+    {
+        var itemsXDirection = AvailableMenuItems.Where(item => GetDirectionToItem(item).X == dir.X).ToEntityList();
+        var itemsYDirection = AvailableMenuItems.Where(item => GetDirectionToItem(item).Y == dir.Y).ToEntityList();
+        return dir.X != 0 ? itemsXDirection : itemsYDirection;
+    }
+
+    private static IntVector2 GetDirectionToItem(Entity item)
+    {
+        var xDir = Math.Sign(item.Position.Pixel.X - SelectedItem.Position.Pixel.X);
+        var yDir = Math.Sign(item.Position.Pixel.Y - SelectedItem.Position.Pixel.Y);
+        return (xDir, yDir);
+    }
+
+    private static List<MenuArea> GetNearestAreasInDirection(IntVector2 dir)
+    {
+        var areasInDirection = GetAreasInDirection(dir);
+        if (areasInDirection.Count == 0)
+            return areasInDirection;
+
+        var currentArea = SelectedItem.MenuItem.OwningMenuArea;
+        Func<MenuArea, int> distanceCalculationFunction = dir.X != 0
+            ? area => Math.Abs(area.Position.X - currentArea.Position.X)
+            : area => Math.Abs(area.Position.Y - currentArea.Position.Y);
+
+        return GetNearestList(areasInDirection, distanceCalculationFunction);
+    }
+
+    private static List<MenuArea> GetAreasInDirection(IntVector2 dir)
+    {
+        var areasInDirection = new List<MenuArea>();
+        var currentArea = SelectedItem.MenuItem.OwningMenuArea;
+        foreach (var area in CurrentMenuLayout.MenuAreas.Except([currentArea]))
+        {
+            var canMoveRight = dir.X == 1 && currentArea.AreaRectangle.IsLeftOfAndAligned(area.AreaRectangle);
+            var canMoveLeft = dir.X == -1 && currentArea.AreaRectangle.IsRightOfAndAligned(area.AreaRectangle);
+            var canMoveDown = dir.Y == 1 && currentArea.AreaRectangle.IsAboveAndAligned(area.AreaRectangle);
+            var canMoveUp = dir.Y == -1 && currentArea.AreaRectangle.IsBelowAndAligned(area.AreaRectangle);
+            if (canMoveRight || canMoveLeft || canMoveDown || canMoveUp)
+                areasInDirection.Add(area);
+        }
+        return areasInDirection;
+    }
+
+    private static EntityList GetNearestItemsInDirection(EntityList itemList, IntVector2 dir)
+    {
+        Func<Entity, int> distanceCalculationFunction = dir.X != 0
+            ? item => Math.Abs(item.Position.Pixel.X - SelectedItem.Position.Pixel.X)
+            : item => Math.Abs(item.Position.Pixel.Y - SelectedItem.Position.Pixel.Y);
+
+        return GetNearestList(itemList, distanceCalculationFunction).ToEntityList();
+    }
+
+    private static Entity GetItemNearestToPosition(EntityList itemList, IntVector2 position)
+    {
+        var nearestItems = GetNearestList(itemList, item =>
+            Math.Abs(item.Position.Pixel.X - position.X) +
+            Math.Abs(item.Position.Pixel.Y - position.Y)).ToEntityList();
+        if (nearestItems.Count == 0)
+            return null;
+        if (nearestItems.Count == 1)
+            return nearestItems[0];
+        // Reverse NextMoveDir to untie
+        return GetNearestItemsInDirection(nearestItems, -LastMoveDirection)[0];
+    }
+
+    private static List<T> GetNearestList<T>(IEnumerable<T> list, Func<T, int> distanceCalculationFunction)
+    {
+        var listOfNearest = new List<T>();
+        var nearestDistance = int.MaxValue;
+
+        foreach (var item in list)
+        {
+            var distance = distanceCalculationFunction(item);
+            if (distance < nearestDistance) // Find nearest item and distance
+            {
+                nearestDistance = distance;
+                listOfNearest.Clear();
+                listOfNearest.Add(item);
+            }
+            else if (distance == nearestDistance) // Accumulate tied items
+                listOfNearest.Add(item);
+        }
+        return listOfNearest;
     }
 }

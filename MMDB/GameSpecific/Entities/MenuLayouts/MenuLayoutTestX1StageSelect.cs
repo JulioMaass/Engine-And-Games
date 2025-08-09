@@ -85,38 +85,5 @@ public class MenuLayoutTestX1StageSelect : MenuLayout
             overallPosition + (overallSpacing.X * 3, overallSpacing.Y * 3),
             overallSpacing);
         MenuAreas.Add(menuAreaBottomRight);
-
-        menuAreaTopLeft.AllowedAreasRight.Add(menuAreaTopCenter);
-        menuAreaTopLeft.AllowedAreasDown.Add(menuAreaCenterLeft);
-
-        menuAreaTopCenter.AllowedAreasLeft.Add(menuAreaTopLeft);
-        menuAreaTopCenter.AllowedAreasRight.Add(menuAreaTopRight);
-        menuAreaTopCenter.AllowedAreasDown.Add(menuAreaCenterCenter);
-
-        menuAreaTopRight.AllowedAreasLeft.Add(menuAreaTopCenter);
-        menuAreaTopRight.AllowedAreasDown.Add(menuAreaCenterRight);
-
-        menuAreaCenterLeft.AllowedAreasUp.Add(menuAreaTopLeft);
-        menuAreaCenterLeft.AllowedAreasRight.Add(menuAreaCenterCenter);
-        menuAreaCenterLeft.AllowedAreasDown.Add(menuAreaBottomLeft);
-
-        menuAreaCenterCenter.AllowedAreasUp.Add(menuAreaTopCenter);
-        menuAreaCenterCenter.AllowedAreasLeft.Add(menuAreaCenterLeft);
-        menuAreaCenterCenter.AllowedAreasRight.Add(menuAreaCenterRight);
-        menuAreaCenterCenter.AllowedAreasDown.Add(menuAreaBottomCenter);
-
-        menuAreaCenterRight.AllowedAreasUp.Add(menuAreaTopRight);
-        menuAreaCenterRight.AllowedAreasLeft.Add(menuAreaCenterCenter);
-        menuAreaCenterRight.AllowedAreasDown.Add(menuAreaBottomRight);
-
-        menuAreaBottomLeft.AllowedAreasUp.Add(menuAreaCenterLeft);
-        menuAreaBottomLeft.AllowedAreasRight.Add(menuAreaBottomCenter);
-
-        menuAreaBottomCenter.AllowedAreasUp.Add(menuAreaCenterCenter);
-        menuAreaBottomCenter.AllowedAreasLeft.Add(menuAreaBottomLeft);
-        menuAreaBottomCenter.AllowedAreasRight.Add(menuAreaBottomRight);
-
-        menuAreaBottomRight.AllowedAreasUp.Add(menuAreaCenterRight);
-        menuAreaBottomRight.AllowedAreasLeft.Add(menuAreaBottomCenter);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Engine.ECS.Entities.EntityCreation;
 using Engine.Managers;
 using System;
-using static Engine.ECS.Components.MenuHandling.MenuLayout;
 
 namespace Engine.ECS.Components.MenuHandling;
 
@@ -26,7 +25,6 @@ public class MenuItem : Component
     {
         MenuManager.LayoutDirectoryList.Add(ContainedMenuLayoutType);
         MenuManager.UpdateAvailableMenuItems();
-        MenuManager.SelectedItem = MenuManager.AvailableMenuItems[MenuManager.CurrentMenuLayout.StartingCursorItem];
-        MenuManager.SetSelectedItemAsIntentionalPosition();
+        MenuManager.SetSelectedItem(MenuManager.CurrentMenuLayout.StartingCursorItem);
     }
 }

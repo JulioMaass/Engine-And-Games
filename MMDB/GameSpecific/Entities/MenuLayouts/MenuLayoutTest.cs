@@ -41,14 +41,5 @@ public class MenuLayoutTest : MenuLayout
         var spacingDownRight = IntVector2.New(50, 10);
         var menuAreaDownRight = new MenuArea(arrayDownRight, positionDownRight, spacingDownRight);
         MenuAreas.Add(menuAreaDownRight);
-
-        menuAreaTop.AllowedAreasDown.Add(menuAreaDownLeft);
-        menuAreaTop.AllowedAreasDown.Add(menuAreaDownRight);
-
-        menuAreaDownLeft.AllowedAreasUp.Add(menuAreaTop);
-        menuAreaDownLeft.AllowedAreasRight.Add(menuAreaDownRight);
-
-        menuAreaDownRight.AllowedAreasUp.Add(menuAreaTop);
-        menuAreaDownRight.AllowedAreasLeft.Add(menuAreaDownLeft);
     }
 }

@@ -3,7 +3,6 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Managers;
 using Engine.Types;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Engine.ECS.Components.MenuHandling;
@@ -15,10 +14,7 @@ public class MenuArea
     private Entity[,] MenuItemEntities { get; set; }
     public IntVector2 Position { get; protected init; }
     public IntVector2 Spacing { get; protected init; }
-    public List<MenuArea> AllowedAreasUp { get; } = new();
-    public List<MenuArea> AllowedAreasDown { get; } = new();
-    public List<MenuArea> AllowedAreasLeft { get; } = new();
-    public List<MenuArea> AllowedAreasRight { get; } = new();
+    public IntRectangle AreaRectangle => GetMenuAreaRectangle();
 
     protected MenuArea() { }
 
@@ -31,14 +27,9 @@ public class MenuArea
         MenuItemEntities = new Entity[MenuItemTypes.GetLength(0), MenuItemTypes.GetLength(1)];
     }
 
-    public Entity[,] GetMenuItemEntities()
-    {
-        MenuItemEntities ??= new Entity[MenuItemTypes.GetLength(0), MenuItemTypes.GetLength(1)];
-        return MenuItemEntities;
-    }
-
     public void GenerateMenuItems()
     {
+        MenuItemEntities ??= new Entity[MenuItemTypes.GetLength(0), MenuItemTypes.GetLength(1)];
         for (var x = 0; x < MenuItemTypes.GetLength(0); x++)
         {
             for (var y = 0; y < MenuItemTypes.GetLength(1); y++)
@@ -49,7 +40,7 @@ public class MenuArea
                 var menuItemEntity = EntityManager.CreateEntityAt(menuItemType, menuItemPosition);
                 menuItemEntity.MenuItem.OwningMenuArea = this;
                 MenuManager.AvailableMenuItems.Add(menuItemEntity);
-                GetMenuItemEntities()[x, y] = menuItemEntity;
+                MenuItemEntities[x, y] = menuItemEntity;
             }
         }
     }
@@ -63,4 +54,7 @@ public class MenuArea
             EntityManager.DeleteEntity(menuItemEntity);
         }
     }
+
+    private IntRectangle GetMenuAreaRectangle() =>
+        new(Position.X, Position.Y, MenuItemTypes.GetLength(0) * Spacing.X, MenuItemTypes.GetLength(1) * Spacing.Y);
 }

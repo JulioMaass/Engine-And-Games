@@ -25,11 +25,6 @@ public class MenuLayoutShop : MenuLayout
         MenuAreas.Add(menuAreaCurrentTab);
         MenuAreas.Add(menuAreaShopOptions);
 
-        menuAreaTabs.AllowedAreasDown.Add(menuAreaCurrentTab);
-        menuAreaCurrentTab.AllowedAreasUp.Add(menuAreaTabs);
-        menuAreaCurrentTab.AllowedAreasDown.Add(menuAreaShopOptions);
-        menuAreaShopOptions.AllowedAreasUp.Add(menuAreaCurrentTab);
-
         SwappableAreaTypes.Add(typeof(MenuAreaMissiles));
         SwappableAreaTypes.Add(typeof(MenuAreaWeapons));
         SwappableAreaTypes.Add(typeof(MenuAreaUpgrades));

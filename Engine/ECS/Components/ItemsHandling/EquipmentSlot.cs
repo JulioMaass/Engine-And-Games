@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Engine.Managers.GlobalManagement;
 using System.Collections.Generic;
 
 namespace Engine.ECS.Components.ItemsHandling;
@@ -7,7 +7,7 @@ public class EquipmentSlot : Component
 {
     public EquipKind EquipKind { get; set; }
     public SlotType SlotType { get; set; }
-    public List<Type> EquipmentList { get; set; } = new();
+    public List<EquipmentData> EquipmentList { get; set; } = new();
 }
 
 public enum SlotType

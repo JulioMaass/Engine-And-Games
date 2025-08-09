@@ -65,15 +65,42 @@ public struct IntRectangle
 
     public static bool operator !=(IntRectangle a, IntRectangle b) => !(a == b);
 
-    public bool Contains(IntVector2 position)
-    {
-        return X <= position.X && position.X < X + Width && Y <= position.Y && position.Y < Y + Height;
-    }
+    public bool Contains(IntVector2 position) =>
+        X <= position.X && position.X < X + Width && Y <= position.Y && position.Y < Y + Height;
 
-    public bool Overlaps(IntRectangle rectangle)
-    {
-        return Left <= rectangle.Right && Right >= rectangle.Left && Top <= rectangle.Bottom && Bottom >= rectangle.Top;
-    }
+    public bool Overlaps(IntRectangle rectangle) =>
+        Left <= rectangle.Right && Right >= rectangle.Left && Top <= rectangle.Bottom && Bottom >= rectangle.Top;
+
+    public bool VerticallyOverlaps(IntRectangle rectangle) =>
+        Top <= rectangle.Bottom && Bottom >= rectangle.Top;
+
+    public bool HorizontallyOverlaps(IntRectangle rectangle) =>
+        Left <= rectangle.Right && Right >= rectangle.Left;
+
+    public bool IsAbove(IntRectangle rectangle) =>
+        Bottom < rectangle.Top;
+
+    public bool IsBelow(IntRectangle rectangle) =>
+        Top > rectangle.Bottom;
+
+    public bool IsLeftOf(IntRectangle rectangle) =>
+        Right < rectangle.Left;
+
+    public bool IsRightOf(IntRectangle rectangle) =>
+        Left > rectangle.Right;
+
+    public bool IsAboveAndAligned(IntRectangle rectangle) =>
+        IsAbove(rectangle) && HorizontallyOverlaps(rectangle);
+
+    public bool IsBelowAndAligned(IntRectangle rectangle) =>
+        IsBelow(rectangle) && HorizontallyOverlaps(rectangle);
+
+    public bool IsLeftOfAndAligned(IntRectangle rectangle) =>
+        IsLeftOf(rectangle) && VerticallyOverlaps(rectangle);
+
+    public bool IsRightOfAndAligned(IntRectangle rectangle) =>
+        IsRightOf(rectangle) && VerticallyOverlaps(rectangle);
+
 
     public IntRectangle RoundDownToTileCoordinate()
     {
