@@ -12,7 +12,7 @@ namespace Engine.Managers.GlobalManagement;
 public class CharData
 {
     // Equipment
-    public List<EquipmentData> Equipment { get; set; } = new();
+    public List<EquipmentData> Equipment { get; } = new();
     public List<EquipmentSlot> EquipmentSlotList { get; } = new();
     public bool EquipOnRespawn { get; set; }
     // Resources
@@ -28,11 +28,16 @@ public class CharData
         Equipment.FirstOrDefault(i => i.Type == itemType)!.Level += 1;
     }
 
+    public void AddEquipment(Type itemType, int level)
+    {
+        Equipment.Add(new EquipmentData(itemType, level));
+    }
+
     public int GetEquipmentCount(Type itemType)
     {
         var slot = GetEquipmentSlotForType(itemType);
         return slot == null ? 0
-            : slot.EquipmentList.Count(t => t.Type == itemType);
+            : slot.Equipment.Count(t => t.Type == itemType);
     }
 
     public bool IsItemEquipped(Type itemType)
@@ -68,8 +73,8 @@ public class CharData
 
         // Equip item on slot
         if (slot.SlotType == SlotType.Switch)
-            slot.EquipmentList.Clear();
-        slot.EquipmentList.Add(equipmentData);
+            slot.Equipment.Clear();
+        slot.Equipment.Add(equipmentData);
 
         // Set shooter stats
         var itemEntity = CollectionManager.GetEntityFromType(itemType);
@@ -91,8 +96,46 @@ public class CharData
         return entity?.EquipmentItemStats?.EquipKind ?? EquipKind.None;
     }
 
-    public List<Type> GetAllItemsEquipped()
+    public List<Type> GetAllItemsEquippedOnChar()
     {
-        return (from slot in EquipmentSlotList from equipment in slot.EquipmentList select equipment.Type).ToList();
+        return (from slot in EquipmentSlotList
+                from equipment in slot.Equipment
+                select equipment.Type).ToList();
+    }
+
+    public List<Type> GetAllItemsEquippedOnEquipment(EquipKind equipKind)
+    {
+        return (from slot in EquipmentSlotList
+                where slot.EquipKind == equipKind
+                from equipment in slot.Equipment
+                from nestedSlot in equipment.EquipmentSlotList
+                from nestedEquipment in nestedSlot.Equipment
+                select nestedEquipment.Type).ToList();
+    }
+
+    public Type GetCurrentEquippedWeaponType()
+    {
+        return EquipmentSlotList.FirstOrDefault(s => s.EquipKind == EquipKind.Weapon)?.Equipment
+            .FirstOrDefault()?.Type;
+    }
+
+    public int GetAmountOfUpgradesOnWeapon(Type upgradeType, Type weaponType = null)
+    {
+        weaponType ??= GetCurrentEquippedWeaponType();
+        if (weaponType == null)
+            return 0;
+        return Equipment.FirstOrDefault((e => e.Type == weaponType))
+            .GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
+            .Equipment.Count(e => e.Type == upgradeType);
+    }
+
+    public void AddUpgradeToWeapon(Type upgradeType, Type weaponType = null)
+    {
+        weaponType ??= GetCurrentEquippedWeaponType();
+        if (weaponType == null)
+            return;
+        Equipment.FirstOrDefault(e => e.Type == weaponType)
+            .GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
+            .AddEquipment(GetType(), 1);
     }
 }

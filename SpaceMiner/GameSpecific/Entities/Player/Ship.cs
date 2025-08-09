@@ -34,8 +34,6 @@ public class Ship : Entity
         AddItemGetter();
         EquipmentHolder = new(this);
         EquipmentHolder.CharData.EquipOnRespawn = true;
-        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
-        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.SecondaryWeapon, SlotType.Switch);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

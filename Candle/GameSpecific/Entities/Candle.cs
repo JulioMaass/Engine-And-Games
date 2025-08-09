@@ -38,9 +38,6 @@ public class Candle : Entity
         AddItemGetter();
         EquipmentHolder = new(this);
         EquipmentHolder.CharData.EquipOnRespawn = true;
-        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
-        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Armor, SlotType.Switch);
-        EquipmentHolder.CharData.AddEquipmentSlot(EquipKind.Foot, SlotType.Switch);
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());

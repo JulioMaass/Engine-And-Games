@@ -40,7 +40,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.Draw = () =>
         {
             // Get item price
-            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
@@ -71,7 +71,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelect = () =>
         {
             // Get item price
-            var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
+            var ownedAmount = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(GetType());
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice == null)
                 return;
@@ -81,9 +81,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                 return;
             ItemPrice.SubtractResources(ownedAmount);
 
-            // Equip item
-            GlobalManager.Values.MainCharData.AddEquipmentLevel(GetType());
-            GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
+            //// Equip item
+            GlobalManager.Values.MainCharData.AddUpgradeToWeapon(GetType());
         };
     }
 
@@ -123,8 +122,15 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
 
         MenuItem.OnSelect = () =>
         {
-            // Get item price
             var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
+            if (ownedAmount > 0)
+            {
+                // If player already owns the item, just equip it
+                GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
+                return;
+            }
+
+            // Get item price
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice == null)
                 return;
@@ -135,7 +141,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Unlock and equip item
-            GlobalManager.Values.MainCharData.AddEquipmentLevel(GetType());
+            GlobalManager.Values.MainCharData.AddEquipment(GetType(), 1);
             GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }

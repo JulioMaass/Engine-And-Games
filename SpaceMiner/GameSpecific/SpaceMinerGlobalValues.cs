@@ -1,4 +1,5 @@
-﻿using Engine.Managers.GlobalManagement;
+﻿using Engine.ECS.Components.ItemsHandling;
+using Engine.Managers.GlobalManagement;
 using Engine.Types;
 
 namespace SpaceMiner.GameSpecific;
@@ -22,6 +23,9 @@ public class SpaceMinerGlobalValues : Values
 
         foreach (var resource in MainCharData.Resources.List)
             resource.Amount = 999999;
+
+        MainCharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);
+        MainCharData.AddEquipmentSlot(EquipKind.SecondaryWeapon, SlotType.Switch);
     }
 
     protected override void CustomUpdate()
