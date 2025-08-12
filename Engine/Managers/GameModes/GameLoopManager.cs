@@ -48,7 +48,7 @@ public static class GameLoopManager
         GlobalManager.Update();
 
         // Run gameplay loop
-        GameCurrentLoop.Update();
+        GameCurrentLoop?.Update();
         var notUpdatedEntities = EntityManager.GetAllEntities().Where(entity => entity.Updated == false).ToList();
         if (EntityManager.GetAllEntities().Any(entity => entity.Updated == false))
             Debugger.Break(); // All entities should be updated after creation, before being drawn

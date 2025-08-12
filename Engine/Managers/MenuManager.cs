@@ -22,6 +22,9 @@ public static class MenuManager
 
     public static void CreateMenu(Type menuType)
     {
+        if (menuType == null)
+            return;
+
         LayoutDirectoryList.Clear();
         LayoutDirectoryList.Add(menuType);
         UpdateAvailableMenuItems();

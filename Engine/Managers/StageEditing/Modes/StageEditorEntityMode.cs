@@ -1,5 +1,4 @@
 ﻿using Engine.ECS.Entities;
-using Engine.GameSpecific;
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
@@ -31,7 +30,8 @@ public class StageEditorEntityMode : StageEditorMode
     {
         foreach (var entityType in GameManager.GameSpecificSettings.EditorEntityTypes)
             EntityNames.Add(entityType);
-        SelectedEntity = EntityNames[0];
+        if (EntityNames.Count > 0)
+            SelectedEntity = EntityNames[0];
     }
 
     public override void Run()

@@ -34,5 +34,6 @@ public enum GameId
     Mole,
     Candle,
     Shooter,
-    SpaceMiner
+    SpaceMiner,
+    CrtTest
 }

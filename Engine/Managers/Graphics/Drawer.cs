@@ -62,6 +62,8 @@ public static class Drawer
     private static void LoadTextures(string folder)
     {
         var folderPath = "Content/" + folder;
+        if (!Directory.Exists(folderPath))
+            return;
         var fileNames = Directory.GetFiles(folderPath, "*.xnb", SearchOption.AllDirectories);
         foreach (var fileName in fileNames)
         {

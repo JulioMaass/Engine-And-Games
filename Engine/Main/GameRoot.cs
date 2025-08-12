@@ -13,11 +13,11 @@ public class GameRoot : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         Window.AllowUserResizing = true;
+        Settings.Initialize();
     }
 
     protected override void Initialize()
     {
-        Settings.Initialize();
         base.Initialize(); // This calls LoadContent()
         Window.TextInput += TextInputHandler.Update;
         GameManager.Initialize();

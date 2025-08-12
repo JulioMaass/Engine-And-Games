@@ -1,6 +1,5 @@
 ﻿using Engine.ECS.Entities;
 using Engine.ECS.Entities.Shared;
-using Engine.GameSpecific;
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Audio;
@@ -71,6 +70,9 @@ public static class StageManager // Used to show current room (tiles and entitie
 
     public static void CheckToTriggerSpawns() // TODO: Make a spawn manager
     {
+        if (CurrentRoom == null)
+            return;
+
         foreach (var entityInstance in CurrentRoom.GetEntityLayout().List)
         {
             if (CollectionManager.GetEntityFromType(entityInstance.EntityType).SpawnManager.AutomaticSpawn == false)
@@ -221,7 +223,7 @@ public static class StageManager // Used to show current room (tiles and entitie
         return !EntityManager.PlayerEntity.TransitionController.UpCondition.AllConditionsAreTrue()
                && roomAndDirection.Direction == IntVector2.PixelUp;
     }
-    
+
     private static bool CantTransitionToSide((Room Room, IntVector2 Direction) roomAndDirection)
     {
         if (EntityManager.PlayerEntity.TransitionController == null)

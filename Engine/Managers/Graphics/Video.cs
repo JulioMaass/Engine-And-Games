@@ -70,6 +70,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         DrawHud();
         DrawEditingMenu();
         DrawFinalRender();
+        DrawOverlay();
         DrawPostFx();
     }
 
@@ -121,6 +122,14 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         SpriteBatch.End();
     }
 
+    private static void DrawOverlay()
+    {
+        Graphics.GraphicsDevice.SetRenderTarget(FinalRender);
+        SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+        SpriteBatch.Draw(Drawer.TextureDictionary["Pixelated"], new IntRectangle(IntVector2.Zero, Settings.ScreenScaledSize), CustomColor.White);
+        SpriteBatch.End();
+    }
+
     private static void DrawPostFx()
     {
         Graphics.GraphicsDevice.SetRenderTarget(PostFxRender);
@@ -128,7 +137,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         SpriteBatch.Draw(FinalRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
         SpriteBatch.End();
         if (CrtManager.IsOn)
-            BlurManager.RenderBlur(1, 1.78f, 1f, PostFxRender, true, PostFxRender);
+            BlurManager.RenderBlur(0, 1.78f, 1f, PostFxRender, true, PostFxRender);
         Graphics.GraphicsDevice.SetRenderTarget(null);
         var effect = CrtManager.IsOn ? CrtManager.CrtEffect : null;
         SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null, effect);
