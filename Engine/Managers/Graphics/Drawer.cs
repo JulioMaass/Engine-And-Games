@@ -54,8 +54,9 @@ public static class Drawer
         PaletteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/PaletteShader");
         WhiteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/WhiteShader");
         AreaLightShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/AreaLightShader");
-        BloomManager.BloomEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomShader");
+        BlurManager.BlurEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BlurShader");
         BloomManager.BloomMaskEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomMaskShader");
+        CrtManager.CrtEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/CrtShader");
     }
 
     private static void LoadTextures(string folder)

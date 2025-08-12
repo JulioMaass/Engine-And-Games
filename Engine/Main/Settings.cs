@@ -1,5 +1,4 @@
-﻿using Engine.GameSpecific;
-using Engine.Managers.StageEditing;
+﻿using Engine.Managers.StageEditing;
 using Engine.Types;
 using Microsoft.Xna.Framework.Graphics;
 using System;

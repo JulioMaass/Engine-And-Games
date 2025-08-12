@@ -63,6 +63,7 @@ public static class GameManager // Role: Control game states and main loop
         DebugMode.CleanUp();
 
         // Video // TODO: Check where to place this so the screen dimmer works as intended at every intended use
+        CrtManager.Update();
         ScreenDimmer.Update();
         ScreenTextManager.Update();
 

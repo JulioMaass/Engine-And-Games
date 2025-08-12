@@ -13,6 +13,8 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
     public static RenderTarget2D GameScreenRender { get; private set; } // Used to draw screen in the original aspect ratio, then later draw this render resized
     private static RenderTarget2D HudRender { get; set; }
     private static RenderTarget2D EditingMenuRender { get; set; }
+    private static RenderTarget2D FinalRender { get; set; }
+    private static RenderTarget2D PostFxRender { get; set; }
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static SpriteBatch SpriteBatch { get; private set; }
 
@@ -29,11 +31,11 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         GameScreenRender = NewRenderTarget(Settings.ScreenSize);
         HudRender = NewRenderTarget(Settings.ScreenSize);
         EditingMenuRender = NewRenderTarget(Settings.EditingMenuWidth, Settings.ScreenScaledSize.Height);
-
+        FinalRender = NewRenderTarget(Settings.ScreenScaledSize);
+        PostFxRender = NewRenderTarget(Settings.ScreenScaledSize);
 
         ResizeScreen(Settings.ScreenScaledSize);
     }
-
 
     public static RenderTarget2D NewRenderTarget(int w, int h) =>
         new(Graphics.GraphicsDevice, w, h);
@@ -67,7 +69,8 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         DrawGameScreen();
         DrawHud();
         DrawEditingMenu();
-        DrawToScreenScaled();
+        DrawFinalRender();
+        DrawPostFx();
     }
 
     private static void DrawGameScreen()
@@ -80,7 +83,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         GameLoopManager.Draw();
         SpriteBatch.End();
 
-        BloomManager.DrawBloom();
+        BloomManager.DrawBloomMask();
         LightingManager.ApplyLighting();
     }
 
@@ -102,26 +105,39 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         SpriteBatch.End();
     }
 
-    private static void DrawToScreenScaled()
+    private static void DrawFinalRender()
     {
-        Graphics.GraphicsDevice.SetRenderTarget(null);
+        Graphics.GraphicsDevice.SetRenderTarget(FinalRender);
         SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-        SpriteBatch.Draw(GameScreenRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), CustomColor.White);
+        SpriteBatch.Draw(GameScreenRender, new IntRectangle(IntVector2.Zero, Settings.ScreenScaledSize), CustomColor.White);
         SpriteBatch.End();
         BloomManager.DrawRender();
         SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         if (!StageEditor.IsOn)
-            SpriteBatch.Draw(HudRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), CustomColor.White);
-        else
-        {
-            var menuX = Camera.FullScreenOffset.X + Settings.ScreenScaledSize.Width;
-            SpriteBatch.Draw(EditingMenuRender, new Rectangle(menuX, Camera.FullScreenOffset.Y, Settings.EditingMenuWidth, Settings.ScreenScaledSize.Height), CustomColor.White);
-        }
+            SpriteBatch.Draw(HudRender, new IntRectangle(IntVector2.Zero, Settings.ScreenScaledSize), CustomColor.White);
         // Apply screen dimmer
         if (ScreenDimmer.Brightness < 1f)
             Drawer.DrawRectangle(IntVector2.Zero, Settings.ScreenScaledSize, CustomColor.Black * (1f - ScreenDimmer.Brightness));
         SpriteBatch.End();
     }
+
+    private static void DrawPostFx()
+    {
+        Graphics.GraphicsDevice.SetRenderTarget(PostFxRender);
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp);
+        SpriteBatch.Draw(FinalRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
+        SpriteBatch.End();
+        if (CrtManager.IsOn)
+            BlurManager.RenderBlur(4, 1.78f, 1f, PostFxRender, true, PostFxRender);
+        Graphics.GraphicsDevice.SetRenderTarget(null);
+        var effect = CrtManager.IsOn ? CrtManager.CrtEffect : null;
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null, effect);
+        SpriteBatch.Draw(PostFxRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
+        if (StageEditor.IsOn)
+            SpriteBatch.Draw(EditingMenuRender, new Rectangle(Settings.ScreenScaledSize.Width, 0, Settings.EditingMenuWidth, Settings.ScreenScaledSize.Height), CustomColor.White);
+        SpriteBatch.End();
+    }
+
 
     public static void DrawStringWithOutline(SpriteFont font, string text, Vector2 position, Color color)
     {
