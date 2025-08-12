@@ -128,7 +128,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         SpriteBatch.Draw(FinalRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
         SpriteBatch.End();
         if (CrtManager.IsOn)
-            BlurManager.RenderBlur(4, 1.78f, 1f, PostFxRender, true, PostFxRender);
+            BlurManager.RenderBlur(1, 1.78f, 1f, PostFxRender, true, PostFxRender);
         Graphics.GraphicsDevice.SetRenderTarget(null);
         var effect = CrtManager.IsOn ? CrtManager.CrtEffect : null;
         SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null, effect);

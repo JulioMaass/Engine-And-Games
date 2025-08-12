@@ -52,11 +52,14 @@ float3 filmic(float3 LinearColor)
 
 float2 curve(float2 uv)
 {
-    uv = (uv - 0.5) * Curvature;
-    uv *= 1.1; // float2(0.925, 1.095);
-    uv.x *= 1.0 + pow((abs(uv.y) / 5.0), 2.0); // 4.0)
-    uv.y *= 1.0 + pow((abs(uv.x) / 4.0), 2.0); // 3.0)
-    uv = (uv / Curvature) + 0.5;
+    uv = (uv - 0.5); // * 2.0;
+    //uv.x *= 0.75;
+    uv *= float2(0.925, 1.095);
+    uv *= Curvature;
+    uv.x *= 1.0 + pow((abs(uv.y) / 4.0), 2.0);
+    uv.y *= 1.0 + pow((abs(uv.x) / 3.0), 2.0);
+    uv /= Curvature;
+    uv += 0.5;
     uv = uv * 0.92 + 0.04;
     return uv;
 }
@@ -75,21 +78,22 @@ float mod(float x, float y) // Implementation of GLSL mod for HLSL
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float2 resolution = OutputSize;
-    float time = FrameCount;
+    float time = mod(FrameCount, 849.0) * 36.0;
     float2 uv = input.TextureCoordinates;
     
     // Curve
     float2 curved_uv = lerp(curve(uv), uv, 0.4);
-    float scale = 0.04;
+    float scale = -0.101;
     float2 scuv = curved_uv * (1.0 - scale) + scale / 2.0 + float2(0.003, -0.001);
+    uv = scuv;
 
     // Main Color, Bleed
-    float3 col;
     float x = WiggleToggle * sin(0.1 * time + curved_uv.y * 13.0) * sin(0.23 * time + curved_uv.y * 19.0) * sin(0.3 + 0.11 * time + curved_uv.y * 23.0) * 0.0012;
     // Add scanline oscillation effect
-    float o = sin(input.Position.y * 1.5) / resolution.x;
-    x += o * 0.25; // Julio: 0.125;
+    float o = sin(input.Position.y * 2.0) / resolution.x; // 0.15
+    x += o * 0.125; // 0.25;
     // color sampling with slight offsets for RGB channels to create color bleed effect
+    float3 col;
     col.r = tsample(float2(x + scuv.x + 0.0009, scuv.y + 0.0009), resolution.y / 800.0, resolution).r + 0.02;
     col.g = tsample(float2(x + scuv.x + 0.0000, scuv.y - 0.0011), resolution.y / 800.0, resolution).g + 0.02;
     col.b = tsample(float2(x + scuv.x - 0.0015, scuv.y + 0.0000), resolution.y / 800.0, resolution).b + 0.02;
@@ -117,14 +121,14 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     col = clamp(col * 1.3 + 0.75 * col * col + 1.25 * col * col * col * col * col, 0.0, 10.0);
     
     // Vignette
-    float vig = ((1.0 - 0.9 * Vignette) + 1.0 * 16.0 * curved_uv.x * curved_uv.y * (1.0 - curved_uv.x) * (1.0 - curved_uv.y));
+    float vig = ((1.0 - 0.99 * Vignette) + 1.0 * 16.0 * curved_uv.x * curved_uv.y * (1.0 - curved_uv.x) * (1.0 - curved_uv.y));
     vig = 1.3 * pow(vig, 0.5);
     col *= vig;
     
     // Scanlines
-    float scanRoll = time * ScanRoll; // Julio 0.18 -> 0.1; 1.5 -> 2.2
+    float scanRoll = time * ScanRoll;
     //float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 2.0), 0.0, 1.0);
-    float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 1.5), 0.0, 1.0);
+    float scans = clamp(0.35 + 0.1 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 2.20), 0.0, 1.0);
     float s = pow(scans, 0.9);
     col = col * s;
     
@@ -141,12 +145,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     // Flicker
     col *= (1.0 - 0.004 * (sin(50.0 * time + curved_uv.y * 2.0) * 0.5 + 0.5));
 
-    // Clamp
-    if (curved_uv.x < 0.0 || curved_uv.x > 1.0)
-        col *= 0.0;
-    if (curved_uv.y < 0.0 || curved_uv.y > 1.0)
-        col *= 0.0;
-    
+    uv = curved_uv;
     //// Frame
     //float2 fscale = float2(0.026, -0.018);
     //uv = float2(uv.x, 1. - uv.y);
