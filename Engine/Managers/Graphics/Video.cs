@@ -1,4 +1,5 @@
-﻿using Engine.Helpers;
+﻿using Engine.GameSpecific;
+using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.GameModes;
 using Engine.Managers.StageEditing;
@@ -70,7 +71,8 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         DrawHud();
         DrawEditingMenu();
         DrawFinalRender();
-        DrawOverlay();
+        if (GameManager.GameSpecificSettings.CurrentGame == GameId.CrtTest)
+            DrawScreenTest();
         DrawPostFx();
     }
 
@@ -122,7 +124,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         SpriteBatch.End();
     }
 
-    private static void DrawOverlay()
+    private static void DrawScreenTest()
     {
         Graphics.GraphicsDevice.SetRenderTarget(FinalRender);
         SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
