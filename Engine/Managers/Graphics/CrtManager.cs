@@ -12,7 +12,7 @@ public static class CrtManager
     public static IntVector2 OutputSize => Settings.ScreenScaledSize;
 
     // Preferences
-    public static bool WiggleToggle { get; set; }
+    public static bool WiggleToggle { get; set; } = true;
     public static float Curvature { get; set; } = 2.0f; // Mattias: 2.0f
 
     public static void Update()
@@ -21,14 +21,14 @@ public static class CrtManager
         var wiggleToggle = WiggleToggle ? 1.0f : 0.0f;
         var curvature = Curvature;
 
-        CrtEffect.Parameters["FrameCount"].SetValue(_frameCount++);
+        //CrtEffect.Parameters["FrameCount"].SetValue(_frameCount++);
         CrtEffect.Parameters["OutputSize"].SetValue(OutputSize);
 
         CrtEffect.Parameters["WiggleToggle"].SetValue(wiggleToggle);
         CrtEffect.Parameters["Curvature"].SetValue(curvature);
-        CrtEffect.Parameters["Ghosting"].SetValue(0.5f);
+        //CrtEffect.Parameters["Ghosting"].SetValue(0.5f);
         CrtEffect.Parameters["Vignette"].SetValue(1.0f);
-        //CrtEffect.Parameters["ScanRoll"].SetValue(0.0f);
+        //CrtEffect.Parameters["ScanRoll"].SetValue(1.0f);
 
         //if (_frameCount % 120 == 0)
         //    IsOn = !IsOn; // Toggle every 120 frames for testing purposes

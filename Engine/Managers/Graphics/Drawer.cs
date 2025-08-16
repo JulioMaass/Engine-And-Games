@@ -55,6 +55,7 @@ public static class Drawer
         WhiteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/WhiteShader");
         AreaLightShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/AreaLightShader");
         BlurManager.BlurEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BlurShader");
+        AccumulatorManager.AccumulateEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/AccumulatorShader");
         BloomManager.BloomMaskEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BloomMaskShader");
         CrtManager.CrtEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/CrtShader");
     }

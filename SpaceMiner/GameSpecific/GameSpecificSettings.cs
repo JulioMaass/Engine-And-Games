@@ -1,10 +1,10 @@
 ﻿using Engine.GameSpecific;
+using Engine.GameSpecific.Placeholders;
 using Engine.Main;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
 using SpaceMiner.GameSpecific.Entities.Player;
 using SpaceMiner.GameSpecific.Managers;
-using SpaceMiner.GameSpecific.Tilesets;
 
 namespace SpaceMiner.GameSpecific;
 
@@ -23,9 +23,8 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
         MainLoop = typeof(SpaceMinerMainLoop);
         GlobalValues = typeof(SpaceMinerGlobalValues);
 
-        DefaultTilesetType = typeof(SpaceMinerTestTileset);
-        TilesetTypes.Add(typeof(SpaceMinerTestTileset));
-        //TilesetTypes.Add(typeof(CemeteryTileset));
+        DefaultTilesetType = typeof(PlaceholderTileset);
+        TilesetTypes.Add(typeof(PlaceholderTileset));
 
         GameFolder = "SPACEMINER";
         StageFiles.Add("defaultStageSpaceMiner");

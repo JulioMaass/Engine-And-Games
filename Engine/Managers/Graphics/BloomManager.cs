@@ -25,7 +25,7 @@ public static class BloomManager
         DrawBloomEntities();
         Video.SpriteBatch.End();
         DrawingBloom = false;
-        BlurManager.RenderBlur(10, 5f, 2.65f, BloomRender, false, BloomRender);
+        BlurManager.RenderBlur(10, 5f, 2.65f, BloomRender, 1, 1);
     }
 
     private static void DrawBloomEntities()
@@ -43,7 +43,7 @@ public static class BloomManager
         if (!IsOn)
             return;
         Video.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp);
-        Video.SpriteBatch.Draw(BloomRender, new IntRectangle(IntVector2.Zero, Settings.ScreenScaledSize), CustomColor.White);
+        Video.SpriteBatch.Draw(BloomRender, new IntRectangle(IntVector2.Zero, Settings.ScreenSize), CustomColor.White);
         Video.SpriteBatch.End();
     }
 }

@@ -30,7 +30,7 @@ public static class LightingManager
             positions[id] = new Vector2(entity.Position.Pixel.X, entity.Position.Pixel.Y) - (Vector2)Camera.Panning;
             (radius1[id], radius2[id]) = entity.LightSource.GetRadius();
             // Case zoomed out
-            if (Camera.ZoomScale == 1)
+            if (Camera.ZoomScale == (1, 1))
             {
                 positions[id] /= 3f;
                 positions[id] += (Vector2)Settings.RoomSizeInPixels / 3;

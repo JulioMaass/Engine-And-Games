@@ -8,11 +8,21 @@
 #define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
+// Properties
+float AccumulationStrength;
+float RenderCapValue;
+
 // Texture and Sampler Setup
 Texture2D SpriteTexture;
 sampler2D SpriteTextureSampler = sampler_state
 {
     Texture = <SpriteTexture>;
+    Filter = Point;
+};
+Texture2D AccumulatorTexture;
+sampler2D AccumulatorTextureSampler = sampler_state
+{
+    Texture = <AccumulatorTexture>;
     Filter = Point;
 };
 
@@ -27,8 +37,9 @@ struct VertexShaderOutput
 // Pixel Shader
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-    float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates) * input.Color;
-    return color;
+    float4 renderColor = tex2D(SpriteTextureSampler, input.TextureCoordinates) * input.Color;
+    float4 accumulatedColor = tex2D(AccumulatorTextureSampler, input.TextureCoordinates) * input.Color * AccumulationStrength;
+    return max(renderColor * RenderCapValue, accumulatedColor);
 }
 
 // Technique and Pass

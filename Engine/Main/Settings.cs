@@ -22,7 +22,7 @@ public static class Settings
 
     // Screen sizes
     public static IntVector2 ScreenSize { get; set; }
-    public static int ScreenScale { get; private set; }
+    public static IntVector2 ScreenScale { get; private set; }
     public static IntVector2 ScreenScaledSize => ScreenSize * ScreenScale;
     public static IntVector2 ZoomOutOffset { get; private set; }
 
@@ -44,7 +44,7 @@ public static class Settings
 
     public static void SetScreenScale(int scale)
     {
-        ScreenScale = scale;
+        ScreenScale = (5, 4); // scale;
         ZoomOutOffset = ScreenSize * (ScreenScale - 1) / 2;
     }
 

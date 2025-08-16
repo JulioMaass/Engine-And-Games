@@ -14,6 +14,8 @@ sampler2D SpriteTextureSampler = sampler_state
 {
     Texture = <SpriteTexture>;
     Filter = Point;
+    AddressU = Clamp;
+    AddressV = Clamp;
 };
 
 // Outside Variables
@@ -34,7 +36,7 @@ float4 MainPS(float2 texCoord : TEXCOORD0) : COLOR0
 {
     float2 texelSize = float2(1.0f / (float) TargetSize.x, 1.0f / (float) TargetSize.y);
     float4 color = float4(0, 0, 0, 0);
-        
+    
     // Sample and accumulate
     [loop]
     for (int i = -10; i <= 10; i++)

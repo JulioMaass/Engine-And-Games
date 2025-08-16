@@ -25,6 +25,7 @@ public static class GameManager // Role: Control game states and main loop
         Camera.Initialize();
         Video.Initialize();
         Drawer.Initialize();
+        ScreenTest.Initialize();
         AudioManager.Initialize();
         MenuManager.CreateMenu(GameSpecificSettings.InitialMenu);
     }
@@ -63,6 +64,7 @@ public static class GameManager // Role: Control game states and main loop
         DebugMode.CleanUp();
 
         // Video // TODO: Check where to place this so the screen dimmer works as intended at every intended use
+        ScreenTest.Update();
         CrtManager.Update();
         ScreenDimmer.Update();
         ScreenTextManager.Update();

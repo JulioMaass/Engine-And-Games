@@ -22,7 +22,10 @@ Texture2D SpriteTexture;
 sampler2D SpriteTextureSampler = sampler_state
 {
     Texture = <SpriteTexture>;
-    Filter = Point;
+    AddressU = Border;
+    AddressV = Border;
+    BorderColor = 0x000000;
+    Filter = Linear;
 };
 
 // Vertex Shader Output Setup
@@ -50,13 +53,26 @@ float3 filmic(float3 LinearColor)
     return (x * (6.2 * x + 0.5)) / (x * (6.2 * x + 1.7) + 0.06);
 }
 
-float2 curve(float2 uv)
+//float2 curve(float2 uv) // NewPixieMattias
+//{
+//    uv = (uv - 0.5) * Curvature; 
+//    uv *= 1.1; // float2(0.925, 1.095);
+//    uv.x *= 1.0 + pow((abs(uv.y) / 5.0), 2.0); // 4.0)
+//    uv.y *= 1.0 + pow((abs(uv.x) / 4.0), 2.0); // 3.0)
+//    uv = (uv / Curvature) + 0.5;
+//    uv = uv * 0.92 + 0.04;
+//    return uv;
+//}
+
+float2 curve(float2 uv) // NewPixieRetroArch
 {
-    uv = (uv - 0.5) * Curvature;
-    uv *= 1.1; // float2(0.925, 1.095);
-    uv.x *= 1.0 + pow((abs(uv.y) / 5.0), 2.0); // 4.0)
-    uv.y *= 1.0 + pow((abs(uv.x) / 4.0), 2.0); // 3.0)
-    uv = (uv / Curvature) + 0.5;
+    uv = (uv - 0.5);
+    uv *= float2(0.925, 1.095);
+    uv *= Curvature;
+    uv.x *= 1.0 + pow((abs(uv.y) / 4.0), 2.0);
+    uv.y *= 1.0 + pow((abs(uv.x) / 3.0), 2.0);
+    uv /= Curvature;
+    uv += 0.5;
     uv = uv * 0.92 + 0.04;
     return uv;
 }
@@ -75,24 +91,26 @@ float mod(float x, float y) // Implementation of GLSL mod for HLSL
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float2 resolution = OutputSize;
-    float time = FrameCount;
+    float time = 0; //FrameCount;
     float2 uv = input.TextureCoordinates;
     
     // Curve
     float2 curved_uv = lerp(curve(uv), uv, 0.4);
-    float scale = 0.04;
-    float2 scuv = curved_uv * (1.0 - scale) + scale / 2.0 + float2(0.003, -0.001);
+    float scale = -0.101; // NewPixieMattias: 0.04; NewPixieRetroArch: -0.101;
+    float2 scuv = curved_uv * (1.0 - scale) + scale / 2.0 + float2(0.003, 0.001);
 
     // Main Color, Bleed
     float3 col;
-    float x = WiggleToggle * sin(0.1 * time + curved_uv.y * 13.0) * sin(0.23 * time + curved_uv.y * 19.0) * sin(0.3 + 0.11 * time + curved_uv.y * 23.0) * 0.0012;
+    float x = WiggleToggle * sin(0.1 * time + (1 - curved_uv.y) * 13.0) * sin(0.23 * time + (1 - curved_uv.y) * 19.0) * sin(0.3 + 0.11 * time + (1 - curved_uv.y) * 23.0) * 0.0012;
     // Add scanline oscillation effect
     float o = sin(input.Position.y * 1.5) / resolution.x;
     x += o * 0.25; // Julio: 0.125;
     // color sampling with slight offsets for RGB channels to create color bleed effect
-    col.r = tsample(float2(x + scuv.x + 0.0009, scuv.y + 0.0009), resolution.y / 800.0, resolution).r + 0.02;
-    col.g = tsample(float2(x + scuv.x + 0.0000, scuv.y - 0.0011), resolution.y / 800.0, resolution).g + 0.02;
+    col.r = tsample(float2(x + scuv.x + 0.0009, scuv.y - 0.0009), resolution.y / 800.0, resolution).r + 0.02;
+    col.g = tsample(float2(x + scuv.x + 0.0000, scuv.y + 0.0011), resolution.y / 800.0, resolution).g + 0.02;
     col.b = tsample(float2(x + scuv.x - 0.0015, scuv.y + 0.0000), resolution.y / 800.0, resolution).b + 0.02;
+    
+    //col = tex2D(SpriteTextureSampler, uv).rgb;
     
     // Ghosting
     float i = clamp(col.r * 0.299 + col.g * 0.587 + col.b * 0.114, 0.0, 1.0);
@@ -108,44 +126,47 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     float3 b = tsample(float2(x - 0.017 * 1.0, -0.003) * 0.85 + 0.007 * float2(0.35 * sin(2.0 / 3.0 + 15.0 * curved_uv.y + 0.7 * time),
         0.35 * cos(2.0 / 3.0 + 10.0 * curved_uv.y + 1.63 * time)) + float2(scuv.x - 0.002, scuv.y + 0.000),
         5.3 + 1.3 * sin(3.0 / 7.0 + 91.0 * curved_uv.x + 1.65 * time), resolution).xyz * float3(0.25, 0.25, 0.5);
-    col += (ghs * (1.0 - 0.299)) * pow(clamp(3.0 * r, 0.0, 1.0), 2.0) * i;
-    col += (ghs * (1.0 - 0.587)) * pow(clamp(3.0 * g, 0.0, 1.0), 2.0) * i;
-    col += (ghs * (1.0 - 0.114)) * pow(clamp(3.0 * b, 0.0, 1.0), 2.0) * i;
+    //col += (ghs * (1.0 - 0.299)) * pow(clamp(3.0 * r, 0.0, 1.0), 2.0) * i;
+    //col += (ghs * (1.0 - 0.587)) * pow(clamp(3.0 * g, 0.0, 1.0), 2.0) * i;
+    //col += (ghs * (1.0 - 0.114)) * pow(clamp(3.0 * b, 0.0, 1.0), 2.0) * i;
     
     // Level adjustment (curves)
     col *= float3(0.95, 1.05, 0.95);
     col = clamp(col * 1.3 + 0.75 * col * col + 1.25 * col * col * col * col * col, 0.0, 10.0);
     
     // Vignette
-    float vig = ((1.0 - 0.9 * Vignette) + 1.0 * 16.0 * curved_uv.x * curved_uv.y * (1.0 - curved_uv.x) * (1.0 - curved_uv.y));
+    // NewPixieMattias
+    //float vig = ((1.0 - 0.9 * Vignette) + 1.0 * 16.0 * curved_uv.x * curved_uv.y * (1.0 - curved_uv.x) * (1.0 - curved_uv.y));
+    // NewPixieRetroArch
+    float vig = ((1.0 - 0.99 * Vignette) + 1.0 * 16.0 * curved_uv.x * curved_uv.y * (1.0 - curved_uv.x) * (1.0 - curved_uv.y));
     vig = 1.3 * pow(vig, 0.5);
     col *= vig;
     
     // Scanlines
-    float scanRoll = time * ScanRoll; // Julio 0.18 -> 0.1; 1.5 -> 2.2
+    float scanRoll = 0; //time * -ScanRoll; // Julio 0.18 -> 0.1; 1.5 -> 2.2
     //float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 2.0), 0.0, 1.0);
-    float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 1.5), 0.0, 1.0);
+    float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - (1 - curved_uv.y) * resolution.y * 1.5), 0.0, 1.0);
     float s = pow(scans, 0.9);
     col = col * s;
     
-    // Vertical lines (shadow mask)
+    // Vertical lines (shadow mask)                 Testing: OK
     col *= 1.0 - 0.23 * (clamp((mod(input.Position.xy.x, 3.0)) / 2.0, 0.0, 1.0));
     
-    // Tone map
+    // Tone map                                     Testing: OK
     col = filmic(col);
     
-    // Noise
-    float2 seed = curved_uv * resolution.xy;;
-    col -= 0.015 * pow(float3(rand(seed + time), rand(seed + time * 2.0), rand(seed + time * 3.0)), 1.5);
+    //// Noise
+    //float2 seed = curved_uv * resolution.xy;;
+    //col -= 0.015 * pow(float3(rand(seed + time), rand(seed + time * 2.0), rand(seed + time * 3.0)), 1.5);
 
     // Flicker
-    col *= (1.0 - 0.004 * (sin(50.0 * time + curved_uv.y * 2.0) * 0.5 + 0.5));
+    //col *= (1.0 - 0.004 * (sin(50.0 * time + curved_uv.y * 2.0) * 0.5 + 0.5));
 
-    // Clamp
-    if (curved_uv.x < 0.0 || curved_uv.x > 1.0)
-        col *= 0.0;
-    if (curved_uv.y < 0.0 || curved_uv.y > 1.0)
-        col *= 0.0;
+    //// Clamp
+    //if (curved_uv.x < 0.0 || curved_uv.x > 1.0)
+    //    col *= 0.0;
+    //if (curved_uv.y < 0.0 || curved_uv.y > 1.0)
+    //    col *= 0.0;
     
     //// Frame
     //float2 fscale = float2(0.026, -0.018);
@@ -154,6 +175,14 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     //f.xyz = lerp(f.xyz, float3(0.5, 0.5, 0.5), 0.5);
     //float fvig = clamp(-0.00 + 512.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.2, 0.8);
     //col = lerp(col, lerp(max(col, 0.0), pow(abs(f.xyz), 1.4) * fvig, f.w * f.w), 1.0); // last float is "use frame"
+    
+    //col.r = curved_uv.x;
+    //col.g = 1.0 - curved_uv.y;
+    //col.b = 0;
+
+    //col.r = input.Position.x;
+    //col.g = input.Position.y;
+    //col.b = 0;
     
     // Output final color
     return float4(col, 1.0);

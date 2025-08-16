@@ -12,9 +12,8 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
         CurrentGame = GameId.CrtTest;
 
         Settings.TileSize = IntVector2.New(16, 16);
-        Settings.RoomSizeInTiles = IntVector2.New(20, 14) * 4;
+        Settings.RoomSizeInTiles = IntVector2.New(16, 14);
         Settings.ScreenSize = Settings.TileSize * Settings.RoomSizeInTiles;
-        Settings.SetScreenScale(1);
         MainLoop = typeof(CrtTestMainLoop);
         GlobalValues = typeof(CrtTestGlobalValues);
 

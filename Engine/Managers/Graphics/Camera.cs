@@ -20,7 +20,7 @@ public static class Camera
     public static Vector2 FractionalPanning { get; private set; }
     public static IntVector2 ZoomPanning => GetZoomPanning();
     private static IntVector2 TransitionStartingPoint { get; set; }
-    public static int ZoomScale { get; private set; }
+    public static IntVector2 ZoomScale { get; private set; }
     public static IntVector2 CameraCenter => Panning + Settings.ScreenSize / 2;
     public static IntVector2 FullScreenOffset { get; private set; }
 
@@ -49,9 +49,9 @@ public static class Camera
 
     public static void ZoomOut()
     {
-        if (ZoomScale == 1)
+        if (ZoomScale == (1, 1))
             return;
-        ZoomScale = 1;
+        ZoomScale = (1, 1);
 
         var zoomSize = Settings.ScreenScaledSize / ZoomScale;
         Video.UpdateScreenRender(zoomSize);
@@ -74,7 +74,7 @@ public static class Camera
 
     private static IntVector2 GetZoomPanning()
     {
-        if (ZoomScale == 1)
+        if (ZoomScale == (1, 1))
             return Panning - Settings.ZoomOutOffset;
         return Panning;
     }
@@ -160,7 +160,7 @@ public static class Camera
     {
         var screenLimits = new IntRectangle(Panning, Settings.ScreenSize);
         //return screenLimits; // To debug drawing optimizations // TODO: Always debug this before releasing to the public
-        var currentZoomOutOffset = ZoomScale == 1 ? Settings.ZoomOutOffset : IntVector2.Zero;
+        var currentZoomOutOffset = ZoomScale == (1, 1) ? Settings.ZoomOutOffset : IntVector2.Zero;
         return new IntRectangle(screenLimits.Position - currentZoomOutOffset, screenLimits.Size + currentZoomOutOffset * 2);
     }
 }
