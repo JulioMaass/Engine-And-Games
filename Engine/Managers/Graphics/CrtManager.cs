@@ -6,7 +6,7 @@ namespace Engine.Managers.Graphics;
 
 public static class CrtManager
 {
-    public static bool IsOn { get; set; } = true; // CRT effect toggle
+    public static bool IsOn { get; set; } = false; // CRT effect toggle
     public static Effect CrtEffect;
     private static uint _frameCount;
     public static IntVector2 OutputSize => Settings.ScreenScaledSize;
@@ -57,7 +57,7 @@ public static class CrtManager
         CrtEffect.Parameters["ScanRoll"]?.SetValue(scanRoll);
         CrtEffect.Parameters["VerticalLinesDepth"]?.SetValue(VerticalLinesDepth);
 
-        if (_frameCount % 120 == 0)
-            IsOn = !IsOn; // Toggle every 120 frames for testing purposes
+        //if (_frameCount % 120 == 0)
+        //    IsOn = !IsOn; // Toggle every 120 frames for testing purposes
     }
 }

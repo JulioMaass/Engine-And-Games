@@ -93,7 +93,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             // Get item price
             var ownedAmount = GlobalManager.Values.MainCharData.Equipment.Count(e => e.Type == GetType());
-            var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
+            var itemPrice = ItemPrice?.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
                 priceString = "-";
@@ -106,7 +106,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                 }
             }
             var color = CustomColor.White;
-            if (!ItemPrice.CanBuy(ownedAmount))
+            if (ItemPrice?.CanBuy(ownedAmount) != true)
                 color = CustomColor.Gray;
 
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
@@ -141,7 +141,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             ItemPrice.SubtractResources(ownedAmount);
 
             // Unlock and equip item
-            GlobalManager.Values.MainCharData.AddEquipment(GetType(), 1);
+            GlobalManager.Values.MainCharData.AddSwitchEquipment(GetType(), 1, 0);
             GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
         };
     }

@@ -26,6 +26,6 @@ public class ItemGetter : Component
 
         // Get Equipment
         if (entity.EquipmentItemStats?.Stats != null && Owner.EquipmentHolder != null)
-            GlobalManager.Values.MainCharData.AddEquipmentLevel(entity.GetType());
+            GlobalManager.Values.MainCharData.AddSwitchEquipment(entity.GetType(), 1, 1);
     }
 }

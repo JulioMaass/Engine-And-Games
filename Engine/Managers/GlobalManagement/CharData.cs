@@ -20,17 +20,14 @@ public class CharData
     // Owner
     private Entity Char => EntityManager.PlayerEntity;
 
-    public void AddEquipmentLevel(Type itemType)
+    public void AddSwitchEquipment(Type itemType, int startLevel, int stackLevel)
     {
         if (!Equipment.Exists(i => i.Type == itemType))
-            Equipment.Add(new EquipmentData(itemType, 0));
-
-        Equipment.FirstOrDefault(i => i.Type == itemType)!.Level += 1;
-    }
-
-    public void AddEquipment(Type itemType, int level)
-    {
-        Equipment.Add(new EquipmentData(itemType, level));
+        {
+            Equipment.Add(new EquipmentData(itemType, startLevel));
+            return;
+        }
+        Equipment.FirstOrDefault(i => i.Type == itemType)!.Level += stackLevel;
     }
 
     public int GetEquipmentCount(Type itemType)
@@ -136,6 +133,6 @@ public class CharData
             return;
         Equipment.FirstOrDefault(e => e.Type == weaponType)
             .GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
-            .AddEquipment(GetType(), 1);
+            .AddEquipment(upgradeType, 1);
     }
 }

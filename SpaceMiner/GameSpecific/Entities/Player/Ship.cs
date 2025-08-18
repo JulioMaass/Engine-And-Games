@@ -1,8 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
-using SpaceMiner.GameSpecific.Entities.Shooters;
 using SpaceMiner.GameSpecific.States;
 
 
@@ -28,16 +26,14 @@ public class Ship : Entity
         AddMoveSpeed(2f);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
-        Shooter = new ShipShooterBasic(this);
+        //Shooter = new ShipShooterBasic(this);
         AddShootDirection(270000);
 
         AddItemGetter();
         EquipmentHolder = new(this);
-        EquipmentHolder.CharData.EquipOnRespawn = true;
 
         AddStateManager();
         var state = NewState(new StatePlayerControl());
         StateManager.AutomaticStatesList.Add(state);
     }
-
 }

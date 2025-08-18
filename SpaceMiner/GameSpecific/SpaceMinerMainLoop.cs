@@ -4,9 +4,11 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Managers;
 using Engine.Managers.GameModes;
+using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using SpaceMiner.GameSpecific.Entities.Background;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using SpaceMiner.GameSpecific.Managers;
 using System.Linq;
 
@@ -22,6 +24,11 @@ public class SpaceMinerMainLoop : GameLoop
         Drawer.BackgroundColor = new(7, 14, 27, 255);
         SetTimer();
         GenerateInitialStars();
+
+        // Starting weapon
+        GlobalManager.Values.MainCharData.AddSwitchEquipment(typeof(MenuItemBasicShot), 1, 0);
+        if (EntityManager.PlayerEntity.Shooter == null)
+            GlobalManager.Values.MainCharData.TryToEquipItem(typeof(MenuItemBasicShot));
     }
 
     private void SetTimer()
