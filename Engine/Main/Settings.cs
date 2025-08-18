@@ -32,7 +32,7 @@ public static class Settings
     public static void Initialize()
     {
         LaptopModeIsOn = DisplaySize.Width < 1920;
-        SetScreenScale(LaptopModeIsOn ? 2 : 3);
+        SetScreenScale(LaptopModeIsOn ? (2, 2) : (3, 3));
     }
 
     public static int GetMaxScreenScale()
@@ -42,9 +42,9 @@ public static class Settings
         return Math.Min(xScale, yScale);
     }
 
-    public static void SetScreenScale(int scale)
+    public static void SetScreenScale(IntVector2 scale)
     {
-        ScreenScale = (5, 4); // scale;
+        ScreenScale = scale; // (5, 4); for Wonder Boy screen test
         ZoomOutOffset = ScreenSize * (ScreenScale - 1) / 2;
     }
 

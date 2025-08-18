@@ -16,6 +16,9 @@ float Curvature;
 float Ghosting;
 float Vignette;
 float ScanRoll;
+float ScanlinesDepth;
+float ScanlinesSpacing;
+float VerticalLinesDepth;
 
 // Texture and Sampler Setup
 Texture2D SpriteTexture;
@@ -91,7 +94,7 @@ float mod(float x, float y) // Implementation of GLSL mod for HLSL
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float2 resolution = OutputSize;
-    float time = 0; //FrameCount;
+    float time = FrameCount;
     float2 uv = input.TextureCoordinates;
     
     // Curve
@@ -143,14 +146,13 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     col *= vig;
     
     // Scanlines
-    float scanRoll = 0; //time * -ScanRoll; // Julio 0.18 -> 0.1; 1.5 -> 2.2
-    //float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - curved_uv.y * resolution.y * 2.0), 0.0, 1.0);
-    float scans = clamp(0.35 + 0.18 * sin(6.0 * scanRoll - (1 - curved_uv.y) * resolution.y * 1.5), 0.0, 1.0);
+    float scanRoll = time * -ScanRoll;
+    float scans = clamp(0.35 + ScanlinesDepth * sin(6.0 * scanRoll - (1 - curved_uv.y) * resolution.y * ScanlinesSpacing), 0.0, 1.0);
     float s = pow(scans, 0.9);
     col = col * s;
     
     // Vertical lines (shadow mask)                 Testing: OK
-    col *= 1.0 - 0.23 * (clamp((mod(input.Position.xy.x, 3.0)) / 2.0, 0.0, 1.0));
+    col *= 1.0 - VerticalLinesDepth * (clamp((mod(input.Position.xy.x, 3.0)) / 2.0, 0.0, 1.0));
     
     // Tone map                                     Testing: OK
     col = filmic(col);
