@@ -6,6 +6,8 @@ using Engine.Managers;
 using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Types;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
+using System;
 using System.Linq;
 
 namespace SpaceMiner.GameSpecific;
@@ -53,8 +55,19 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                     priceString = priceString + resourceCost.Amount + " ";
                 }
             }
+
+            // Check for color limit
+            var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
+            var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
+            var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
+            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellow)) > 0;
+            var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
+            if (colorCount >= 2 && ownedAmount == 0)
+                priceString = "-";
+
+            // Set color
             var color = CustomColor.White;
-            if (!ItemPrice.CanBuy(ownedAmount))
+            if (!ItemPrice.CanBuy(ownedAmount) || priceString == "-")
                 color = CustomColor.Gray;
 
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
@@ -68,6 +81,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-16, 6), CustomColor.White);
         };
 
+        // ReSharper disable once ComplexConditionExpression
         MenuItem.OnSelect = () =>
         {
             // Get item price
@@ -76,8 +90,18 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (itemPrice == null)
                 return;
 
+            // Check for color limit
+            var hasAvailableColorSlot = true;
+            var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
+            var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
+            var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
+            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellow)) > 0;
+            var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
+            if (colorCount >= 2 && ownedAmount == 0)
+                hasAvailableColorSlot = false;
+
             // Check if player has enough resources to buy the item
-            if (!ItemPrice.CanBuy(ownedAmount))
+            if (!ItemPrice.CanBuy(ownedAmount) || !hasAvailableColorSlot)
                 return;
             ItemPrice.SubtractResources(ownedAmount);
 
@@ -96,7 +120,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             var itemPrice = ItemPrice?.GetCurrentPrice(ownedAmount);
             string priceString = null;
             if (itemPrice == null)
-                priceString = "-";
+                priceString = "";
             else
             {
                 foreach (var resourceCost in itemPrice.ResourceCosts)
@@ -105,13 +129,37 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                     priceString = priceString + resourceCost.Amount + " ";
                 }
             }
+
+            // Set color
             var color = CustomColor.White;
-            if (ItemPrice?.CanBuy(ownedAmount) != true)
-                color = CustomColor.Gray;
+
+            // Draw upgrade levels
+            var ownedUpgrades = GlobalManager.Values.MainCharData.GetAllUpgradesOnWeapon(GetType());
+            (Type Type, int Amount) upgrade1 = (ownedUpgrades.FirstOrDefault(), 0);
+            (Type Type, int Amount) upgrade2 = (ownedUpgrades.FirstOrDefault(u => u != upgrade1.Type), 0);
+            foreach (var upgrade in ownedUpgrades)
+                if (upgrade == upgrade1.Type)
+                    upgrade1.Amount++;
+                else if (upgrade == upgrade2.Type)
+                    upgrade2.Amount++;
+            if (upgrade1.Type != null)
+            {
+                CollectionManager.DrawEntityPreview(upgrade1.Type, Position.Pixel + (4, 42), color, 8);
+                Video.SpriteBatch.DrawString(Drawer.MegaManFont, upgrade1.Amount.ToString(), Position.Pixel + (8, 38), color);
+            }
+            if (upgrade2.Type != null)
+            {
+                CollectionManager.DrawEntityPreview(upgrade2.Type, Position.Pixel + (4, 42 + 8), color, 8);
+                Video.SpriteBatch.DrawString(Drawer.MegaManFont, upgrade2.Amount.ToString(), Position.Pixel + (8, 38 + 8), color);
+            }
 
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
             CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), color);
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
+
+            // Draw rectangle selection on current weapon
+            if (GlobalManager.Values.MainCharData.IsItemEquipped(GetType()))
+                Drawer.DrawRectangleOutline(Position.Pixel + (-8, -8), (64, 64), CustomColor.White);
         };
 
         MenuItem.OnSelectDraw = () =>

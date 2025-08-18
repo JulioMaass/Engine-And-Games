@@ -119,11 +119,16 @@ public class CharData
     public int GetAmountOfUpgradesOnWeapon(Type upgradeType, Type weaponType = null)
     {
         weaponType ??= GetCurrentEquippedWeaponType();
-        if (weaponType == null)
-            return 0;
-        return Equipment.FirstOrDefault((e => e.Type == weaponType))
-            .GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
-            .Equipment.Count(e => e.Type == upgradeType);
+        return weaponType == null ? 0 : GetAllUpgradesOnWeapon(weaponType).Count(t => t == upgradeType);
+    }
+
+    public List<Type> GetAllUpgradesOnWeapon(Type weaponType = null)
+    {
+        weaponType ??= GetCurrentEquippedWeaponType();
+        var upgradeList = Equipment.FirstOrDefault(e => e.Type == weaponType)
+            ?.GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
+            .Equipment.Select(e => e.Type).ToList();
+        return upgradeList ?? new List<Type>();
     }
 
     public void AddUpgradeToWeapon(Type upgradeType, Type weaponType = null)
