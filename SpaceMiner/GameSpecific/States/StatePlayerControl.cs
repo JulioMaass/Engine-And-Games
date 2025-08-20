@@ -60,7 +60,7 @@ public class StatePlayerControl : State
 
         // Attack
         AttackFrame--;
-        var fireRate = (int)(Owner.Shooter.AutoFireRate / (1 + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraAttackSpeed)));
+        var fireRate = (int)(Owner.Shooter.AutoFireRate / (1 + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraAttackSpeed, true, true, false)));
         if (Owner.PlayerControl.Button1Hold && AttackFrame <= 10)
             BufferedAttack = true;
         if (AttackFrame <= 0 && BufferedAttack)

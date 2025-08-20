@@ -79,13 +79,13 @@ public class Shooter : Component
         // Damage
         if (BaseDamage > 0)
             shot.DamageDealer.BaseDamage = BaseDamage;
-        var extraDamagePercentage = StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraDamagePercentage);
+        var extraDamagePercentage = GetShooterAddedFloatStats(stats => stats.ExtraDamagePercentage);
         shot.DamageDealer.AddExtraDamage((int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage));
 
         // Size
         if (ShotSize != 0 && shot.Sprite.Resizable)
         {
-            var size = ShotSize + StatsManager.GetAddedStats(Owner, stats => stats.ExtraSize) * SizeScaling;
+            var size = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling;
             shot.Sprite.StretchedSize = new IntVector2(size, size);
             shot.AddCenteredOutlinedCollisionBox();
         }
@@ -97,14 +97,14 @@ public class Shooter : Component
         var speed = ShotSpeed == 0
             ? shot.Speed.MoveSpeed
             : ShotSpeed;
-        speed += StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraSpeed);
+        speed += GetShooterAddedFloatStats(stats => stats.ExtraSpeed);
         shot.Speed.MoveSpeed = speed;
 
         // Blast
-        var blastLevel = StatsManager.GetAddedStats(Owner, stats => stats.AddedBlastLevel);
+        var blastLevel = GetShooterAddedStats(stats => stats.AddedBlastLevel);
         if (blastLevel > 0)
         {
-            var shotSize = ShotSize + StatsManager.GetAddedStats(Owner, stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
+            var shotSize = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
             var blastSize = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotSize;
             var damage = shot.DamageDealer.Damage + BlastBaseDamage + BlastDamageScaling * (blastLevel - 1);
             var color = new Color(255, 127, 0, 255);
@@ -182,14 +182,28 @@ public class Shooter : Component
 
     public void ShootSpread(int middleAngle, int angleBetweenShots, int spawnOffset = 0)
     {
-        var shotMultiplier = (StatsManager.GetAddedStats(Owner, stats => stats.ExtraShots) + 1);
-        var amountOfShots = AmountOfShots * (StatsManager.GetAddedStats(Owner, stats => stats.ExtraShots) + 1);
+        var shotMultiplier = GetShooterAddedStats(stats => stats.ExtraShots) + 1;
+        var amountOfShots = AmountOfShots * shotMultiplier;
         var initialAngle = GetInitialAngle(middleAngle, angleBetweenShots, amountOfShots);
         for (var i = 0; i < amountOfShots; i++)
         {
             var shot = NewShotMovingToDirection(initialAngle + i * angleBetweenShots, spawnOffset);
             shot.Facing.CopyFacingFrom(Owner);
         }
+    }
+
+    private int GetShooterAddedStats(Func<Stats, int?> statSelector)
+    {
+        var isPrimaryWeapon = Owner.Shooter == this;
+        var isSecondaryWeapon = Owner.SecondaryShooter == this;
+        return StatsManager.GetAddedStats(Owner, statSelector, false, isPrimaryWeapon, isSecondaryWeapon);
+    }
+
+    private float GetShooterAddedFloatStats(Func<Stats, float?> statSelector)
+    {
+        var isPrimaryWeapon = Owner.Shooter == this;
+        var isSecondaryWeapon = Owner.SecondaryShooter == this;
+        return StatsManager.GetAddedFloatStats(Owner, statSelector, false, isPrimaryWeapon, isSecondaryWeapon);
     }
 
     public int GetInitialAngle(int middleAngle, int angleBetweenShots, int amountOfShots)

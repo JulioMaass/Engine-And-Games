@@ -79,7 +79,7 @@ public class StatePlayerControl : State
 
         // Tick life
         var burnSpeed = 60;
-        burnSpeed *= StatsManager.GetMultipliedStats(Owner, stats => stats.BurningRateMultiplier);
+        burnSpeed *= StatsManager.GetMultipliedStats(Owner, stats => stats.BurningRateMultiplier, true, true, false);
         if (GlobalManager.Values.Timer % burnSpeed == 0)
             Owner.DamageTaker.CurrentHp.Amount -= 1;
 

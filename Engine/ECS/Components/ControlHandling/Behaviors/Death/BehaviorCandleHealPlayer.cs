@@ -18,7 +18,7 @@ public class BehaviorCandleHealPlayer : Behavior
         if (player == null)
             return;
 
-        var multiplier = StatsManager.GetMultipliedStats(player, stats => stats.HealOnKillMultiplier);
+        var multiplier = StatsManager.GetMultipliedStats(player, stats => stats.HealOnKillMultiplier, true, true, false);
         player.DamageTaker.HealHp(HealAmount * multiplier);
     }
 }

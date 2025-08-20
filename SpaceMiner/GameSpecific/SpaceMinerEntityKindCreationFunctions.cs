@@ -132,6 +132,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
 
             // Set color
             var color = CustomColor.White;
+            if (ItemPrice?.CanBuy(ownedAmount) != true && ownedAmount == 0)
+                color = CustomColor.Gray;
 
             // Draw upgrade levels
             var ownedUpgrades = GlobalManager.Values.MainCharData.GetAllUpgradesOnWeapon(GetType());

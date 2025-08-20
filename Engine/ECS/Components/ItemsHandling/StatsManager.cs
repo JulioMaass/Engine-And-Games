@@ -39,25 +39,25 @@ public static class StatsManager
             .Count(unlockCondition) > 0;
     }
 
-    public static int GetAddedStats(Entity entity, Func<Stats, int?> propertySelector)
+    public static int GetAddedStats(Entity entity, Func<Stats, int?> propertySelector, bool entityStats, bool weaponStats, bool secondaryWeaponStats)
     {
-        return GetAllStatsSources(entity, true, true).ToList()
+        return GetAllStatsSources(entity, entityStats, weaponStats, secondaryWeaponStats).ToList()
             .Select(propertySelector)
             .Where(value => value.HasValue && value != 0)
             .Sum(value => value.Value);
     }
 
-    public static float GetAddedFloatStats(Entity entity, Func<Stats, float?> propertySelector)
+    public static float GetAddedFloatStats(Entity entity, Func<Stats, float?> propertySelector, bool entityStats, bool weaponStats, bool secondaryWeaponStats)
     {
-        return GetAllStatsSources(entity, true, true).ToList()
+        return GetAllStatsSources(entity, entityStats, weaponStats, secondaryWeaponStats).ToList()
             .Select(propertySelector)
             .Where(value => value.HasValue && value != 0)
             .Sum(value => value.Value);
     }
 
-    public static int GetMultipliedStats(Entity entity, Func<Stats, int?> propertySelector)
+    public static int GetMultipliedStats(Entity entity, Func<Stats, int?> propertySelector, bool entityStats, bool weaponStats, bool secondaryWeaponStats)
     {
-        return GetAllStatsSources(entity, true, true).ToList().Select(propertySelector)
+        return GetAllStatsSources(entity, entityStats, weaponStats, secondaryWeaponStats).ToList().Select(propertySelector)
             .Where(value => value.HasValue && value != 0)
             .Aggregate(1, (current, value) => current * value.Value);
     }
