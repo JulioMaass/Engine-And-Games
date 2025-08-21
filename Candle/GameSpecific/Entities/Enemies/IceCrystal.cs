@@ -1,5 +1,9 @@
 ﻿using Candle.GameSpecific.Entities.EnemyShots;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
+using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.State;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.ShootingHandling;
@@ -47,7 +51,7 @@ public class IceCrystal : Entity
         // Auto States
         var idleState = NewState(new StateIdleAndFall())
             .AddStateSettingBehavior(new BehaviorStop())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetFrame()),
+            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(90, 150), ComparisonType.Equal))
             .AddBehavior(new BehaviorCircleMovement(Engine.Helpers.Axes.Y, 3, 100, 180000))
             .AddToAutomaticStatesList();

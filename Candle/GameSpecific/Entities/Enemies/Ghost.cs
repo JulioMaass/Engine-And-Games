@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Entities.EntityCreation;
 
 namespace Candle.GameSpecific.Entities.Enemies;

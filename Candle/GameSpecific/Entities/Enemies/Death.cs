@@ -1,5 +1,7 @@
 ﻿using Candle.GameSpecific.Entities.EnemyShots;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
+using Engine.ECS.Components.ControlHandling.Behaviors.State;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities;
@@ -37,7 +39,7 @@ public class Death : Entity
         // Auto States
         var idleState = NewState()
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetFrame()),
+            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(150, 180), ComparisonType.Equal))
             .AddToAutomaticStatesList();
     }

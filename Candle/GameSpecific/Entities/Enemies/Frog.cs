@@ -1,9 +1,11 @@
 ﻿using Candle.GameSpecific.States.Enemy;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Snap;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
+using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Components.ControlHandling.States;
 using Engine.Types;
 
 namespace Candle.GameSpecific.Entities.Enemies;

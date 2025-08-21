@@ -1,4 +1,7 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
+using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.State;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.PhysicsHandling;

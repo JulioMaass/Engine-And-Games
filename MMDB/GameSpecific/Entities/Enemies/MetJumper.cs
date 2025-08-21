@@ -1,4 +1,8 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.CollisionBox;
+using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Snap;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
+using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ControlHandling.StateGrouping;
 using Engine.ECS.Components.ControlHandling.States;
@@ -7,8 +11,8 @@ using Engine.ECS.Components.PositionHandling;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
-using MMDB.GameSpecific.States.Enemy;
 using MMDB.GameSpecific.Entities.EnemyShots;
+using MMDB.GameSpecific.States.Enemy;
 
 namespace MMDB.GameSpecific.Entities.Enemies;
 

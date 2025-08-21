@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Snap;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
 

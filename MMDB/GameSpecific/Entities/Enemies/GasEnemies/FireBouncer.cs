@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
 

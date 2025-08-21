@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Teleporting;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;

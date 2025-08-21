@@ -1,5 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.CollisionBox;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PositionHandling;
 using Engine.ECS.Entities.EntityCreation;

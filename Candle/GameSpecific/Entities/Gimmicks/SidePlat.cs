@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.Spawning;
 using Engine.ECS.Entities.EntityCreation;

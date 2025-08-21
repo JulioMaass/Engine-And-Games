@@ -1,5 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.Death;
+using Engine.ECS.Components.ControlHandling.Behaviors.DeathAndDestroy;
 using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.Helpers;

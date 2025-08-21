@@ -1,10 +1,12 @@
 ﻿using Candle.GameSpecific.Entities.EnemyShots;
-using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
+using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
+using Engine.ECS.Components.ControlHandling.Behaviors.State;
 using Engine.ECS.Components.ControlHandling.Conditions;
+using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Components.ControlHandling.States;
 using Engine.Types;
 
 namespace Candle.GameSpecific.Entities.Enemies;
@@ -40,7 +42,7 @@ public class RocketShooter : Entity
         // Auto States
         var idleState = NewState(new StateIdleAndFall())
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetFrame()),
+            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(105, 165), ComparisonType.Equal))
             .AddToAutomaticStatesList();
     }

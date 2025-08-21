@@ -21,6 +21,7 @@ public class ResizableShot : Entity
         AddMoveSpeed(4.5f);
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10, PiercingType.PierceOnOverkill);
+        //DamageDealer.AddOnHitTargetBehavior(new BehaviorAddSpeed(0f, -0.25f));
 
         // State
         AddStateManager();

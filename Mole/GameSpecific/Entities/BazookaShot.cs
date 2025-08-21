@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Facing;
 using Engine.ECS.Entities.EntityCreation;
 
 namespace Mole.GameSpecific.Entities;

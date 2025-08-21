@@ -1,6 +1,6 @@
 ﻿using Candle.GameSpecific.Entities.Currency;
 using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.Death;
+using Engine.ECS.Components.ControlHandling.Behaviors.DeathAndDestroy;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers;

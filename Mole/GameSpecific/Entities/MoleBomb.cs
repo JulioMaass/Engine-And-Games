@@ -1,8 +1,7 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.Death;
 using Engine.ECS.Entities.EntityCreation;
-using System.Collections.Generic;
 using Mole.GameSpecific.Behaviors;
+using System.Collections.Generic;
 
 namespace Mole.GameSpecific.Entities;
 

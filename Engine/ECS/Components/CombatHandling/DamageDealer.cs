@@ -17,6 +17,7 @@ public class DamageDealer : Component
     public HitType HitType { get; set; }
     private readonly List<Entity> _hitList = new();
     private List<Behavior> OnHitBehaviors { get; } = new();
+    private List<Behavior> OnHitTargetBehaviors { get; } = new(); // runs behavior on the target that was hit
 
     public DamageDealer(Entity owner, int damage, PiercingType piercingType)
     {
@@ -30,6 +31,7 @@ public class DamageDealer : Component
         AddToHitList(damagedEntity);
         DeleteIfCantPierce(damagedEntity);
         RunOnHitBehaviors();
+        RunOnHitTargetBehaviors(damagedEntity);
     }
 
     public void AddExtraDamage(int extraDamage)
@@ -77,6 +79,22 @@ public class DamageDealer : Component
     {
         foreach (var behavior in OnHitBehaviors)
             behavior.Action();
+    }
+
+    public void AddOnHitTargetBehavior(Behavior behavior)
+    {
+        OnHitTargetBehaviors.Add(behavior);
+        behavior.Owner = Owner;
+    }
+
+    public void RunOnHitTargetBehaviors(Entity target)
+    {
+        foreach (var behavior in OnHitTargetBehaviors)
+        {
+            behavior.Owner = target;
+            behavior.Action();
+            behavior.Owner = Owner;
+        }
     }
 }
 
