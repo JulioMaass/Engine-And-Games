@@ -80,7 +80,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
 
         Graphics.GraphicsDevice.SetRenderTarget(GameScreenRender);
         Graphics.GraphicsDevice.Clear(CustomColor.DarkGray);
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.WhiteShader, Camera.Matrix);
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader, Camera.Matrix);
         GameLoopManager.Draw();
         SpriteBatch.End();
 
@@ -92,7 +92,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
     {
         Graphics.GraphicsDevice.SetRenderTarget(HudRender);
         Graphics.GraphicsDevice.Clear(CustomColor.Transparent);
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.WhiteShader);
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader);
         Hud.Draw();
         SpriteBatch.End();
     }

@@ -13,13 +13,13 @@ public static class PaletteManager
         Texture = texture;
         Index = index;
 
-        Drawer.PaletteShader.Parameters["IsOn"].SetValue(true);
-        Drawer.PaletteShader.Parameters["PaletteIndex"].SetValue(FractionIndex);
-        Drawer.PaletteShader.Parameters["PaletteTexture"].SetValue(Texture);
+        Drawer.SpriteMasterShader.Parameters["ApplyPalette"].SetValue(true);
+        Drawer.SpriteMasterShader.Parameters["PaletteIndex"].SetValue(FractionIndex);
+        Drawer.SpriteMasterShader.Parameters["PaletteTexture"].SetValue(Texture);
     }
 
     public static void ResetPalette()
     {
-        Drawer.PaletteShader.Parameters["IsOn"].SetValue(false);
+        Drawer.SpriteMasterShader.Parameters["ApplyPalette"].SetValue(false);
     }
 }

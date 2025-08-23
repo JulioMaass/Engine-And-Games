@@ -18,8 +18,7 @@ public static class Drawer
     public static SpriteFont HpFontMap { get; private set; }
 
     // Shaders
-    public static Effect PaletteShader { get; private set; }
-    public static Effect WhiteShader { get; private set; }
+    public static Effect SpriteMasterShader { get; private set; }
     public static Effect AreaLightShader { get; private set; }
 
     // Default values for drawing
@@ -51,8 +50,7 @@ public static class Drawer
         HpFontMap.Spacing = 1;
 
         // Shaders
-        PaletteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/PaletteShader");
-        WhiteShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/WhiteShader");
+        SpriteMasterShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/SpriteMasterShader");
         AreaLightShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/AreaLightShader");
         BlurManager.BlurEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/BlurShader");
         AccumulatorManager.AccumulateEffect = GameManager.Game.Content.Load<Effect>("SpriteShaders/AccumulatorShader");

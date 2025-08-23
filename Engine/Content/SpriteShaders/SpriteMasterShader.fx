@@ -24,8 +24,12 @@ sampler2D PaletteTextureSampler = sampler_state
 };
 
 // Outside Variables
-bool IsOn;
+// Palette
+bool ApplyPalette;
 float PaletteIndex;
+// White
+bool ApplyWhite;
+
 
 // Vertex Shader Output Setup
 struct VertexShaderOutput
@@ -41,17 +45,14 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates) * input.Color;
 
-    // Bypass
-    if (!IsOn)
-    {
-        return color;
-    }
-    
-    // Get palette color
-    float originalAlpha = color.a;
+    // Apply Palette
     float2 paletteColorPosition = float2(color.r, PaletteIndex);
-    color = tex2D(PaletteTextureSampler, paletteColorPosition);
-    color.a = originalAlpha;
+    float4 paletteColor = tex2D(PaletteTextureSampler, paletteColorPosition);
+    color.rgb = lerp(color.rgb, paletteColor.rgb, ApplyPalette);
+    
+    // Apply White
+    color.rgb = lerp(color.rgb, float3(1, 1, 1), ApplyWhite);
+
     return color;
 }
 
