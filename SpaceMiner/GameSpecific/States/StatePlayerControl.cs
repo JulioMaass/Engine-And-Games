@@ -3,6 +3,7 @@ using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
+using Engine.Types;
 using Microsoft.Xna.Framework;
 using SpaceMiner.GameSpecific.Entities.Vfx;
 using System;
@@ -14,6 +15,8 @@ public class StatePlayerControl : State
 {
     private int AttackFrame { get; set; }
     private bool BufferedAttack { get; set; }
+    private int DashFrame { get; set; }
+    private int DashDirection { get; set; }
 
     public override bool StartCondition()
     {
@@ -73,6 +76,19 @@ public class StatePlayerControl : State
         // Missile
         if (Owner.PlayerControl.Button2Press)
             Owner.SecondaryShooter?.CheckToShoot();
+
+        // Dash
+        DashFrame--;
+        if (Owner.PlayerControl.Button3Press && (Owner.Speed.X != 0 || Owner.Speed.Y != 0) && DashFrame < -15)
+        {
+            DashFrame = 15;
+            DashDirection = Angle.GetAngleFromDistanceCoordinates(new Vector2(Owner.Speed.X, Owner.Speed.Y)).Value;
+        }
+        if (DashFrame > 0)
+        {
+            Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * Owner.Speed.DashSpeed);
+            Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * Owner.Speed.DashSpeed);
+        }
     }
 
     public override void PostProcessingBehavior()
