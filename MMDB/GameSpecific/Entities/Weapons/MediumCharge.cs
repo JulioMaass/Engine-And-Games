@@ -15,7 +15,7 @@ public class MediumCharge : Entity
         AddPlayerShotComponents(2, PiercingType.PierceOnOverkill, 1);
 
         // Custom components
-        AddSpeed(6.5f);
+        AddMoveSpeed(6.5f);
         AddCenteredCollisionBox(12);
 
         // States

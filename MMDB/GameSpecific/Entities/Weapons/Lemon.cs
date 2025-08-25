@@ -15,7 +15,7 @@ public class Lemon : Entity
         AddPlayerShotComponents(1, PiercingType.PierceNone, 1);
 
         // Custom components
-        AddSpeed(6.5f);
+        AddMoveSpeed(6.5f);
         AddCenteredCollisionBox(8);
 
         // States

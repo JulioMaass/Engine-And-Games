@@ -21,24 +21,16 @@ public class Palette : Component
         Texture = texture;
     }
 
-    private int UpdateIndex()
+    private void UpdateIndex()
     {
-        if (Conditions.Count == 0)
-            return 0;
-        for (var i = 0; i < Conditions.Count; i++)
-        {
-            if (Conditions[i]())
-            {
-                var index = PatternsOrigin[i]() / PatternsSpeed[i] % Patterns[i].Count;
-                return Patterns[i][index];
-            }
-        }
-        return 0;
+        Index = 0;
+        Index += Owner.WeaponManager.CurrentWeapon.PaletteId;
+        Index += Owner.WeaponManager.GetPaletteChargeOffset();
     }
 
     public void SetPalette()
     {
-        Index = UpdateIndex();
+        UpdateIndex();
         PaletteManager.SetPalette(Texture, Index);
     }
 }

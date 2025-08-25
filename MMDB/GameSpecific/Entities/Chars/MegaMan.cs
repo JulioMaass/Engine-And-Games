@@ -1,10 +1,13 @@
-﻿using Engine.ECS.Components.ControlHandling.SecondaryStates;
+﻿using Engine.ECS.Components.ControlHandling.Conditions;
+using Engine.ECS.Components.ControlHandling.SecondaryStates;
 using Engine.ECS.Components.ControlHandling.States;
+using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using MMDB.GameSpecific.States;
-using System.Collections.Generic;
-using Engine.ECS.Components.ControlHandling.Conditions;
 using MMDB.GameSpecific.States.Player;
+using MMDB.GameSpecific.Weapons;
+using System.Collections.Generic;
+using System.Linq;
 using StateFall = MMDB.GameSpecific.States.Player.StateFall;
 
 namespace MMDB.GameSpecific.Entities.Chars;
@@ -14,6 +17,7 @@ public class MegaMan : Entity
     public MegaMan()
     {
         EntityKind = EntityKind.Player;
+
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSprite("MegaMan", 34, 39, 14, 14);
@@ -25,26 +29,20 @@ public class MegaMan : Entity
         AddJumpSpeed(5.05f);
         AddDashSpeed(2.5f);
 
+        // Weapons
+        WeaponManager.Weapons.Add(new WeaponBuster(this));
+        WeaponManager.Weapons.Add(new WeaponChain(this));
+        WeaponManager.Weapons.Add(new WeaponGas(this));
+        WeaponManager.Weapons.Add(new WeaponPolice(this));
+        WeaponManager.Weapons.Add(new WeaponGhost(this));
+        WeaponManager.Weapons.Add(new WeaponOcean(this));
+        WeaponManager.Weapons.Add(new WeaponVacuum(this));
+        WeaponManager.Weapons.Add(new WeaponJungle(this));
+        WeaponManager.Weapons.Add(new WeaponRemote(this));
+        WeaponManager.CurrentWeapon = WeaponManager.Weapons.FirstOrDefault();
         ChargeManager = new(this);
-        ChargeManager.ChargeTierFrames = new List<int> { 40, 60, 80 };
-
-        // PALETTE CONTROLLERS // TODO - ARCHITECTURE - MMDB: Simplify this or move elsewhere
+        ChargeManager.ChargeTierFrames = [40, 80];
         AddPalette("MMPalette");
-        // Full charge
-        Palette.Conditions.Add(() => ChargeManager.GetChargeTier() == 3);
-        Palette.Patterns.Add(new List<int> { 2, 3, 1, 0 });  //{ 2, 0, 1, 0 }; //Original
-        Palette.PatternsSpeed.Add(2);
-        Palette.PatternsOrigin.Add(() => ChargeManager.ChargeFrame);
-        // Medium charge fast
-        Palette.Conditions.Add(() => ChargeManager.GetChargeTier() == 2);
-        Palette.Patterns.Add(new List<int> { 0, 1, 0, 1 });
-        Palette.PatternsSpeed.Add(2);
-        Palette.PatternsOrigin.Add(() => ChargeManager.ChargeFrame);
-        // Medium charge slow
-        Palette.Conditions.Add(() => ChargeManager.GetChargeTier() == 1);
-        Palette.Patterns.Add(new List<int> { 1, 0, 1, 0 });
-        Palette.PatternsSpeed.Add(4);
-        Palette.PatternsOrigin.Add(() => ChargeManager.ChargeFrame);
 
         // Control components
         // TODO - ARCHITECTURE - MMDB: Simplify state creation or move elsewhere
@@ -82,11 +80,9 @@ public class MegaMan : Entity
 
         // Transition controller
         TransitionController = new(this);
-
         var upCondition = new ConditionState(stateClimb);
         upCondition.Owner = this;
         TransitionController.UpCondition = upCondition;
-
         var sidesCondition = new ConditionStateNot(stateHurt);
         sidesCondition.Owner = this;
         TransitionController.SidesCondition = sidesCondition;

@@ -15,6 +15,12 @@ public class ChargeManager : Component
 
     public void Update()
     {
+        if (Owner.WeaponManager.CurrentWeapon.PrimaryShooterMidCharge == null && Owner.WeaponManager.CurrentWeapon.PrimaryShooterFullCharge == null)
+        {
+            ChargeFrame = 0;
+            return;
+        }
+
         if (Owner.PlayerControl.Button1Hold && !Owner.PlayerControl.Button1Press)
             ChargeFrame++;
         else

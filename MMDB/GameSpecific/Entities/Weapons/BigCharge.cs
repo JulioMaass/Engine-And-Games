@@ -16,7 +16,7 @@ public class BigCharge : Entity
         AddPlayerShotComponents(3, PiercingType.PierceOnKill, 1);
 
         // Custom components
-        AddSpeed(2f);
+        AddMoveSpeed(2f);
         AddCenteredCollisionBox(20);
 
         // States

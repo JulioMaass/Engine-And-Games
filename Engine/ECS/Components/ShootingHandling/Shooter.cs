@@ -5,6 +5,7 @@ using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Entities.Shared;
 using Engine.Helpers;
+using Engine.Managers.Audio;
 using Engine.Managers.GlobalManagement;
 using Engine.Types;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,7 @@ namespace Engine.ECS.Components.ShootingHandling;
 public class Shooter : Component
 {
     public Type ShotType { get; set; }
+    public string SoundName { get; set; }
     public EntityKind EntityKind { get; set; }
     public List<Action<Entity>> ShotModifiers { get; } = new();
     private Action ShootAction { get; set; } // Keep this private so that it can only be called using CheckToShoot
@@ -71,6 +73,9 @@ public class Shooter : Component
         var shot = EntityManager.CreateEntityAt(ShotType, SpawnPosition);
         shot.AssignEntityKind(EntityKind);
         ApplyModifiers(shot);
+        shot.Alignment.OwningEntity = Owner;
+        if (SoundName != null)
+            AudioManager.PlaySound("sndShot");
         return shot;
     }
 

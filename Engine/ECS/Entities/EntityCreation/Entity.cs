@@ -129,6 +129,7 @@ public abstract partial class Entity
         CustomUpdate();
 
         // Special Components
+        WeaponManager?.Update();
         ChargeManager?.Update();
         Paralax?.Update();
         VfxEmitter?.Update();

@@ -5,6 +5,7 @@ namespace Engine.ECS.Components.CombatHandling;
 public class Alignment : Component
 {
     public AlignmentType Type { get; }
+    public Entity OwningEntity { get; set; }
 
     public Alignment(Entity owner, AlignmentType type)
     {

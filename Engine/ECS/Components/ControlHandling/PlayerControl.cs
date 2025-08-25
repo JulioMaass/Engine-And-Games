@@ -22,6 +22,9 @@ public class PlayerControl : Component
     // Consequential controls
     public int DirectionX { get; private set; }
     public int DirectionY { get; private set; }
+    public bool SwitchLeft { get; private set; }
+    public bool SwitchRight { get; private set; }
+    public bool SwitchReset { get; private set; }
 
     // Automatic controls
     public class AutomaticControl
@@ -56,6 +59,11 @@ public class PlayerControl : Component
         Down = Input.Down.Holding && !Input.Up.Holding;
         Left = Input.Left.Holding && !Input.Right.Holding;
         Right = Input.Right.Holding && !Input.Left.Holding;
+
+        // Update weapon switching
+        SwitchLeft = Input.L.Pressed;
+        SwitchRight = Input.R.Pressed;
+        SwitchReset = Input.L.Holding && Input.R.Holding;
 
         Button1Press = Input.Button1.Pressed;
         Button1Hold = Input.Button1.Holding;
