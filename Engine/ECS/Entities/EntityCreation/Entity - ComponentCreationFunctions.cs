@@ -167,9 +167,11 @@ public abstract partial class Entity
     }
 
     // Solid Behavior
-    public void AddSolidBehavior(SolidType solidType = SolidType.NotSolid, SolidInteractionType pushable = SolidInteractionType.GoThroughSolids)
+    public void AddSolidBehavior(SolidType solidType = SolidType.NotSolid,
+        SolidInteractionType pushable = SolidInteractionType.GoThroughSolids,
+        MomentumType momentumType = MomentumType.StopHitSpeedOnly)
     {
-        SolidBehavior = new(this, solidType, pushable);
+        SolidBehavior = new(this, solidType, pushable, momentumType);
     }
 
     public void AddTileDestructor(Strength strength)
@@ -345,7 +347,7 @@ public abstract partial class Entity
         return state;
     }
 
-    public State NewStateWithTimedPattern(State state, params (int, int)[] spriteTimedPattern)
+    public State NewStateWithTimedPattern(State state, params (int id, int f)[] spriteTimedPattern)
     {
         // Turns _spriteTimedPattern into a normal _spritePattern
         var spritePattern = new List<int>();

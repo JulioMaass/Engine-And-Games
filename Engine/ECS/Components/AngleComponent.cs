@@ -72,6 +72,11 @@ public abstract class AngleComponent : Component
         Angle = Angle.GetAngleTurnedTo(intendedAngle, Owner.Speed.TurnSpeed);
     }
 
+    public void TurnTowardsAngle(int intendedAngle, int turnSpeed)
+    {
+        Angle = Angle.GetAngleTurnedTo(intendedAngle, turnSpeed);
+    }
+
     public Vector2 GetVectorLength()
     {
         return Angle.GetVectorLength();

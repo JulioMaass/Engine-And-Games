@@ -24,6 +24,12 @@ public class WeaponManager : Component
     public int GetShotCount() =>
         EntityManager.GetAllEntities().Count(e => e.Alignment?.OwningEntity == Owner);
 
+    public int GetShotPriceCount()
+    {
+        var shots = EntityManager.GetAllEntities().Where(e => e.Alignment?.OwningEntity == Owner);
+        return shots.Sum(s => s.ShotProperties?.ShotScreenPrice ?? 1);
+    }
+
     private void CheckToSwitchWeapon()
     {
         if (Owner.PlayerControl?.SwitchLeft == true)
@@ -37,7 +43,7 @@ public class WeaponManager : Component
     private void SwitchWeapon(int movePosition)
     {
         var currentPosition = Weapons.IndexOf(CurrentWeapon);
-        currentPosition += movePosition;
+        currentPosition += movePosition + Weapons.Count;
         currentPosition %= Weapons.Count;
         CurrentWeapon = Weapons[currentPosition];
     }

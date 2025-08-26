@@ -1,7 +1,7 @@
 ﻿using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
-using SpaceMiner.GameSpecific.Entities.Shooters;
+using SpaceMiner.GameSpecific.Shooters;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.MissilesArea;
 

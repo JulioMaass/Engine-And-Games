@@ -154,6 +154,34 @@ public class Shooter : Component
         shot.Speed.SetMoveSpeedToCurrentDirection();
     }
 
+    public void ShootHorizontalAimable(int aimingAngle)
+    {
+        var shot = NewShotWithInheritedDirection();
+        if (Owner.PlayerControl == null)
+            return;
+        if (Owner.PlayerControl.Up)
+            shot.MoveDirection.TurnTowardsAngle(270000, aimingAngle);
+        if (Owner.PlayerControl.Down)
+            shot.MoveDirection.TurnTowardsAngle(90000, aimingAngle);
+        shot.Speed.SetMoveSpeedToCurrentDirection();
+    }
+
+    public void ShootEightDirectionAim()
+    {
+        var shot = NewShotWithInheritedDirection();
+        if (Owner.PlayerControl == null)
+            return;
+        if (Owner.PlayerControl.Up)
+            shot.MoveDirection.TurnTowardsAngle(270000, 90000);
+        if (Owner.PlayerControl.Down)
+            shot.MoveDirection.TurnTowardsAngle(90000, 90000);
+        if (Owner.PlayerControl.Left)
+            shot.MoveDirection.TurnTowardsAngle(180000, 45000);
+        if (Owner.PlayerControl.Right)
+            shot.MoveDirection.TurnTowardsAngle(0, 45000);
+        shot.Speed.SetMoveSpeedToCurrentDirection();
+    }
+
     public void ShootAtSpeed(Vector2 speed)
     {
         if (Owner.Facing.IsXMirrored)

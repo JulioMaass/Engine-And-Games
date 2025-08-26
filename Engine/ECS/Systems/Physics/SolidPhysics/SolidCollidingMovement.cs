@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components;
+using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.ECS.Systems.Physics.GeneralPhysics;
 using Engine.Types;
@@ -60,6 +61,8 @@ public class SolidCollidingMovement : Component
             Owner.Position.Pixel += (0, yDir);
         FreeMovement.SetFractionY(0);
         Owner.Speed.SetYSpeed(0);
+        if (Owner.SolidBehavior.MomentumType == MomentumType.StopBothAxesOnHit)
+            Owner.Speed.SetXSpeed(0);
     }
 
     public void MoveToSolidX()
@@ -77,10 +80,10 @@ public class SolidCollidingMovement : Component
         if (!SolidCollisionChecking.CollidesWithAnySolidAtPixel(destinyPixel, Pixel))
             FreeMovement.MoveXInPixelsAndFraction(speedX);
         else
-            MoveToSolidXUntilHitSolid(speedX);
+            MoveUntilHitSolidX(speedX);
     }
 
-    private void MoveToSolidXUntilHitSolid(float speedX)
+    private void MoveUntilHitSolidX(float speedX)
     {
         var xDir = Math.Sign(speedX);
         var speed = IntVector2.New(xDir, 0);
@@ -88,6 +91,8 @@ public class SolidCollidingMovement : Component
             Owner.Position.Pixel += (xDir, 0);
         FreeMovement.SetFractionX(0);
         Owner.Speed.SetXSpeed(0); // TODO - BUG - MMDB: May reset speed to 0 even when is being pushed/carried, but speed is an internal/independent value
+        if (Owner.SolidBehavior.MomentumType == MomentumType.StopBothAxesOnHit)
+            Owner.Speed.SetYSpeed(0);
     }
 
     public void MoveThroughSolidUntilNotColliding(IntVector2 dir)

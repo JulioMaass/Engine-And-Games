@@ -7,7 +7,7 @@ public class SecondaryStateShoot : SecondaryState
     public override bool StartCondition()
     {
         var shootPress = Owner.PlayerControl.Button1Press;
-        var shotCountBelowLimit = Owner.WeaponManager.GetShotCount() < Owner.WeaponManager.ShotLimit;
+        var shotCountBelowLimit = Owner.WeaponManager.GetShotPriceCount() < Owner.WeaponManager.ShotLimit;
         var shootUncharged = shootPress && shotCountBelowLimit;
 
         var isCharged = Owner.ChargeManager?.GetChargeTier() > 0;

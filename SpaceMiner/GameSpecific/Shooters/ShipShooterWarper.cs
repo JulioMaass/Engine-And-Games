@@ -5,7 +5,7 @@ using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Shots;
 using System.Linq;
 
-namespace SpaceMiner.GameSpecific.Entities.Shooters;
+namespace SpaceMiner.GameSpecific.Shooters;
 
 public class ShipShooterWarper : Shooter
 {
