@@ -3,7 +3,7 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Shots;
 
-namespace SpaceMiner.GameSpecific.Entities.Shooters;
+namespace SpaceMiner.GameSpecific.Shooters;
 
 public class ShipShooterSlugger : Shooter
 {
