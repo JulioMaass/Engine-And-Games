@@ -28,6 +28,7 @@ public class Sprite : Component
 
     // Origin
     public IntVector2 Origin { get; set; }
+    public IntVector2 CustomStretchedOrigin { get; set; }
     private IntVector2 StretchedOrigin => (Vector2)Origin * (Vector2)StretchedSize / (Vector2)Size; // If StretchedSize is not set, use Origin
     public IntVector2 FinalOrigin => StretchedSize == default ? Origin : StretchedOrigin;
 
@@ -61,7 +62,7 @@ public class Sprite : Component
         var position = GetPosition() + offset;
         var sourceRectangle = Drawer.GetSourceRectangleFromId(Texture, SpriteSheetOrigin, Size, spriteId);
         if (!HudSprite
-            && !Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, sourceRectangle.Size))
+            && !Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, FinalSize))
             && Owner.EntityKind != EntityKind.Paralax)
             return;
         if (Owner.Paralax != null && Owner.Paralax.Repeat != ParalaxRepeat.None)
@@ -75,11 +76,17 @@ public class Sprite : Component
 
     private void DrawSpriteTexture(IntRectangle sourceRectangle, IntVector2 position)
     {
+        var destinationRectangle = new IntRectangle(position + FinalOrigin, FinalSize);
+
         var effects = SpriteEffects.None;
         if (IsFlipped)
             effects = SpriteEffects.FlipHorizontally;
-        var destinationRectangle = new IntRectangle(position + FinalOrigin, FinalSize);
-        Video.SpriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, CalculateSpriteColor(), GetRotation(), Origin, effects, Drawer.DefaultDepth);
+
+        var origin = (Vector2)Origin;
+        if (CustomStretchedOrigin != default)
+            origin = (Vector2)CustomStretchedOrigin / (Vector2)StretchedSize * (Vector2)sourceRectangle.Size;
+
+        Video.SpriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, CalculateSpriteColor(), GetRotation(), origin, effects, Drawer.DefaultDepth);
     }
 
     private float GetRotation()

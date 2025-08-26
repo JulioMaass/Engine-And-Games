@@ -3,6 +3,7 @@ using Engine.Main;
 using Engine.Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -32,7 +33,7 @@ public static class Drawer
     {
         // While pixel to draw rectangles, etc
         WhitePixel = new Texture2D(Video.Graphics.GraphicsDevice, 1, 1);
-        WhitePixel.SetData(new[] { CustomColor.White });
+        WhitePixel.SetData([CustomColor.White]);
     }
 
     public static void LoadContent()
@@ -139,7 +140,7 @@ public static class Drawer
 
     public static IntRectangle GetSourceRectangleFromId(Texture2D texture, IntVector2 spriteSheetOrigin, IntVector2 size, int id)
     {
-        var sheetColumns = texture.Width / size.Width;
+        var sheetColumns = Math.Max(texture.Width / size.Width, 1); // Math.Max to avoid division by 0
 
         // Calculate the 1st sprite position in the sheet
         var spriteSheetOriginColumn = spriteSheetOrigin.X / size.Width;

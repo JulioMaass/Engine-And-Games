@@ -10,6 +10,7 @@ using Engine.Managers.StageHandling;
 using SpaceMiner.GameSpecific.Entities.Background;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using SpaceMiner.GameSpecific.Managers;
+using SpaceMiner.GameSpecific.Shooters;
 using System.Linq;
 
 namespace SpaceMiner.GameSpecific;
@@ -29,6 +30,7 @@ public class SpaceMinerMainLoop : GameLoop
         GlobalManager.Values.MainCharData.AddSwitchEquipment(typeof(MenuItemBasicShot), 1, 0);
         if (EntityManager.PlayerEntity.Shooter == null)
             GlobalManager.Values.MainCharData.TryToEquipItem(typeof(MenuItemBasicShot));
+        EntityManager.PlayerEntity.SuperShooter = (new ShipSuperShooterBeam((Entity)EntityManager.PlayerEntity));
     }
 
     private void SetTimer()

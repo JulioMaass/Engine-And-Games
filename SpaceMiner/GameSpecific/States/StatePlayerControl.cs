@@ -68,20 +68,27 @@ public class StatePlayerControl : State
             BufferedAttack = true;
         if (AttackFrame <= 0 && BufferedAttack)
         {
-            AttackFrame = fireRate;
-            Owner.Shooter.CheckToShoot();
-            BufferedAttack = false;
+            if (Owner.FrameHandler.CurrentFrame > 1) // Redundant to CheckToShoot, but avoids resetting AttackFrame on frame 0
+            {
+                Owner.Shooter.CheckToShoot();
+                AttackFrame = fireRate;
+                BufferedAttack = false;
+            }
         }
 
         // Missile
         if (Owner.PlayerControl.Button2Press)
             Owner.SecondaryShooter?.CheckToShoot();
 
+        // Super
+        if (Owner.PlayerControl.Button4Press)
+            Owner.SuperShooter?.CheckToShoot();
+
         // Dash
         DashFrame--;
-        if (Owner.PlayerControl.Button3Press && (Owner.Speed.X != 0 || Owner.Speed.Y != 0) && DashFrame < -15)
+        if (Owner.PlayerControl.Button3Press && (Owner.Speed.X != 0 || Owner.Speed.Y != 0) && DashFrame < -20)
         {
-            DashFrame = 15;
+            DashFrame = 10;
             DashDirection = Angle.GetAngleFromDistanceCoordinates(new Vector2(Owner.Speed.X, Owner.Speed.Y)).Value;
         }
         if (DashFrame > 0)

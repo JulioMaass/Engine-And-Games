@@ -24,6 +24,8 @@ public abstract partial class Entity
     // Entity typing
     public EntityInstance EntityInstance { get; set; }
     public EntityKind EntityKind { get; protected set; }
+    public EntityKind DrawAs { get; protected set; } = EntityKind.None; // If not None, overrides Owner.EntityKind for drawing order
+    public EntityKind DrawingOrder => DrawAs == EntityKind.None ? EntityKind : DrawAs;
 
     // Component enforcer
     public ComponentEnforcer ComponentEnforcer { get; protected set; }
@@ -90,6 +92,7 @@ public abstract partial class Entity
     // Shooting components
     public Shooter Shooter { get; set; }
     public Shooter SecondaryShooter { get; set; }
+    public Shooter SuperShooter { get; set; }
     public ChargeManager ChargeManager { get; protected set; }
     public WeaponManager WeaponManager { get; protected set; }
     public ShotProperties ShotProperties { get; protected set; }

@@ -90,7 +90,7 @@ public static class GameLoopManager
             room?.DrawTileLayer(layerId);
         EntityManager.GetAllEntities()
             .Where(entity => entity.LayerId == layerId)
-            .OrderBy(entity => entity.EntityKind)
+            .OrderBy(entity => entity.DrawingOrder)
             .ThenBy(entity => entity.DrawOrder)
             .ToList()
             .ForEach(entity => entity.Draw());
