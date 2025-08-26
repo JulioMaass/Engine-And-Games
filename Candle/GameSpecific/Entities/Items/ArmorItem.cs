@@ -15,7 +15,7 @@ public class ArmorItem : Entity
         AddSpriteCenteredOrigin("ArmorItem", 16);
         AddCenteredCollisionBox(14);
         AddEquipmentItemStats(EquipKind.Armor);
-        EquipmentItemStats.Stats.DefenseRatio = 2;
+        EquipmentItemStats.Stats.AddedDefenseRatio = 1;
 
         MenuItem = new MenuItem(this);
         MenuItem.Label = "Armor";

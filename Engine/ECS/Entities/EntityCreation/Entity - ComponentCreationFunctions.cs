@@ -387,11 +387,14 @@ public abstract partial class Entity
     }
 
     // Item Stats
-    public void AddResourceItemStats(ResourceType resourceType, int amount)
+    public void AddResourceItemStats(ResourceType resourceType, int amount, IncreaseKind increaseKind = IncreaseKind.Current)
     {
-        ResourceItemStats ??= new(this);
-        ResourceItemStats.Amount = amount;
-        ResourceItemStats.ResourceType = resourceType;
+        ResourceItemStatsList ??= new();
+        var resourceItemStats = new ResourceItemStats(this);
+        resourceItemStats.Amount = amount;
+        resourceItemStats.ResourceType = resourceType;
+        resourceItemStats.IncreaseKind = increaseKind;
+        ResourceItemStatsList.Add(resourceItemStats);
     }
 
     public void AddEquipmentItemStats(EquipKind kind)

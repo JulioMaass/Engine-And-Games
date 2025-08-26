@@ -30,6 +30,11 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
         CurrentHp.Add(hp);
     }
 
+    public void IncreaseMaxHp(int amount)
+    {
+        CurrentHp.IncreaseMax(amount);
+    }
+
     private void CheckForDeath()
     {
         if (CurrentHp.Amount > 0) return;
@@ -38,7 +43,7 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
 
     public void BufferDamage(int amount)
     {
-        amount /= StatsManager.GetMultipliedStats(Owner, stats => stats.DefenseRatio, true, true, false);
+        amount /= StatsManager.GetAddedStats(Owner, stats => stats.AddedDefenseRatio, true, true, false) + 1;
 
         if (InvincibleOnHit)
             DamageBuffer = DamageBuffer == 0 ?

@@ -35,6 +35,16 @@ public class Resource // Used to pass integers by reference
     {
         Amount = Math.Clamp(Amount + value, MinAmount, MaxAmount);
     }
+
+    public void IncreaseMax(int value = 1)
+    {
+        MaxAmount += value;
+    }
+
+    public int GetMax()
+    {
+        return MaxAmount;
+    }
 }
 
 public enum ResourceType

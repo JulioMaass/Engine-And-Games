@@ -12,6 +12,7 @@ using Engine.ECS.Systems.Physics;
 using Engine.Managers;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -78,7 +79,7 @@ public abstract partial class Entity
     // Item components
     public ItemGetter ItemGetter { get; protected set; }
     public ItemPrice ItemPrice { get; protected set; }
-    public ResourceItemStats ResourceItemStats { get; protected set; }
+    public List<ResourceItemStats> ResourceItemStatsList { get; protected set; }
     public EquipmentItemStats EquipmentItemStats { get; protected set; }
     public ItemDropper ItemDropper { get; protected set; }
     public EquipmentHolder EquipmentHolder { get; protected set; }

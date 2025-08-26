@@ -26,8 +26,13 @@ public class Resources
         return List.Find(r => r.ResourceType == resourceType).Amount >= amount;
     }
 
-    public void AddAmount(ResourceType resourceType, int amount)
-    {
+    public void AddAmount(ResourceType resourceType, int amount) =>
         List.FirstOrDefault(r => r.ResourceType == resourceType).Add(amount);
-    }
+
+    public void IncreaseMax(ResourceType resourceType, int amount) =>
+        List.FirstOrDefault(r => r.ResourceType == resourceType).IncreaseMax(amount);
+
+    public int GetMax(ResourceType resourceType) =>
+        List.FirstOrDefault(r => r.ResourceType == resourceType).GetMax();
+
 }

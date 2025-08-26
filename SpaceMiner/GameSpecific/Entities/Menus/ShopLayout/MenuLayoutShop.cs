@@ -3,6 +3,7 @@ using Engine.Managers.Graphics;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.MissilesArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.OptionsArea;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.ShipArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.TabsArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
@@ -19,12 +20,13 @@ public class MenuLayoutShop : MenuLayout
         BackgroundImagePosition = new IntVector2(64, 32);
 
         var menuAreaTabs = new MenuAreaTabs();
-        var menuAreaCurrentTab = (MenuArea)Activator.CreateInstance(typeof(MenuAreaMissiles));
+        var menuAreaCurrentTab = (MenuArea)Activator.CreateInstance(typeof(MenuAreaShip));
         var menuAreaShopOptions = new MenuAreaShopOptions();
         MenuAreas.Add(menuAreaTabs);
         MenuAreas.Add(menuAreaCurrentTab);
         MenuAreas.Add(menuAreaShopOptions);
 
+        SwappableAreaTypes.Add(typeof(MenuAreaShip));
         SwappableAreaTypes.Add(typeof(MenuAreaMissiles));
         SwappableAreaTypes.Add(typeof(MenuAreaWeapons));
         SwappableAreaTypes.Add(typeof(MenuAreaUpgrades));

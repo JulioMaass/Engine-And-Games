@@ -15,17 +15,33 @@ public class ItemGetter : Component
     public void GetItem(Entity entity)
     {
         // Get Resource
-        if (entity.ResourceItemStats != null)
+        foreach (var resourceItemStats in entity.ResourceItemStatsList)
         {
-            if (entity.ResourceItemStats.ResourceType == ResourceType.Hp)
-                Owner.DamageTaker.HealHp(entity.ResourceItemStats.Amount);
+            if (resourceItemStats.ResourceType == ResourceType.Hp)
+            {
+                if (resourceItemStats.IncreaseKind is IncreaseKind.Max or IncreaseKind.CurrentAndMax)
+                    Owner.DamageTaker.IncreaseMaxHp(resourceItemStats.Amount);
+                if (resourceItemStats.IncreaseKind is IncreaseKind.Current or IncreaseKind.CurrentAndMax)
+                    Owner.DamageTaker.HealHp(resourceItemStats.Amount);
+            }
             else
-                GlobalManager.Values.MainCharData.Resources.AddAmount(entity.ResourceItemStats.ResourceType,
-                    entity.ResourceItemStats.Amount);
+            {
+                if (resourceItemStats.IncreaseKind is IncreaseKind.Max or IncreaseKind.CurrentAndMax)
+                    GlobalManager.Values.MainCharData.Resources.IncreaseMax(resourceItemStats.ResourceType,
+                        resourceItemStats.Amount);
+                if (resourceItemStats.IncreaseKind is IncreaseKind.Current or IncreaseKind.CurrentAndMax)
+                    GlobalManager.Values.MainCharData.Resources.AddAmount(resourceItemStats.ResourceType,
+                        resourceItemStats.Amount);
+            }
         }
 
         // Get Equipment
         if (entity.EquipmentItemStats?.Stats != null && Owner.EquipmentHolder != null)
-            GlobalManager.Values.MainCharData.AddSwitchEquipment(entity.GetType(), 1, 1);
+        {
+            if (entity.EquipmentItemStats.EquipKind != EquipKind.None)
+                GlobalManager.Values.MainCharData.AddSwitchEquipment(entity.GetType(), 1, 1);
+            else
+                GlobalManager.Values.MainCharData.AddStackEquipment(entity.GetType());
+        }
     }
 }

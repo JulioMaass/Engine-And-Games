@@ -1,4 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
@@ -22,7 +23,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         AddDamageDealer(damage);
     }
 
-    public void AddItemComponents(ResourceType resource, int amount)
+    public void AddItemComponents(ResourceType resource, int amount, IncreaseKind increaseKind = IncreaseKind.Current)
     {
         // Position components
         AddCenteredOutlinedCollisionBox();
@@ -33,7 +34,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         // Item components
-        AddResourceItemStats(resource, amount);
+        AddResourceItemStats(resource, amount, increaseKind);
     }
 
     public void AddSpaceMinerUpgradeItemComponents()
@@ -201,12 +202,15 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         // ReSharper disable once ComplexConditionExpression
         MenuItem.Draw = () =>
         {
-            var price = ItemPrice.PriceList.FirstOrDefault();
+            var ownedAmount = GlobalManager.Values.MainCharData.GetAmount(GetType());
+            ownedAmount = Math.Min(ownedAmount, ItemPrice.PriceList.Count - 1); // Cap to max price
+            var price = ItemPrice!.GetCurrentPrice(ownedAmount);
+
             var resourceCost = price.ResourceCosts.FirstOrDefault();
             var priceString = resourceCost.ResourceType.ToString().Substring(3) + " " + resourceCost.Amount;
 
             var color = CustomColor.White;
-            if (!ItemPrice.CanBuy(0))
+            if (!ItemPrice.CanBuy(ownedAmount))
                 color = CustomColor.Gray;
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, priceString, Position.Pixel + (0, 38), color);
             CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), color);
@@ -219,17 +223,20 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-16, 6), CustomColor.White);
         };
 
+        // ReSharper disable once ComplexConditionExpression
         MenuItem.OnSelect = () =>
         {
             // Get item price
-            var itemPrice = ItemPrice.PriceList.FirstOrDefault();
-            if (itemPrice == null)
+            var price = ItemPrice.PriceList.FirstOrDefault();
+            var ownedAmount = GlobalManager.Values.MainCharData.GetAmount(GetType());
+            ownedAmount = Math.Min(ownedAmount, ItemPrice.PriceList.Count - 1); // Cap to max price
+            price = ItemPrice?.GetCurrentPrice(ownedAmount);
+            if (price == null)
                 return;
 
             // Check if player has enough resources to buy the item
-            if (!ItemPrice.CanBuy(0))
+            if (!ItemPrice.CanBuy(ownedAmount))
                 return;
-            ItemPrice.SubtractResources(0);
 
             // Equip item
             EntityManager.PlayerEntity!.ItemGetter.GetItem(this);

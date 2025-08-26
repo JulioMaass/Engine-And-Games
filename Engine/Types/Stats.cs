@@ -5,9 +5,10 @@ namespace Engine.Types;
 public class Stats
 {
     // Stats
-    public int DefenseRatio { get; set; }
+    public int AddedDefenseRatio { get; set; }
     public int BurningRateMultiplier { get; set; }
     public int HealOnKillMultiplier { get; set; }
+    public float ExtraMoveSpeed { get; set; }
 
     // Abilities
     public bool DoubleJump { get; set; }

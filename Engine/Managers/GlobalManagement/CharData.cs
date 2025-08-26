@@ -30,6 +30,11 @@ public class CharData
         Equipment.FirstOrDefault(i => i.Type == itemType)!.Level += stackLevel;
     }
 
+    public void AddStackEquipment(Type itemType)
+    {
+        Equipment.Add(new EquipmentData(itemType, 1));
+    }
+
     public int GetEquipmentCount(Type itemType)
     {
         var slot = GetEquipmentSlotForType(itemType);
@@ -110,21 +115,26 @@ public class CharData
                 select nestedEquipment.Type).ToList();
     }
 
-    public Type GetCurrentEquippedWeaponType()
+    public int GetAmount(Type equipmentType)
     {
-        return EquipmentSlotList.FirstOrDefault(s => s.EquipKind == EquipKind.Weapon)?.Equipment
+        return Equipment.Count(e => e.Type == equipmentType);
+    }
+
+    public Type GetCurrentEquippedTypeOnSlot(EquipKind equipKind)
+    {
+        return EquipmentSlotList.FirstOrDefault(s => s.EquipKind == equipKind)?.Equipment
             .FirstOrDefault()?.Type;
     }
 
     public int GetAmountOfUpgradesOnWeapon(Type upgradeType, Type weaponType = null)
     {
-        weaponType ??= GetCurrentEquippedWeaponType();
+        weaponType ??= GetCurrentEquippedTypeOnSlot(EquipKind.Weapon);
         return weaponType == null ? 0 : GetAllUpgradesOnWeapon(weaponType).Count(t => t == upgradeType);
     }
 
     public List<Type> GetAllUpgradesOnWeapon(Type weaponType = null)
     {
-        weaponType ??= GetCurrentEquippedWeaponType();
+        weaponType ??= GetCurrentEquippedTypeOnSlot(EquipKind.Weapon);
         var upgradeList = Equipment.FirstOrDefault(e => e.Type == weaponType)
             ?.GetEquipmentSlot(EquipKind.WeaponUpgrade, SlotType.Stack)
             .Equipment.Select(e => e.Type).ToList();
@@ -133,7 +143,7 @@ public class CharData
 
     public void AddUpgradeToWeapon(Type upgradeType, Type weaponType = null)
     {
-        weaponType ??= GetCurrentEquippedWeaponType();
+        weaponType ??= GetCurrentEquippedTypeOnSlot(EquipKind.Weapon);
         if (weaponType == null)
             return;
         Equipment.FirstOrDefault(e => e.Type == weaponType)

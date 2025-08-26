@@ -42,17 +42,18 @@ public class StatePlayerControl : State
         // TODO: Make an actual state machine for the player
         // Direction // TODO: Make acceleration and deceleration (test 0.2acc and 0.3dec)
         // TODO: Diagonals need to be slower
+        var moveSpeed = Owner.Speed.MoveSpeed + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraMoveSpeed, true, false, false);
         if (Owner.PlayerControl.Up)
-            Owner.Speed.SetYSpeed(-Owner.Speed.MoveSpeed);
+            Owner.Speed.SetYSpeed(-moveSpeed);
         else if (Owner.PlayerControl.Down)
-            Owner.Speed.SetYSpeed(Owner.Speed.MoveSpeed);
+            Owner.Speed.SetYSpeed(moveSpeed);
         else
             Owner.Speed.SetYSpeed(0);
 
         if (Owner.PlayerControl.Left)
-            Owner.Speed.SetXSpeed(-Owner.Speed.MoveSpeed);
+            Owner.Speed.SetXSpeed(-moveSpeed);
         else if (Owner.PlayerControl.Right)
-            Owner.Speed.SetXSpeed(Owner.Speed.MoveSpeed);
+            Owner.Speed.SetXSpeed(moveSpeed);
         else
             Owner.Speed.SetXSpeed(0);
         if (Owner.Speed.X != 0 && Owner.Speed.Y != 0)
@@ -86,15 +87,18 @@ public class StatePlayerControl : State
 
         // Dash
         DashFrame--;
-        if (Owner.PlayerControl.Button3Press && (Owner.Speed.X != 0 || Owner.Speed.Y != 0) && DashFrame < -20)
+        var isMoving = (Owner.Speed.X != 0 || Owner.Speed.Y != 0);
+        if (StatsManager.CheckForUnlock(Owner, stats => stats.Dash)
+            && Owner.PlayerControl.Button3Press && isMoving && DashFrame < -20)
         {
             DashFrame = 10;
             DashDirection = Angle.GetAngleFromDistanceCoordinates(new Vector2(Owner.Speed.X, Owner.Speed.Y)).Value;
         }
         if (DashFrame > 0)
         {
-            Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * Owner.Speed.DashSpeed);
-            Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * Owner.Speed.DashSpeed);
+            var dashSpeed = moveSpeed + Owner.Speed.DashSpeed;
+            Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * dashSpeed);
+            Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * dashSpeed);
         }
     }
 
