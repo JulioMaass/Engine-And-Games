@@ -1,7 +1,9 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.ShootingHandling;
@@ -39,7 +41,8 @@ public class Firefly : Entity
         AddStateManager();
         // Auto States
         var state = NewState()
-            .AddBehavior(new BehaviorSetDirectionToPlayer())
+            .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
+            .AddBehavior(new BehaviorSetDirectionToTarget())
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(10))
             .AddToAutomaticStatesList();

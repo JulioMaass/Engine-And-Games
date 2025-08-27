@@ -107,6 +107,11 @@ public abstract class AngleComponent : Component
         return Angle.GetRoundedAngle(possibleAngles, angleOffset);
     }
 
+    public void RoundAngle(int possibleAngles, int angleOffset = 0)
+    {
+        Angle = GetRoundedAngle(possibleAngles, angleOffset).Value;
+    }
+
     public int GetRoundedIndex(int possibleAngles, int angleOffset = 0)
     {
         return Angle.GetRoundedIndex(possibleAngles, angleOffset);

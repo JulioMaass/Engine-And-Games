@@ -32,7 +32,8 @@ public class HomingMissile : Entity
         // State
         AddStateManager();
         var state = NewState()
-            .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Hostile))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToXFacing())
+            .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Hostile, EntityKind.Enemy))
             .AddBehavior(new BehaviorTurnTowardsTarget())
             .AddBehavior(new BehaviorMoveToCurrentDirection());
         StateManager.AutomaticStatesList.Add(state);

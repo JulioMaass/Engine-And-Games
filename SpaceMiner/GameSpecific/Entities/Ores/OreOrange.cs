@@ -1,6 +1,8 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
+﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
 using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.VisualsHandling;
@@ -37,7 +39,8 @@ public class OreOrange : Entity
         var stateHomeToPlayer = NewState()
             .AddStartCondition(new ConditionDistanceToPlayerLessThan(32))
             .AddBehavior(new BehaviorMoveToCurrentDirection())
-            .AddBehavior(new BehaviorSetDirectionToPlayer())
+            .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
+            .AddBehavior(new BehaviorSetDirectionToTarget())
             .AddBehavior(new BehaviorChangeMoveSpeed(3f))
             .AddToAutomaticStatesList();
         var stateFall = NewState()

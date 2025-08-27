@@ -1,7 +1,8 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
@@ -41,7 +42,8 @@ public class Bat : Entity
 
         // Auto States
         var state = NewStateWithTimedPattern(default, (0, 6), (1, 6), (2, 4), (3, 6))
-            .AddBehavior(new BehaviorSetDirectionToPlayer())
+            .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
+            .AddBehavior(new BehaviorSetDirectionToTarget())
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddToAutomaticStatesList();
 
