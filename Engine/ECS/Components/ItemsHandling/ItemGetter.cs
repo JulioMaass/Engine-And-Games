@@ -14,7 +14,18 @@ public class ItemGetter : Component
 
     public void GetItem(Entity entity)
     {
+        // Get Equipment
+        if (entity.EquipmentItemStats?.Stats != null && Owner.EquipmentHolder != null)
+        {
+            if (entity.EquipmentItemStats.EquipKind != EquipKind.None)
+                GlobalManager.Values.MainCharData.AddSwitchEquipment(entity.GetType(), 1, 1);
+            else
+                GlobalManager.Values.MainCharData.AddStackEquipment(entity.GetType());
+        }
+
         // Get Resource
+        if (entity.ResourceItemStatsList == null)
+            return;
         foreach (var resourceItemStats in entity.ResourceItemStatsList)
         {
             if (resourceItemStats.ResourceType == ResourceType.Hp)
@@ -33,15 +44,6 @@ public class ItemGetter : Component
                     GlobalManager.Values.MainCharData.Resources.AddAmount(resourceItemStats.ResourceType,
                         resourceItemStats.Amount);
             }
-        }
-
-        // Get Equipment
-        if (entity.EquipmentItemStats?.Stats != null && Owner.EquipmentHolder != null)
-        {
-            if (entity.EquipmentItemStats.EquipKind != EquipKind.None)
-                GlobalManager.Values.MainCharData.AddSwitchEquipment(entity.GetType(), 1, 1);
-            else
-                GlobalManager.Values.MainCharData.AddStackEquipment(entity.GetType());
         }
     }
 }

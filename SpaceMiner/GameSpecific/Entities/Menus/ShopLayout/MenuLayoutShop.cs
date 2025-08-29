@@ -15,9 +15,9 @@ public class MenuLayoutShop : MenuLayout
 {
     public MenuLayoutShop()
     {
-        BackgroundImage = Drawer.TextureDictionary["BlackTile"];
-        BackgroundImageSize = new IntVector2(256 + 64, 128 + 64);
-        BackgroundImagePosition = new IntVector2(64, 32);
+        BackgroundImage = Drawer.TextureDictionary["ShopBackground"];
+        BackgroundImageSize = new IntVector2(256 + 64 + 32, 128 - 16);
+        BackgroundImagePosition = new IntVector2(48, 48);
 
         var menuAreaTabs = new MenuAreaTabs();
         var menuAreaCurrentTab = (MenuArea)Activator.CreateInstance(typeof(MenuAreaShip));

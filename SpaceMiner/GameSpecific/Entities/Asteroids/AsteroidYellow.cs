@@ -14,7 +14,7 @@ public class AsteroidYellow : Asteroid
         AddSpriteCenteredOrigin("AsteroidYellow", 32);
         AddSpriteVariation(4, 1);
         AddCenteredCollisionBox(16);
-        BloomSource = new BloomSource(this, 0.80f);
+        BloomSource = new BloomSource(this, 0.70f);
 
         // Properties
         AddSpaceMinerEnemyComponents(50, 50);

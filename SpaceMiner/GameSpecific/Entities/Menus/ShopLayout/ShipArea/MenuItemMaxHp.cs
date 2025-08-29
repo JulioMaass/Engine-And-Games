@@ -14,6 +14,7 @@ public class MenuItemMaxHp : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemHp", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
 
         AddItemComponents(ResourceType.Hp, 50, IncreaseKind.CurrentAndMax);

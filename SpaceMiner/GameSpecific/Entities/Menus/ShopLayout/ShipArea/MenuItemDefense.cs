@@ -14,6 +14,7 @@ public class MenuItemDefense : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemDefense", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.AddedDefenseRatio = 1;
 

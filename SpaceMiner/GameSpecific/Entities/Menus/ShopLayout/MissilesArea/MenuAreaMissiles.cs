@@ -12,7 +12,7 @@ public class MenuAreaMissiles : MenuArea
         {
             { typeof(MenuItemMissileSpray), typeof(MenuItemMissileDrill), typeof(MenuItemMissileAtomic), typeof(MenuItemMissileHoming) },
         });
-        Position = IntVector2.New(64, 64);
+        Position = IntVector2.New(64 + 16, 64 + 16);
         Spacing = IntVector2.New(64 + 32, 32 + 32);
     }
 }

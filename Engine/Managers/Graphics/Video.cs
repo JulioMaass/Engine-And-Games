@@ -143,14 +143,4 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
             SpriteBatch.Draw(EditingMenuRender, new Rectangle(Settings.ScreenScaledSize.Width, 0, Settings.EditingMenuWidth, Settings.ScreenScaledSize.Height), CustomColor.White);
         SpriteBatch.End();
     }
-
-
-    public static void DrawStringWithOutline(SpriteFont font, string text, Vector2 position, Color color)
-    {
-        for (var x = -1; x <= 1; x++)
-            for (var y = -1; y <= 1; y++)
-                if (x != 0 || y != 0)
-                    SpriteBatch.DrawString(font, text, position + new Vector2(x, y), CustomColor.Black);
-        SpriteBatch.DrawString(font, text, position, color);
-    }
 }

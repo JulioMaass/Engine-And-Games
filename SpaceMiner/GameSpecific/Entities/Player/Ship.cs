@@ -14,7 +14,8 @@ public class Ship : Entity
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("SpaceMinerPlayer");
-        WhiteShader = new(this);
+        ColorShader = new(this);
+        ColorShader.FlickerWhiteOn = true;
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10);
@@ -22,7 +23,7 @@ public class Ship : Entity
         DamageTaker.SetInvincibilityFrames(60);
 
         AddPlayerComponents();
-        AddCollisionBox(16, 16, 8, 8);
+        AddCollisionBox(12, 12, 6, 6);
         AddMoveSpeed(2f);
         Speed.DashSpeed = 4f;
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);

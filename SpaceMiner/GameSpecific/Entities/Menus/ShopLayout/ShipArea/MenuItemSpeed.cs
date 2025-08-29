@@ -14,6 +14,7 @@ public class MenuItemSpeed : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemSpeed", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.ExtraMoveSpeed = 0.5f;
 

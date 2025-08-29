@@ -14,6 +14,7 @@ public class MenuItemSocketYellow : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeYellow", 16);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.WeaponUpgrade);
         EquipmentItemStats.Stats.ExtraShots = 1;
 

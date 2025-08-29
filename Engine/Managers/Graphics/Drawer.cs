@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace Engine.Managers.Graphics;
 
@@ -155,6 +156,15 @@ public static class Drawer
         var spriteX = spriteColumn * size.Width;
         var spriteY = spriteRow * size.Height;
         return new IntRectangle(spriteX, spriteY, size);
+    }
+
+    public static void DrawOutlinedString(SpriteFont font, string @string, IntVector2 position, Color color)
+    {
+        for (var x = -1; x <= 1; x++)
+            for (var y = -1; y <= 1; y++)
+                if (x != 0 || y != 0)
+                    Video.SpriteBatch.DrawString(font, @string, position + new Vector2(x, y), CustomColor.Black);
+        Video.SpriteBatch.DrawString(font, @string, position, color);
     }
 
     public static void DrawEmptyBackground(IntVector2 positionInTiles, IntVector2 sizeInTiles, int scale = 1)

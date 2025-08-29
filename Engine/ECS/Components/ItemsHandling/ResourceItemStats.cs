@@ -14,6 +14,7 @@ public class ResourceItemStats : Component
         Owner = owner;
     }
 }
+
 public enum IncreaseKind
 {
     Current,

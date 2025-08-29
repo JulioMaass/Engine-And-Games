@@ -27,8 +27,9 @@ sampler2D PaletteTextureSampler = sampler_state
 // Palette
 bool ApplyPalette;
 float PaletteIndex;
-// White
+// Color
 bool ApplyWhite;
+bool ApplyGrayscale;
 
 
 // Vertex Shader Output Setup
@@ -52,6 +53,9 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     
     // Apply White
     color.rgb = lerp(color.rgb, float3(1, 1, 1), ApplyWhite);
+    
+    // Apply Black and White
+    color.rgb = lerp(color.rgb, float(color.r * 0.299 + color.g * 0.587 + color.b * 0.114), ApplyGrayscale);
 
     return color;
 }

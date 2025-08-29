@@ -14,6 +14,7 @@ public class MenuItemRepair : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemRepair", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
 
         AddItemComponents(ResourceType.Hp, 1000000);

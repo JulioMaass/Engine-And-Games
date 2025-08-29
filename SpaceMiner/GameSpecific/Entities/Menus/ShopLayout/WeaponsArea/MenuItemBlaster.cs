@@ -15,6 +15,7 @@ public class MenuItemBlaster : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponBlaster", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterBlaster);
         EquipmentItemStats.Stats.AddedBlastLevel = 1; // Turns on the blast

@@ -21,8 +21,8 @@ public class SpaceMinerGlobalValues : Values
         MainCharData.Resources.AddNew(ResourceType.MissileSpray, 10, 0);
         MainCharData.Resources.AddNew(ResourceType.MissileDrill, 10, 0);
 
-        foreach (var resource in MainCharData.Resources.List)
-            resource.Add(999999);
+        //foreach (var resource in MainCharData.Resources.List)
+        //    resource.Add(999999);
 
         MainCharData.AddEquipmentSlot(EquipKind.None, SlotType.Stack);
         MainCharData.AddEquipmentSlot(EquipKind.Weapon, SlotType.Switch);

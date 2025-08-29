@@ -1,5 +1,4 @@
-﻿using Engine.GameSpecific;
-using Engine.Helpers;
+﻿using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageEditing.Tools;
@@ -188,7 +187,7 @@ public class StageEditorTileMode : StageEditorMode
             var layerHeight = Settings.TileSize.Y * layer.lines;
             var layerSize = new IntVector2(CurrentTileset.Texture.Width, layerHeight) * Settings.EditingMenuScale;
             Drawer.DrawRectangleOutline(layerPosition, layerSize, CustomColor.Black);
-            Video.DrawStringWithOutline(Drawer.PicoFont, layer.id.ToString(), layerPosition + (1, 1), Color.White);
+            Drawer.DrawOutlinedString(Drawer.PicoFont, layer.id.ToString(), layerPosition + (1, 1), Color.White);
             layerPosition += new IntVector2(0, layerHeight) * Settings.EditingMenuScale;
         }
 

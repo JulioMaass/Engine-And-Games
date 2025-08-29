@@ -14,6 +14,7 @@ public class MenuItemDash : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemDash", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.Dash = true;
 

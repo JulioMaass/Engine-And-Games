@@ -15,6 +15,7 @@ public class MenuItemPuncher : Entity
 
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponPuncher", 32);
+        Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterPuncher);
 
