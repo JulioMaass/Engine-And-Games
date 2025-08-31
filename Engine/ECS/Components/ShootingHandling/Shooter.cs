@@ -220,7 +220,9 @@ public class Shooter : Component
         var initialAngle = GetInitialAngle(middleAngle, angleBetweenShots, amountOfShots);
         for (var i = 0; i < amountOfShots; i++)
         {
-            var shot = NewShotMovingToDirection(initialAngle + i * angleBetweenShots, spawnOffset);
+            var angle = new Angle(initialAngle + i * angleBetweenShots);
+            if (Owner.Facing.IsXMirrored) angle.MirrorX();
+            var shot = NewShotMovingToDirection(angle.Value, spawnOffset);
             shot.Facing.CopyFacingFrom(Owner);
         }
     }

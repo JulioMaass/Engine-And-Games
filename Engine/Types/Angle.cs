@@ -130,25 +130,33 @@ public struct Angle
 
     // Mirror X
     // Static
-    public static Angle MirrorX(int angle)
+    public static Angle GetMirrorX(int angle)
     {
         return (360000 - angle + 180000) % 360000;
     }
     // Instance
-    public Angle MirrorX()
+    public Angle GetMirrorX()
     {
-        return MirrorX(Value);
+        return GetMirrorX(Value);
+    }
+    public void MirrorX()
+    {
+        Value = GetMirrorX().Value;
     }
     // Mirror Y
     // Static
-    public static Angle MirrorY(int angle)
+    public static Angle GetMirrorY(int angle)
     {
         return (360000 - angle) % 360000;
     }
     // Instance
-    public Angle MirrorY()
+    public Angle GetMirrorY()
     {
-        return MirrorY(Value);
+        return GetMirrorY(Value);
+    }
+    public void MirrorY()
+    {
+        Value = GetMirrorY().Value;
     }
     // Reverse angle
     // Static

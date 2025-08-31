@@ -94,12 +94,12 @@ public abstract class AngleComponent : Component
 
     public void MirrorX()
     {
-        Angle = Angle.MirrorX();
+        Angle = Angle.GetMirrorX();
     }
 
     public void MirrorY()
     {
-        Angle = Angle.MirrorY();
+        Angle = Angle.GetMirrorY();
     }
 
     public Angle GetRoundedAngle(int possibleAngles, int angleOffset = 0)

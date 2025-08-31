@@ -32,11 +32,11 @@ public class MetShooter : Entity
 
         // Shooter
         Shooter = new Shooter(this);
-        Shooter.AddShootAction(() => Shooter.ShootSpread(0, 30000));
+        Shooter.AddShootAction(() => Shooter.ShootSpread(0, 45000));
         Shooter.AmountOfShots = 3;
         Shooter.RelativeSpawnPosition = IntVector2.New(4, 4);
         Shooter.ShotType = typeof(EnemyBullet);
-        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2f);
+        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 2.5f);
 
         // States
         AddStateManager();
