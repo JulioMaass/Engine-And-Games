@@ -53,6 +53,7 @@ public static class GameManager // Role: Control game states and main loop
     public static void Update()
     {
         EntityManager.RunComponentEnforcerCheckingList();
+        Input.UpdateInputState();
 
         // Audio
         AudioManager.Update();
@@ -60,7 +61,8 @@ public static class GameManager // Role: Control game states and main loop
         // Debug
         Input.UpdateDebugInput();
         DebugMode.Update();
-        if (DebugMode.Paused) return;
+        if (DebugMode.Paused)
+            return;
         DebugMode.CleanUp();
 
         // Video // TODO: Check where to place this so the screen dimmer works as intended at every intended use
@@ -71,7 +73,8 @@ public static class GameManager // Role: Control game states and main loop
 
         // Run stage editor loop
         StageEditor.Update();
-        if (StageEditor.IsOn) return;
+        if (StageEditor.IsOn)
+            return;
 
         // Game state
         Input.UpdateGameInput();

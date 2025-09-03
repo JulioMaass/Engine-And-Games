@@ -1,8 +1,8 @@
 ﻿using Engine.Main;
 using Engine.Managers.Graphics;
 using Engine.Types;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,6 +14,8 @@ public static class Input
     public static KeyboardState KeyboardState;
     private static GamePadState _gamePadState;
     private static MouseState _mouseState;
+    private static JoystickState _joystickState;
+    private static int _deadZone = 4096;
 
     // MOUSE HANDLING
     // Left Button
@@ -37,16 +39,20 @@ public static class Input
         private int _pressFrame;
         public Keys Key { get; private set; }
         public Buttons GamePadButton { get; private set; }
+        public int JoystickIndex { get; private set; } // For controllers that are not identified as a gamepad (XInput)
+        public (int Axis, AxisSign Sign) JoystickAxisAndSign { get; private set; }
         public MouseButton MouseButton { get; set; }
         public bool Pressed => _pressFrame == 1;
         public bool Holding => _pressFrame > 0;
         public void AddFrame() => _pressFrame += 1;
         public void ResetFrame() => _pressFrame = 0;
-        public Button(InputType inputType, Keys key, Buttons btn = Buttons.None)
+        public Button(InputType inputType, Keys key, Buttons btn = Buttons.None, int joystickIndex = -1, (int, AxisSign) joystickAxisAndSign = default)
         {
             InputType = inputType;
             Key = key;
             GamePadButton = btn;
+            JoystickIndex = joystickIndex;
+            JoystickAxisAndSign = joystickAxisAndSign;
             InputList.Add(this);
         }
 
@@ -56,18 +62,18 @@ public static class Input
 
     // Game input (doesn't work during debug pause)
     private static readonly List<Button> InputList = new();
-    public static Button Up { get; private set; } = new(InputType.Game, Keys.NumPad5, Buttons.DPadUp);
-    public static Button Down { get; private set; } = new(InputType.Game, Keys.NumPad2, Buttons.DPadDown);
-    public static Button Left { get; private set; } = new(InputType.Game, Keys.NumPad1, Buttons.DPadLeft);
-    public static Button Right { get; private set; } = new(InputType.Game, Keys.NumPad3, Buttons.DPadRight);
-    public static Button Button1 { get; private set; } = new(InputType.Game, Keys.Z, Buttons.A);
-    public static Button Button2 { get; private set; } = new(InputType.Game, Keys.X, Buttons.B);
-    public static Button Button3 { get; private set; } = new(InputType.Game, Keys.C, Buttons.X);
-    public static Button Button4 { get; private set; } = new(InputType.Game, Keys.V, Buttons.Y);
-    public static Button L { get; private set; } = new(InputType.Game, Keys.A, Buttons.LeftShoulder);
-    public static Button R { get; private set; } = new(InputType.Game, Keys.S, Buttons.RightShoulder);
-    public static Button Start { get; private set; } = new(InputType.Game, Keys.Enter, Buttons.Start);
-    public static Button Select { get; private set; } = new(InputType.Game, Keys.Back, Buttons.Back);
+    public static Button Up { get; private set; } = new(InputType.Game, Keys.NumPad5, Buttons.DPadUp, -1, (1, AxisSign.Negative));
+    public static Button Down { get; private set; } = new(InputType.Game, Keys.NumPad2, Buttons.DPadDown, -1, (1, AxisSign.Positive));
+    public static Button Left { get; private set; } = new(InputType.Game, Keys.NumPad1, Buttons.DPadLeft, -1, (0, AxisSign.Negative));
+    public static Button Right { get; private set; } = new(InputType.Game, Keys.NumPad3, Buttons.DPadRight, -1, (0, AxisSign.Positive));
+    public static Button Button1 { get; private set; } = new(InputType.Game, Keys.Z, Buttons.A, 3);
+    public static Button Button2 { get; private set; } = new(InputType.Game, Keys.X, Buttons.B, 2);
+    public static Button Button3 { get; private set; } = new(InputType.Game, Keys.C, Buttons.X, 1);
+    public static Button Button4 { get; private set; } = new(InputType.Game, Keys.V, Buttons.Y, 0);
+    public static Button L { get; private set; } = new(InputType.Game, Keys.A, Buttons.LeftShoulder, 4);
+    public static Button R { get; private set; } = new(InputType.Game, Keys.S, Buttons.RightShoulder, 5);
+    public static Button Start { get; private set; } = new(InputType.Game, Keys.Enter, Buttons.Start, 9);
+    public static Button Select { get; private set; } = new(InputType.Game, Keys.Back, Buttons.Back, 8);
 
     // Debug input (works during debug pause)
     public static Button ToggleDebugMode { get; private set; } = new(InputType.Debug, Keys.D);
@@ -108,9 +114,15 @@ public static class Input
     public static Button Shift { get; } = new(InputType.Debug, Keys.LeftShift);
     public static Button Alt { get; } = new(InputType.Debug, Keys.LeftAlt);
 
-    public static void UpdateDebugInput()
+    public static void UpdateInputState()
     {
         KeyboardState = Keyboard.GetState();
+        _gamePadState = GamePad.GetState(0);
+        _joystickState = Joystick.GetState(0);
+    }
+
+    public static void UpdateDebugInput()
+    {
         foreach (var button in InputList.Where(button => button.InputType == InputType.Debug))
             UpdateButton(button);
         UpdateMouse();
@@ -118,8 +130,6 @@ public static class Input
 
     public static void UpdateGameInput()
     {
-        KeyboardState = Keyboard.GetState();
-        _gamePadState = GamePad.GetState(PlayerIndex.One);
         foreach (var button in InputList.Where(button => button.InputType == InputType.Game))
             UpdateButton(button);
     }
@@ -205,10 +215,27 @@ public static class Input
 
     private static void UpdateButton(Button button)
     {
-        if (KeyboardState.IsKeyDown(button.Key) || _gamePadState.IsButtonDown(button.GamePadButton) || MouseButtonPressed(button.MouseButton))
+        if (KeyboardState.IsKeyDown(button.Key) || _gamePadState.IsButtonDown(button.GamePadButton)
+            || JoystickButtonIsDown(button.JoystickIndex) || JoystickAxisIsDown(button.JoystickAxisAndSign) || MouseButtonPressed(button.MouseButton))
             button.AddFrame();
         else
             button.ResetFrame();
+    }
+
+    private static bool JoystickButtonIsDown(int buttonIndex)
+    {
+        if (buttonIndex == -1)
+            return false;
+        return _joystickState.Buttons[buttonIndex] == ButtonState.Pressed;
+    }
+
+    private static bool JoystickAxisIsDown((int Axis, AxisSign Sign) joystickAxisAndSign)
+    {
+        if (joystickAxisAndSign.Sign == 0)
+            return false;
+        if (Math.Abs(_joystickState.Axes[joystickAxisAndSign.Axis]) <= _deadZone)
+            return false;
+        return Math.Sign(_joystickState.Axes[joystickAxisAndSign.Axis]) == (int)joystickAxisAndSign.Sign;
     }
 
     private static bool MouseButtonPressed(MouseButton mouseButton) =>
@@ -262,4 +289,11 @@ public enum MouseButton
     None,
     Left,
     Right,
+}
+
+public enum AxisSign
+{
+    None = 0,
+    Positive = 1,
+    Negative = -1,
 }
