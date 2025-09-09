@@ -30,7 +30,7 @@ public class SpinStar : Entity
 
         // Enemy specific components
         AddMoveDirection();
-        AddMoveSpeed(1.0f);
+        AddMoveSpeed(1.5f);
         AddTurnSpeed(2000);
         AddMoveDirection();
         TargetPool = new TargetPool(this);
@@ -49,16 +49,23 @@ public class SpinStar : Entity
         // Auto States
         var stateDash = NewState(default, 4)
             .AddStateSettingBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 8))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 8, (0, -48)))
             .AddStateSettingBehavior(new BehaviorMoveToCurrentDirection())
             .AddBehaviorWithConditions(new BehaviorDecelerateMomentum(40), new ConditionFrame(2, ComparisonType.Greater))
             .AddToAutomaticStatesList();
         // Command States
         var shootFrame = 50;
         var shootStateDuration = 80;
-        var stateShoot = NewState()
+        var stateShootPerfect = NewState()
             .AddStateSettingBehavior(new BehaviorFacePlayer())
             .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20))
+            .AddStateSettingBehaviorWithConditions(new BehaviorMirrorDirection(ShootDirection), new ConditionCustom(() => Facing.IsXMirrored))
+            .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
+            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
+            .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
+        var stateShootFront = NewState()
+            .AddStateSettingBehavior(new BehaviorFacePlayer())
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20, (48, 0)))
             .AddStateSettingBehaviorWithConditions(new BehaviorMirrorDirection(ShootDirection), new ConditionCustom(() => Facing.IsXMirrored))
             .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
             .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
@@ -68,6 +75,7 @@ public class SpinStar : Entity
         // Get up
         AiControl = new(this);
         AiControl.SetConditionsToTriggerDecision(new ConditionStateFrame(stateDash, 45));
-        AiControl.AddSingleStatePool(stateShoot);
+        AiControl.AddSingleStatePool(stateShootPerfect);
+        AiControl.AddSingleStatePool(stateShootFront);
     }
 }

@@ -41,12 +41,12 @@ public abstract class AngleComponent : Component
         Owner.Speed.SetSpeed(xSpeed, ySpeed);
     }
 
-    public void SetAngleDirectionTo(Entity target)
+    public void SetAngleDirectionTo(Entity target, IntVector2 relativePosition = default)
     {
         if (target == null)
             return;
 
-        Angle = Angle.GetDirection(Owner, target);
+        Angle = Angle.GetDirection(Owner, target.Position.Pixel + relativePosition);
     }
 
     public void SetAngleDirectionToPosition(IntVector2 position)
