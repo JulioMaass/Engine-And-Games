@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Entities.EntityCreation;
@@ -30,9 +30,9 @@ public class Telly : Entity
         var state = NewState(default, 0, 4, 12)
             .AddStateSettingBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
             .AddStateSettingBehavior(new BehaviorFacePlayer())
-            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(2))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 2))
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddBehavior(new BehaviorTurnTowardsTarget())
+            .AddBehavior(new BehaviorTurnTowardsTarget(MoveDirection))
             .AddBehavior(new BehaviorMoveToCurrentDirection())
             .AddToAutomaticStatesList();
     }

@@ -1,12 +1,11 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Gravity;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
-using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
@@ -58,7 +57,7 @@ public class Owl : Entity
             .AddStateSettingBehavior(new BehaviorSwitchGravity(Switch.Off))
             .AddStateSettingBehavior(new BehaviorStop(Axes.Y))
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddBehavior(new BehaviorSetDirectionToTarget())
+            .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection(Axes.X, 1.5f))
             .AddToAutomaticStatesList();
 

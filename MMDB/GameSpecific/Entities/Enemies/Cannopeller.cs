@@ -1,8 +1,7 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
-using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
@@ -41,7 +40,7 @@ public class Cannopeller : Entity
         // Auto States
         var state = NewState()
             .AddBehavior(new BehaviorAccelerateToDirection())
-            .AddBehaviorWithConditions(new BehaviorReverseAngleDirection(), new ConditionCollidesAtDistanceWithCurrentDirection(48),
+            .AddBehaviorWithConditions(new BehaviorReverseAngleDirection(MoveDirection), new ConditionCollidesAtDistanceWithCurrentDirection(48),
                 new ConditionYSpeedBiggerThan(1.0f))
             .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(90))
             .AddToAutomaticStatesList();

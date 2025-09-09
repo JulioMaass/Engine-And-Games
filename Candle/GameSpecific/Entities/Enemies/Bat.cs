@@ -1,5 +1,5 @@
 ﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
@@ -43,7 +43,7 @@ public class Bat : Entity
         // Auto States
         var state = NewStateWithTimedPattern(default, (0, 6), (1, 6), (2, 4), (3, 6))
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddBehavior(new BehaviorSetDirectionToTarget())
+            .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddToAutomaticStatesList();
 

@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
@@ -41,7 +41,7 @@ public class OreGray : Entity
             .AddStartCondition(new ConditionDistanceToPlayerLessThan(32))
             .AddBehavior(new BehaviorMoveToCurrentDirection())
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddBehavior(new BehaviorSetDirectionToTarget())
+            .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorChangeMoveSpeed(3f))
             .AddToAutomaticStatesList();
         var stateFall = NewState()

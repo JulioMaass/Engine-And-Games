@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Entities.EntityCreation;
@@ -33,7 +33,7 @@ public class HomingMissile : Entity
         AddStateManager();
         var state = NewState()
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Hostile, EntityKind.Enemy))
-            .AddBehavior(new BehaviorTurnTowardsTarget())
+            .AddBehavior(new BehaviorTurnTowardsTarget(MoveDirection))
             .AddBehavior(new BehaviorMoveToCurrentDirection());
         StateManager.AutomaticStatesList.Add(state);
     }

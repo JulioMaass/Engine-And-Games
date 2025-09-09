@@ -1,10 +1,11 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.Behaviors.Sprite;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ShootingHandling;
@@ -29,7 +30,7 @@ public class SpinStar : Entity
 
         // Enemy specific components
         AddMoveDirection();
-        AddMoveSpeed(1.5f);
+        AddMoveSpeed(1.0f);
         AddTurnSpeed(2000);
         AddMoveDirection();
         TargetPool = new TargetPool(this);
@@ -48,31 +49,18 @@ public class SpinStar : Entity
         // Auto States
         var stateDash = NewState(default, 4)
             .AddStateSettingBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(8))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 8))
             .AddStateSettingBehavior(new BehaviorMoveToCurrentDirection())
             .AddBehaviorWithConditions(new BehaviorDecelerateMomentum(40), new ConditionFrame(2, ComparisonType.Greater))
             .AddToAutomaticStatesList();
         // Command States
         var shootFrame = 50;
         var shootStateDuration = 80;
-        var stateAimUp = NewState(default, 0)
+        var stateShoot = NewState()
             .AddStateSettingBehavior(new BehaviorFacePlayer())
-            .AddStateSettingBehavior(new BehaviorSetShootDirection(270000))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
-            .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
-        var stateAimForward = NewState(default, 1)
-            .AddStateSettingBehavior(new BehaviorFacePlayer())
-            .AddStateSettingBehavior(new BehaviorSetShootDirection(0))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
-            .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
-        var stateAimDown = NewState(default, 2)
-            .AddStateSettingBehavior(new BehaviorFacePlayer())
-            .AddStateSettingBehavior(new BehaviorSetShootDirection(90000))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
-            .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
-        var stateAimBack = NewState(default, 3)
-            .AddStateSettingBehavior(new BehaviorFacePlayer())
-            .AddStateSettingBehavior(new BehaviorSetShootDirection(180000))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20))
+            .AddStateSettingBehaviorWithConditions(new BehaviorMirrorDirection(ShootDirection), new ConditionCustom(() => Facing.IsXMirrored))
+            .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
             .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
             .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
 
@@ -80,9 +68,6 @@ public class SpinStar : Entity
         // Get up
         AiControl = new(this);
         AiControl.SetConditionsToTriggerDecision(new ConditionStateFrame(stateDash, 45));
-        AiControl.AddSingleStatePool(stateAimUp);
-        AiControl.AddSingleStatePool(stateAimForward);
-        AiControl.AddSingleStatePool(stateAimDown);
-        AiControl.AddSingleStatePool(stateAimBack);
+        AiControl.AddSingleStatePool(stateShoot);
     }
 }

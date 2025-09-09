@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling.Behaviors.DeathAndDestroy;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
@@ -46,7 +46,7 @@ public class ShooterEnemy : Entity
         var state = NewState()
             .AddBehavior(new BehaviorFacePlayer())
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddBehavior(new BehaviorSetDirectionToTarget())
+            .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection(Engine.Helpers.Axes.X))
             .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(50, 70), ComparisonType.Equal))

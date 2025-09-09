@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
@@ -34,7 +34,7 @@ public class FireflyWanderer : Entity
                 new BehaviorMirrorXFacing(),
                 new ConditionXDistanceFromSpawnBiggerThan(48), // TODO: Change reference point (starting position) if enemy is out of reach from this distance (knocked from a platform, etc.)
                 new ConditionXFacingAwayFromSpawn())
-            .AddBehavior(new BehaviorSetDirectionToXFacing())
+            .AddBehavior(new BehaviorSetDirectionToXFacing(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddToAutomaticStatesList();
     }

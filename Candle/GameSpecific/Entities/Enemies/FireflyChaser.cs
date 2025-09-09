@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Entities.EntityCreation;
@@ -30,7 +30,7 @@ public class FireflyChaser : Entity
         // Auto States
         var state = NewState()
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehavior(new BehaviorSetDirectionToXFacing())
+            .AddBehavior(new BehaviorSetDirectionToXFacing(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddToAutomaticStatesList();
     }

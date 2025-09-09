@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Direction;
 using Engine.ECS.Components.ControlHandling.Behaviors.ComplexMovement.Snap;
-using Engine.ECS.Components.ControlHandling.Behaviors.Direction;
+using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.PhysicsHandling;
@@ -34,7 +34,7 @@ public class SuzyX : Entity
             .AddToAutomaticStatesList();
         // Command States
         var stateMove = NewState()
-            .AddStateSettingBehaviorWithConditions(new BehaviorReverseAngleDirection(), new ConditionCollidesWithSolidAtDirection())
+            .AddStateSettingBehaviorWithConditions(new BehaviorReverseAngleDirection(MoveDirection), new ConditionCollidesWithSolidAtDirection())
             .AddKeepCondition(new ConditionCollidesWithSolidAtDirection().Reversed())
             .AddBehavior(new BehaviorMoveToCurrentDirection());
         StateManager.CommandState(stateIdle, 40); // To spawn with closed eye
