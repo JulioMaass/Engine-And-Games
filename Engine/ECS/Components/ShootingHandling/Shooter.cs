@@ -227,6 +227,9 @@ public class Shooter : Component
         }
     }
 
+    public void ShootAimedSpread(int angleBetweenShots, int spawnOffset = 0) =>
+        ShootSpread(Owner.ShootDirection.Angle.Value, angleBetweenShots, spawnOffset);
+
     private int GetShooterAddedStats(Func<Stats, int?> statSelector)
     {
         var isPrimaryWeapon = Owner.Shooter == this;

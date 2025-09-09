@@ -17,6 +17,9 @@ public class BehaviorDecelerateMomentum : Behavior
 
     public override void Action()
     {
+        if (Owner.Speed.Value == Vector2.Zero)
+            return;
+
         if (!Triggered)
         {
             InitialSpeed = Owner.Speed.Value;
@@ -25,7 +28,10 @@ public class BehaviorDecelerateMomentum : Behavior
 
         var deceleration = InitialSpeed / FramesToStop;
         Owner.Speed.SetSpeed(Owner.Speed.Value - deceleration);
-        if (Math.Sign(Owner.Speed.Value.X) != Math.Sign(InitialSpeed.X))
+        if (Math.Sign(Owner.Speed.Value.X) != Math.Sign(InitialSpeed.X) || Math.Sign(Owner.Speed.Value.Y) != Math.Sign(InitialSpeed.Y))
+        {
             Owner.Speed.SetSpeed(0, 0);
+            Triggered = false;
+        }
     }
 }

@@ -226,12 +226,16 @@ public static class Input
     {
         if (buttonIndex == -1)
             return false;
+        if (_joystickState.IsConnected == false)
+            return false;
         return _joystickState.Buttons[buttonIndex] == ButtonState.Pressed;
     }
 
     private static bool JoystickAxisIsDown((int Axis, AxisSign Sign) joystickAxisAndSign)
     {
         if (joystickAxisAndSign.Sign == 0)
+            return false;
+        if (_joystickState.IsConnected == false)
             return false;
         if (Math.Abs(_joystickState.Axes[joystickAxisAndSign.Axis]) <= _deadZone)
             return false;
