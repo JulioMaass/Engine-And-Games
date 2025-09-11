@@ -98,6 +98,10 @@ public static class Hud
                 Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileDrill),
                     new IntVector2(2, 2 + 8 * 10), Color.White);
 
+                Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 11, 8, 8), new IntRectangle(32, 0, 8, 8), CustomColor.White);
+                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileMine),
+                    new IntVector2(2, 2 + 8 * 11), Color.White);
+
                 Drawer.DrawOutlinedString(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
                     new IntVector2(440, 2 + 8 * 0), Color.White);
                 //Video.DrawStringWithOutline(Drawer.PicoFont, "Time: " + ((SpaceMinerMainLoop)GameLoopManager.GameMainLoop).Timer / 60,

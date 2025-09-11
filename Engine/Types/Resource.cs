@@ -75,4 +75,5 @@ public enum ResourceType
     MissileHoming,
     MissileSpray,
     MissileDrill,
+    MissileMine,
 }
