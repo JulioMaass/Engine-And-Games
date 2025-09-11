@@ -384,9 +384,9 @@ public abstract partial class Entity
 
 
     // Item Getter
-    public void AddItemGetter()
+    public void AddItemGetter(int attractionRadius = 0)
     {
-        ItemGetter = new(this);
+        ItemGetter = new(this, attractionRadius);
     }
 
     // Item Stats

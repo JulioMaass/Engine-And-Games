@@ -6,10 +6,12 @@ namespace Engine.ECS.Components.ItemsHandling;
 
 public class ItemGetter : Component
 {
+    private int AttractionRadius { get; set; }
 
-    public ItemGetter(Entity owner)
+    public ItemGetter(Entity owner, int attractionRadius)
     {
         Owner = owner;
+        AttractionRadius = attractionRadius;
     }
 
     public void GetItem(Entity entity)
@@ -45,5 +47,11 @@ public class ItemGetter : Component
                         resourceItemStats.Amount);
             }
         }
+    }
+
+    public int GetAttractionRadius()
+    {
+        var extraRadius = StatsManager.GetAddedStats(Owner, stats => stats.ExtraItemAttractionRadius, true, false, false);
+        return AttractionRadius + extraRadius;
     }
 }

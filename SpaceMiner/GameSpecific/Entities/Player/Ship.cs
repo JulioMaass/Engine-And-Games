@@ -31,7 +31,7 @@ public class Ship : Entity
         //Shooter = new ShipShooterBasic(this);
         AddShootDirection(270000);
 
-        AddItemGetter();
+        AddItemGetter(32);
         EquipmentHolder = new(this);
 
         AddStateManager();

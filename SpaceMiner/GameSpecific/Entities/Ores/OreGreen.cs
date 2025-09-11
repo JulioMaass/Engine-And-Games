@@ -37,7 +37,7 @@ public class OreGreen : Entity
         AddStateManager();
         // Auto States
         var stateHomeToPlayer = NewState()
-            .AddStartCondition(new ConditionDistanceToPlayerLessThan(32))
+            .AddStartCondition(new ConditionAttractedToPlayer())
             .AddBehavior(new BehaviorMoveToCurrentDirection())
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
             .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))

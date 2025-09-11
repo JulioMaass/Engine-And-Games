@@ -3,23 +3,17 @@ using Engine.Types;
 
 namespace Engine.ECS.Components.ControlHandling.Conditions;
 
-public class ConditionDistanceToPlayerLessThan : Condition
+public class ConditionAttractedToPlayer : Condition
 {
-    private int Distance { get; }
-
-    public ConditionDistanceToPlayerLessThan(int distance)
-    {
-        Distance = distance;
-    }
-
     protected override bool IsTrue()
     {
         if (EntityManager.PlayerEntity == null)
             return false;
+        var attractionRadius = EntityManager.PlayerEntity.ItemGetter.GetAttractionRadius();
         var currentDistance = IntVector2.GetDistance(
             Owner.Position.Pixel,
             EntityManager.PlayerEntity.Position.Pixel
         );
-        return currentDistance < Distance;
+        return currentDistance < attractionRadius;
     }
 }

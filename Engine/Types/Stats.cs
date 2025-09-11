@@ -9,6 +9,7 @@ public class Stats
     public int BurningRateMultiplier { get; set; }
     public int HealOnKillMultiplier { get; set; }
     public float ExtraMoveSpeed { get; set; }
+    public int ExtraItemAttractionRadius { get; set; }
 
     // Abilities
     public bool DoubleJump { get; set; }
