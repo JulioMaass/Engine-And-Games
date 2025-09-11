@@ -1,0 +1,36 @@
+Asteroids
+- Less, stronger asteroids, so the player can focus on dodging and counter attacking
+- Preview enemies before each wave
+- Waves of themed enemies that can counter your strategy, so you need to adapt
+- Asteroid waves need some other themes besides asteroid types (like coming from the side(s)/back, and powers bigger/faster/more)
+- More wave themes: coming from teleporter, black hole on screen, 
+
+Power ups
+- More expensive weapons
+- Once you buy a weapon/socket, it should be unlocked and easy to swap
+- Just one socket for each weapon (except basic one maybe). 2 sockets + weapon effect feels too diluted (gets 3 out of 4 powers)
+- It needs to be harder to get to higher levels, otherwise challenge becomes too trivial too fast
+- Each weapon can level up and maybe have a skilltree
+
+Content
+- More asteroids, weapons and powerups, to make runs less samey
+- Implement missiles, so you can buy stuff even when you can't afford upgrades (should be presented 1st to the player?)
+- Super: can cast once per wave, max
+
+TODO Until Festival:
+4a
+- 4 Missiles and 4 supers;
+- UI Visuals (selecting power ups);
+- Shots visuals;
+5a
+- Gradient BG?
+- Drill theme on the spaceship? Chat to get original ideas?
+- Capsule;
+- Trailer (Police Music?)
+6a
+
+
+
+
+
+

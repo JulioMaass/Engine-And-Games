@@ -1,0 +1,83 @@
+Space Miner Foundations
+- Use minerals to make weapons/parts/upgrades
+	- All minerals can be used as mods, but specific mixes/amounts for equipment/upgrade tier
+- Have sub weapons and supers that use ammo (or cooldown)
+- Slots:
+	- Weapon + Socket Mods
+	- Missile
+	- Super/Bomb
+	- Armor/Passive
+	- Unique Upgrades? (mutation/downwell upgrades vibes)
+
+Space Miner Questions
+- How to make the runs diverse in a crafting game?
+	YES - Runs have different minerals, so players need to make different equipment;
+	YES - Some enemies counter specific builds, so players need to adapt;
+	YES - Unlocking new blueprints makes the player curious to try new (better) equipment;
+	YES - Modifiers/chars(starting weapons/passives) incentivize different builds;
+	YES - Achievements: Some builds are better for specific objectives;
+- Crafting or customizable? (or both?)
+	YES - Both. Craft parts, upgrade/mod with minerals
+- How to avoid the customization being diluted (10% of everything instead of 200% attack speed + level 5 pierce)
+	YES - Limited slots for modding. Each slot gets 1 type, but each type can be upgraded)
+- How to allow for skill expression (positive feedback, instead of negative; also higher skill ceiling)
+- Should ammo be the raw minerals, or craft them?
+	YES - Raw minerals for ammo, but some missiles/supers may be crafted and cast
+- Improve station and unlock blueprints?
+	YES - Unlock blueprints to tutorialize progress (less overwhelming). May be able to buy some blueprints on meta game.
+	YES - Special blueprints are unlocked via achievements
+- Mix rarity with elemental typing?
+	YES - Elemental typing for mods, rarity for size/amount
+	YES - Rare metals for special effects (black hole, just need 1 to socket), or special crafts (ultra attract needs 1 black hole);
+- Modular customization, or slots?
+	YES - Slots per type. 1 weapon, 1 armor, 1 missile, 1 super...
+- What triggers shop? May be frustrating go to shop/crafting and be unable to get upgrades.
+	YES - Time/Mission complete. Just make sure that the player has resources early on via balance. 
+	- NT approach: Skip if there are no upgrades available
+	- Get a "mutation" regardless of being able to buy equipment?
+	- Basic metals cheap upgrades (damage +1%)
+	- Time? Basic mineral (xp/slot creator?)
+	- Forced to loan, to get at least one upgrade (lol?)
+	- Have other stuff to do other than crafting in the shop screen? (Sell/trade minerals?)
+	- Very cheap items available (temporary boosts/special ammo)?
+	- Basic metal(s) always has some damage/number stats to boost?
+	- Simply balance the game to have enought minerals to craft? Limit crafting to 1 per stop, to avoid crafting 5 equips, and then can't craft anything in the next stop?
+	- Discounts for random crafts (like Ufo50's Overbold)
+	- Choose next stage, or increase difficulty by adding minerals to the run?
+	- Use basic mineral to heal?
+	- Every roguelike with shops have the chance to no be able to buy anything. Just avoid it happening on 1st stop
+- How to get better tier equipment? Upgrade current equipment, or substitute it? Pros and cons
+	- Upgrade, but be able to substitute for tier 1 and then upgrade the new equip. (can sell unnused equip?)
+- Weapon upgrades slots amount is linked to spaceship or weapon? Can craft weapons or each char has it's own?
+	- Initial test: Weapon upgrades per weapon; Can craft weapons (chars may have initial default weapons)
+- Can remove socketed minerals from weapons?
+	- Can remove but has a cost(?)
+- Bag for unnused equipment?
+	- Initial test: Sell, to avoid clutter
+- Basic metal (xp): Used to unlock slots during runs? Slots are simply char based?
+	- Used to unlock, and tutorialize the first few loops
+	- Used for basic stats progress (damage/hp), in run/meta?
+- Tradeoffs to make metals balanced? 
+	NO - Multi reduces damage, blast reduces rapid...?
+	YES - Each weapon has its own quirks on modding (machinegun gets a small blast, slugger gets a big one; machine gun gets a small angle from multi, slugger gets more; etc)
+
+
+Roguelike route (Downwell/Spelunky/Nuclear Throne)
+- Weapons: Random, switch
+- Upgrades: Stack (limited options), long run (via xp/stage clear/exploration)
+- Drops: Keep engaged, custom choices/meta progression
+
+- Low skill (Drops)
+- High skill (Temporary/During Run)
+- 
+
+
+
+
+Chars:
+- Collector: Can't upgrade equipment, swap for new ones instead. Swapped equipment can be used to start new runs.
+- Bullet Muncher: Uses minerals as ammo, but is stronger (may be a weapon trait too)
+- Different focus characters: May have extra slots for weapons, upgrades, hull, missile, super
+- Don't use ammo for supers, but has cooldown instead
+
+

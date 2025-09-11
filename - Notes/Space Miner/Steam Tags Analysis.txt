@@ -1,0 +1,69 @@
+ 			Reviews
+Binding of Isaac	314125		ActionRogue	Roguelike	Indie		2d		PixelArt
+-Vampire Survivors	238415		ActionRogue	Bullethell	PixelArt	Roguelite	2d
+Brotato			 93601		Roguelike	ActionRogue	Action		Bullethell	Science Fiction
+Enter the Gungeon	 75935		Bullethell	ActionRogue	Roguelike	PixelArt	Indie
+Soulstone Survivors	 21986		ActionRogue	Bullethell	Roguelite	Roguelike	VisaoSup
+-Nuclear Throne		 13600		ActionRogue	Roguelike	PixelArt	Indie		BulletHell
+-Rocket Rats		   943		ActionRogue	PixelArt	Roguelite	Bullethell	Casual
+Deep Space Cache	   700		Indie		Casual		2d		Retro		Shmup
+
+
+Soulstone Survivors	21986		ActionRogue	Bullethell	Roguelite	Roguelike	VisaoSup
+
+-ActionRogue 	xxxxxxx
+-Bullethell	xxxxxx
+-PixelArt	xxxxx
+-Roguelike	xxxxx
+-Indie		xxxx
+-Roguelite	xxx
+-2d		xxx
+-Casual		xx
+-Action		x
+-SciFi		x
+-Retro		x
+-Shmup		x
+-Topdown	x
+TopdownShoot
+Cute
+Arcade
+Singleplay
+CharacterCust
+GunCustom
+ResourceManag
+
+Vampire Survivors + Rocket Rats
+ActionRogue
+Bullethell
+PixelArt
+Roguelite
+2d
+Indie
+Singleplay
+Casual
+Arcade
+Action
+Roguelike
+-RPG
+-Controller
+Retro
+-Score Attack
+-Action RPG
+-1980s
+
+Shooter
+Colorful
+Cute
+
+Vampire
+TopdownShoot
+Topdown
+Space
+Combat
+
+SciFi
+Shmup
+Cute
+CharacterCust
+GunCustom
+ResourceManag

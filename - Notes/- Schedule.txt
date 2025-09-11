@@ -1,6 +1,13 @@
-﻿
-01/10/2024 to 25/10/2024
-    - Implement basic mechanics for MMDB 
-    - Implement basic mechanics for MOLE
-    - Fix engine todos (especially Game Specific stuff)
-    - Do a TODO sweep pass
+﻿11/09/2025
+SPACE MINER CONTENT
+	- Enemy ships
+	- Separate weapon upgrades (green = size or damage or pierce, yellow = multi or split, blue = fast or rapid)
+		- Split upgrade (Split on hit, auto split)
+	- STG Weapons
+		- Mine
+		- Shoot nearest
+SPACE MINER TWEAKS
+	- Asteroids tiers give 2, 3, 4, 5 colored ores
+	- Progressive upgrades should cost the same, so you can choose which one you like instead of maxing low levels
+		(Like having all upgrades at level 2 instead of 2 upgrades at level 5)
+		Have stage inflation like spelunky and downwell?

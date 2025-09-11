@@ -1,0 +1,13 @@
+- Make 4 tiers of asteroids (2 sizes each)
+	- Higher tiers have more hp and better abilities and drop more ores;
+	- Use palette shader to draw all colors;
+- Rename ores (Speedium, Toughsten, Splitton, Magnetite, Blast, Flakker)
+- Make upgrades require gray ores
+	- All asteroids drop some gray ore
+- Make shops
+- Choose route after each section (or groups of sections?)
+
+- Difficulty scaling:
+	- Difficulty doubles every 3-4 levels
+	- Should be able to upgrade main weapon every 5 levels
+	- Missiles and supers should handle the "remaining difficulty"
