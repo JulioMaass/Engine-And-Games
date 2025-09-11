@@ -1,0 +1,35 @@
+Basic Loop
+	4 asteroid colors
+	4 currencies
+	30 sec gameplay 
+		then use currencies on upgrades / items
+		then choose next level
+	20 waves to win?
+
+Upgrades
+	Basic:
+		-Unlock slots
+		-Change difficulty
+		-Small Customizations (Shot angle/spread, etc)
+		-Heal? (expensive)
+	Blue (Fast): 
+		OK - Attack Speed
+		-Shot Distance/Time/Range
+		-Ship Speed
+	Red (Blast): 
+		-Blast radius
+		-Size
+		-Attract Distance
+	Green (Big):
+		-Damage
+		-Penetration
+		-Max Hp
+	Yellow (Split):
+		OK - +1 Shot
+		-Split
+		-Secondary ship
+	All:
+		Heal
+	Other/Later:
+		Loop once
+		Bullet Speed

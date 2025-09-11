@@ -1,0 +1,66 @@
+High Level Issues/Improvements
+	- Stuff to buy with all ores
+	- Stuff competing for your attention (2+ different items that use the same ores)
+		- Player should have conflicting desires (damage/coverage/attraction/defense/survivability/shortOrLongTerm/mobility...)
+		- Multiple types for the same(ish) thing (ex: damage or attack speed)
+		- Competing strategies (make mine barrier or make black hole trap and damage)
+	- Show prices as icons
+	- Show gathered resources as icons
+	- Dont allow buying missiles when stack is full
+	- Show missiles as icons (and allow multiple missile types on the stack)
+	- There should be a threat when you are OP (like purple bullets)
+		- Balance game to make later asteroids harder to destroy
+		- Level 2 asteroids have aditional threats (damage over time, etc)
+	- High damage is OP, make shot get smaller every hit?
+	- Radial collision
+	
+Main shop
+	- Colors: ship speed, repair, missile capacity, attraction area
+	- Gray: Tweaks (change shot direction, etc)
+TIER 1 COLORS
+Blue
+	OK - Attack speed
+	OK - Machine gun
+	OK - Warper gun
+	- Ship speed
+Yellow (merge with purple (tier 2)?) 
+	OK - Multi shot
+	OK - Shotgun
+	OK - Puncher
+	OK - Missile spray
+Green (Change to shield/radiation type?)
+	OK - Damage
+	OK - Slugger
+	OK - Missile drill
+	- Repair
+	- Max hp
+TIER 2 COLORS
+Red
+	OK - Blast radius
+	OK - Blaster
+	OK - Missile atomic
+	- Missile capacity
+Orange
+	OK - Missile homing
+	- Attraction area
+	- Weapon Upgrade: Turn speed
+Purple
+	- Missile: Flak Cannon
+	- Shot: 
+	- Weapon Upgrade: Split
+TIER 3 COLORS
+Pink
+Brown
+Black
+White
+Cyan
+
+SPECIAL/UNIQUE COLORS (may have special sprites)
+Frost (slow/freeze)
+Metal (only explosions damage it)
+	Piercing?
+Knockback
+
+
+
+

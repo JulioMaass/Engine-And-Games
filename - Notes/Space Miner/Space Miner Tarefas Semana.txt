@@ -1,0 +1,30 @@
+Tarefas Semana 01/07-04/04
+
+Hoje:
+- Refazer space miner de pico
+	- 4 asteroides, 4 gemas, 4 tiros, 4 especiais
+
+Burocratico
+- Resolver pendencias seguro
+- Pagar kriscia
+- Enviar mais curriculos e tentar bicos (1 dia)
+- Ver quanto $ temos que ganhar até o fechamento da fatura
+- Ver quanto gustavo me deve e se pode me mandar 10%
+
+Chocolates
+- Fazer dragees e vender?
+- Testar vendas no mercado livre?
+- Testar propaganda no Google (dragees para emporios), eventos Cris
+- Atualizar precificação dos chocolates?
+- Melhorar propaganda de eventos
+
+Jogos
+- Fazer um main loop para Space Miner (terminar jogo até fim do mes)
+	- Vertical slice
+	- Implement content (code and visuals)
+- Fazer videos (fireship like) pra divulgar e eventualmente fazer um patreon
+	- Brainstorm a few ideas, with topics
+	- Good, unskippable thumb and title
+	- Record voiceover for best idea
+	- Make simple video with memes etc
+- Abrir empresa?

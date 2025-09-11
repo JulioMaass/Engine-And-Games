@@ -3,6 +3,7 @@ using Engine.Helpers;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Asteroids;
+using SpaceMiner.GameSpecific.Entities.Enemies;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,7 @@ public static class AsteroidSpawner
     public static List<AsteroidColor> Tier2Asteroids { get; } = new();
     public static List<AsteroidColor> ColorPool { get; } = new();
     public static List<Type> SpawnPool { get; } = new();
+    public static int SpaceshipSpawnDelay { get; private set; } = 1;
 
     public static void Initialize()
     {
@@ -65,17 +67,29 @@ public static class AsteroidSpawner
     {
         if (Timer == 0)
             UpdateSpawnPool();
-        if (ItIsSpawnTime())
+        if (ItIsAsteroidSpawnTime())
             SpawnAsteroid();
+        if (ItIsShipSpawnTime())
+            SpawnShip();
         Timer++;
     }
 
-    public static bool ItIsSpawnTime()
+    public static bool ItIsAsteroidSpawnTime()
     {
         var loopTime = 60 * 60; // 60 seconds in frames
         var spawnRate = loopTime / (float)(LevelDataList[CurrentLevel].TotalSpawns * 2); // * 2 to account for small and gray
         return (int)(Timer % spawnRate) == (int)Math.Floor(spawnRate / 2);
     }
+
+    public static bool ItIsShipSpawnTime()
+    {
+        var loopTime = 60 * 60; // 60 seconds in frames
+        if (Timer == 0 || Timer == loopTime)
+            return false;
+        var spawnRate = loopTime / (CurrentLevel + 2);
+        return Timer % spawnRate == 0;
+    }
+
 
     public static void UpdateSpawnPool()
     {
@@ -169,6 +183,15 @@ public static class AsteroidSpawner
         var maxAngleCapped = Math.Min(120000, maxAngle);
         asteroid.MoveDirection.Angle = GetRandom.UnseededInt(minAngleCapped, maxAngleCapped);
         asteroid.Speed.SetMoveSpeedToCurrentDirection();
+    }
+
+    private static void SpawnShip()
+    {
+        var screenLeft = StageManager.CurrentRoom.PositionInPixels.X;
+        var screenRight = StageManager.CurrentRoom.PositionInPixels.X + StageManager.CurrentRoom.SizeInPixels.X;
+        var screenTop = StageManager.CurrentRoom.PositionInPixels.Y;
+        var position = new IntVector2(GetRandom.UnseededInt(screenLeft, screenRight), screenTop);
+        EntityManager.CreateEntityAt(typeof(EnemyShip), position);
     }
 }
 

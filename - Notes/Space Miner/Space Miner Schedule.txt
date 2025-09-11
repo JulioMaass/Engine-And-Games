@@ -1,0 +1,41 @@
+Schedule
+
+References:
+	Vamp Surv
+	NT
+	Rocket Rats
+	Downwell
+	Monster Train
+
+24/07: MAIN UPGRADES
+	OK - Finish 4 main weapons
+	OK - Finish 4 sockets
+	OK - Bigger attraction range
+	- Implement 4 missiles (Can be stacked)
+		- Homing (Blue)
+		- Mine (Green)
+		- Flak Cannon (Yellow)
+		- Atomic (Red)
+	- Implement 4 supers (Just one purchase per wave)
+		- Beam (Blue)
+		- Front Barrier (Green)
+		- Side wave (Yellow)
+		- Shield (Red)
+	- Rebalance upgrades 
+		- More expensive weapons and initial sockets (player should use missiles initially)
+		- Use only one socket, socketed gems are bound to each weapon
+		- Weapons can be unlocked then reselected
+	- Rebalance Asteroids
+		- Less asteroids, individually get harder
+		- Special waves (come from the side, from teleporters, black hole on screen)
+		- More asteroid types
+		- Ships and shots (force player to dodge)
+	- Win/Lose
+	- Stages
+	- Difficulty scaling (harder asteroids...)
+	- Meta progression (unlock/upgrade weapons, new asteroids...)
+25/07: POLISH
+	- Visuals
+
+
+

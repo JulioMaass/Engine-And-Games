@@ -48,7 +48,8 @@ public abstract partial class Entity
 
     public void AddDirectionAndMove(int angle)
     {
-        MoveDirection = new(this, angle);
+        MoveDirection ??= new(this, angle);
+        MoveDirection.Angle = angle;
         Speed.SetMoveSpeedToCurrentDirection();
     }
 
