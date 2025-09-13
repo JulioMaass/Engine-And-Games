@@ -16,7 +16,7 @@ public class MenuItemDefense : Entity
         AddSpriteCenteredOrigin("ItemDefense", 32);
         Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
-        EquipmentItemStats.Stats.AddedDefenseRatio = 1;
+        EquipmentItemStats.Stats.DefensePercentage = 0.1f;
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddPrices(ResourceType.OreGreen, 100, 1000, 10000, 100000, 1000000);

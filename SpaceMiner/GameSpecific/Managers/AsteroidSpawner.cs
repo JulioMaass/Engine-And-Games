@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Entities;
 using Engine.Helpers;
+using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Asteroids;
@@ -29,32 +30,47 @@ public static class AsteroidSpawner
         Tier2Asteroids.Add(AsteroidColor.Purple);
         Tier2Asteroids.Add(AsteroidColor.Orange);
 
+        //// Level 0 (To avoid off by one error)
+        //LevelDataList.Add(new LevelData(20));
+        //// Levels 1 - 5
+        //LevelDataList.Add(new LevelData(40));
+        //LevelDataList.Add(new LevelData(50));
+        //LevelDataList.Add(new LevelData(60));
+        //LevelDataList.Add(new LevelData(80));
+        //LevelDataList.Add(new LevelData(100));
+        //// Levels 6 - 10
+        //LevelDataList.Add(new LevelData(80, 20));
+        //LevelDataList.Add(new LevelData(60, 40));
+        //LevelDataList.Add(new LevelData(40, 60));
+        //LevelDataList.Add(new LevelData(20, 80));
+        //LevelDataList.Add(new LevelData(0, 100));
+        //// Levels 11 - 15
+        //LevelDataList.Add(new LevelData(20, 40, 60));
+        //LevelDataList.Add(new LevelData(20, 40, 80));
+        //LevelDataList.Add(new LevelData(20, 40, 100));
+        //LevelDataList.Add(new LevelData(20, 40, 80, 20));
+        //LevelDataList.Add(new LevelData(20, 40, 50, 50));
+        //// Levels 16 - 20
+        //LevelDataList.Add(new LevelData(0, 0, 40, 80));
+        //LevelDataList.Add(new LevelData(0, 0, 80, 80));
+        //LevelDataList.Add(new LevelData(0, 0, 80, 120));
+        //LevelDataList.Add(new LevelData(0, 0, 80, 160));
+        //LevelDataList.Add(new LevelData(0, 0, 80, 200));
+
         // Level 0 (To avoid off by one error)
         LevelDataList.Add(new LevelData(20));
         // Levels 1 - 5
         LevelDataList.Add(new LevelData(40));
-        LevelDataList.Add(new LevelData(50));
-        LevelDataList.Add(new LevelData(60));
-        LevelDataList.Add(new LevelData(80));
+        LevelDataList.Add(new LevelData(70));
         LevelDataList.Add(new LevelData(100));
-        // Levels 6 - 10
         LevelDataList.Add(new LevelData(80, 20));
-        LevelDataList.Add(new LevelData(60, 40));
         LevelDataList.Add(new LevelData(40, 60));
-        LevelDataList.Add(new LevelData(20, 80));
-        LevelDataList.Add(new LevelData(0, 100));
-        // Levels 11 - 15
+        // Levels 6 - 10
         LevelDataList.Add(new LevelData(20, 40, 60));
-        LevelDataList.Add(new LevelData(20, 40, 80));
         LevelDataList.Add(new LevelData(20, 40, 100));
-        LevelDataList.Add(new LevelData(20, 40, 80, 20));
         LevelDataList.Add(new LevelData(20, 40, 50, 50));
-        // Levels 16 - 20
-        LevelDataList.Add(new LevelData(0, 0, 40, 80));
         LevelDataList.Add(new LevelData(0, 0, 80, 80));
-        LevelDataList.Add(new LevelData(0, 0, 80, 120));
         LevelDataList.Add(new LevelData(0, 0, 80, 160));
-        LevelDataList.Add(new LevelData(0, 0, 80, 200));
     }
 
     public static void LevelUp()
@@ -72,6 +88,7 @@ public static class AsteroidSpawner
         if (ItIsShipSpawnTime())
             SpawnShip();
         Timer++;
+        Hud.FrameDebugInfoToPrint.Add(("Level = " + CurrentLevel, null));
     }
 
     public static bool ItIsAsteroidSpawnTime()

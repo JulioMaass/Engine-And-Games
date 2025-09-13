@@ -17,9 +17,10 @@ public class MenuItemDash : Entity
         Sprite.HudSprite = true;
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.Dash = true;
+        EquipmentItemStats.Stats.ExtraDashSpeed = 2f;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreBlue, 10000, 1000000);
+        ItemPrice.AddPrices(ResourceType.OreBlue, 100, 1000, 10000, 100000);
 
         MenuItem.Label = "Dash";
         AddSpaceMinerMissileItemComponents();

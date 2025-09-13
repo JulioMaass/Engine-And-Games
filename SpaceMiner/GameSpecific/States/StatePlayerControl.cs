@@ -96,7 +96,7 @@ public class StatePlayerControl : State
         }
         if (DashFrame > 0)
         {
-            var dashSpeed = moveSpeed + Owner.Speed.DashSpeed;
+            var dashSpeed = moveSpeed + Owner.Speed.DashSpeed + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraDashSpeed, true, false, false);
             Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * dashSpeed);
             Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * dashSpeed);
         }

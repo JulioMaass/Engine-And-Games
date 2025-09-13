@@ -43,7 +43,8 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
 
     public void BufferDamage(int amount)
     {
-        amount /= StatsManager.GetAddedStats(Owner, stats => stats.AddedDefenseRatio, true, true, false) + 1;
+        var defensePercentage = StatsManager.GetAddedFloatStats(Owner, stats => stats.DefensePercentage, true, true, false);
+        amount -= (int)(amount * defensePercentage);
 
         if (InvincibleOnHit)
             DamageBuffer = DamageBuffer == 0 ?
