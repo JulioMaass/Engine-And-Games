@@ -8,7 +8,9 @@ using Engine.ECS.Components.ControlHandling.Behaviors.Sprite;
 using Engine.ECS.Components.ControlHandling.Behaviors.Targeting;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ShootingHandling;
+using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Managers.StageHandling;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Asteroids;
 
@@ -46,9 +48,10 @@ public class EnemyShip : Entity
         // States
         AddStateManager();
         // Auto States
+        var relativePositionGetter = () => new IntVector2(0, -(EntityManager.PlayerEntity.Position.Pixel.Y - StageManager.CurrentRoom.PositionInPixels.Y) / 2);
         var stateDash = NewState(default, 4)
             .AddStateSettingBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
-            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 8, (0, -64)))
+            .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(MoveDirection, 8, relativePositionGetter))
             .AddStateSettingBehavior(new BehaviorMoveToCurrentDirection())
             .AddBehaviorWithConditions(new BehaviorDecelerateMomentum(40), new ConditionFrame(2, ComparisonType.Greater))
             .AddToAutomaticStatesList();

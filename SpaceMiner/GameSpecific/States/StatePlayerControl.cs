@@ -5,6 +5,7 @@ using Engine.Helpers;
 using Engine.Managers.GlobalManagement;
 using Engine.Types;
 using Microsoft.Xna.Framework;
+using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using SpaceMiner.GameSpecific.Entities.Vfx;
 using System;
 using System.Linq;
@@ -63,6 +64,8 @@ public class StatePlayerControl : State
         }
 
         // Attack
+        if (EntityManager.PlayerEntity.Shooter == null)
+            GlobalManager.Values.MainCharData.TryToEquipItem(typeof(MenuItemBasicShot));
         AttackFrame--;
         var fireRate = (int)(Owner.Shooter.AutoFireRate / (1 + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraAttackSpeed, true, true, false)));
         if (Owner.PlayerControl.Button1Hold && AttackFrame <= 10)
