@@ -144,13 +144,11 @@ public static class Hud
         // Draw background image
         if (MenuManager.CurrentMenuLayout.BackgroundImage != null)
         {
-            IntVector2 textureSize = MenuManager.CurrentMenuLayout.BackgroundImage.Bounds.Size;
-            var repetitions = MenuManager.CurrentMenuLayout.BackgroundImageSize / textureSize + 1;
-            for (var i = 0; i < repetitions.X; i++)
-                for (var j = 0; j < repetitions.Y; j++)
-                    Drawer.DrawTextureRectangleAt(MenuManager.CurrentMenuLayout.BackgroundImage,
-                        MenuManager.CurrentMenuLayout.BackgroundImage.Bounds,
-                        new IntVector2(i, j) * textureSize + MenuManager.CurrentMenuLayout.BackgroundImagePosition);
+            Drawer.DrawNineSliceTextureAt(MenuManager.CurrentMenuLayout.BackgroundImage,
+                new IntRectangle((0, 0), MenuManager.CurrentMenuLayout.BackgroundImage.Bounds.Size),
+                MenuManager.CurrentMenuLayout.BackgroundImagePosition,
+                MenuManager.CurrentMenuLayout.BackgroundImageSize,
+                MenuManager.CurrentMenuLayout.NineSliceBorder);
         }
 
         // Draw menu items

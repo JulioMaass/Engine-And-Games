@@ -5,9 +5,9 @@ using Engine.Helpers;
 
 namespace SpaceMiner.GameSpecific.Entities.Vfx;
 
-public class VfxDebrisCircle : Entity
+public class VfxShotSplashCircle : Entity
 {
-    public VfxDebrisCircle()
+    public VfxShotSplashCircle()
     {
         EntityKind = EntityKind.Vfx;
 
@@ -20,10 +20,10 @@ public class VfxDebrisCircle : Entity
         //Sprite.Color = CustomColor.White;
         //Sprite.StretchedSize = (32, 32);
         VfxAnimation = new(this);
-        VfxAnimation.SetInitialSize(8);
+        VfxAnimation.SetInitialSize(5);
         VfxAnimation.SetSpeed(-0f);
         VfxAnimation.SetAcceleration(-0.20f);
-        VfxAnimation.SetColors(2, CustomColor.Pico5);
+        VfxAnimation.SetColors(2, CustomColor.Pico25);
         DrawOrder = 0;
 
         // State

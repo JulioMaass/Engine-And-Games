@@ -15,6 +15,7 @@ public class MenuItemDefense : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemDefense", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.DefensePercentage = 0.1f;
 

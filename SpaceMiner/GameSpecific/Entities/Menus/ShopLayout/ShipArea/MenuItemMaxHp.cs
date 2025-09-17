@@ -15,6 +15,7 @@ public class MenuItemMaxHp : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemHp", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
 
         AddItemComponents(ResourceType.Hp, 50, IncreaseKind.CurrentAndMax);

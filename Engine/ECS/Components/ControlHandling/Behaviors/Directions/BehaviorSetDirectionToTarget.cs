@@ -1,6 +1,6 @@
-﻿using System;
-using Engine.ECS.Components.PositionHandling;
+﻿using Engine.ECS.Components.PositionHandling;
 using Engine.Types;
+using System;
 using System.Linq;
 
 namespace Engine.ECS.Components.ControlHandling.Behaviors.Directions;

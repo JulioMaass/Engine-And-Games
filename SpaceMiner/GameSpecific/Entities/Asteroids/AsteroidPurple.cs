@@ -34,6 +34,6 @@ public class AsteroidPurple : Asteroid
                 }
             }
         );
-        AddDeathHandler(deathBehavior);
+        DeathHandler.AddBehavior(deathBehavior);
     }
 }

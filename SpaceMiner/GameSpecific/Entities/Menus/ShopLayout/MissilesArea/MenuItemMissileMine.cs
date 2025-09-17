@@ -16,6 +16,7 @@ public class MenuItemMissileMine : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("MissileMine", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.SecondaryWeapon);
         EquipmentItemStats.Stats.SecondaryShooter = typeof(ShipShooterMissileMine);
 

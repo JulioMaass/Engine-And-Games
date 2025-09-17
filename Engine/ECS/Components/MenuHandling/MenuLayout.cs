@@ -12,5 +12,6 @@ public class MenuLayout
     public Texture2D BackgroundImage { get; protected init; }
     public IntVector2 BackgroundImagePosition { get; protected init; }
     public IntVector2 BackgroundImageSize { get; protected init; }
+    public IntVector2 NineSliceBorder { get; protected init; } // 0 to disable
     public Type StartingCursorItem { get; protected init; }
 }

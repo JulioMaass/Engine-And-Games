@@ -16,6 +16,7 @@ public class MenuItemShotgun : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponShotgun", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterShotgun);
 

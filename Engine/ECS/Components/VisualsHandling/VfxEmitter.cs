@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Engine.ECS.Components.PositionHandling;
-using Engine.ECS.Entities;
+﻿using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Types;
+using System;
 
 namespace Engine.ECS.Components.VisualsHandling;
 
@@ -17,7 +12,7 @@ public class VfxEmitter : Component
 
     // Emission properties
     public Type VfxType { get; set; }
-    public int EmissionFrames { get; set; }
+    public int EmissionFrames { get; set; } // 0 = infinite (entity doesn't delete itself)
     public int EmissionsPerFrame { get; set; }
     public int Distance { get; set; }
     // Movement
@@ -34,7 +29,7 @@ public class VfxEmitter : Component
 
     public void Update()
     {
-        if (Frame < EmissionFrames)
+        if (Frame < EmissionFrames || EmissionFrames == 0)
         {
             for (var i = 0; i < EmissionsPerFrame; i++)
             {
@@ -47,7 +42,7 @@ public class VfxEmitter : Component
             Frame++;
         }
         else
-            EntityManager.DeleteEntity(Owner); // TODO: This should be optional (entity may be permanent)
+            EntityManager.DeleteEntity(Owner);
     }
 
     private void SetSpeedFromDistance(Entity entity, IntVector2 distance)

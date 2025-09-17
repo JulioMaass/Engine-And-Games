@@ -15,6 +15,7 @@ public class MenuItemSpeed : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemSpeed", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.ExtraMoveSpeed = 0.5f;
 

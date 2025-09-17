@@ -1,5 +1,8 @@
 ﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
+using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 
 namespace SpaceMiner.GameSpecific.Entities.Shots;
 
@@ -22,6 +25,11 @@ public class ResizableShot : Entity
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10, PiercingType.PierceOnOverkill);
         //DamageDealer.AddOnHitTargetBehavior(new BehaviorAddSpeed(0f, -0.25f));
+        AddDeathHandler(new BehaviorCreateEntity(typeof(VfxShotSplash)));
+
+        // Vfx
+        VfxEmitter = new VfxEmitter(this, typeof(VfxShotSplashCircle), 0, 1, 2);
+        VfxEmitter.DistanceToSpeedMultiplier = 0.25f;
 
         // State
         AddStateManager();

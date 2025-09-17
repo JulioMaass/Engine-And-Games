@@ -12,7 +12,7 @@ public class MenuAreaUpgrades : MenuArea
         {
             { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellow), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
         });
-        Position = IntVector2.New(64 + 16, 64 + 16);
+        Position = IntVector2.New(64 + 16, 64 + 12);
         Spacing = IntVector2.New(64 + 32, 32 + 32);
     }
 }

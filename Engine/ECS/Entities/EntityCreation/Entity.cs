@@ -50,9 +50,12 @@ public abstract partial class Entity
     public SolidBehavior SolidBehavior { get; protected set; }
     public TileDestructor TileDestructor { get; protected set; }
 
-    // Visual components
+    // Sprite components
     public Sprite Sprite { get; protected set; }
     public SpriteVfxs SpriteVfxs { get; protected set; }
+    public FrameSprite FrameSprite { get; protected set; }
+
+    // Visual components
     public Palette Palette { get; protected set; }
     public ColorShader ColorShader { get; protected set; }
     public LightSource LightSource { get; protected set; }
@@ -165,6 +168,7 @@ public abstract partial class Entity
         if (DamageTaker?.IsFlickering() == true)
             return;
 
+        FrameSprite?.Draw();
         Palette?.SetPalette();
         ColorShader?.Set();
         Sprite?.Draw();

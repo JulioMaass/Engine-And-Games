@@ -16,6 +16,7 @@ public class MenuItemWarper : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponWarper", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterWarper);
 

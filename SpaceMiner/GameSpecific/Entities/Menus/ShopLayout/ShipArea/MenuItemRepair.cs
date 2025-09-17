@@ -15,6 +15,7 @@ public class MenuItemRepair : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemRepair", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
 
         AddItemComponents(ResourceType.Hp, 1000000);

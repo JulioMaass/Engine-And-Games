@@ -24,7 +24,7 @@ public class EnemyShip : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteCenteredOrigin("EnemyShip", 18);
+        AddSpriteCenteredOrigin("EnemyShip", 22);
 
         // Enemy specific components
         AddSpaceMinerEnemyComponents(100, 50);

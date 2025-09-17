@@ -1,6 +1,8 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Entities;
 using Engine.Helpers;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
@@ -29,6 +31,7 @@ public class AsteroidYellowBig : AsteroidYellow
                 }
             }
         );
-        AddDeathHandler(deathBehavior);
+        AddDeathHandler(new BehaviorCreateEntity(typeof(VfxDebris)));
+        DeathHandler.AddBehavior(deathBehavior);
     }
 }

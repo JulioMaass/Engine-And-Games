@@ -16,6 +16,7 @@ public class MenuItemSlugger : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("WeaponSlugger", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterSlugger);
 

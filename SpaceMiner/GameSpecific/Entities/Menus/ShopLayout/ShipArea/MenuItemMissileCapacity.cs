@@ -16,6 +16,7 @@ public class MenuItemMissileCapacity : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemMissileCapacity", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
 
         foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))

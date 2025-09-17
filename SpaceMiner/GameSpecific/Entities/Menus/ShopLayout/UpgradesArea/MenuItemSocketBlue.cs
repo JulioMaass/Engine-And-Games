@@ -15,6 +15,7 @@ public class MenuItemSocketBlue : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeBlue", 16);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.WeaponUpgrade);
         EquipmentItemStats.Stats.ExtraAttackSpeed = 0.5f;
         EquipmentItemStats.Stats.ExtraSpeed = 0.25f;

@@ -15,6 +15,7 @@ public class MenuItemSocketRed : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("UpgradeRed", 16);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.WeaponUpgrade);
         EquipmentItemStats.Stats.AddedBlastLevel = 1;
 

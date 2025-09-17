@@ -13,7 +13,7 @@ public class MenuAreaWeapons : MenuArea
             { typeof(MenuItemBasicShot), typeof(MenuItemMachineGun), typeof(MenuItemShotgun), typeof(MenuItemSlugger) },
             { typeof(MenuItemPuncher), typeof(MenuItemWarper), typeof(MenuItemBlaster), typeof(MenuItemWarper) },
         });
-        Position = IntVector2.New(64 + 16, 64 + 16);
+        Position = IntVector2.New(64 + 16, 64 + 12);
         Spacing = IntVector2.New(64 + 32, 32 + 32);
     }
 }

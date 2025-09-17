@@ -74,13 +74,13 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (!ItemPrice.CanBuy(ownedAmount) || priceString == "-")
                 color = CustomColor.Gray;
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 20), color);
+            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
             Draw();
             if (itemPrice != null)
-                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 18), color);
+                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 20), color);
             //Video.SpriteBatch.DrawString(Drawer.PicoFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
         };
 
@@ -183,13 +183,13 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                 Video.SpriteBatch.DrawString(Drawer.MegaManFont, upgrade2.Amount.ToString(), Position.Pixel + (8, 38 + 8), color);
             }
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 20), color);
+            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
             Draw();
             if (itemPrice != null)
-                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 18), color);
+                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 20), color);
             //Video.SpriteBatch.DrawString(Drawer.PicoFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
 
             // Draw rectangle selection on current weapon
@@ -246,14 +246,14 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (!ItemPrice.CanBuy(ownedAmount))
                 color = CustomColor.Gray;
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 20), color);
+            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
             Draw();
             var itemPrice = ItemPrice.GetCurrentPrice(ownedAmount);
             if (itemPrice != null)
-                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 18), color);
+                DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 20), color);
         };
 
         MenuItem.OnSelectDraw = () =>

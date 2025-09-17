@@ -1,9 +1,11 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
+using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Ores;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
@@ -31,6 +33,7 @@ public class AsteroidPurple2 : AsteroidPurple
                 }
             }
         );
-        AddDeathHandler(deathBehavior);
+        AddDeathHandler(new BehaviorCreateEntity(typeof(VfxDebris)));
+        DeathHandler.AddBehavior(deathBehavior);
     }
 }

@@ -15,6 +15,7 @@ public class MenuItemDash : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemDash", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.Dash = true;
         EquipmentItemStats.Stats.ExtraDashSpeed = 2f;

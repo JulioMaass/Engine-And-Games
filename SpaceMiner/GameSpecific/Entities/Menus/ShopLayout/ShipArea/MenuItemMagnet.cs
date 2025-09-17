@@ -15,6 +15,7 @@ public class MenuItemMagnet : Entity
         // Basic, Sprite, EntityKind
         AddSpriteCenteredOrigin("ItemMagnet", 32);
         Sprite.HudSprite = true;
+        AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
         EquipmentItemStats.Stats.ExtraItemAttractionRadius = 32;
 

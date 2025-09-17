@@ -222,6 +222,11 @@ public abstract partial class Entity
         Sprite.VariationOffset = GetRandom.UnseededInt(totalVariations) * variationOffset;
     }
 
+    public void AddFrameSprite(string textureName, int borderWidth, int borderHeight)
+    {
+        FrameSprite = new(this, textureName, IntVector2.New(borderWidth, borderHeight));
+    }
+
     // Palette
     public void AddPalette(string paletteName) =>
         Palette = new(this, Drawer.TextureDictionary[paletteName]);

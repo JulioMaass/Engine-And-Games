@@ -12,7 +12,7 @@ public class MenuAreaTabs : MenuArea
         {
             { typeof(MenuItemShipTab), typeof(MenuItemMissileTab), typeof(MenuItemWeaponTab), typeof(MenuItemUpgradeTab) },
         });
-        Position = IntVector2.New(64, 32);
+        Position = IntVector2.New(64, 32 + 4);
         Spacing = IntVector2.New(64 + 32, 16);
     }
 }

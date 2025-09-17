@@ -127,6 +127,38 @@ public static class Drawer
         Video.SpriteBatch.Draw(texture, position, sourceRectangle, color, DefaultRotation, DefaultRotationOrigin, 1, effects, DefaultDepth);
     }
 
+    public static void DrawNineSliceTextureAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 size, IntVector2 borderSize)
+    {
+        var xLeft = borderSize.X;
+        var xRight = borderSize.X;
+        var xMid = size.X - xLeft - xRight;
+        var xSourceMid = sourceRectangle.Width - xLeft - xRight;
+
+        var yTop = borderSize.Y;
+        var yBottom = borderSize.Y;
+        var yMid = size.Y - yTop - yBottom;
+        var ySourceMid = sourceRectangle.Height - yTop - yBottom;
+
+        // Top Left
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(0, 0, xLeft, yTop), position, (xLeft, yTop));
+        // Top Middle
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft, 0, xSourceMid, yTop), position + (xLeft, 0), (xMid, yTop));
+        // Top Right
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft + xSourceMid, 0, xRight, yTop), position + (xLeft + xMid, 0), (xRight, yTop));
+        // Middle Left
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(0, yTop, xLeft, ySourceMid), position + (0, yTop), (xLeft, yMid));
+        // Middle Middle
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft, yTop, xSourceMid, ySourceMid), position + (xLeft, yTop), (xMid, yMid));
+        // Middle Right
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft + xSourceMid, yTop, xRight, ySourceMid), position + (xLeft + xMid, yTop), (xRight, yMid));
+        // Bottom Left
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(0, yTop + ySourceMid, xLeft, yBottom), position + (0, yTop + yMid), (xLeft, yBottom));
+        // Bottom Middle
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft, yTop + ySourceMid, xSourceMid, yBottom), position + (xLeft, yTop + yMid), (xMid, yBottom));
+        // Bottom Right
+        DrawTextureRectangleStretchedAt(texture, new IntRectangle(xLeft + xSourceMid, yTop + ySourceMid, xRight, yBottom), position + (xLeft + xMid, yTop + yMid), (xRight, yBottom));
+    }
+
     public static void DrawTextureRectangleStretchedAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 stretchedSize, bool flipped = false)
     {
         var effects = SpriteEffects.None;
