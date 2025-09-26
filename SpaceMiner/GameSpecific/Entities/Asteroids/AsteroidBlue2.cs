@@ -2,6 +2,7 @@
 using Engine.ECS.Components.VisualsHandling;
 using Engine.Types;
 using SpaceMiner.GameSpecific.Entities.Ores;
+using SpaceMiner.GameSpecific.Entities.Vfx;
 
 namespace SpaceMiner.GameSpecific.Entities.Asteroids;
 
@@ -20,7 +21,7 @@ public class AsteroidBlue2 : AsteroidBlue
         AddStateManager();
         // Auto States
         var state = NewState()
-            .AddBehavior(new BehaviorWarp(this, 6))
+            .AddBehavior(new BehaviorWarp(this, 6, typeof(VfxBlueTeleport)))
             .AddToAutomaticStatesList();
     }
 }
