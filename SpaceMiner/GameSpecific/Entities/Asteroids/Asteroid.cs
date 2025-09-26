@@ -19,7 +19,7 @@ public class Asteroid : Entity
         AddSolidBehavior();
         AddItemDropper(typeof(OreGray), 3, 8);
 
-        AddRandomMoveSpeed(1.25f, 1.75f);
+        AddRandomMoveSpeed(0.4f, 0.6f);
         Speed.MaxSpeed = 8f;
         AddMoveDirection();
         AddDeathHandler(new BehaviorCreateEntity(typeof(VfxDebris)));
