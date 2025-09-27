@@ -15,15 +15,16 @@ public class DamageDealer : Component
     // Hit behavior
     private PiercingType PiercingType { get; set; }
     public HitType HitType { get; set; }
-    private readonly List<Entity> _hitList = new();
+    private List<Entity> HitList { get; } = new();
     private List<Behavior> OnHitBehaviors { get; } = new();
     private List<Behavior> OnHitTargetBehaviors { get; } = new(); // runs behavior on the target that was hit
 
-    public DamageDealer(Entity owner, int damage, PiercingType piercingType)
+    public DamageDealer(Entity owner, int damage, PiercingType piercingType, HitType hitType)
     {
         Owner = owner;
         BaseDamage = damage;
         PiercingType = piercingType;
+        HitType = hitType;
     }
 
     public void RunEffects(Entity damagedEntity)
@@ -42,14 +43,20 @@ public class DamageDealer : Component
     public void AddToHitList(Entity entity)
     {
         if (HitType == HitType.HitOnce)
-            _hitList.Add(entity);
+            HitList.Add(entity);
+    }
+
+    public void CopyHitListFrom(Entity entity)
+    {
+        if (HitType == HitType.HitOnce)
+            HitList.AddRange(entity.DamageDealer.HitList);
     }
 
     public bool IsInHitList(Entity entity)
     {
         if (HitType != HitType.HitOnce)
             return false;
-        return _hitList.Contains(entity);
+        return HitList.Contains(entity);
     }
 
     public void DeleteIfCantPierce(Entity entity)

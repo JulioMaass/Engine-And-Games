@@ -1,9 +1,6 @@
-﻿using Engine.ECS.Components.CombatHandling;
-using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
-using Engine.ECS.Components.ItemsHandling;
+﻿using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Entities.Shared;
 using Engine.Helpers;
 using Engine.Managers.Audio;
 using Engine.Managers.GlobalManagement;
@@ -43,6 +40,8 @@ public class Shooter : Component
     public int ExtraSpawnPoints { get; set; }
     public (int Angle, int Distance) ExtraSpawnAngleAndDistance { get; set; }
     private IntVector2 _extraSpawnPoint;
+    // Split
+    public int SplitLevel { get; set; }
     // Red
     public int BlastBaseSize { get; set; }
     public int BlastSizeScaling { get; set; }
@@ -71,9 +70,13 @@ public class Shooter : Component
     private Entity NewShot()
     {
         var shot = EntityManager.CreateEntityAt(ShotType, SpawnPosition);
-        shot.AssignEntityKind(EntityKind);
+        shot.AddShotProperties();
+        shot.ShotProperties.SetShotBasicData(EntityKind, Owner);
         ApplyModifiers(shot);
-        shot.Alignment.OwningEntity = Owner;
+
+        // Multi Positioning
+        shot.Position.Pixel += _extraSpawnPoint;
+
         if (SoundName != null)
             AudioManager.PlaySound("sndShot");
         return shot;
@@ -82,47 +85,38 @@ public class Shooter : Component
     private void ApplyModifiers(Entity shot)
     {
         // Damage
+        var baseDamage = shot.DamageDealer.BaseDamage;
         if (BaseDamage > 0)
-            shot.DamageDealer.BaseDamage = BaseDamage;
+            baseDamage = BaseDamage;
         var extraDamagePercentage = GetShooterAddedFloatStats(stats => stats.ExtraDamagePercentage);
-        shot.DamageDealer.AddExtraDamage((int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage));
+        var extraDamage = (int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage);
 
         // Size
+        var size = shot.Sprite.Size.X;
         if (ShotSize != 0 && shot.Sprite.Resizable)
-        {
-            var size = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling;
-            shot.Sprite.StretchedSize = new IntVector2(size, size);
-            shot.AddCenteredOutlinedCollisionBox();
-        }
-
-        // Multi Positioning
-        shot.Position.Pixel += _extraSpawnPoint;
+            size = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling;
 
         // Speed
         var speed = ShotSpeed == 0
             ? shot.Speed.MoveSpeed
             : ShotSpeed;
         speed += GetShooterAddedFloatStats(stats => stats.ExtraSpeed);
-        shot.Speed.MoveSpeed = speed;
 
         // Blast
+        var blastData = (Duration: BlastDuration, Damage: 0, Size: 0);
         var blastLevel = GetShooterAddedStats(stats => stats.AddedBlastLevel);
         if (blastLevel > 0)
         {
             var shotSize = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
-            var blastSize = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotSize;
-            var damage = shot.DamageDealer.Damage + BlastBaseDamage + BlastDamageScaling * (blastLevel - 1);
-            var color = new Color(255, 127, 0, 255);
-            shot.DamageDealer.AddOnHitBehavior(new BehaviorCreateBlast(typeof(ResizableBlast), EntityKind.PlayerShot, AlignmentType.Friendly, BlastDuration, damage, blastSize, color));
+            blastData.Size = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotSize;
+            blastData.Damage = shot.DamageDealer.Damage + BlastBaseDamage + BlastDamageScaling * (blastLevel - 1);
         }
 
-        // Duration
-        if (ShotDuration > 0)
-            shot.AddFrameCounter(ShotDuration);
+        // Split
+        var splitLevel = SplitLevel + GetShooterAddedStats(stats => stats.ExtraSplitLevel);
 
-        // Other
-        foreach (var modifier in ShotModifiers)
-            modifier(shot);
+        // Apply modifiers
+        shot.ShotProperties.ApplyShotModifiers(baseDamage, extraDamage, size, speed, blastData, splitLevel, ShotDuration, ShotModifiers);
     }
 
     private Entity NewShotWithInheritedDirection()

@@ -4,9 +4,9 @@ using Engine.Types;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
-public class MenuItemSocketYellow : Entity
+public class MenuItemSocketYellowMulti : Entity
 {
-    public MenuItemSocketYellow()
+    public MenuItemSocketYellowMulti()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();

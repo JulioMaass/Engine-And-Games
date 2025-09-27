@@ -39,7 +39,6 @@ public class BehaviorCreateBlast : Behavior
         entity.AddAlignment(Alignment);
         entity.AddFrameCounter(Duration);
         entity.AddDamageDealer(Damage);
-        entity.DamageDealer.HitType = HitType.HitOnce;
         entity.Sprite.StretchedSize = new IntVector2(Size, Size);
         entity.AddCenteredOutlinedCollisionBox();
         entity.Sprite.SetColor(Color);

@@ -255,8 +255,8 @@ public abstract partial class Entity
         Alignment = new(this, type);
 
     // Damage Dealer
-    public void AddDamageDealer(int damage, PiercingType piercingType = PiercingType.PierceAll) =>
-        DamageDealer = new(this, damage, piercingType);
+    public void AddDamageDealer(int damage, PiercingType piercingType = PiercingType.PierceAll, HitType hitType = HitType.HitOnce) =>
+        DamageDealer = new(this, damage, piercingType, hitType);
 
     // Damage Taker
     public void AddDamageTaker(int maxHealth) =>
@@ -476,6 +476,10 @@ public abstract partial class Entity
             SpawnManager.DespawnOnScreenExit = false;
         }
     }
+
+    // Shooting
+    public void AddShotProperties() =>
+        ShotProperties ??= new(this);
 
     // Menu
     public void AddBasicMenuComponents()

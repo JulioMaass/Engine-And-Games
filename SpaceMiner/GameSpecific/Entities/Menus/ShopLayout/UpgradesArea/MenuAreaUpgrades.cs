@@ -10,7 +10,8 @@ public class MenuAreaUpgrades : MenuArea
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellow), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
+            { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellowMulti), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
+            { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellowSplit), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
         });
         Position = IntVector2.New(64 + 16, 64 + 12);
         Spacing = IntVector2.New(64 + 32, 32 + 32);

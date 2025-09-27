@@ -17,7 +17,6 @@ public class CandleSmallSlash : Entity
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(1);
-        DamageDealer.HitType = HitType.HitOnce;
         AddFrameCounter(8); // TODO: Check this, 2 animation frames hit for 1 frame
 
         // State

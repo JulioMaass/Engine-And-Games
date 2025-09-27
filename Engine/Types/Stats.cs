@@ -22,6 +22,7 @@ public class Stats
     public float ExtraAttackSpeed { get; set; }
     public float ExtraSpeed { get; set; }
     public int ExtraShots { get; set; }
+    public int ExtraSplitLevel { get; set; }
     public float ExtraDamagePercentage { get; set; }
     public int ExtraSize { get; set; }
     public int AddedBlastLevel { get; set; }

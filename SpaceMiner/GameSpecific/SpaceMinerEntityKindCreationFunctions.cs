@@ -64,7 +64,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
             var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
             var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
-            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellow)) > 0;
+            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowMulti)) > 0;
             var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
             if (colorCount >= 2 && ownedAmount == 0)
                 priceString = "-";
@@ -105,7 +105,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
             var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
             var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
-            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellow)) > 0;
+            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowMulti)) > 0;
             var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
             if (colorCount >= 2 && ownedAmount == 0)
                 hasAvailableColorSlot = false;

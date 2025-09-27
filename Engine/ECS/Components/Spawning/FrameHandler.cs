@@ -7,7 +7,7 @@ public class FrameHandler : Component
 {
     public int FastForwardFrames { get; set; } // Makes the entity run int frames on spawn (to sync gimmicks, etc)
     public int CurrentFrame { get; private set; }
-    private int EntityDuration { get; }
+    public int EntityDuration { get; private set; }
     private bool TriggerDeathAtDurationEnd { get; }
 
     public FrameHandler(Entity owner, int entityDuration, bool triggerDeathAtDurationEnd)
