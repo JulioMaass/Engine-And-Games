@@ -23,7 +23,7 @@ public class ShipShooterWarper : Shooter
         ShotSpeed = 5.5f;
         // Green
         BaseDamage = 15;
-        ShotSize = 10;
+        ShotSize = IntVector2.Square(10);
         SizeScaling = 3;
         // Yellow
         SpreadAngle = 45000 / 2;

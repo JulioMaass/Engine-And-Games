@@ -30,7 +30,7 @@ public class Shooter : Component
     public float ShotSpeed { get; set; }
     // Green
     public int BaseDamage { get; set; }
-    public int ShotSize { get; set; }
+    public IntVector2 ShotSize { get; set; }
     public int SizeScaling { get; set; }
     // Yellow
     // Multi angle
@@ -85,15 +85,13 @@ public class Shooter : Component
     private void ApplyModifiers(Entity shot)
     {
         // Damage
-        var baseDamage = shot.DamageDealer.BaseDamage;
-        if (BaseDamage > 0)
-            baseDamage = BaseDamage;
+        var baseDamage = BaseDamage == 0 ? shot.DamageDealer.BaseDamage : BaseDamage;
         var extraDamagePercentage = GetShooterAddedFloatStats(stats => stats.ExtraDamagePercentage);
-        var extraDamage = (int)Math.Round(shot.DamageDealer.BaseDamage * extraDamagePercentage);
+        var extraDamage = (int)Math.Round(baseDamage * extraDamagePercentage);
 
         // Size
-        var size = shot.Sprite.Size.X;
-        if (ShotSize != 0 && shot.Sprite.Resizable)
+        var size = shot.Sprite.Size;
+        if (ShotSize != IntVector2.Zero && shot.Sprite.Resizable)
             size = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling;
 
         // Speed
@@ -108,7 +106,8 @@ public class Shooter : Component
         if (blastLevel > 0)
         {
             var shotSize = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling; // Green size increase is applied to blast too (to avoid shot being bigger than blast)
-            blastData.Size = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotSize;
+            var shotBiggerAxisSize = Math.Max(shotSize.X, shotSize.Y);
+            blastData.Size = BlastBaseSize + BlastSizeScaling * (blastLevel - 1) + shotBiggerAxisSize;
             blastData.Damage = shot.DamageDealer.Damage + BlastBaseDamage + BlastDamageScaling * (blastLevel - 1);
         }
 

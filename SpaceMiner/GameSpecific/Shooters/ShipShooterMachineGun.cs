@@ -21,7 +21,7 @@ public class ShipShooterMachineGun : Shooter
         ShotSpeed = 6.5f;
         // Green
         BaseDamage = 8;
-        ShotSize = 6;
+        ShotSize = IntVector2.Square(6);
         SizeScaling = 2;
         // Yellow
         SpreadAngle = 10000;

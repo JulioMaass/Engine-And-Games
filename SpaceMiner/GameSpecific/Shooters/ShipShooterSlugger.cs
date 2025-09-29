@@ -21,7 +21,7 @@ public class ShipShooterSlugger : Shooter
         ShotSpeed = 4.5f;
         // Green
         BaseDamage = 40;
-        ShotSize = 16;
+        ShotSize = IntVector2.Square(16);
         SizeScaling = 6;
         // Yellow
         SpreadAngle = 45000;

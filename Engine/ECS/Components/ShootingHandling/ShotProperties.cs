@@ -28,15 +28,18 @@ public class ShotProperties : Component
         Owner.Alignment.OwningEntity = owningEntity;
     }
 
-    public void ApplyShotModifiers(int baseDamage, int extraDamage, int size, float speed, (int Duration, int Damage, int Size) blastData, int splitLevel, int duration, List<Action<Entity>> shotModifiers)
+    public void ApplyShotModifiers(int baseDamage, int extraDamage, IntVector2 size, float speed, (int Duration, int Damage, int Size) blastData, int splitLevel, int duration, List<Action<Entity>> shotModifiers)
     {
         // Damage
         Owner.DamageDealer.BaseDamage = baseDamage;
         Owner.DamageDealer.AddExtraDamage(extraDamage);
 
         // Size
-        Owner.Sprite.StretchedSize = new IntVector2(size, size);
-        Owner.AddCenteredOutlinedCollisionBox();
+        if (Owner.Sprite.Size != size)
+        {
+            Owner.Sprite.StretchedSize = size;
+            Owner.AddCenteredOutlinedCollisionBox();
+        }
 
         // Speed
         Owner.Speed.MoveSpeed = speed;
@@ -70,7 +73,7 @@ public class ShotProperties : Component
         var baseDamage = originalShot.DamageDealer.BaseDamage;
         var extraDamage = originalShot.DamageDealer.ExtraDamage;
         // Size
-        var size = originalShot.Sprite.StretchedSize.X;
+        var size = originalShot.Sprite.StretchedSize;
         // Speed
         var speed = originalShot.Speed.MoveSpeed;
         // Blast

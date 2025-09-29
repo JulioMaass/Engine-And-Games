@@ -21,7 +21,7 @@ public class ShipShooterShotgun : Shooter
         ShotSpeed = 5.5f;
         // Green
         BaseDamage = 20;
-        ShotSize = 8;
+        ShotSize = IntVector2.Square(8);
         SizeScaling = 4;
         // Yellow
         AmountOfShots = 3;

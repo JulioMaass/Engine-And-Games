@@ -34,6 +34,11 @@ public struct IntVector2
         return new IntVector2(x, y);
     }
 
+    public static IntVector2 Square(int size)
+    {
+        return new IntVector2(size, size);
+    }
+
     public static IntVector2 Zero => new(0, 0);
     public static IntVector2 PixelUp => new(0, -1);
     public static IntVector2 PixelDown => new(0, 1);

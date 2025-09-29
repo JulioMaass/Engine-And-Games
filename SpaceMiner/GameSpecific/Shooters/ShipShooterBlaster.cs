@@ -21,7 +21,7 @@ public class ShipShooterBlaster : Shooter
         ShotSpeed = 6.0f;
         // Green
         BaseDamage = 30;
-        ShotSize = 8;
+        ShotSize = IntVector2.Square(8);
         SizeScaling = 3;
         // Yellow
         SpreadAngle = 30000;

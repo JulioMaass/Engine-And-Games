@@ -21,7 +21,7 @@ public class ShipShooterBasic : Shooter
         ShotSpeed = 5.5f;
         // Green
         BaseDamage = 10;
-        ShotSize = 8;
+        ShotSize = IntVector2.Square(8);
         SizeScaling = 3;
         // Yellow
         SpreadAngle = 45000 / 2;
