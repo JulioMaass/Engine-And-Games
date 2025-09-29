@@ -20,11 +20,7 @@ public class Sprite : Component
     // Sizes
     public bool Resizable { get; set; }
     public IntVector2 Size { get; set; }
-    public IntVector2 StretchedSize
-    {
-        get;
-        set;
-    }
+    public IntVector2 StretchedSize { get; set; }
     public IntVector2 FinalSize => StretchedSize == default ? Size : StretchedSize; // If StretchedSize is not set, use Size
 
     // Rotation

@@ -29,15 +29,11 @@ public struct IntVector2
         Y = y;
     }
 
-    public static IntVector2 New(int x, int y)
-    {
-        return new IntVector2(x, y);
-    }
+    public static IntVector2 New(int x, int y) =>
+        new(x, y);
 
-    public static IntVector2 Square(int size)
-    {
-        return new IntVector2(size, size);
-    }
+    public static IntVector2 Square(int size) =>
+        new(size, size);
 
     public static IntVector2 Zero => new(0, 0);
     public static IntVector2 PixelUp => new(0, -1);
