@@ -23,7 +23,7 @@ public class VfxDebrisCircle : Entity
         VfxAnimation.SetInitialSize(8);
         VfxAnimation.SetSpeed(-0f);
         VfxAnimation.SetAcceleration(-0.20f);
-        VfxAnimation.SetColors(2, CustomColor.Pico5);
+        VfxAnimation.SetSingleColorAnimation(2, CustomColor.PicoDarkGray);
         DrawOrder = 0;
 
         // State

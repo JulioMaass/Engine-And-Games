@@ -23,7 +23,7 @@ public class VfxShotSplashCircle : Entity
         VfxAnimation.SetInitialSize(5);
         VfxAnimation.SetSpeed(-0f);
         VfxAnimation.SetAcceleration(-0.20f);
-        VfxAnimation.SetColors(2, CustomColor.Pico25);
+        VfxAnimation.SetSingleColorAnimation(2, CustomColor.Pico25);
         DrawOrder = 0;
 
         // State

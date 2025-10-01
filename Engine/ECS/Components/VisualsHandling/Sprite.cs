@@ -34,6 +34,7 @@ public class Sprite : Component
 
     public IntVector2 SpriteSheetOrigin { get; set; } // Choose position for default/first sprite in sprite sheet
     public Color Color { get; set; } = CustomColor.White;
+    public Color FinalColor => CalculateFinalColor(Color);
     private State OwnerState => Owner.StateManager.GetCurrentStateOrDefault();
     private IntVector2 OwnerPosition => Owner.Position.Pixel;
     public bool IsVisible { get; set; } = true;
@@ -86,7 +87,15 @@ public class Sprite : Component
         if (CustomStretchedOrigin != default)
             origin = (Vector2)CustomStretchedOrigin / (Vector2)StretchedSize * (Vector2)sourceRectangle.Size;
 
-        Video.SpriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, CalculateSpriteColor(), GetRotation(), origin, effects, Drawer.DefaultDepth);
+        var rotation = GetRotation();
+
+        if (Owner.VfxAnimation == null)
+            Video.SpriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, FinalColor, rotation, origin, effects, Drawer.DefaultDepth);
+        else
+        {
+            var spriteDrawingData = new SpriteDrawingData(Texture, destinationRectangle, sourceRectangle, FinalColor, rotation, origin, effects, Drawer.DefaultDepth);
+            Owner.VfxAnimation.Draw(spriteDrawingData);
+        }
     }
 
     private float GetRotation()
@@ -96,19 +105,15 @@ public class Sprite : Component
         return 0f;
     }
 
-    private Color CalculateSpriteColor()
+    public Color CalculateFinalColor(Color color)
     {
-        var color = Color;
         if (!BloomManager.DrawingBloom)
             return color;
+        if (Owner.BloomSource == null)
+            return CustomColor.Black;
 
-        if (Owner.BloomSource != null)
-        {
-            var bloomOscillation = (float)Math.Sin(Owner.FrameHandler.CurrentFrame / 10f) / 40f;
-            color *= Owner.BloomSource.Intensity + bloomOscillation;
-        }
-        else
-            color = CustomColor.Black;
+        var bloomOscillation = (float)Math.Sin(Owner.FrameHandler.CurrentFrame / 10f) / 40f;
+        color *= Owner.BloomSource.Intensity + bloomOscillation;
         return color;
     }
 

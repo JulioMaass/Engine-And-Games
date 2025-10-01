@@ -113,6 +113,13 @@ public struct IntRectangle
         return new IntRectangle(position, size);
     }
 
+    public IntRectangle ReducedRectangle(int sizeReduction)
+    {
+        var newWidth = Width - sizeReduction * 2;
+        var newHeight = Height - sizeReduction * 2;
+        return new IntRectangle(X, Y, newWidth, newHeight);
+    }
+
     public IntRectangle OffsetPosition(IntVector2 positionOffset)
     {
         Position += positionOffset;

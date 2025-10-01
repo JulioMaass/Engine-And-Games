@@ -138,9 +138,6 @@ public abstract partial class Entity
         // Special Components
         WeaponManager?.Update();
         ChargeManager?.Update();
-        Paralax?.Update();
-        VfxEmitter?.Update();
-        VfxAnimation?.Update();
         // Control and State
         FrameHandler.CheckDurationEnd();
         PlayerControl?.Update();
@@ -152,6 +149,11 @@ public abstract partial class Entity
         Physics?.Update();
         // State Pos Processing
         StateManager?.PostProcessing();
+        // Visual Components
+        Paralax?.Update();
+        VfxEmitter?.Update();
+        VfxAnimation?.Update();
+
         Updated = true;
     }
 

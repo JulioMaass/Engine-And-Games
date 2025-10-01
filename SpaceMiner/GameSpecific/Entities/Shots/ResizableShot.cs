@@ -2,7 +2,10 @@
 using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Helpers;
+using Microsoft.Xna.Framework;
 using SpaceMiner.GameSpecific.Entities.Vfx;
+using System.Collections.Generic;
 
 namespace SpaceMiner.GameSpecific.Entities.Shots;
 
@@ -15,7 +18,6 @@ public class ResizableShot : Entity
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSpriteFullImageCenteredOrigin("MegaCircle");
-        Sprite.SetColor(255, 127, 0, 255);
         Sprite.Resizable = true;
         AddSolidBehavior();
         AddCenteredOutlinedCollisionBox();
@@ -28,8 +30,13 @@ public class ResizableShot : Entity
         AddDeathHandler(new BehaviorCreateEntity(typeof(VfxShotSplash)));
 
         // Vfx
-        VfxEmitter = new VfxEmitter(this, typeof(VfxShotSplashCircle), 0, 1, 2);
-        VfxEmitter.DistanceToSpeedMultiplier = 0.25f;
+        VfxAnimation = new(this);
+        VfxAnimation.SetInnerSizeReduction(1, 2);
+        var colors1 = new List<Color> { CustomColor.PicoRed, CustomColor.PicoOrange, CustomColor.PicoYellow };
+        var colors2 = new List<Color> { CustomColor.PicoOrange, CustomColor.PicoYellow, CustomColor.PicoWhite };
+        VfxAnimation.SetNestedColorAnimation(4, colors1, colors2);
+        VfxAnimation.LoopColors = true;
+        VfxAnimation.TrailFrames = 2;
 
         // State
         AddStateManager();
