@@ -4,25 +4,25 @@ using Engine.Types;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
-public class MenuItemSocketYellowMulti : Entity
+public class MenuItemSocketBlueAttackSpeed : Entity
 {
-    public MenuItemSocketYellowMulti()
+    public MenuItemSocketBlueAttackSpeed()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("UpgradeYellow", 16);
+        AddSpriteCenteredOrigin("UpgradeBlueAttackSpeed", 32);
         Sprite.HudSprite = true;
         AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.WeaponUpgrade);
-        EquipmentItemStats.Stats.ExtraShots = 1;
+        EquipmentItemStats.Stats.ExtraAttackSpeed = 0.5f;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 100, 250, 500, 1000);
+        ItemPrice.AddPrices(ResourceType.OreBlue, 100, 150, 250, 500, 750, 1000, 1500, 2000);
 
-        MenuItem.Label = "Multi";
+        MenuItem.Label = "Attack Speed";
         AddSpaceMinerUpgradeItemComponents();
     }
 }

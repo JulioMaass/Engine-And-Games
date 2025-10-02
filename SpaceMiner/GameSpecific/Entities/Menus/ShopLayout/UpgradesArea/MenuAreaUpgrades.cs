@@ -10,10 +10,11 @@ public class MenuAreaUpgrades : MenuArea
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellowMulti), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
-            { typeof(MenuItemSocketBlue), typeof(MenuItemSocketYellowSplit), typeof(MenuItemSocketGreen), typeof(MenuItemSocketRed) },
+            { typeof(MenuItemSocketBlueAttackSpeed), typeof(MenuItemSocketYellowStraightMulti), typeof(MenuItemSocketGreenDamage), typeof(MenuItemSocketRed), null, null },
+            { typeof(MenuItemSocketBlueShotSpeed), typeof(MenuItemSocketYellowAngleMulti), typeof(MenuItemSocketGreenPierce), null, null, null },
+            { typeof(MenuItemSocketBlueDuration), typeof(MenuItemSocketYellowSplit), typeof(MenuItemSocketGreenSize), null, null, null },
         });
-        Position = IntVector2.New(64 + 16, 64 + 12);
-        Spacing = IntVector2.New(64 + 32, 32 + 32);
+        Position = IntVector2.New(64 + 16, 64 - 4);
+        Spacing = IntVector2.New(64, 32 + 32);
     }
 }

@@ -56,5 +56,5 @@ public class MenuArea
     }
 
     private IntRectangle GetMenuAreaRectangle() =>
-        new(Position.X, Position.Y, MenuItemTypes.GetLength(0) * Spacing.X, MenuItemTypes.GetLength(1) * Spacing.Y);
+        new(Position.X, Position.Y, (MenuItemTypes.GetLength(0) - 1) * Spacing.X, (MenuItemTypes.GetLength(1) - 1) * Spacing.Y);
 }

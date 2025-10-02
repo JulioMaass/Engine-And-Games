@@ -12,7 +12,7 @@ public class MenuAreaShopOptions : MenuArea
         {
             { typeof(MenuItemUpgradesExit) },
         });
-        Position = IntVector2.New(256 + 128, 128 + 64 + 32);
+        Position = IntVector2.New(256 + 128, 128 + 64 + 32 + 16);
         Spacing = IntVector2.New(64, 32);
     }
 }

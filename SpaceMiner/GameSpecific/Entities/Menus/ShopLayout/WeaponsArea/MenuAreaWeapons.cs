@@ -10,10 +10,11 @@ public class MenuAreaWeapons : MenuArea
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemBasicShot), typeof(MenuItemMachineGun), typeof(MenuItemShotgun), typeof(MenuItemSlugger) },
-            { typeof(MenuItemPuncher), typeof(MenuItemWarper), typeof(MenuItemBlaster), typeof(MenuItemWarper) },
+            { typeof(MenuItemBasicShot), typeof(MenuItemMachineGun), typeof(MenuItemShotgun), typeof(MenuItemSlugger), typeof(MenuItemBlaster), typeof(MenuItemWarper) },
+            { typeof(MenuItemPuncher), null, null, null, null, null },
+            { null, null, null, null, null, null },
         });
-        Position = IntVector2.New(64 + 16, 64 + 12);
-        Spacing = IntVector2.New(64 + 32, 32 + 32);
+        Position = IntVector2.New(64 + 16, 64 - 4);
+        Spacing = IntVector2.New(64, 32 + 32);
     }
 }

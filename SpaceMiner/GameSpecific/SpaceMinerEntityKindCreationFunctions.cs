@@ -9,7 +9,6 @@ using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Types;
 using Microsoft.Xna.Framework;
-using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,14 +59,14 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
                 }
             }
 
-            // Check for color limit
-            var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
-            var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
-            var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
-            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowMulti)) > 0;
-            var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
-            if (colorCount >= 2 && ownedAmount == 0)
-                priceString = "-";
+            //// Check for color limit
+            //var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlueAttackSpeed)) > 0;
+            //var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreenPierce)) > 0;
+            //var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
+            //var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowStraightMulti)) > 0;
+            //var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
+            //if (colorCount >= 2 && ownedAmount == 0)
+            //    priceString = "-";
 
             // Set color
             var color = CustomColor.White;
@@ -88,7 +87,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64), CustomColor.White);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         // ReSharper disable once ComplexConditionExpression
@@ -100,18 +99,18 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (itemPrice == null)
                 return;
 
-            // Check for color limit
-            var hasAvailableColorSlot = true;
-            var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlue)) > 0;
-            var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreen)) > 0;
-            var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
-            var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowMulti)) > 0;
-            var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
-            if (colorCount >= 2 && ownedAmount == 0)
-                hasAvailableColorSlot = false;
+            //// Check for color limit
+            //var hasAvailableColorSlot = true;
+            //var hasBlue = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketBlueAttackSpeed)) > 0;
+            //var hasGreen = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketGreenPierce)) > 0;
+            //var hasRed = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketRed)) > 0;
+            //var hasYellow = GlobalManager.Values.MainCharData.GetAmountOfUpgradesOnWeapon(typeof(MenuItemSocketYellowStraightMulti)) > 0;
+            //var colorCount = (hasBlue ? 1 : 0) + (hasGreen ? 1 : 0) + (hasRed ? 1 : 0) + (hasYellow ? 1 : 0);
+            //if (colorCount >= 2 && ownedAmount == 0)
+            //    hasAvailableColorSlot = false;
 
             // Check if player has enough resources to buy the item
-            if (!ItemPrice.CanBuy(ownedAmount) || !hasAvailableColorSlot)
+            if (!ItemPrice.CanBuy(ownedAmount))
                 return;
             ItemPrice.SubtractResources(ownedAmount);
 
@@ -201,7 +200,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64), CustomColor.White);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         MenuItem.OnSelect = () =>
@@ -260,7 +259,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
             Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64), CustomColor.White);
+            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         // ReSharper disable once ComplexConditionExpression

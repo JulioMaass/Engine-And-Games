@@ -16,8 +16,8 @@ public class MenuLayoutShop : MenuLayout
     public MenuLayoutShop()
     {
         BackgroundImage = Drawer.TextureDictionary["MenuNineSlice"];
-        BackgroundImageSize = new IntVector2(256 + 128, 128);
-        BackgroundImagePosition = new IntVector2(48, 48);
+        BackgroundImageSize = new IntVector2(256 + 128, 128 + 64);
+        BackgroundImagePosition = new IntVector2(48, 32);
         NineSliceBorder = (8, 8);
 
         var menuAreaTabs = new MenuAreaTabs();

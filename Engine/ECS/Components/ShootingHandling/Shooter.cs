@@ -8,6 +8,7 @@ using Engine.Types;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Engine.ECS.Components.ShootingHandling;
 
@@ -28,15 +29,18 @@ public class Shooter : Component
     // Blue
     public int AutoFireRate { get; set; } // Frames between shots
     public float ShotSpeed { get; set; }
+    public int ShotDuration { get; set; }
     // Green
     public int BaseDamage { get; set; }
     public IntVector2 ShotSize { get; set; }
     public int SizeScaling { get; set; }
+    public int PierceAmount { get; set; }
     // Yellow
     // Multi angle
     public int AmountOfShots { get; set; } = 1;
     public int SpreadAngle { get; set; } = 45000;
     // Multi spawn
+    public int TotalSpawnPoints => ExtraSpawnPoints + GetShooterAddedStats(stats => stats.ExtraSpawnPointShots) + 1;
     public int ExtraSpawnPoints { get; set; }
     public (int Angle, int Distance) ExtraSpawnAngleAndDistance { get; set; }
     private IntVector2 _extraSpawnPoint;
@@ -50,7 +54,6 @@ public class Shooter : Component
     public int BlastDuration { get; set; }
     // Other
     public (int Step, int MaxAngle) InaccuracyAngle { get; set; } // Step 5 max 15 means angles 0, 5, 10, 15 are allowed
-    public int ShotDuration { get; set; }
 
     public Shooter(Entity owner) => Owner = owner;
     public void AddShootAction(Action shootAction) => ShootAction = shootAction;
@@ -94,11 +97,17 @@ public class Shooter : Component
         if (ShotSize != IntVector2.Zero && shot.Sprite.Resizable)
             size = ShotSize + GetShooterAddedStats(stats => stats.ExtraSize) * SizeScaling;
 
+        // Pierce
+        var pierce = PierceAmount + GetShooterAddedStats(stats => stats.ExtraPierceAmount);
+
         // Speed
         var speed = ShotSpeed == 0
             ? shot.Speed.MoveSpeed
             : ShotSpeed;
         speed += GetShooterAddedFloatStats(stats => stats.ExtraSpeed);
+
+        // Duration
+        var duration = ShotDuration + GetShooterAddedStats(stats => stats.ExtraDuration);
 
         // Blast
         var blastData = (Duration: BlastDuration, Damage: 0, Size: 0);
@@ -115,7 +124,7 @@ public class Shooter : Component
         var splitLevel = SplitLevel + GetShooterAddedStats(stats => stats.ExtraSplitLevel);
 
         // Apply modifiers
-        shot.ShotProperties.ApplyShotModifiers(baseDamage, extraDamage, size, speed, blastData, splitLevel, ShotDuration, ShotModifiers);
+        shot.ShotProperties.ApplyShotModifiers(baseDamage, extraDamage, size, pierce, speed, blastData, splitLevel, duration, ShotModifiers);
     }
 
     private Entity NewShotWithInheritedDirection()
@@ -208,7 +217,7 @@ public class Shooter : Component
 
     public void ShootSpread(int middleAngle, int angleBetweenShots, int spawnOffset = 0)
     {
-        var shotMultiplier = GetShooterAddedStats(stats => stats.ExtraShots) + 1;
+        var shotMultiplier = GetShooterAddedStats(stats => stats.ExtraAngleShots) + 1;
         var amountOfShots = AmountOfShots * shotMultiplier;
         var initialAngle = GetInitialAngle(middleAngle, angleBetweenShots, amountOfShots);
         for (var i = 0; i < amountOfShots; i++)
@@ -249,7 +258,7 @@ public class Shooter : Component
     {
         var inaccuracyAngle = GetInaccuracyAngle();
         var shotAngle = Owner.ShootDirection.Angle.Value + inaccuracyAngle.Value;
-        if (ExtraSpawnPoints == 0)
+        if (TotalSpawnPoints <= 1)
             ShootSpread(shotAngle, SpreadAngle);
         else
             ShootFromExtraSpawnPoints(shotAngle);
@@ -257,10 +266,17 @@ public class Shooter : Component
 
     private void ShootFromExtraSpawnPoints(int shotAngle)
     {
-        var initialAngle = GetInitialAngle(shotAngle, ExtraSpawnAngleAndDistance.Angle, ExtraSpawnPoints + 1);
-        for (var i = 0; i < ExtraSpawnPoints + 1; i++)
+        if (ExtraSpawnAngleAndDistance.Angle == 0)
+        {
+            Debugger.Break(); // Not implemented for this weapon, need to check it
+            ExtraSpawnAngleAndDistance = (45000, 10);
+        }
+
+        var initialAngle = GetInitialAngle(shotAngle, ExtraSpawnAngleAndDistance.Angle, TotalSpawnPoints);
+        for (var i = 0; i < TotalSpawnPoints; i++)
         {
             _extraSpawnPoint = Angle.GetVectorLength(initialAngle + i * ExtraSpawnAngleAndDistance.Angle) * ExtraSpawnAngleAndDistance.Distance;
+            _extraSpawnPoint.Y += ExtraSpawnAngleAndDistance.Distance;
             ShootSpread(shotAngle, SpreadAngle);
         }
     }

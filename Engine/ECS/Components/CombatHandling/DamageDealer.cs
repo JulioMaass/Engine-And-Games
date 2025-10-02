@@ -14,6 +14,8 @@ public class DamageDealer : Component
     public int ExtraDamage { get; private set; }
     // Hit behavior
     private PiercingType PiercingType { get; set; }
+    public int PierceAmount { get; set; }
+    private int PiercedAmount { get; set; }
     public HitType HitType { get; set; }
     private List<Entity> HitList { get; } = new();
     private List<Behavior> OnHitBehaviors { get; } = new();
@@ -59,7 +61,7 @@ public class DamageDealer : Component
         return HitList.Contains(entity);
     }
 
-    public void DeleteIfCantPierce(Entity entity)
+    private void DeleteIfCantPierce(Entity entity)
     {
         var entityHp = entity.DamageTaker.CurrentHp.Amount;
 
@@ -69,6 +71,12 @@ public class DamageDealer : Component
             EntityManager.TriggerDeath(Owner);
         if (PiercingType == PiercingType.PierceOnKill && entityHp > Damage)
             EntityManager.TriggerDeath(Owner);
+        if (PiercingType == PiercingType.PierceAmount)
+        {
+            if (PiercedAmount >= PierceAmount)
+                EntityManager.TriggerDeath(Owner);
+            PiercedAmount++;
+        }
     }
 
     public void SetPiecingType(PiercingType piercingType)
@@ -110,7 +118,8 @@ public enum PiercingType
     PierceAll,
     PierceNone,
     PierceOnOverkill,
-    PierceOnKill
+    PierceOnKill,
+    PierceAmount
 }
 
 public enum HitType

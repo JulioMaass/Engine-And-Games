@@ -77,16 +77,16 @@ public struct IntRectangle
     public bool HorizontallyOverlaps(IntRectangle rectangle) =>
         Left <= rectangle.Right && Right >= rectangle.Left;
 
-    public bool IsAbove(IntRectangle rectangle) =>
+    private bool IsAbove(IntRectangle rectangle) =>
         Bottom < rectangle.Top;
 
-    public bool IsBelow(IntRectangle rectangle) =>
+    private bool IsBelow(IntRectangle rectangle) =>
         Top > rectangle.Bottom;
 
-    public bool IsLeftOf(IntRectangle rectangle) =>
+    private bool IsLeftOf(IntRectangle rectangle) =>
         Right < rectangle.Left;
 
-    public bool IsRightOf(IntRectangle rectangle) =>
+    private bool IsRightOf(IntRectangle rectangle) =>
         Left > rectangle.Right;
 
     public bool IsAboveAndAligned(IntRectangle rectangle) =>

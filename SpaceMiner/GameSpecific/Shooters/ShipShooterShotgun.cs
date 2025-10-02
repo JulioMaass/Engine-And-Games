@@ -19,6 +19,7 @@ public class ShipShooterShotgun : Shooter
         // Blue
         AutoFireRate = 30;
         ShotSpeed = 5.5f;
+        ShotDuration = 30;
         // Green
         BaseDamage = 20;
         ShotSize = IntVector2.Square(8);
@@ -33,6 +34,5 @@ public class ShipShooterShotgun : Shooter
         BlastDamageScaling = 10;
         BlastDuration = 20;
         // Other
-        ShotDuration = 30;
     }
 }

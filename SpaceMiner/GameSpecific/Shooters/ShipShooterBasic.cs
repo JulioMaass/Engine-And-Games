@@ -17,14 +17,16 @@ public class ShipShooterBasic : Shooter
         ShotType = typeof(ResizableShot);
         EntityKind = EntityKind.PlayerShot;
         // Blue
-        AutoFireRate = 20;
-        ShotSpeed = 5.5f;
+        AutoFireRate = 40;
+        ShotSpeed = 3.5f;
+        ShotDuration = 30;
         // Green
         BaseDamage = 10;
         ShotSize = IntVector2.Square(8);
         SizeScaling = 3;
         // Yellow
         SpreadAngle = 45000 / 2;
+        ExtraSpawnAngleAndDistance = new IntVector2(45000, 16);
         // Red
         BlastBaseSize = 16;
         BlastSizeScaling = 6;

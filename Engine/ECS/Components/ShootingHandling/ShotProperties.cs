@@ -28,7 +28,7 @@ public class ShotProperties : Component
         Owner.Alignment.OwningEntity = owningEntity;
     }
 
-    public void ApplyShotModifiers(int baseDamage, int extraDamage, IntVector2 size, float speed, (int Duration, int Damage, int Size) blastData, int splitLevel, int duration, List<Action<Entity>> shotModifiers)
+    public void ApplyShotModifiers(int baseDamage, int extraDamage, IntVector2 size, int pierce, float speed, (int Duration, int Damage, int Size) blastData, int splitLevel, int duration, List<Action<Entity>> shotModifiers)
     {
         // Damage
         Owner.DamageDealer.BaseDamage = baseDamage;
@@ -40,6 +40,9 @@ public class ShotProperties : Component
             Owner.Sprite.StretchedSize = size;
             Owner.AddCenteredOutlinedCollisionBox();
         }
+
+        // Pierce
+        Owner.DamageDealer.PierceAmount = pierce;
 
         // Speed
         Owner.Speed.MoveSpeed = speed;
@@ -74,6 +77,8 @@ public class ShotProperties : Component
         var extraDamage = originalShot.DamageDealer.ExtraDamage;
         // Size
         var size = originalShot.Sprite.StretchedSize;
+        // Pierce
+        var pierce = originalShot.DamageDealer.PierceAmount;
         // Speed
         var speed = originalShot.Speed.MoveSpeed;
         // Blast
@@ -85,6 +90,6 @@ public class ShotProperties : Component
         // Other modifiers
         var shotModifiers = new List<Action<Entity>>();
         shotModifiers.AddRange(originalShot.ShotProperties.ShotModifiers);
-        ApplyShotModifiers(baseDamage, extraDamage, size, speed, blastData, splitLevel, duration, shotModifiers);
+        ApplyShotModifiers(baseDamage, extraDamage, size, pierce, speed, blastData, splitLevel, duration, shotModifiers);
     }
 }

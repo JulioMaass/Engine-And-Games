@@ -10,10 +10,11 @@ public class MenuAreaMissiles : MenuArea
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemMissileSpray), typeof(MenuItemMissileDrill), typeof(MenuItemMissileAtomic), typeof(MenuItemMissileHoming) },
-            { typeof(MenuItemMissileMine), typeof(MenuItemMissileMine), typeof(MenuItemMissileMine), typeof(MenuItemMissileMine) },
+            { typeof(MenuItemMissileSpray), typeof(MenuItemMissileDrill), typeof(MenuItemMissileAtomic), typeof(MenuItemMissileHoming), typeof(MenuItemMissileMine), null },
+            { null, null, null, null, null, null },
+            { null, null, null, null, null, null },
         });
-        Position = IntVector2.New(64 + 16, 64 + 12);
-        Spacing = IntVector2.New(64 + 32, 32 + 32);
+        Position = IntVector2.New(64 + 16, 64 - 4);
+        Spacing = IntVector2.New(64, 32 + 32);
     }
 }

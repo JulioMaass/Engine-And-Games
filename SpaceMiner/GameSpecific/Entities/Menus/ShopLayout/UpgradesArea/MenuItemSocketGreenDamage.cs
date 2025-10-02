@@ -4,25 +4,25 @@ using Engine.Types;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.UpgradesArea;
 
-public class MenuItemSocketYellowSplit : Entity
+public class MenuItemSocketGreenDamage : Entity
 {
-    public MenuItemSocketYellowSplit()
+    public MenuItemSocketGreenDamage()
     {
         EntityKind = EntityKind.Menu;
         AddBasicComponents();
         MenuItem = new(this);
 
         // Basic, Sprite, EntityKind
-        AddSpriteCenteredOrigin("UpgradeYellowSplit", 32);
+        AddSpriteCenteredOrigin("UpgradeGreenDamage", 32);
         Sprite.HudSprite = true;
         AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.WeaponUpgrade);
-        EquipmentItemStats.Stats.ExtraSplitLevel = 1;
+        EquipmentItemStats.Stats.ExtraDamagePercentage = 1f;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 100, 250, 500, 1000);
+        ItemPrice.AddPrices(ResourceType.OreGreen, 150, 300, 500, 1000);
 
-        MenuItem.Label = "Split";
+        MenuItem.Label = "Damage";
         AddSpaceMinerUpgradeItemComponents();
     }
 }
