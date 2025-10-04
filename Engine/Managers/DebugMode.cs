@@ -9,7 +9,7 @@ namespace Engine.Managers;
 public static class DebugMode
 {
     public static bool Paused { get; private set; }
-    private static bool _pauseNextFrame;
+    public static bool PauseNextFrame { get; private set; }
     private static bool IsOn { get; set; } // = true;
     public static bool ShowMasks { get; private set; }
     public static int EntityCollisionCounter { get; set; }
@@ -43,15 +43,15 @@ public static class DebugMode
         // Pause/Unpause
         if (Input.Pause.Pressed) Paused = !Paused;
         // Step loop
-        if (_pauseNextFrame)
+        if (PauseNextFrame)
         {
             Paused = true;
-            _pauseNextFrame = false;
+            PauseNextFrame = false;
         }
         if (Input.Step.Pressed)
         {
             Paused = false;
-            _pauseNextFrame = true;
+            PauseNextFrame = true;
         }
     }
 

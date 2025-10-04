@@ -18,11 +18,11 @@ public static class StatsManager
 
         // Get all equipment stats
         if (getEntityStats)
-            statsList.AddRange(entity.EquipmentHolder.CharData.GetAllItemsEquippedOnChar().Select(GetStatsFromType));
+            statsList.AddRange(entity.EquipmentHolder.CharData.CachedAllItemsEquippedOnChar.Select(GetStatsFromType));
         if (getShooterStats)
-            statsList.AddRange(entity.EquipmentHolder.CharData.GetAllItemsEquippedOnEquipment(EquipKind.Weapon).Select(GetStatsFromType));
+            statsList.AddRange(entity.EquipmentHolder.CharData.CachedAllItemsEquippedOnWeapon.Select(GetStatsFromType));
         if (getSecondaryShooterStats)
-            statsList.AddRange(entity.EquipmentHolder.CharData.GetAllItemsEquippedOnEquipment(EquipKind.SecondaryWeapon).Select(GetStatsFromType));
+            statsList.AddRange(entity.EquipmentHolder.CharData.CachedAllItemsEquippedOnSecondaryWeapon.Select(GetStatsFromType));
 
         return statsList;
     }

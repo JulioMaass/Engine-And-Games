@@ -10,7 +10,7 @@ public class EntityList : List<Entity>
     {
         base.Add(entity);
 #if DEBUG
-        if (CollectionManager.FullCollection.Contains(entity))
+        if (CollectionManager.Contains(entity))
         {
             throw new Exception("Entity is from a collection, use CreateEntity or create a copy instead.");
         }

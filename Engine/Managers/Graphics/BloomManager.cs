@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities;
+﻿using Engine.ECS.Components.VisualsHandling;
+using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Types;
@@ -21,7 +22,7 @@ public static class BloomManager
         DrawingBloom = true;
         Video.Graphics.GraphicsDevice.SetRenderTarget(BloomRender);
         Video.Graphics.GraphicsDevice.Clear(CustomColor.Black);
-        Video.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, BloomMaskEffect, Camera.Matrix);
+        Video.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, BloomMaskEffect, Camera.Matrix);
         DrawBloomEntities();
         Video.SpriteBatch.End();
         DrawingBloom = false;
@@ -30,7 +31,11 @@ public static class BloomManager
 
     private static void DrawBloomEntities()
     {
-        EntityManager.GetAllEntities()
+        var bloomEntities = EntityManager.GetAllEntities()
+            .Where(entity => entity.BloomSource == null || entity.BloomSource.BloomType is BloomType.Bloom or BloomType.Shadow)
+            .ToList();
+
+        bloomEntities
             .OrderBy(entity => entity.LayerId)
             .ThenBy(entity => entity.EntityKind)
             .ThenBy(entity => entity.DrawOrder)

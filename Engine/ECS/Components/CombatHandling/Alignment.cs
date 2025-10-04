@@ -12,6 +12,9 @@ public class Alignment : Component
         Owner = owner;
         Type = type;
     }
+
+    public bool IsHostileTo(AlignmentType alignmentType) =>
+        Type != alignmentType;
 }
 
 public enum AlignmentType

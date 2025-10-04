@@ -5,6 +5,7 @@ using Engine.Managers.StageEditing;
 using Engine.Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Engine.Managers.Graphics;
 
@@ -17,6 +18,10 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
     private static RenderTarget2D PostFxRender { get; set; }
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static SpriteBatch SpriteBatch { get; private set; }
+    private static bool CameraOn { get; set; } // Tells if the camera matrix should be applied
+    private static Matrix? Matrix => CameraOn ? Camera.Matrix : null;
+    private static SpriteSortMode CurrentSpriteSortMode { get; set; } = SpriteSortMode.Deferred;
+    private static int SpriteSortModeSwitchCount { get; set; }
 
     public static void CreateGraphicsDevice()
     {
@@ -66,6 +71,7 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
 
     public static void Draw()
     {
+        ResetSpriteSortModeSwitchCount();
         DrawGameScreen();
         DrawHud();
         DrawEditingMenu();
@@ -74,15 +80,25 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         DrawPostFx();
     }
 
+    private static void ResetSpriteSortModeSwitchCount()
+    {
+        if (SpriteSortModeSwitchCount > 20)
+            Debugger.Break(); // Too many sprite sort mode switches in one frame, try to optimize
+        SpriteSortModeSwitchCount = 0;
+    }
+
     private static void DrawGameScreen()
     {
         Camera.MatrixUpdate();
 
+        CameraOn = true;
         Graphics.GraphicsDevice.SetRenderTarget(GameScreenRender);
         Graphics.GraphicsDevice.Clear(CustomColor.DarkGray);
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader, Camera.Matrix);
+        CurrentSpriteSortMode = SpriteSortMode.Deferred;
+        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader, Matrix);
         GameLoopManager.Draw();
         SpriteBatch.End();
+        CameraOn = false;
 
         BloomManager.DrawBloomMask();
         LightingManager.ApplyLighting();
@@ -92,15 +108,27 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
     {
         Graphics.GraphicsDevice.SetRenderTarget(HudRender);
         Graphics.GraphicsDevice.Clear(CustomColor.Transparent);
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader);
+        CurrentSpriteSortMode = SpriteSortMode.Deferred;
+        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader, Matrix);
         Hud.Draw();
         SpriteBatch.End();
+    }
+
+    public static void SwitchSpriteSortMode(SpriteSortMode spriteSortMode) // Switch to immediate when using shaders with draw call specific parameters
+    {
+        if (CurrentSpriteSortMode == spriteSortMode)
+            return;
+        CurrentSpriteSortMode = spriteSortMode;
+        SpriteSortModeSwitchCount++;
+        SpriteBatch.End();
+        SpriteBatch.Begin(spriteSortMode, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, Drawer.SpriteMasterShader, Matrix);
     }
 
     private static void DrawEditingMenu()
     {
         Graphics.GraphicsDevice.SetRenderTarget(EditingMenuRender);
         Graphics.GraphicsDevice.Clear(CustomColor.Black);
+        CurrentSpriteSortMode = SpriteSortMode.Deferred;
         SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp);
         StageEditor.DrawMenu();
         SpriteBatch.End();
@@ -130,14 +158,14 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
         Graphics.GraphicsDevice.SetRenderTarget(PostFxRender);
         var render = CrtManager.IsOn ? AccumulatorManager.AccumulatorRender : FinalRender;
         var sampler = CrtManager.IsOn ? SamplerState.LinearClamp : SamplerState.PointClamp;
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, sampler);
+        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, sampler);
         SpriteBatch.Draw(render, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
         SpriteBatch.End();
 
         // Apply crt shader
         Graphics.GraphicsDevice.SetRenderTarget(null);
         var effect = CrtManager.IsOn ? CrtManager.CrtEffect : null;
-        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null, effect);
+        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, null, null, effect);
         SpriteBatch.Draw(PostFxRender, new IntRectangle(Camera.FullScreenOffset, Settings.ScreenScaledSize), Color.White);
         if (StageEditor.IsOn)
             SpriteBatch.Draw(EditingMenuRender, new Rectangle(Settings.ScreenScaledSize.Width, 0, Settings.EditingMenuWidth, Settings.ScreenScaledSize.Height), CustomColor.White);

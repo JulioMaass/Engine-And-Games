@@ -1,19 +1,40 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Entities;
+using Engine.ECS.Entities.EntityCreation;
 
 namespace Engine.ECS.Components.PhysicsHandling;
 
 public class SolidBehavior : Component
 {
-    public SolidType SolidType { get; set; }
+    public SolidType SolidType { get; private set; }
     public SolidInteractionType SolidInteractionType { get; set; }
-    public MomentumType MomentumType { get; set; }
+    public MomentumType MomentumType { get; private set; }
 
     public SolidBehavior(Entity owner, SolidType solidType, SolidInteractionType solidInteractionType, MomentumType momentumType)
     {
         Owner = owner;
-        SolidType = solidType;
+        SetSolidType(solidType);
         SolidInteractionType = solidInteractionType;
         MomentumType = momentumType;
+    }
+
+    public void SetSolidType(SolidType solidType)
+    {
+        SolidType = solidType;
+        if (solidType == SolidType.Solid)
+        {
+            EntityListManager.SolidEntities.Add(Owner);
+            EntityListManager.SolidTopEntities.Remove(Owner);
+        }
+        else if (solidType == SolidType.SolidTop)
+        {
+            EntityListManager.SolidTopEntities.Add(Owner);
+            EntityListManager.SolidEntities.Remove(Owner);
+        }
+    }
+
+    public void SetSolidInteractionType(SolidInteractionType solidInteractionType)
+    {
+        SolidInteractionType = solidInteractionType;
     }
 }
 

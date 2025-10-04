@@ -12,10 +12,21 @@ namespace Engine.Managers.StageHandling;
 public class DebugTiles
 {
     private Room Room { get; }
+    public List<TileLayout> ForegroundTileLayouts { get; } = new(); // Cached list of foreground tile layouts only
 
-    public DebugTiles(IntVector2 size, Room room)
+    public DebugTiles(Room room)
     {
         Room = room;
+        UpdateLayout();
+    }
+
+    public void UpdateLayout()
+    {
+        ForegroundTileLayouts.Clear();
+        ForegroundTileLayouts.AddRange(
+            Room.Layers.OfType<TileLayout>()
+                .Where(tileLayout => tileLayout.LayerId == LayerId.ForegroundTiles)
+                .Where(tileLayout => tileLayout.Layout != null).ToList());
     }
 
     public bool IsThereTileWithPropertyInRectangle(IntRectangle absoluteTileRectangle, TileProperty tileProperty)
@@ -28,9 +39,9 @@ public class DebugTiles
         return false;
     }
 
-    public List<TileProperty> GetTilePropertiesInBoundsValueAt(int x, int y)
+    private List<TileProperty> GetTilePropertiesInBoundsValueAt(int x, int y)
     {
-        var tileType = GetTileTypeInBoundsValueAt(IntVector2.New(x, y));
+        var tileType = GetTileTypeInBoundsValueAt(x, y);
         return GetTileTypeProperties(tileType);
     }
 
@@ -42,9 +53,7 @@ public class DebugTiles
         if (!IsInBounds(position))
             return TileType.Default;
 
-        foreach (var tileLayout in Room.Layers.OfType<TileLayout>()
-                     .Where(tileLayout => tileLayout.LayerId == LayerId.ForegroundTiles)
-                     .Where(tileLayout => tileLayout.Layout != null).ToList())
+        foreach (var tileLayout in ForegroundTileLayouts)
         {
             var tileId = tileLayout.GetValueAt(position);
             var debugValue = GetDebugTypeFromTileId(tileId, tileLayout.Tileset);
@@ -55,11 +64,12 @@ public class DebugTiles
         return TileType.NoTile;
     }
 
+    public TileType GetTileTypeAt(int x, int y) =>
+        GetTileTypeAt(new IntVector2(x, y));
+
     private bool IsInBounds(IntVector2 position)
     {
-        return Room.Layers.OfType<TileLayout>()
-            .Where(tileLayout => tileLayout.LayerId == LayerId.ForegroundTiles)
-            .Where(tileLayout => tileLayout.Layout != null)
+        return ForegroundTileLayouts
             .Any(tileLayout => tileLayout.Layout.IsInBounds(position));
     }
 
@@ -69,19 +79,17 @@ public class DebugTiles
         return GetTileTypeProperties(tileType);
     }
 
-    public TileType GetTileTypeInBoundsValueAt(IntVector2 position)
+    private TileType GetTileTypeInBoundsValueAt(int x, int y)
     {
         // If edge tile is solid, out of bounds returns solid
-        var inBoundsPosition = IntVector2.New(
-            Math.Clamp(position.X, 0, Room.SizeInTiles.X - 1),
-            Math.Clamp(position.Y, 0, Room.SizeInTiles.Y - 1)
-        );
-        if (inBoundsPosition != position
-            && GetTileTypeAt(inBoundsPosition) == TileType.Solid)
+        var inBoundsX = Math.Clamp(x, 0, Room.SizeInTiles.X - 1);
+        var inBoundsY = Math.Clamp(y, 0, Room.SizeInTiles.Y - 1);
+        if ((inBoundsX != x || inBoundsY != y)
+            && GetTileTypeAt(inBoundsX, inBoundsY) == TileType.Solid)
             return TileType.Solid;
 
         // Else return the tile value (NO_TILE when out of bounds)
-        return GetTileTypeAt(position);
+        return GetTileTypeAt(x, y);
     }
 
     public void Draw()
@@ -99,7 +107,7 @@ public class DebugTiles
     private void DrawTile(IntVector2 tilePosition, TileType type)
     {
         var pixelPosition = Room.PositionInPixels + tilePosition * Settings.TileSize;
-        if (!Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(pixelPosition, Settings.TileSize)))
+        if (!Camera.DrawScreenLimits.Overlaps(new IntRectangle(pixelPosition, Settings.TileSize)))
             return;
         var color = GetTypeColor(type);
         Drawer.DrawRectangle(pixelPosition, Settings.TileSize, color);

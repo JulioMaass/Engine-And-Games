@@ -12,25 +12,26 @@ public static class CollisionHandler
 {
     public static void AlignedEntitiesDealDamage(AlignmentType damageDealerAlignment) // TODO: Simplify this function
     {
-        foreach (var damagingEntity in EntityManager.GetAllEntities())
-        {
-            if (damagingEntity.CollisionBox == null) continue;
-            if (damagingEntity.CollisionBox?.BodyType == BodyType.Bypass) continue;
-            if (damagingEntity.Alignment?.Type != damageDealerAlignment) continue;
-            if (damagingEntity.DamageDealer == null) continue;
-            if (damagingEntity.DamageDealer?.DealsDamage == false) continue;
+        var allEntities = EntityManager.GetAllEntities().ToList();
 
-            foreach (var damagedEntity in EntityManager.GetAllEntities())
+        var damagingEntities = allEntities
+            .Where(e => e.CollisionBox?.BodyTypeDealsDamage() == true)
+            .Where(e => e.Alignment?.Type == damageDealerAlignment)
+            .Where(e => e.DamageDealer?.DealsDamage == true)
+            .ToList();
+
+        var damagedEntities = allEntities
+            .Where(e => e.CollisionBox?.BodyTypeGetsDamaged() == true)
+            .Where(e => e.Alignment?.IsHostileTo(damageDealerAlignment) == true)
+            .Where(e => e.DamageTaker?.CanBeDamaged() == true)
+            .ToList();
+
+        foreach (var damagingEntity in damagingEntities)
+        {
+            foreach (var damagedEntity in damagedEntities)
             {
-                if (damagedEntity.CollisionBox == null) continue;
-                if (damagedEntity.CollisionBox?.BodyType == BodyType.Bypass) continue;
-                if (damagedEntity.CollisionBox?.BodyType == BodyType.Invincible) continue;
-                if (damagedEntity.Alignment == null) continue;
-                if (damagedEntity.Alignment?.Type == damageDealerAlignment) continue;
                 if (damagingEntity.DamageDealer?.HitType == HitType.HitOnce
                     && damagingEntity.DamageDealer.IsInHitList(damagedEntity)) continue;
-                if (damagedEntity.DamageTaker == null) continue;
-                if (damagedEntity.DamageTaker?.IsInvincible() == true) continue;
                 if (damagingEntity.CollisionBox?.CollidesWithEntityPixel(damagedEntity) != true) continue;
 
                 // TODO: Move shield checks elsewhere

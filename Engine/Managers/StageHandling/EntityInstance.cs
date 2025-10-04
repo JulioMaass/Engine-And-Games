@@ -46,7 +46,7 @@ public class EntityInstance
     {
         var entitySprite = CollectionManager.GetEntityFromType(EntityType).Sprite;
         var previewRectangle = new IntRectangle(PositionAbsolute - entitySprite.Origin, entitySprite.Size);
-        return Camera.GetDrawScreenLimits().Overlaps(previewRectangle);
+        return Camera.DrawScreenLimits.Overlaps(previewRectangle);
     }
 
     public void DrawCustomValues(int valueToSkip)

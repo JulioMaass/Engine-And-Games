@@ -4,6 +4,7 @@ using Engine.Main;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageEditing;
 using Engine.Types;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Engine.Managers.StageHandling;
@@ -77,27 +78,34 @@ public class TileLayout : Layer // TODO: Rename to layout?
         if (Layout == null)
             return;
 
-        for (var x = 0; x < Size.Width; x++)
+        // Cached values for performance
+        var layout = Layout;
+        var texture = Tileset.Texture;
+        var tileSize = Settings.TileSize;
+        var roomPixelPosition = Room.PositionInPixels;
+        var cameraBounds = Camera.DrawScreenLimits;
+
+        // Draw only what is visible on screen
+        var startingX = Math.Max(0, (cameraBounds.Left - roomPixelPosition.X) / tileSize.X);
+        var startingY = Math.Max(0, (cameraBounds.Top - roomPixelPosition.Y) / tileSize.Y);
+        var endingX = Math.Min(Size.Width, (cameraBounds.Right - roomPixelPosition.X + tileSize.X) / tileSize.X);
+        var endingY = Math.Min(Size.Height, (cameraBounds.Bottom - roomPixelPosition.Y + tileSize.Y) / tileSize.Y);
+
+        for (var x = startingX; x < endingX; x++)
         {
-            for (var y = 0; y < Size.Height; y++)
+            for (var y = startingY; y < endingY; y++)
             {
-                var type = Layout[x, y];
-                var tilePosition = IntVector2.New(x, y);
-                DrawTile(tilePosition, type);
+                var type = layout[x, y];
+                if (type < 0)
+                    continue;
+
+                var sourceRectangle = Tileset.GetSourceRectangle(type);
+                var pixelX = roomPixelPosition.X + x * tileSize.X;
+                var pixelY = roomPixelPosition.Y + y * tileSize.Y;
+                var pixelPosition = new Vector2(pixelX, pixelY);
+
+                Drawer.DrawTextureRectangleAt(texture, sourceRectangle, pixelPosition);
             }
         }
-    }
-
-    private void DrawTile(IntVector2 tilePosition, int type)
-    {
-        if (type < 0)
-            return;
-
-        var sourceRectangle = Drawer.GetSourceRectangleFromId(Tileset.Texture, IntVector2.Zero, Settings.TileSize, type);
-        var pixelPosition = Room.PositionInPixels + tilePosition * Settings.TileSize;
-
-        if (!Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(pixelPosition, sourceRectangle.Size)))
-            return;
-        Drawer.DrawTextureRectangleAt(Tileset.Texture, sourceRectangle, pixelPosition);
     }
 }

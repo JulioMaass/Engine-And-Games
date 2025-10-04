@@ -83,6 +83,9 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
         return InvincibilityCounter < InvincibilityFrames;
     }
 
+    public bool CanBeDamaged() =>
+        !IsInvincible();
+
     public bool IsFlickering()
     {
         if (!IsInvincible())

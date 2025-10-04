@@ -84,7 +84,7 @@ class StageEditorRectangleTileTool : StageEditorTool
                 // Get source rectangle
                 var tilePosition = IntVector2.New(x, y);
                 var tileSpriteId = StageEditor.TileMode.GetTileSpriteId(tilePosition);
-                var sourceRectangle = Drawer.GetSourceRectangleFromId(StageEditor.TileMode.CurrentTileset.Texture, IntVector2.Zero, Settings.TileSize, tileSpriteId);
+                var sourceRectangle = Drawer.GetSourceRectangleFromId(StageEditor.TileMode.CurrentTileset.Texture.Width, IntVector2.Zero, Settings.TileSize, tileSpriteId);
 
                 // Draw tile
                 var pixelPosition = IntVector2.New(x, y) * Settings.TileSize + StageEditor.SelectedRoom.PositionInPixels;

@@ -19,7 +19,7 @@ public static class AccumulatorManager
         AccumulateEffect.Parameters["RenderCapValue"].SetValue(0.96f);
         AccumulateEffect.Parameters["AccumulatorTexture"].SetValue(AccumulatorRender);
         Video.Graphics.GraphicsDevice.SetRenderTarget(AccumulatorRender);
-        Video.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null, AccumulateEffect);
+        Video.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, null, null, AccumulateEffect);
         Video.SpriteBatch.Draw(Video.FinalRender, Vector2.Zero, Color.White);
         Video.SpriteBatch.End();
         // Remove Accumulator render from index 1, so it uses register 0 for the next draw and is affected by SpriteBatch.Begin (SamplerState only affects the first texture)

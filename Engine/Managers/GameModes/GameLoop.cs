@@ -1,7 +1,7 @@
-﻿using Engine.ECS.Entities.EntityCreation;
-using Engine.ECS.Entities;
-using System.Collections.Generic;
+﻿using Engine.ECS.Entities;
+using Engine.ECS.Entities.EntityCreation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Engine.Managers.GameModes;
@@ -23,9 +23,11 @@ public abstract class GameLoop
 
     private void UpdateEntitiesOfKind(EntityKind entityKind)
     {
-        EntityManager.GetFilteredEntitiesFrom(entityKind)
-            .ToList()
-            .ForEach(entity => entity.Update());
+        var kindList = EntityManager.GetFilteredEntitiesFrom(entityKind)
+            .ToList();
+
+        foreach (var entity in kindList)
+            entity.Update();
     }
 
     // Ensures all entities are updated once before the end of the frame they are created

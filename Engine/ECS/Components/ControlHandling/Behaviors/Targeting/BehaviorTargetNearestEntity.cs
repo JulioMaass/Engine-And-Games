@@ -20,10 +20,11 @@ public class BehaviorTargetNearestEntity : Behavior
     {
         Owner.TargetPool ??= new TargetPool(Owner);
         Owner.TargetPool.TargetList.Clear();
-        // ReSharper disable once ComplexConditionExpression
-        var nearestEntity = EntityManager.GetAllEntities()
-            .Where(entity => entity.Alignment?.Type == AlignmentType && entity != Owner)
-            .Where(entity => (EntityKind == EntityKind.None || entity.EntityKind == EntityKind))
+
+        var entitiesOfKind = EntityManager.GetFilteredEntitiesFrom(EntityKind);
+        entitiesOfKind.Remove(Owner);
+        var nearestEntity = entitiesOfKind
+            .Where(entity => entity.Alignment?.Type == AlignmentType)
             .MinBy(entity => Owner.Position.GetDistanceTo(entity));
         Owner.TargetPool.TargetList.Add(nearestEntity);
     }

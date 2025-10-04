@@ -1,6 +1,4 @@
 ﻿using Engine.ECS.Entities.EntityCreation;
-using Engine.GameSpecific;
-using Engine.Main;
 using Engine.Managers.Graphics;
 using Engine.Types;
 using Microsoft.Xna.Framework;
@@ -18,18 +16,11 @@ namespace Engine.ECS.Entities;
 /// </summary>
 public static class CollectionManager // TODO: rename to EntityListGenerator? (also change summary)
 {
-    private static Dictionary<int, EntityCollection> KindCollections { get; } = new();
-    public static EntityCollection FullCollection { get; } = new();
+    private static Dictionary<Type, Entity> CollectionDictionary { get; } = new();
 
     static CollectionManager()
     {
-        Initialize();
-    }
-
-    private static void Initialize()
-    {
-        FullCollection.AddRange(FullEntityList());
-        GenerateKindCollections();
+        CollectionDictionary = FullEntityList().ToDictionary(entity => entity.GetType());
     }
 
     private static List<Entity> FullEntityList()
@@ -56,20 +47,11 @@ public static class CollectionManager // TODO: rename to EntityListGenerator? (a
             .ToList();
     }
 
-    private static void GenerateKindCollections()
-    {
-        foreach (var entity in FullCollection)
-        {
-            if (!KindCollections.ContainsKey((int)entity.EntityKind))
-                KindCollections.Add((int)entity.EntityKind, new());
-            KindCollections[(int)entity.EntityKind].Add(entity);
-        }
-    }
+    public static Entity GetEntityFromType(Type type) =>
+        CollectionDictionary.GetValueOrDefault(type);
 
-    public static Entity GetEntityFromType(Type type)
-    {
-        return FullCollection.FirstOrDefault(entity => entity.GetType() == type);
-    }
+    public static bool Contains(Entity entity) =>
+        CollectionDictionary.ContainsValue(entity);
 
     public static void DrawEntityPreview(Type entityType, IntVector2 previewPosition, Color color, int stretchSize = 0)
     {

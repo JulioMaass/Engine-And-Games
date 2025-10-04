@@ -30,6 +30,7 @@ public class GameRoot : Game
 
     protected override void Update(GameTime gameTime)
     {
+        PerformanceMonitor.Start(IsActive);
         if (IsActive)
         {
             GameManager.CheckToUnpauseEngine();
@@ -39,10 +40,12 @@ public class GameRoot : Game
         else
             GameManager.CheckToPauseEngine();
         Camera.Update();
+        PerformanceMonitor.End(IsActive);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        PerformanceMonitor.CheckForDrawCall();
         Video.Draw();
         base.Draw(gameTime);
     }

@@ -78,16 +78,15 @@ public class Paralax : Component
         return false;
     }
 
-    private void Draw(IntRectangle sourceRectangle)
+    private void Draw(Rectangle sourceRectangle)
     {
-        var flipSprite = Owner.Sprite.IsFlipped;
         var repetitionsAmount = GetRepetitionsAmount();
         for (var x = 0; x < repetitionsAmount.X; x++)
         {
             for (var y = 0; y < repetitionsAmount.Y; y++)
             {
-                var repetitionPosition = FirstRepetitionPosition + new IntVector2(x * Spacing.X, y * Spacing.Y);
-                Drawer.DrawTextureRectangleAt(Owner.Sprite.Texture, sourceRectangle, repetitionPosition, flipSprite, Owner.Sprite.Color);
+                var repetitionPosition = FirstRepetitionPosition + new Vector2(x * Spacing.X, y * Spacing.Y);
+                Drawer.DrawTextureRectangleAt(Owner.Sprite.Texture, sourceRectangle, repetitionPosition);
             }
         }
     }

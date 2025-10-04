@@ -149,20 +149,30 @@ public class VfxAnimation : Component
 
     public void Draw(SpriteDrawingData spriteDrawingData)
     {
+        var linkedTrailPositions = GetLinkedTrailPositions();
         for (var i = 0; i < InnerSizeReduction.Count + 1; i++)
         {
             TrailFrameSize = CurrentSize;
             var reduction = i == 0 ? 0 : InnerSizeReduction[i - 1];
-            var linkedTrailPositions = GetLinkedTrailPositions();
             for (var j = linkedTrailPositions.Count - 1; j >= 0; j--)
             {
                 TrailFrameSize += new Vector2(TrailFrameResize, TrailFrameResize);
-                var trailRectangle = new IntRectangle(linkedTrailPositions[j], TrailFrameSize).ReducedRectangle(reduction);
-                var color = Colors[ColorIndex][i];
+                var intTrailFrameSize = new IntVector2((int)TrailFrameSize.X, (int)TrailFrameSize.Y);
+
+                var trailRectangle = new Rectangle(
+                    linkedTrailPositions[j].X,
+                    linkedTrailPositions[j].Y,
+                    intTrailFrameSize.X - reduction * 2,
+                    intTrailFrameSize.Y - reduction * 2
+                    );
+
                 if (trailRectangle.Width > 0 && trailRectangle.Height > 0)
+                {
+                    var color = Owner.Sprite.CalculateFinalColor(Colors[ColorIndex][i]);
                     Video.SpriteBatch.Draw(spriteDrawingData.Texture, trailRectangle, spriteDrawingData.SourceRectangle,
-                        Owner.Sprite.CalculateFinalColor(color), spriteDrawingData.Rotation, spriteDrawingData.Origin,
+                        color, spriteDrawingData.Rotation, spriteDrawingData.Origin,
                         spriteDrawingData.Effects, spriteDrawingData.Depth);
+                }
             }
         }
     }

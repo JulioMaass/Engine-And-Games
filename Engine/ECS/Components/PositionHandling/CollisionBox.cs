@@ -76,10 +76,7 @@ public class CollisionBox : Component
     {
         var x = position.X - MaskLeft;
         var y = position.Y - MaskTop;
-        var w = MaskRight + MaskLeft;
-        var h = MaskBottom + MaskTop;
-
-        return new IntRectangle(x, y, w, h);
+        return new IntRectangle(x, y, Size.Width, Size.Height);
     }
 
     public IntRectangle GetTileCollisionRectangle() =>
@@ -136,10 +133,36 @@ public class CollisionBox : Component
         if (entity == null)
             return false;
         DebugMode.EntityCollisionCounter++;
-        var collisionRectangle1 = GetCollisionRectangle();
-        var collisionRectangle2 = entity.CollisionBox.GetCollisionRectangle();
-        return collisionRectangle1.Overlaps(collisionRectangle2);
+        return HighPerformanceCollisionTest(entity);
     }
+
+    private bool HighPerformanceCollisionTest(Entity entity) // Avoids using objects and function calls
+    {
+        // Current entity bounds
+        var pos1 = Owner.Position.Pixel;
+        var left1 = pos1.X - MaskLeft;
+        var right1 = pos1.X + MaskRight - 1;
+        var top1 = pos1.Y - MaskTop;
+        var bottom1 = pos1.Y + MaskBottom - 1;
+        // Other entity bounds
+        var pos2 = entity.Position.Pixel;
+        var collisionBox = entity.CollisionBox;
+        var left2 = pos2.X - collisionBox.MaskLeft;
+        var right2 = pos2.X + collisionBox.MaskRight - 1;
+        var top2 = pos2.Y - collisionBox.MaskTop;
+        var bottom2 = pos2.Y + collisionBox.MaskBottom - 1;
+        // Collision check
+        return left1 <= right2 &&
+               right1 >= left2 &&
+               top1 <= bottom2 &&
+               bottom1 >= top2;
+    }
+
+    public bool BodyTypeDealsDamage() =>
+        BodyType != BodyType.Bypass;
+
+    public bool BodyTypeGetsDamaged() =>
+        BodyType != BodyType.Bypass && BodyType != BodyType.Invincible;
 }
 
 public enum BodyType

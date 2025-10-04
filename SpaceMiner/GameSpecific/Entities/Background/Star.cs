@@ -20,8 +20,6 @@ public class Star : Entity
         AddMoveSpeed(speed);
         AddMoveDirection(90000);
 
-        BloomSource = new BloomSource(this, 1.0f);
-
         // States
         AddStateManager();
         // Auto States

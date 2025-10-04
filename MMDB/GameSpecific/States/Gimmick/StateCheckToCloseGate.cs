@@ -31,7 +31,7 @@ public class StateCheckToCloseGate : State
         var xDifference = ownerCollisionRectangle.X + ownerCollisionRectangle.Width - playerCollisionRectangle.X;
         if (xDifference <= 0)
         {
-            Owner.SolidBehavior.SolidType = SolidType.Solid;
+            Owner.SolidBehavior.SetSolidType(SolidType.Solid);
             Owner.Sprite.IsVisible = true;
         }
     }

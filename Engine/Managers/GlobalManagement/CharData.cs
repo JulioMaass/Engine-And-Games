@@ -19,6 +19,25 @@ public class CharData
     public Resources Resources { get; set; } = new();
     // Owner
     private Entity Char => EntityManager.PlayerEntity;
+    // Cached list char's equipment
+    public List<Type> CachedAllItemsEquippedOnChar { get; } = new();
+    public List<Type> CachedAllItemsEquippedOnWeapon { get; } = new();
+    public List<Type> CachedAllItemsEquippedOnSecondaryWeapon { get; } = new();
+
+    public void Update()
+    {
+        UpdateCachedLists();
+    }
+
+    private void UpdateCachedLists()
+    {
+        CachedAllItemsEquippedOnChar.Clear();
+        CachedAllItemsEquippedOnChar.AddRange(GetAllItemsEquippedOnChar());
+        CachedAllItemsEquippedOnWeapon.Clear();
+        CachedAllItemsEquippedOnWeapon.AddRange(GetAllItemsEquippedOnEquipment(EquipKind.Weapon));
+        CachedAllItemsEquippedOnSecondaryWeapon.Clear();
+        CachedAllItemsEquippedOnSecondaryWeapon.AddRange(GetAllItemsEquippedOnEquipment(EquipKind.SecondaryWeapon));
+    }
 
     public void AddSwitchEquipment(Type itemType, int startLevel, int stackLevel)
     {
@@ -98,14 +117,14 @@ public class CharData
         return entity?.EquipmentItemStats?.EquipKind ?? EquipKind.None;
     }
 
-    public List<Type> GetAllItemsEquippedOnChar()
+    private List<Type> GetAllItemsEquippedOnChar()
     {
         return (from slot in EquipmentSlotList
                 from equipment in slot.Equipment
                 select equipment.Type).ToList();
     }
 
-    public List<Type> GetAllItemsEquippedOnEquipment(EquipKind equipKind)
+    private List<Type> GetAllItemsEquippedOnEquipment(EquipKind equipKind)
     {
         return (from slot in EquipmentSlotList
                 where slot.EquipKind == equipKind

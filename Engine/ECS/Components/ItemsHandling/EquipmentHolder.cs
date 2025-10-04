@@ -11,4 +11,9 @@ public class EquipmentHolder : Component
     {
         Owner = owner;
     }
+
+    public void Update()
+    {
+        CharData.Update();
+    }
 }

@@ -11,7 +11,8 @@ namespace Engine.ECS.Components.VisualsHandling;
 
 public class Sprite : Component
 {
-    public Texture2D Texture { get; private set; }
+    public Texture2D Texture { get; }
+    private IntVector2 TextureSize { get; }
 
     // Flipping
     public bool FlippedFacing => Owner.Facing.X == -1;
@@ -47,6 +48,7 @@ public class Sprite : Component
     {
         Owner = owner;
         Texture = Drawer.TextureDictionary[textureName];
+        TextureSize = new IntVector2(Texture.Width, Texture.Height);
         Size = size;
         Origin = origin;
         SpriteSheetOrigin = spriteSheetOrigin;
@@ -61,9 +63,9 @@ public class Sprite : Component
     public void DrawId(int spriteId, IntVector2 offset = default)
     {
         var position = GetPosition() + offset;
-        var sourceRectangle = Drawer.GetSourceRectangleFromId(Texture, SpriteSheetOrigin, Size, spriteId);
+        var sourceRectangle = Drawer.GetSourceRectangleFromId(TextureSize.Width, SpriteSheetOrigin, Size, spriteId);
         if (!HudSprite
-            && !Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, FinalSize))
+            && !Camera.DrawScreenLimits.Overlaps(new IntRectangle(position, FinalSize))
             && Owner.EntityKind != EntityKind.Paralax)
             return;
         if (Owner.Paralax != null && Owner.Paralax.Repeat != ParalaxRepeat.None)
@@ -75,7 +77,7 @@ public class Sprite : Component
         }
     }
 
-    private void DrawSpriteTexture(IntRectangle sourceRectangle, IntVector2 position)
+    private void DrawSpriteTexture(Rectangle sourceRectangle, IntVector2 position)
     {
         var destinationRectangle = new IntRectangle(position + FinalOrigin, FinalSize);
 
@@ -83,9 +85,12 @@ public class Sprite : Component
         if (IsFlipped)
             effects = SpriteEffects.FlipHorizontally;
 
-        var origin = (Vector2)Origin;
+        Vector2 origin = Origin;
         if (CustomStretchedOrigin != default)
-            origin = (Vector2)CustomStretchedOrigin / (Vector2)StretchedSize * (Vector2)sourceRectangle.Size;
+        {
+            var sourceRectangleSize = new Vector2(sourceRectangle.Width, sourceRectangle.Height);
+            origin = (Vector2)CustomStretchedOrigin / (Vector2)StretchedSize * sourceRectangleSize;
+        }
 
         var rotation = GetRotation();
 

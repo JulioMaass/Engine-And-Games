@@ -34,9 +34,21 @@ public class Room
         GenerateDebugLayer();
     }
 
+    public void AddLayer(Layer layer)
+    {
+        Layers.Add(layer);
+        DebugTiles.UpdateLayout();
+    }
+
+    public void RemoveLayer(Layer layer)
+    {
+        Layers.Remove(layer);
+        DebugTiles.UpdateLayout();
+    }
+
     public void GenerateDebugLayer()
     {
-        DebugTiles = new(SizeInTiles, this);
+        DebugTiles = new(this);
     }
 
     public TileLayout GetTileLayout(LayerId layerId, Type tilesetType)
@@ -46,7 +58,7 @@ public class Room
         {
             layout = new TileLayout(this, tilesetType, layerId);
             ((TileLayout)layout).CreateTileLayout();
-            Layers.Add(layout);
+            AddLayer(layout);
         }
         return (TileLayout)layout;
     }
@@ -57,7 +69,7 @@ public class Room
         if (layout == null)
         {
             layout = new EntityLayout(this);
-            Layers.Add(layout);
+            AddLayer(layout);
         }
         return (EntityLayout)layout;
     }
@@ -71,8 +83,7 @@ public class Room
 
     public void DestroyTileAt(IntVector2 position)
     {
-        foreach (var tileLayout in Layers.OfType<TileLayout>()
-                     .Where(tileLayout => tileLayout.LayerId == LayerId.ForegroundTiles).ToList())
+        foreach (var tileLayout in DebugTiles.ForegroundTileLayouts)
         {
             var tileId = tileLayout.GetValueAt(position);
             tileLayout.CheckToDropItem(tileId, position);
@@ -112,7 +123,7 @@ public class Room
                 }
             }
         }
-        DebugTiles = new DebugTiles(tileSize, this);
+        DebugTiles = new DebugTiles(this);
         AddRoomToGrid();
     }
 
@@ -244,15 +255,9 @@ public class Room
 
     public void DrawEmptyBackground()
     {
-        if (!Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(PositionInPixels, SizeInPixels)))
+        if (!Camera.DrawScreenLimits.Overlaps(new IntRectangle(PositionInPixels, SizeInPixels)))
             return;
         Drawer.DrawEmptyBackground(PositionInTiles, SizeInTiles);
-    }
-
-    public void DrawAllTileLayers()
-    {
-        foreach (var tileLayer in Layers.OfType<TileLayout>().OrderByDescending(l => l.LayerId))
-            tileLayer.Draw();
     }
 
     public void DrawTileLayer(LayerId layerId)

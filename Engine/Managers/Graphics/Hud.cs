@@ -7,6 +7,7 @@ using Engine.Managers.GameModes;
 using Engine.Managers.GlobalManagement;
 using Engine.Types;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,7 @@ public static class Hud
         {
             if (GameManager.GameSpecificSettings.CurrentGame == GameId.Mmdb) // TODO: TEMPORARY: Game specific settings should on GameSpecificSettings
             {
+                Video.SwitchSpriteSortMode(SpriteSortMode.Immediate);
                 DrawHealthBar(EntityManager.PlayerEntity, 16, 16);
                 var bossEntity = EntityManager.GetFilteredEntitiesFrom(EntityKind.Boss).FirstOrDefault();
                 if (bossEntity != null)

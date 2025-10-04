@@ -23,6 +23,7 @@ public static class Camera
     public static IntVector2 ZoomScale { get; private set; }
     public static IntVector2 CameraCenter => Panning + Settings.ScreenSize / 2;
     public static IntVector2 FullScreenOffset { get; private set; }
+    public static IntRectangle DrawScreenLimits { get; private set; } // Used to avoid drawing things outside the screen
 
     public static void Initialize()
     {
@@ -55,6 +56,7 @@ public static class Camera
 
         var zoomSize = Settings.ScreenScaledSize / ZoomScale;
         Video.UpdateScreenRender(zoomSize);
+        UpdateDrawScreenLimits();
     }
 
     public static void ZoomIn()
@@ -65,6 +67,7 @@ public static class Camera
 
         var zoomSize = Settings.ScreenScaledSize / ZoomScale;
         Video.UpdateScreenRender(zoomSize);
+        UpdateDrawScreenLimits();
     }
 
     public static void UpdatePanning()
@@ -94,10 +97,9 @@ public static class Camera
 
         var min = StageManager.CurrentRoom.PositionInPixels;
         var max = StageManager.CurrentRoom.PositionInPixels + StageManager.CurrentRoom.SizeInPixels - Settings.ScreenSize;
-
-        var position = entity.Position.Pixel;
-        Panning = position - Settings.ScreenSize / 2;
-        Panning = IntVector2.Clamp(Panning, min, max);
+        var position = entity.Position.Pixel - Settings.ScreenSize / 2;
+        position = Vector2.Clamp(position, min, max);
+        SetPanning(position);
 
         // Update last direction (used for midpoint rounding - when camera is on a .5 position)
         if (Panning.X != oldPanning.X)
@@ -112,6 +114,12 @@ public static class Camera
         MovedYThisFrame = oldFractionalPanning.Y != FractionalPanning.Y;
     }
 
+    private static void SetPanning(IntVector2 panningPosition)
+    {
+        Panning = panningPosition;
+        UpdateDrawScreenLimits();
+    }
+
     public static void SaveTransitionReferencePoints()
     {
         TransitionStartingPoint = Panning;
@@ -122,8 +130,9 @@ public static class Camera
         // TODO: Fix transition issue
         var transitionTotalDistance = Settings.RoomSizeInPixels * StageManager.TransitionDirection;
         var transitionDistance = transitionTotalDistance / StageManager.TransitionFrames * StageManager.TransitionFrame;
-        Panning = TransitionStartingPoint + transitionDistance;
-        FractionalPanning = Panning;
+        var panning = TransitionStartingPoint + transitionDistance;
+        SetPanning(panning);
+        FractionalPanning = panning;
     }
 
     private static void EditorPanning()
@@ -134,7 +143,7 @@ public static class Camera
             return;
 
         var movement = Input.GetMouseMovement();
-        Panning -= movement;
+        SetPanning(Panning - movement);
     }
 
     public static void UpdateFullscreenOffset()
@@ -156,11 +165,10 @@ public static class Camera
         return new IntRectangle(screenLimits.Position - borderSize, screenLimits.Size + borderSize * 2);
     }
 
-    public static IntRectangle GetDrawScreenLimits() // Used to avoid drawing things outside the screen
+    private static void UpdateDrawScreenLimits()
     {
         var screenLimits = new IntRectangle(Panning, Settings.ScreenSize);
-        //return screenLimits; // To debug drawing optimizations // TODO: Always debug this before releasing to the public
         var currentZoomOutOffset = ZoomScale == (1, 1) ? Settings.ZoomOutOffset : IntVector2.Zero;
-        return new IntRectangle(screenLimits.Position - currentZoomOutOffset, screenLimits.Size + currentZoomOutOffset * 2);
+        DrawScreenLimits = new IntRectangle(screenLimits.Position - currentZoomOutOffset, screenLimits.Size + currentZoomOutOffset * 2);
     }
 }

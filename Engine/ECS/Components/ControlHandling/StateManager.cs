@@ -108,6 +108,9 @@ public class StateManager : Component
 
     private void AutomaticStateUpdate()
     {
+        if (AutomaticStatesList.Count == 1 && CurrentState == AutomaticStatesList[0])
+            return;
+
         foreach (var state in AutomaticStatesList)
         {
             if (CheckToSetState(state))

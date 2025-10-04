@@ -12,6 +12,7 @@ using Engine.ECS.Systems.Physics;
 using Engine.Managers;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -136,6 +137,7 @@ public abstract partial class Entity
         CustomUpdate();
 
         // Special Components
+        EquipmentHolder?.Update();
         WeaponManager?.Update();
         ChargeManager?.Update();
         // Control and State
@@ -171,6 +173,15 @@ public abstract partial class Entity
             return;
 
         FrameSprite?.Draw();
+
+        if (!BloomManager.DrawingBloom)
+        {
+            if (Palette != null || ColorShader != null)
+                Video.SwitchSpriteSortMode(SpriteSortMode.Immediate);
+            else
+                Video.SwitchSpriteSortMode(SpriteSortMode.Deferred);
+        }
+
         Palette?.SetPalette();
         ColorShader?.Set();
         Sprite?.Draw();

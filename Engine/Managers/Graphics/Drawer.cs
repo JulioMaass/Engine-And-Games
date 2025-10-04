@@ -119,13 +119,8 @@ public static class Drawer
         DrawRectangle(rightPosition, verticalSize, color);
     }
 
-    public static void DrawTextureRectangleAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, bool flipped = false, Color color = default)
-    {
-        var effects = SpriteEffects.None;
-        if (flipped) effects = SpriteEffects.FlipHorizontally;
-        if (color == default) color = DefaultColor;
-        Video.SpriteBatch.Draw(texture, position, sourceRectangle, color, DefaultRotation, DefaultRotationOrigin, 1, effects, DefaultDepth);
-    }
+    public static void DrawTextureRectangleAt(Texture2D texture, Rectangle sourceRectangle, Vector2 position) =>
+        Video.SpriteBatch.Draw(texture, position, sourceRectangle, DefaultColor);
 
     public static void DrawNineSliceTextureAt(Texture2D texture, IntRectangle sourceRectangle, IntVector2 position, IntVector2 size, IntVector2 borderSize)
     {
@@ -171,9 +166,9 @@ public static class Drawer
         Video.SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, DefaultColor, DefaultRotation, DefaultRotationOrigin, effects, DefaultDepth);
     }
 
-    public static IntRectangle GetSourceRectangleFromId(Texture2D texture, IntVector2 spriteSheetOrigin, IntVector2 size, int id)
+    public static Rectangle GetSourceRectangleFromId(int textureWidth, IntVector2 spriteSheetOrigin, IntVector2 size, int id)
     {
-        var sheetColumns = Math.Max(texture.Width / size.Width, 1); // Math.Max to avoid division by 0
+        var sheetColumns = Math.Max(textureWidth / size.Width, 1); // Math.Max to avoid division by 0
 
         // Calculate the 1st sprite position in the sheet
         var spriteSheetOriginColumn = spriteSheetOrigin.X / size.Width;
@@ -187,7 +182,7 @@ public static class Drawer
         var spriteRow = offsetId / sheetColumns;
         var spriteX = spriteColumn * size.Width;
         var spriteY = spriteRow * size.Height;
-        return new IntRectangle(spriteX, spriteY, size);
+        return new Rectangle(spriteX, spriteY, size.X, size.Y);
     }
 
     public static void DrawOutlinedString(SpriteFont font, string @string, IntVector2 position, Color color)

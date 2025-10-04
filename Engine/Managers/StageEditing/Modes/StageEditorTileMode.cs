@@ -150,7 +150,7 @@ public class StageEditorTileMode : StageEditorMode
                 for (var y = 0; y < room.SizeInTiles.Height; y++)
                 {
                     var tile = room.PositionInPixels + Settings.TileSize * (x, y);
-                    if (Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(tile, Settings.TileSize)))
+                    if (Camera.DrawScreenLimits.Overlaps(new IntRectangle(tile, Settings.TileSize)))
                         Drawer.DrawRectangleOutline(tile, Settings.TileSize, CustomColor.TransparentGray);
                 }
             }

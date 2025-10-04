@@ -6,7 +6,7 @@ using Engine.ECS.Systems.Physics.GeneralPhysics;
 using Engine.Managers;
 using Engine.Managers.StageHandling;
 using Engine.Types;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Engine.ECS.Systems.Physics.SolidPhysics;
 
@@ -23,10 +23,10 @@ public class SolidCollisionChecking : Component
         Owner = owner;
     }
 
-    public bool CollidesWithSolidWithPixelSpeed(IntVector2 speed, List<Entity> exceptionList = null)
+    public bool CollidesWithSolidWithPixelSpeed(IntVector2 speed)
     {
         var destinyPixel = Pixel + speed;
-        return CollidesWithAnySolidAtPixel(destinyPixel, Pixel, exceptionList);
+        return CollidesWithAnySolidAtPixel(destinyPixel, Pixel);
     }
 
     public bool IsOnTopOfSolid()
@@ -49,13 +49,27 @@ public class SolidCollisionChecking : Component
     public bool IsCollidingWithSolid() =>
         CollidesWithSolidWithPixelSpeed(IntVector2.Zero);
 
-    public bool CollidesWithAnySolidAtPixel(IntVector2 destinyPixel, IntVector2 originPixel, List<Entity> exceptionList = null)
+    public bool CollidesWithAnySolidAtPixel(IntVector2 destinyPixel, IntVector2 originPixel)
     {
         DebugMode.SolidScanCounter++;
-        return CollidesWithAnySolidTileAtPixel(destinyPixel, StageManager.CurrentRoom)
-            || CollidesWithAnySolidTopTileAtPixel(destinyPixel, originPixel, StageManager.CurrentRoom)
-            || CollidesWithAnySolidEntityAtPixel(destinyPixel, originPixel, exceptionList)
-            || CollidesWithAnySolidTopEntityAtPixel(destinyPixel, originPixel, exceptionList);
+
+        var collidesWithSolidTile = CollidesWithAnySolidTileAtPixel(destinyPixel, StageManager.CurrentRoom);
+        if (collidesWithSolidTile)
+            return true;
+
+        var collidesWithSolidTopTile = CollidesWithAnySolidTopTileAtPixel(destinyPixel, originPixel, StageManager.CurrentRoom);
+        if (collidesWithSolidTopTile)
+            return true;
+
+        var collidesWithSolidEntity = CollidesWithAnySolidEntityAtPixel(destinyPixel, originPixel);
+        if (collidesWithSolidEntity)
+            return true;
+
+        var collidesWithSolidTopEntity = CollidesWithAnySolidTopEntityAtPixel(destinyPixel, originPixel);
+        if (collidesWithSolidTopEntity)
+            return true;
+
+        return false;
     }
 
     private bool CollidesWithAnySolidTileAtPixel(IntVector2 position, Room room)
@@ -89,13 +103,13 @@ public class SolidCollisionChecking : Component
         return false;
     }
 
-    private bool CollidesWithAnySolidEntityAtPixel(IntVector2 destinyPixel, IntVector2 originPixel, List<Entity> exceptionList = null)
+    private bool CollidesWithAnySolidEntityAtPixel(IntVector2 destinyPixel, IntVector2 originPixel)
     {
-        foreach (var entity in EntityManager.GetAllEntities())
+        var collidableEntities = EntityListManager.SolidEntities.ToList();
+        collidableEntities.Remove(Owner);
+
+        foreach (var entity in collidableEntities)
         {
-            if (entity == Owner) continue;
-            if (exceptionList != null && exceptionList.Contains(entity)) continue;
-            if (entity.SolidBehavior?.SolidType != SolidType.Solid) continue;
             if (EntityCollisionChecking.CollidesWithEntityAtPixel(entity, destinyPixel)
                 && !EntityCollisionChecking.CollidesWithEntityAtPixel(entity, originPixel))
                 return true;
@@ -103,13 +117,13 @@ public class SolidCollisionChecking : Component
         return false;
     }
 
-    private bool CollidesWithAnySolidTopEntityAtPixel(IntVector2 destinyPixel, IntVector2 originPixel, List<Entity> exceptionList = null)
+    private bool CollidesWithAnySolidTopEntityAtPixel(IntVector2 destinyPixel, IntVector2 originPixel)
     {
-        foreach (var entity in EntityManager.GetAllEntities())
+        var collidableEntities = EntityListManager.SolidTopEntities.ToList();
+        collidableEntities.Remove(Owner);
+
+        foreach (var entity in collidableEntities)
         {
-            if (entity == Owner) continue;
-            if (exceptionList != null && exceptionList.Contains(entity)) continue;
-            if (entity.SolidBehavior?.SolidType != SolidType.SolidTop) continue;
             if (CollidesWithSolidTopEntityAtPixel(entity, destinyPixel, originPixel))
                 return true;
         }

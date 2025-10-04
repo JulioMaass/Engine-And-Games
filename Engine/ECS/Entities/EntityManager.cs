@@ -50,6 +50,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
 
         AllEntities.Add(entity);
         AddEntityToSubList(entity);
+        EntityListManager.AddEntityToLists(entity);
         return entity;
     }
 
@@ -118,6 +119,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
     {
         AllEntities.Remove(entity);
         RemoveEntityFromSubList(entity);
+        EntityListManager.RemoveEntityFromLists(entity);
     }
 
     public static void RemoveEntityFromSubList(Entity entity)
@@ -138,12 +140,12 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
             KindLists.Add(new EntityList());
     }
 
-    public static List<Entity> GetAllEntities() // TODO - ARCHITECTURE: Avoid getting all entities. Make smaller lists and call the filtered function
+    public static List<Entity> GetAllEntities()
     {
         return AllEntities.ToList();
     }
 
-    public static List<Entity> GetFilteredEntitiesFrom(EntityKind subListId) // TODO - BUG - MMDB: Test filtering shots when there is none
+    public static List<Entity> GetFilteredEntitiesFrom(EntityKind subListId)
     {
         CheckToCreateSubList(subListId);
         return KindLists[(int)subListId];

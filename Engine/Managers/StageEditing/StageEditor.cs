@@ -74,7 +74,7 @@ public static class StageEditor
                 if (layer is not TileLayout tileLayout)
                     continue;
                 if (tileLayout.IsEmpty())
-                    room.Layers.Remove(layer);
+                    room.RemoveLayer(layer);
             }
     }
 
@@ -139,7 +139,7 @@ public static class StageEditor
             for (var y = 0; y < CurrentStage.RoomGrid.GetLength(1); y++)
             {
                 var position = (x, y) * Settings.RoomSizeInPixels;
-                if (Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(position, Settings.RoomSizeInPixels)))
+                if (Camera.DrawScreenLimits.Overlaps(new IntRectangle(position, Settings.RoomSizeInPixels)))
                     Drawer.DrawRectangleOutline(position, Settings.RoomSizeInPixels, CustomColor.TransparentWhite);
             }
         }
@@ -148,7 +148,7 @@ public static class StageEditor
     private static void DrawAllRoomOutlines()
     {
         foreach (var room in CurrentStage.RoomList)
-            if (Camera.GetDrawScreenLimits().Overlaps(new IntRectangle(room.PositionInPixels, room.SizeInPixels)))
+            if (Camera.DrawScreenLimits.Overlaps(new IntRectangle(room.PositionInPixels, room.SizeInPixels)))
                 Drawer.DrawRectangleOutline(room.PositionInPixels, room.SizeInPixels, CustomColor.TransparentGreen, 2);
     }
 

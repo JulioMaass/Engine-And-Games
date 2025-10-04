@@ -37,6 +37,7 @@ public class ResizableShot : Entity
         VfxAnimation.SetNestedColorAnimation(4, colors1, colors2);
         VfxAnimation.LoopColors = true;
         VfxAnimation.TrailFrames = 2;
+        BloomSource = new BloomSource(this, BloomType.Bypass);
 
         // State
         AddStateManager();
