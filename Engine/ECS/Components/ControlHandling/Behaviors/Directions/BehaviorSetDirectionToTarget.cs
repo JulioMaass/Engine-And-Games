@@ -38,7 +38,7 @@ public class BehaviorSetDirectionToTarget : Behavior
         if (RelativePositionGetter != null)
             relativePosition = RelativePositionGetter();
         if (Owner.TargetPool.TargetList.FirstOrDefault().Sprite.IsFlipped)
-            relativePosition = RelativePosition.MirrorX();
+            relativePosition.MirrorX();
 
         Direction.SetAngleDirectionTo(Owner.TargetPool.TargetList.FirstOrDefault(), relativePosition);
         if (PossibleAngles > 0)
