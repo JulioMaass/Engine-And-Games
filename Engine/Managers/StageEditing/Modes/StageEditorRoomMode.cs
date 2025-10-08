@@ -1,5 +1,6 @@
 ﻿using Engine.Helpers;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageEditing.Tools;
 using Engine.Managers.StageHandling;
 using Engine.Types;
@@ -10,7 +11,7 @@ namespace Engine.Managers.StageEditing.Modes;
 
 public class StageEditorRoomMode : StageEditorMode
 {
-    public override Input.Button Shortcut { get; } = Input.RoomMode;
+    public override Button Shortcut { get; } = EditorInput.RoomMode;
     public StageEditorRoomMode()
     {
         AvailableTools = new List<StageEditorTool>

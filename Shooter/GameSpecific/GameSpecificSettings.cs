@@ -1,7 +1,6 @@
-﻿using Engine.ECS.Components.ShootingHandling;
-using Engine.GameSpecific;
+﻿using Engine.GameSpecific;
 using Engine.Main;
-using Engine.Managers;
+using Engine.Managers.Input;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
 using ShooterGame.GameSpecific.Entities;
@@ -35,14 +34,14 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
         EditorEntityTypes.Add(typeof(ShooterEnemy));
         EditorEntityTypes.Add(typeof(ShooterEnemySpawner));
 
-        Input.Up.RebindKey(Keys.W);
-        Input.Down.RebindKey(Keys.S);
-        Input.Left.RebindKey(Keys.A);
-        Input.Right.RebindKey(Keys.D);
+        GameInput.Up.RebindKey(Keys.W);
+        GameInput.Down.RebindKey(Keys.S);
+        GameInput.Left.RebindKey(Keys.A);
+        GameInput.Right.RebindKey(Keys.D);
 
-        Input.Button2.RebindKey(Keys.W);
-        Input.Button3.RebindKey(Keys.Space);
-        Input.Button1.MouseButton = MouseButton.Left;
-        Input.Button3.MouseButton = MouseButton.Right;
+        GameInput.Button2.RebindKey(Keys.W);
+        GameInput.Button3.RebindKey(Keys.Space);
+        GameInput.Button1.RebindMouseButton(MouseButton.Left);
+        GameInput.Button3.RebindMouseButton(MouseButton.Right);
     }
 }

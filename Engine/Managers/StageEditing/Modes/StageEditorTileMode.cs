@@ -1,6 +1,7 @@
 ﻿using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageEditing.Tools;
 using Engine.Managers.StageHandling;
 using Engine.Types;
@@ -14,7 +15,7 @@ namespace Engine.Managers.StageEditing.Modes;
 
 public class StageEditorTileMode : StageEditorMode
 {
-    public override Input.Button Shortcut { get; } = Input.TileMode;
+    public override Button Shortcut { get; } = EditorInput.TileMode;
     public Tileset CurrentTileset { get; set; }
     // Menu
     public IntVector2 SelectedMenuTile { get; private set; }
@@ -46,7 +47,7 @@ public class StageEditorTileMode : StageEditorMode
 
     private void TileEditorCheckToResetCoordinates()
     {
-        if (!Input.MouseLeftReleased || !Input.MouseRightReleased)
+        if (!MouseHandler.MouseLeftReleased || !MouseHandler.MouseRightReleased)
             return;
         SelectionStartGameTile = IntVector2.New(-1, -1);
         SelectionEndGameTile = IntVector2.New(-1, -1);
@@ -61,7 +62,7 @@ public class StageEditorTileMode : StageEditorMode
 
     public IntVector2 GetSelectedTile()
     {
-        return (Input.MousePositionOnGame - StageEditor.SelectedRoom.PositionInPixels).RoundDownToTileCoordinate();
+        return (MouseHandler.MousePositionOnGame - StageEditor.SelectedRoom.PositionInPixels).RoundDownToTileCoordinate();
     }
 
     public int GetTileSpriteId(IntVector2 gameTilePosition)
@@ -86,22 +87,22 @@ public class StageEditorTileMode : StageEditorMode
 
     private void TileEditorMenuClick()
     {
-        if (!Input.ClickedOnEditingMenu())
+        if (!MouseHandler.ClickedOnEditingMenu())
             return;
 
         // Tile coordinates
-        var tilePosition = Input.MousePositionOnMenu().RoundDownToTileCoordinate() / Settings.EditingMenuScale;
+        var tilePosition = MouseHandler.MousePositionOnMenu().RoundDownToTileCoordinate() / Settings.EditingMenuScale;
 
         // Select individual tile
-        if (Input.MouseLeftPressed)
+        if (MouseHandler.MouseLeftPressed)
             SelectedMenuTile = tilePosition;
 
         // Select rectangle of tiles
-        if (Input.Ctrl.Holding) // Hold Ctrl to select only the individual tile
+        if (InputHandler.Ctrl.Holding) // Hold Ctrl to select only the individual tile
             return;
-        if (Input.MouseLeftHold)
+        if (MouseHandler.MouseLeftHold)
             SelectionStartMenuTile = SelectedMenuTile;
-        if (Input.MouseLeftHold)
+        if (MouseHandler.MouseLeftHold)
             SelectionEndMenuTile = tilePosition;
     }
 
@@ -110,7 +111,7 @@ public class StageEditorTileMode : StageEditorMode
         Keys[] keys = { Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9, Keys.D0 };
 
         for (var i = 0; i < keys.Length; i++)
-            if (Input.KeyboardState.IsKeyDown(keys[i]))
+            if (InputHandler.KeyboardState.IsKeyDown(keys[i]))
                 SetTilesetOfIndex(i);
     }
 
@@ -136,7 +137,7 @@ public class StageEditorTileMode : StageEditorMode
         CurrentTool?.Draw();
 
         // Draw selected tile
-        var tileSelection = Input.MousePositionOnGame.RoundDownToTileCoordinate() * Settings.TileSize;
+        var tileSelection = MouseHandler.MousePositionOnGame.RoundDownToTileCoordinate() * Settings.TileSize;
         Drawer.DrawRectangleOutline(tileSelection, Settings.TileSize, CustomColor.TransparentRed, 2);
     }
 

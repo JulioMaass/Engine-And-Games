@@ -5,6 +5,7 @@ using Engine.Managers.Audio;
 using Engine.Managers.GameModes;
 using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageEditing;
 using Engine.Managers.StageHandling;
 using Microsoft.Xna.Framework;
@@ -20,6 +21,7 @@ public static class GameManager // Role: Control game states and main loop
 
     public static void Initialize()
     {
+        InputHandler.Initialize();
         GlobalManager.Initialize();
         StageManager.Initialize();
         Camera.Initialize();
@@ -53,13 +55,13 @@ public static class GameManager // Role: Control game states and main loop
     public static void Update()
     {
         EntityManager.RunComponentEnforcerCheckingList();
-        Input.UpdateInputState();
+        InputHandler.Update();
 
         // Audio
         AudioManager.Update();
 
         // Debug
-        Input.UpdateDebugInput();
+        InputHandler.UpdateInputList(InputHandler.DebugInputList);
         DebugMode.Update();
         if (DebugMode.Paused)
             return;
@@ -72,22 +74,26 @@ public static class GameManager // Role: Control game states and main loop
         ScreenTextManager.Update();
 
         // Run stage editor loop
+        InputHandler.UpdateInputList(InputHandler.EditorInputList);
         StageEditor.Update();
         if (StageEditor.IsOn)
             return;
 
         // Game state
-        Input.UpdateGameInput();
-        CheckToPause();
+        InputHandler.UpdateInputList(InputHandler.GameInputList);
         if (MenuManager.IsActive)
             MenuManager.Update();
-        else if (!Paused)
-            GameLoopManager.Update();
+        else
+        {
+            CheckToPause();
+            if (!Paused)
+                GameLoopManager.Update();
+        }
     }
 
     public static void CheckToPause()
     {
-        if (!Input.Start.Pressed)
+        if (!GameInput.Start.Pressed)
             return;
         if (Paused || GameLoopManager.GameCurrentLoop == GameLoopManager.GameMainLoop) // Only pause on main loop
             Paused = !Paused;

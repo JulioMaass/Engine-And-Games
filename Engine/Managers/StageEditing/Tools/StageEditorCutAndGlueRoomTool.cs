@@ -1,6 +1,8 @@
 ﻿using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
+using Engine.Types;
 using Microsoft.Xna.Framework.Input;
 
 namespace Engine.Managers.StageEditing.Tools;
@@ -8,20 +10,20 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorCutAndGlueRoomTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.FromTexture2D(Drawer.TextureDictionary["CursorSplit"], 16, 16);
-    public override Input.Button Shortcut { get; } = Input.RoomCutAndGlueTool;
+    public override Button Shortcut { get; } = EditorInput.RoomCutAndGlueTool;
 
     public override void Run()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
 
         if (StageEditor.SelectedRoom == null)
             return;
         var cutPositionX = GetCutPositionX();
 
-        if (Input.MouseLeftPressed)
+        if (MouseHandler.MouseLeftPressed)
             StageEditor.SelectedRoom.CutRoom(cutPositionX);
-        else if (Input.MouseRightPressed)
+        else if (MouseHandler.MouseRightPressed)
             StageEditor.SelectedRoom.GlueRoom();
     }
 

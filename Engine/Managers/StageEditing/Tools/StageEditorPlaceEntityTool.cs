@@ -1,8 +1,8 @@
 ﻿using Engine.ECS.Entities;
 using Engine.ECS.Entities.Shared;
-using Engine.GameSpecific;
 using Engine.Helpers;
 using Engine.Main;
+using Engine.Managers.Input;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
@@ -14,7 +14,7 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorPlaceEntityTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.Crosshair;
-    public override Input.Button Shortcut { get; } = Input.EntityPlaceTool;
+    public override Button Shortcut { get; } = EditorInput.EntityPlaceTool;
 
     public override void Run()
     {
@@ -23,19 +23,19 @@ class StageEditorPlaceEntityTool : StageEditorTool
 
     private void EntityPlaceToolGameScreenClick()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
         if (StageEditor.SelectedRoom == null)
             return;
 
-        var magnetMousePosition = (Input.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
+        var magnetMousePosition = (MouseHandler.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
 
         // Create entity
-        if (Input.MouseLeftPressed)
+        if (MouseHandler.MouseLeftPressed)
             CreateEntityInstance(StageEditor.EntityMode.SelectedEntity, magnetMousePosition);
 
         // Delete entity
-        if (Input.MouseRightPressed)
+        if (MouseHandler.MouseRightPressed)
             DeleteEntityLayoutAt(magnetMousePosition);
     }
 
@@ -87,7 +87,7 @@ class StageEditorPlaceEntityTool : StageEditorTool
 
     public override void Draw()
     {
-        var magnetMouse = (Input.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
+        var magnetMouse = (MouseHandler.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
         CollectionManager.DrawEntityPreview(StageEditor.EntityMode.SelectedEntity, magnetMouse, CustomColor.TransparentWhite);
     }
 }

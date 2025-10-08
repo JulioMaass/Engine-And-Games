@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Components.MenuHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Managers.Input;
 using Engine.Types;
 using System;
 using System.Collections.Generic;
@@ -134,19 +135,19 @@ public static class MenuManager
     public static void Update()
     {
         // Movement
-        if (Input.Up.Pressed)
+        if (GameInput.Up.Pressed)
             MoveSelection((0, -1));
-        else if (Input.Down.Pressed)
+        else if (GameInput.Down.Pressed)
             MoveSelection((0, 1));
-        else if (Input.Left.Pressed)
+        else if (GameInput.Left.Pressed)
             MoveSelection((-1, 0));
-        else if (Input.Right.Pressed)
+        else if (GameInput.Right.Pressed)
             MoveSelection((1, 0));
 
         // Select and Cancel
-        if (Input.Button1.Pressed)
+        if (GameInput.Confirm.Pressed)
             SelectedItem.MenuItem.OnSelect?.Invoke();
-        else if (Input.Button2.Pressed)
+        else if (GameInput.Cancel.Pressed)
             GoBackOneMenu();
     }
 

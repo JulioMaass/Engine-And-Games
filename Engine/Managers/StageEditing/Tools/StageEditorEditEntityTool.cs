@@ -2,7 +2,9 @@
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageHandling;
+using Engine.Types;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 
@@ -11,7 +13,7 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorEditEntityTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.Hand;
-    public override Input.Button Shortcut { get; } = Input.EntityEditTool;
+    public override Button Shortcut { get; } = EditorInput.EntityEditTool;
     private EntityInstance SelectedEntityInstance { get; set; }
     private int SelectedCustomValueIndex { get; set; }
 
@@ -24,10 +26,10 @@ class StageEditorEditEntityTool : StageEditorTool
 
     private void CheckToSelectEntity()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
 
-        var magnetMousePosition = (Input.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
+        var magnetMousePosition = (MouseHandler.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
         var positionRoom = StageEditor.CurrentStage.GetRoomAtPixel(magnetMousePosition);
         var entityInstance = positionRoom?.GetEntityLayout().GetEntityInstanceAt(magnetMousePosition);
         SelectedEntityInstance = entityInstance;
@@ -44,12 +46,12 @@ class StageEditorEditEntityTool : StageEditorTool
         if (SelectedEntityInstance == null)
             return;
 
-        if (Input.SelectionUp.Pressed)
+        if (EditorInput.SelectionUp.Pressed)
             SelectedCustomValueIndex += 1;
-        if (Input.SelectionDown.Pressed)
+        if (EditorInput.SelectionDown.Pressed)
             SelectedCustomValueIndex -= 1;
 
-        if (Input.Enter.Pressed)
+        if (EditorInput.Enter.Pressed)
         {
             SelectedCustomValueIndex += 1;
             if (SelectedCustomValueIndex >= SelectedEntityInstance.CustomValues.Count)
@@ -60,7 +62,7 @@ class StageEditorEditEntityTool : StageEditorTool
         }
 
         SelectedCustomValueIndex = (SelectedCustomValueIndex + SelectedEntityInstance.CustomValues.Count) % SelectedEntityInstance.CustomValues.Count;
-        if (Input.SelectionUp.Pressed || Input.SelectionDown.Pressed || Input.Enter.Pressed)
+        if (EditorInput.SelectionUp.Pressed || EditorInput.SelectionDown.Pressed || EditorInput.Enter.Pressed)
             StringInput.EditString(SelectedEntityInstance.CustomValues[SelectedCustomValueIndex].ToString());
     }
 

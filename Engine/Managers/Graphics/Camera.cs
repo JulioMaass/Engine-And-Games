@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Main;
+using Engine.Managers.Input;
 using Engine.Managers.StageEditing;
 using Engine.Managers.StageHandling;
 using Engine.Types;
@@ -137,13 +138,12 @@ public static class Camera
 
     private static void EditorPanning()
     {
-        if (!Input.Panning.Holding)
+        if (!EditorInput.Panning.Holding)
             return;
-        if (!Input.MouseLeftHold && !Settings.LaptopModeIsOn)
+        if (!MouseHandler.MouseLeftHold && !Settings.LaptopModeIsOn)
             return;
 
-        var movement = Input.GetMouseMovement();
-        SetPanning(Panning - movement);
+        SetPanning(Panning - MouseHandler.GetMouseMovement());
     }
 
     public static void UpdateFullscreenOffset()

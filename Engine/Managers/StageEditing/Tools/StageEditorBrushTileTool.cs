@@ -1,5 +1,6 @@
 ﻿using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
@@ -9,12 +10,12 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorBrushTileTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.Arrow;
-    public override Input.Button Shortcut { get; } = Input.TileBrushTool;
+    public override Button Shortcut { get; } = EditorInput.TileBrushTool;
 
 
     public override void Run()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
         if (StageEditor.SelectedRoom == null)
             return;
@@ -26,27 +27,27 @@ class StageEditorBrushTileTool : StageEditorTool
     {
         // Get tile coordinates
         var tilePosition = StageEditor.TileMode.GetSelectedTile();
-        if (Input.MouseLeftPressed)
+        if (MouseHandler.MouseLeftPressed)
             StageEditor.TileMode.SelectionStartGameTile = tilePosition;
-        if (Input.MouseLeftHold)
+        if (MouseHandler.MouseLeftHold)
             StageEditor.TileMode.SelectionEndGameTile = tilePosition;
 
         var tileSpriteId = StageEditor.TileMode.GetTileSpriteId(StageEditor.TileMode.SelectionEndGameTile);
         var tileLayout = StageEditor.TileMode.GetCurrentTileLayout(tileSpriteId);
 
-        if (Input.MouseLeftHold)
+        if (MouseHandler.MouseLeftHold)
             tileLayout.SetTileAt(tilePosition, tileSpriteId);
-        if (Input.MouseRightHold)
+        if (MouseHandler.MouseRightHold)
             tileLayout.SetTileAt(tilePosition, TileLayout.EMPTY);
     }
 
     public override void Draw()
     {
-        if (Input.MouseLeftHold || Input.MouseRightHold) return;
+        if (MouseHandler.MouseLeftHold || MouseHandler.MouseRightHold) return;
         if (StageEditor.SelectedRoom == null) return;
 
         var sourceRectangle = new IntRectangle(StageEditor.TileMode.SelectedMenuTile * Settings.TileSize, Settings.TileSize);
-        var tileSelection = Input.MousePositionOnGame.RoundDownToTileCoordinate() * Settings.TileSize;
+        var tileSelection = MouseHandler.MousePositionOnGame.RoundDownToTileCoordinate() * Settings.TileSize;
         Drawer.DrawTextureRectangleAt(StageEditor.TileMode.CurrentTileset.Texture, sourceRectangle, tileSelection);
     }
 }

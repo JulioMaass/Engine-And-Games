@@ -2,6 +2,7 @@
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageEditing.Tools;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
@@ -12,7 +13,7 @@ namespace Engine.Managers.StageEditing.Modes;
 
 public class StageEditorEntityMode : StageEditorMode
 {
-    public override Input.Button Shortcut { get; } = Input.EntityMode;
+    public override Button Shortcut { get; } = EditorInput.EntityMode;
     public List<Type> EntityNames { get; } = new();
     public Type SelectedEntity { get; set; }
 
@@ -44,12 +45,12 @@ public class StageEditorEntityMode : StageEditorMode
 
     private void EntityPlaceToolMenuClick()
     {
-        if (!Input.ClickedOnEditingMenu())
+        if (!MouseHandler.ClickedOnEditingMenu())
             return;
-        if (!Input.MouseLeftPressed)
+        if (!MouseHandler.MouseLeftPressed)
             return;
 
-        var entityPosition = Input.MousePositionOnMenu().RoundDownToTileCoordinate() / Settings.EditingMenuScale;
+        var entityPosition = MouseHandler.MousePositionOnMenu().RoundDownToTileCoordinate() / Settings.EditingMenuScale;
         var entityIndex = entityPosition.Y * Settings.EditingMenuSizeInTiles.X + entityPosition.X;
         if (entityIndex < EntityNames.Count)
         {
@@ -63,7 +64,7 @@ public class StageEditorEntityMode : StageEditorMode
         Keys[] keys = { Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9, Keys.D0 };
 
         for (var i = 0; i < keys.Length; i++)
-            if (Input.KeyboardState.IsKeyDown(keys[i]))
+            if (InputHandler.KeyboardState.IsKeyDown(keys[i]))
             {
                 SetEntityOfIndex(i);
                 ToggleTool(typeof(StageEditorPlaceEntityTool));
@@ -79,7 +80,7 @@ public class StageEditorEntityMode : StageEditorMode
     public override void Draw()
     {
         // Draw cross-hair on selected point
-        var magnetMouse = (Input.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
+        var magnetMouse = (MouseHandler.MousePositionOnGame + Settings.TileSize / 4).RoundDownDivision(Settings.TileSize / 2) * (Settings.TileSize / 2);
         var crossHairRadius = Settings.TileSize / 2;
         // Horizontal line
         var position = magnetMouse - (crossHairRadius.X, 1);

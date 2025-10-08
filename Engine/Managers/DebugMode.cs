@@ -3,6 +3,7 @@ using Engine.Main;
 using Engine.Managers.Audio;
 using Engine.Managers.GameModes;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 
 namespace Engine.Managers;
 
@@ -26,13 +27,13 @@ public static class DebugMode
         if (!IsOn) return;
 
         // Hard coded debug keys
-        if (Input.Fullscreen.Pressed) Video.ToggleFullScreen();
-        if (Input.ZoomIn.Pressed && !StringInput.IsOn) Camera.ZoomIn();
-        if (Input.ZoomOut.Pressed && !StringInput.IsOn) Camera.ZoomOut();
-        if (Input.Mute.Pressed) AudioManager.ToggleMute();
-        if (Input.Mask.Pressed) ShowMasks = !ShowMasks;
-        if (Input.Kill.Pressed) EntityManager.TriggerDeath(EntityManager.PlayerEntity);
-        if (Input.Reset.Pressed)
+        if (DebugInput.Fullscreen.Pressed) Video.ToggleFullScreen();
+        if (DebugInput.ZoomIn.Pressed && !StringInput.IsOn) Camera.ZoomIn();
+        if (DebugInput.ZoomOut.Pressed && !StringInput.IsOn) Camera.ZoomOut();
+        if (DebugInput.Mute.Pressed) AudioManager.ToggleMute();
+        if (DebugInput.Mask.Pressed) ShowMasks = !ShowMasks;
+        if (DebugInput.Kill.Pressed) EntityManager.TriggerDeath(EntityManager.PlayerEntity);
+        if (DebugInput.Reset.Pressed)
         {
             // TODO: Rough reset, may have bugs
             MenuManager.CreateMenu(GameManager.GameSpecificSettings.InitialMenu);
@@ -41,14 +42,14 @@ public static class DebugMode
         }
 
         // Pause/Unpause
-        if (Input.Pause.Pressed) Paused = !Paused;
+        if (DebugInput.Pause.Pressed) Paused = !Paused;
         // Step loop
         if (PauseNextFrame)
         {
             Paused = true;
             PauseNextFrame = false;
         }
-        if (Input.Step.Pressed)
+        if (DebugInput.Step.Pressed)
         {
             Paused = false;
             PauseNextFrame = true;
@@ -67,9 +68,11 @@ public static class DebugMode
 
     private static void CheckToTurnOnAndOff()
     {
-        if (!Input.CtrlCommand(Input.ToggleDebugMode))
+#if DEBUG
+        if (!InputHandler.CtrlCommand(DebugInput.ToggleDebugMode))
             return;
 
         IsOn = !IsOn;
+#endif
     }
 }

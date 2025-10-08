@@ -1,4 +1,6 @@
-﻿using Engine.Managers.StageEditing.Tools;
+﻿using Engine.Managers.Input;
+using Engine.Managers.StageEditing.Tools;
+using Engine.Types;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ namespace Engine.Managers.StageEditing.Modes;
 
 public abstract class StageEditorMode
 {
-    public abstract Input.Button Shortcut { get; }
+    public abstract Button Shortcut { get; }
     public List<StageEditorTool> AvailableTools { get; set; }
     public StageEditorTool DefaultTool => AvailableTools[0];
     public StageEditorTool CurrentTool { get; set; }
@@ -19,7 +21,7 @@ public abstract class StageEditorMode
     public void CheckToToggleTools()
     {
         foreach (var tool in AvailableTools)
-            if (Input.ShortcutCommand(tool.Shortcut))
+            if (InputHandler.ShortcutCommand(tool.Shortcut))
                 ToggleTool(tool);
     }
 

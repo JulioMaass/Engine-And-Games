@@ -1,4 +1,5 @@
 ﻿using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,19 +8,19 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorResizeRoomTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.FromTexture2D(Drawer.TextureDictionary["CursorAddRight"], 16, 16);
-    public override Input.Button Shortcut { get; } = Input.RoomResizeTool;
+    public override Button Shortcut { get; } = EditorInput.RoomResizeTool;
 
     public override void Run()
     {
         UpdateResizeToolCursor();
 
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
 
-        if (Input.MouseLeftPressed)
+        if (MouseHandler.MouseLeftPressed)
             RoomEditorLeftClick();
 
-        if (Input.MouseRightPressed && StageEditor.CurrentStage.HasRoomAt(StageEditor.SelectionRoom))
+        if (MouseHandler.MouseRightPressed && StageEditor.CurrentStage.HasRoomAt(StageEditor.SelectionRoom))
             RoomEditorRightClick();
     }
 
@@ -35,7 +36,7 @@ class StageEditorResizeRoomTool : StageEditorTool
     {
         // Calculate room size change
         var sizeIncrease = IntVector2.Zero;
-        if (Input.Shift.Holding)
+        if (InputHandler.Shift.Holding)
             sizeIncrease += (0, -1);
         else
             sizeIncrease += (-1, 0);
@@ -43,7 +44,7 @@ class StageEditorResizeRoomTool : StageEditorTool
         // Calculate new position and resizing direction
         var dir = 1;
         var newPosition = StageEditor.SelectedRoom.Position;
-        if (Input.Ctrl.Holding)
+        if (InputHandler.Ctrl.Holding)
         {
             dir = -1;
             newPosition += sizeIncrease * -1;
@@ -60,7 +61,7 @@ class StageEditorResizeRoomTool : StageEditorTool
     {
         // Calculate room size change
         var sizeIncrease = IntVector2.Zero;
-        if (Input.Shift.Holding)
+        if (InputHandler.Shift.Holding)
             sizeIncrease += (0, 1);
         else
             sizeIncrease += (1, 0);
@@ -69,7 +70,7 @@ class StageEditorResizeRoomTool : StageEditorTool
         // Calculate new position and resizing direction
         var dir = 1;
         var newPosition = StageEditor.SelectedRoom.Position;
-        if (Input.Ctrl.Holding)
+        if (InputHandler.Ctrl.Holding)
         {
             dir = -1;
             newPosition += sizeIncrease * -1;
@@ -86,13 +87,13 @@ class StageEditorResizeRoomTool : StageEditorTool
     private void UpdateResizeToolCursor()
     {
         var cursorTextureName = "";
-        if (!Input.Shift.Holding && !Input.Ctrl.Holding)
+        if (!InputHandler.Shift.Holding && !InputHandler.Ctrl.Holding)
             cursorTextureName = "CursorAddRight";
-        else if (Input.Shift.Holding && !Input.Ctrl.Holding)
+        else if (InputHandler.Shift.Holding && !InputHandler.Ctrl.Holding)
             cursorTextureName = "CursorAddDown";
-        else if (!Input.Shift.Holding && Input.Ctrl.Holding)
+        else if (!InputHandler.Shift.Holding && InputHandler.Ctrl.Holding)
             cursorTextureName = "CursorAddLeft";
-        else if (Input.Shift.Holding && Input.Ctrl.Holding)
+        else if (InputHandler.Shift.Holding && InputHandler.Ctrl.Holding)
             cursorTextureName = "CursorAddUp";
         Mouse.SetCursor(MouseCursor.FromTexture2D(Drawer.TextureDictionary[cursorTextureName], 16, 16));
     }

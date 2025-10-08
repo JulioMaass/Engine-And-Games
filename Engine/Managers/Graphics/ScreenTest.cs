@@ -1,6 +1,7 @@
 ﻿using Engine.GameSpecific;
 using Engine.Helpers;
 using Engine.Main;
+using Engine.Managers.Input;
 using Engine.Types;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -45,13 +46,13 @@ public static class ScreenTest
         if (GameManager.GameSpecificSettings.CurrentGame != GameId.CrtTest)
             return;
 
-        if (Input.Right.Pressed)
+        if (GameInput.Right.Pressed)
         {
             Index++;
             if (Index >= Images.Count)
                 Index = 0;
         }
-        else if (Input.Left.Pressed)
+        else if (GameInput.Left.Pressed)
         {
             Index--;
             if (Index < 0)

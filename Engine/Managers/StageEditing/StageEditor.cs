@@ -2,6 +2,7 @@
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.SaveSystem;
 using Engine.Managers.StageEditing.Modes;
 using Engine.Managers.StageHandling;
@@ -15,7 +16,7 @@ public static class StageEditor
 {
     public static Stage CurrentStage => StageManager.CurrentStage;
     public static bool IsOn { get; private set; }
-    public static IntVector2 SelectionRoom => Input.MousePositionOnGame / Settings.RoomSizeInPixels;
+    public static IntVector2 SelectionRoom => MouseHandler.MousePositionOnGame / Settings.RoomSizeInPixels;
     public static Room SelectedRoom => StageManager.CurrentStage.GetRoomAtGrid(SelectionRoom);
 
     // Modes
@@ -27,6 +28,7 @@ public static class StageEditor
 
     public static void Update()
     {
+#if DEBUG
         CheckToTurnOnAndOff();
         StringInput.CheckToTurnOff();
         CheckToSaveStages();
@@ -34,11 +36,12 @@ public static class StageEditor
             return;
         CheckToChangeMode();
         RunEditor();
+#endif
     }
 
     private static void CheckToTurnOnAndOff()
     {
-        if (!Input.CtrlCommand(Input.Edit))
+        if (!InputHandler.CtrlCommand(EditorInput.Edit))
             return;
         if (IsOn)
             TurnOff();
@@ -80,7 +83,7 @@ public static class StageEditor
 
     private static void CheckToSaveStages()
     {
-        if (!Input.CtrlCommand(Input.Save))
+        if (!InputHandler.CtrlCommand(EditorInput.Save))
             return;
         var stageData = new StageData();
         DeleteEmptyLayers();
@@ -91,10 +94,10 @@ public static class StageEditor
     private static void CheckToChangeMode()
     {
         foreach (var mode in Modes)
-            if (Input.ShortcutCommand(mode.Shortcut))
+            if (InputHandler.ShortcutCommand(mode.Shortcut))
                 ChangeMode(mode);
 
-        if (Input.CtrlCommand(Input.LaptopMode))
+        if (InputHandler.CtrlCommand(EditorInput.LaptopMode))
             Settings.LaptopModeIsOn = !Settings.LaptopModeIsOn;
     }
 
@@ -106,7 +109,7 @@ public static class StageEditor
 
     private static void RunEditor()
     {
-        if (Input.Panning.Holding)
+        if (EditorInput.Panning.Holding)
             return;
         CurrentMode.Run();
     }

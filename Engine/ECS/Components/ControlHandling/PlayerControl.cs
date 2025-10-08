@@ -1,5 +1,5 @@
 ﻿using Engine.ECS.Entities.EntityCreation;
-using Engine.Managers;
+using Engine.Managers.Input;
 
 namespace Engine.ECS.Components.ControlHandling;
 
@@ -55,24 +55,24 @@ public class PlayerControl : Component
     public void Update()
     {
         // Update controls
-        Up = Input.Up.Holding && !Input.Down.Holding;
-        Down = Input.Down.Holding && !Input.Up.Holding;
-        Left = Input.Left.Holding && !Input.Right.Holding;
-        Right = Input.Right.Holding && !Input.Left.Holding;
+        Up = GameInput.Up.Holding && !GameInput.Down.Holding;
+        Down = GameInput.Down.Holding && !GameInput.Up.Holding;
+        Left = GameInput.Left.Holding && !GameInput.Right.Holding;
+        Right = GameInput.Right.Holding && !GameInput.Left.Holding;
 
         // Update weapon switching
-        SwitchLeft = Input.L.Pressed;
-        SwitchRight = Input.R.Pressed;
-        SwitchReset = Input.L.Holding && Input.R.Holding;
+        SwitchLeft = GameInput.L.Pressed;
+        SwitchRight = GameInput.R.Pressed;
+        SwitchReset = GameInput.L.Holding && GameInput.R.Holding;
 
-        Button1Press = Input.Button1.Pressed;
-        Button1Hold = Input.Button1.Holding;
-        Button2Press = Input.Button2.Pressed;
-        Button2Hold = Input.Button2.Holding;
-        Button3Press = Input.Button3.Pressed;
-        Button3Hold = Input.Button3.Holding;
-        Button4Press = Input.Button4.Pressed;
-        Button4Hold = Input.Button4.Holding;
+        Button1Press = GameInput.Button1.Pressed;
+        Button1Hold = GameInput.Button1.Holding;
+        Button2Press = GameInput.Button2.Pressed;
+        Button2Hold = GameInput.Button2.Holding;
+        Button3Press = GameInput.Button3.Pressed;
+        Button3Hold = GameInput.Button3.Holding;
+        Button4Press = GameInput.Button4.Pressed;
+        Button4Hold = GameInput.Button4.Holding;
 
         UpdateDirection();
     }

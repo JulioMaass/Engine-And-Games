@@ -1,6 +1,7 @@
 ﻿using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Graphics;
+using Engine.Managers.Input;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using Microsoft.Xna.Framework.Input;
@@ -10,7 +11,7 @@ namespace Engine.Managers.StageEditing.Tools;
 class StageEditorRectangleTileTool : StageEditorTool
 {
     public override MouseCursor MouseCursor { get; } = MouseCursor.SizeNWSE;
-    public override Input.Button Shortcut { get; } = Input.TileRectangleTool;
+    public override Button Shortcut { get; } = EditorInput.TileRectangleTool;
 
 
     public override void Run()
@@ -23,22 +24,22 @@ class StageEditorRectangleTileTool : StageEditorTool
 
     private void TileEditorUpdateRectangleToolSelection()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
 
         // Get tile coordinates
         var tilePosition = StageEditor.TileMode.GetSelectedTile();
-        if (Input.MouseLeftPressed || Input.MouseRightPressed)
+        if (MouseHandler.MouseLeftPressed || MouseHandler.MouseRightPressed)
             StageEditor.TileMode.SelectionStartGameTile = tilePosition;
-        if (Input.MouseLeftHold || Input.MouseRightHold)
+        if (MouseHandler.MouseLeftHold || MouseHandler.MouseRightHold)
             StageEditor.TileMode.SelectionEndGameTile = tilePosition;
     }
 
     private void TileEditorGameScreenRelease()
     {
-        if (!Input.MouseIsOnGameScreen())
+        if (!MouseHandler.MouseIsOnGameScreen())
             return;
-        if (!Input.MouseLeftReleased && !Input.MouseRightReleased)
+        if (!MouseHandler.MouseLeftReleased && !MouseHandler.MouseRightReleased)
             return;
 
         // Rectangle limits
@@ -54,7 +55,7 @@ class StageEditorRectangleTileTool : StageEditorTool
                 var tileLayout = StageEditor.TileMode.GetCurrentTileLayout(tileSpriteId);
 
                 // Draw/erase tiles
-                if (Input.MouseLeftReleased)
+                if (MouseHandler.MouseLeftReleased)
                     tileLayout.SetTileAt(position, tileSpriteId);
                 else
                     tileLayout.SetTileAt(position, TileLayout.EMPTY);
@@ -64,11 +65,11 @@ class StageEditorRectangleTileTool : StageEditorTool
 
     public override void Draw()
     {
-        if (!Input.ClickedOnGameScreen())
+        if (!MouseHandler.ClickedOnGameScreen())
             return;
-        if (Input.Panning.Holding)
+        if (EditorInput.Panning.Holding)
             return;
-        if (!Input.MouseLeftHold && !Input.MouseRightHold)
+        if (!MouseHandler.MouseLeftHold && !MouseHandler.MouseRightHold)
             return;
         if (StageEditor.SelectedRoom == null)
             return;
@@ -89,7 +90,7 @@ class StageEditorRectangleTileTool : StageEditorTool
                 // Draw tile
                 var pixelPosition = IntVector2.New(x, y) * Settings.TileSize + StageEditor.SelectedRoom.PositionInPixels;
                 Drawer.DrawRectangle(pixelPosition, Settings.TileSize, CustomColor.Black); // Draw black background
-                if (Input.MouseLeftHold)
+                if (MouseHandler.MouseLeftHold)
                     Drawer.DrawTextureRectangleAt(StageEditor.TileMode.CurrentTileset.Texture, sourceRectangle, pixelPosition); // Draw tile
             }
         }
