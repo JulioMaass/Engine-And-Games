@@ -188,7 +188,7 @@ public class StageEditorTileMode : StageEditorMode
             var layerHeight = Settings.TileSize.Y * layer.lines;
             var layerSize = new IntVector2(CurrentTileset.Texture.Width, layerHeight) * Settings.EditingMenuScale;
             Drawer.DrawRectangleOutline(layerPosition, layerSize, CustomColor.Black);
-            Drawer.DrawOutlinedString(Drawer.PicoFont, layer.id.ToString(), layerPosition + (1, 1), Color.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, layer.id.ToString(), layerPosition + (1, 1), Color.White);
             layerPosition += new IntVector2(0, layerHeight) * Settings.EditingMenuScale;
         }
 

@@ -38,7 +38,7 @@ public static class Hud
 
                 // number
                 var hp = player.DamageTaker.CurrentHp.Amount;
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "hp: " + hp, IntVector2.Zero + (2, 9), Color.White);
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "HP: " + hp, IntVector2.Zero + (2, 9), Color.White);
 
                 // candle wick
                 var texture = Drawer.TextureDictionary.GetValueOrDefault("CandleWick");
@@ -51,62 +51,62 @@ public static class Hud
             }
             else if (GameManager.GameSpecificSettings.CurrentGame == GameId.Shooter)
             {
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "Score: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.Score),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "Score: " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.Score),
                     new IntVector2(0, 0), Color.White);
             }
             else if (GameManager.GameSpecificSettings.CurrentGame == GameId.SpaceMiner)
             {
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreGray"), new IntRectangle(1, 1 + 8 * 0, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGray),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGray),
                     new IntVector2(2, 2 + 8 * 0), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreBlue"), new IntRectangle(1, 1 + 8 * 1, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreBlue),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreBlue),
                     new IntVector2(2, 2 + 8 * 1), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreGreen"), new IntRectangle(1, 1 + 8 * 2, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGreen),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreGreen),
                     new IntVector2(2, 2 + 8 * 2), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreRed"), new IntRectangle(1, 1 + 8 * 3, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreRed),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreRed),
                     new IntVector2(2, 2 + 8 * 3), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreYellow"), new IntRectangle(1, 1 + 8 * 4, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreYellow),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreYellow),
                     new IntVector2(2, 2 + 8 * 4), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OreOrange"), new IntRectangle(1, 1 + 8 * 5, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreOrange),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OreOrange),
                     new IntVector2(2, 2 + 8 * 5), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("OrePurple"), new IntRectangle(1, 1 + 8 * 6, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OrePurple),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.OrePurple),
                     new IntVector2(2, 2 + 8 * 6), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 7, 8, 8), new IntRectangle(0, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileAtomic),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileAtomic),
                     new IntVector2(2, 2 + 8 * 7), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 8, 8, 8), new IntRectangle(8, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileHoming),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileHoming),
                     new IntVector2(2, 2 + 8 * 8), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 9, 8, 8), new IntRectangle(16, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileSpray),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileSpray),
                     new IntVector2(2, 2 + 8 * 9), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 10, 8, 8), new IntRectangle(24, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileDrill),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileDrill),
                     new IntVector2(2, 2 + 8 * 10), Color.White);
 
                 Video.SpriteBatch.Draw(Drawer.TextureDictionary.GetValueOrDefault("MissileIcons"), new IntRectangle(1, 1 + 8 * 11, 8, 8), new IntRectangle(32, 0, 8, 8), CustomColor.White);
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileMine),
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "  " + GlobalManager.Values.MainCharData.Resources.GetAmount(ResourceType.MissileMine),
                     new IntVector2(2, 2 + 8 * 11), Color.White);
 
-                Drawer.DrawOutlinedString(Drawer.PicoFont, "Hp: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, "HP: " + EntityManager.PlayerEntity?.DamageTaker.CurrentHp.Amount,
                     new IntVector2(440, 2 + 8 * 0), Color.White);
-                //Video.DrawStringWithOutline(Drawer.PicoFont, "Time: " + ((SpaceMinerMainLoop)GameLoopManager.GameMainLoop).Timer / 60,
+                //Video.DrawStringWithOutline(Drawer.TinyUnicodeSoftFont, "Time: " + ((SpaceMinerMainLoop)GameLoopManager.GameMainLoop).Timer / 60,
                 //    new IntVector2(440, 10), Color.White);
             }
         }
@@ -190,7 +190,7 @@ public static class Hud
         //var repetitions = 0;
         //foreach (var resource in GlobalManager.Values.Resources.List)
         //{
-        //    Video.DrawStringWithOutline(Drawer.PicoFont, resource.ResourceType + ": " + resource.Amount,
+        //    Video.DrawStringWithOutline(Drawer.TinyUnicodeFont, resource.ResourceType + ": " + resource.Amount,
         //        IntVector2.Zero + (2, 18 + repetitions * 8), Color.White);
         //    repetitions++;
         //}
@@ -213,7 +213,7 @@ public static class Hud
         void DrawDebugLine(string label, object value)
         {
             var yOffset = currentLine * 8;
-            Drawer.DrawOutlinedString(Drawer.PicoFont, $"{label}: {value}",
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, $"{label}: {value}",
                 debugTextPosition + new IntVector2(0, yOffset), Color.White);
             currentLine++;
         }
@@ -227,16 +227,16 @@ public static class Hud
         var entity = EntityManager.GetFilteredEntitiesFrom(EntityKind.Enemy).FirstOrDefault();
 
         var currentState = entity?.StateManager?.CurrentState?.Name;
-        Drawer.DrawOutlinedString(Drawer.PicoFont, "current state: " + currentState, debugTextPosition + (0, 0), Color.White);
+        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current state: " + currentState, debugTextPosition + (0, 0), Color.White);
 
         var currentCommandedState = entity?.StateManager?.CurrentCommandedState?.Name;
-        Drawer.DrawOutlinedString(Drawer.PicoFont, "current commanded state: " + currentCommandedState, debugTextPosition + (0, 8), Color.White);
+        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current commanded state: " + currentCommandedState, debugTextPosition + (0, 8), Color.White);
 
         var stateQueue = entity?.StateManager?.CommandedStatesQueue;
         if (stateQueue != null)
         {
             var stateQueueString = stateQueue.Aggregate("state queue: ", (current, state) => current + state.Name + ", ");
-            Drawer.DrawOutlinedString(Drawer.PicoFont, stateQueueString, debugTextPosition + (0, 16), Color.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, stateQueueString, debugTextPosition + (0, 16), Color.White);
         }
     }
 }

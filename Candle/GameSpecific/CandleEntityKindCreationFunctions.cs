@@ -53,11 +53,11 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (EquipmentItemStats.IsUnlocked())
             {
                 CollectionManager.DrawEntityPreview(GetType(), Position.Pixel + (8, 8), CustomColor.White);
-                Video.SpriteBatch.DrawString(Drawer.MegaManFont, EquipmentItemStats.GetLevel().ToString(), Position.Pixel + (18, 4), CustomColor.White);
+                StringDrawer.DrawString(StringDrawer.PressStart2PShadowFont, EquipmentItemStats.GetLevel().ToString(), Position.Pixel + (18, 4), CustomColor.White);
             }
             var label = MenuItem?.Label;
             if (label != null)
-                Video.SpriteBatch.DrawString(Drawer.MegaManFont, label, Position.Pixel + (0, 18), CustomColor.White);
+                StringDrawer.DrawString(StringDrawer.PressStart2PShadowFont, label, Position.Pixel + (0, 18), CustomColor.White);
             if (GlobalManager.Values.MainCharData.IsItemEquipped(GetType()))
                 Drawer.DrawRectangleOutline(Position.Pixel - 4, (16 + 8, 16 + 8), CustomColor.White);
         };
@@ -65,7 +65,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-10, 6), CustomColor.White);
+            StringDrawer.DrawString(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-10, 6), CustomColor.White);
         };
 
         MenuItem.OnSelect = () =>

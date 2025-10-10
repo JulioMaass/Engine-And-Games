@@ -14,10 +14,6 @@ public static class Drawer
 {
     private static Texture2D WhitePixel { get; set; } // a single white pixel
     public static Dictionary<string, Texture2D> TextureDictionary { get; } = new();
-    public static SpriteFont PicoFont { get; private set; }
-    public static SpriteFont MegaManFont { get; private set; }
-    public static SpriteFont HpFont { get; private set; }
-    public static SpriteFont HpFontMap { get; private set; }
 
     // Shaders
     public static Effect SpriteMasterShader { get; private set; }
@@ -42,14 +38,7 @@ public static class Drawer
         // Textures
         LoadTextures("EngineTextures");
         LoadTextures("Textures");
-
-        // Fonts
-        PicoFont = GameManager.Game.Content.Load<SpriteFont>("Fonts/PicoFont");
-        MegaManFont = GameManager.Game.Content.Load<SpriteFont>("Fonts/MegaManFont");
-        HpFont = GameManager.Game.Content.Load<SpriteFont>("Fonts/HpFont");
-        HpFont.Spacing = -1;
-        HpFontMap = GameManager.Game.Content.Load<SpriteFont>("Fonts/HpFontMap");
-        HpFontMap.Spacing = 1;
+        StringDrawer.LoadFonts();
 
         // Shaders
         SpriteMasterShader = GameManager.Game.Content.Load<Effect>("SpriteShaders/SpriteMasterShader");
@@ -183,15 +172,6 @@ public static class Drawer
         var spriteX = spriteColumn * size.Width;
         var spriteY = spriteRow * size.Height;
         return new Rectangle(spriteX, spriteY, size.X, size.Y);
-    }
-
-    public static void DrawOutlinedString(SpriteFont font, string @string, IntVector2 position, Color color)
-    {
-        for (var x = -1; x <= 1; x++)
-            for (var y = -1; y <= 1; y++)
-                if (x != 0 || y != 0)
-                    Video.SpriteBatch.DrawString(font, @string, position + new Vector2(x, y), CustomColor.Black);
-        Video.SpriteBatch.DrawString(font, @string, position, color);
     }
 
     public static void DrawEmptyBackground(IntVector2 positionInTiles, IntVector2 sizeInTiles, int scale = 1)

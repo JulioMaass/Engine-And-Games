@@ -73,21 +73,21 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (!ItemPrice.CanBuy(ownedAmount) || priceString == "-")
                 color = CustomColor.Gray;
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, priceString, Position.Pixel + (-12, -12), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
             Draw();
             if (itemPrice != null)
                 DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 20), color);
-            //Video.SpriteBatch.DrawString(Drawer.PicoFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
+            //StringDrawer.DrawString(StringDrawer.TinyUnicodeFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
         };
 
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-24, -2), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         // ReSharper disable once ComplexConditionExpression
@@ -174,22 +174,22 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (upgrade1.Type != null)
             {
                 CollectionManager.DrawEntityPreview(upgrade1.Type, Position.Pixel + (4, 42), color, 8);
-                Video.SpriteBatch.DrawString(Drawer.MegaManFont, upgrade1.Amount.ToString(), Position.Pixel + (8, 38), color);
+                StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, upgrade1.Amount.ToString(), Position.Pixel + (8, 38), color);
             }
             if (upgrade2.Type != null)
             {
                 CollectionManager.DrawEntityPreview(upgrade2.Type, Position.Pixel + (4, 42 + 8), color, 8);
-                Video.SpriteBatch.DrawString(Drawer.MegaManFont, upgrade2.Amount.ToString(), Position.Pixel + (8, 38 + 8), color);
+                StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, upgrade2.Amount.ToString(), Position.Pixel + (8, 38 + 8), color);
             }
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, priceString, Position.Pixel + (-12, 22), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
             Draw();
             if (itemPrice != null)
                 DrawOreIcon(itemPrice.ResourceCosts[0].ResourceType, Position.Pixel + (-14, 20), color);
-            //Video.SpriteBatch.DrawString(Drawer.PicoFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
+            //StringDrawer.DrawString(StringDrawer.TinyUnicodeFont, MenuItem?.Label, Position.Pixel + (0, 28), color);
 
             // Draw rectangle selection on current weapon
             if (GlobalManager.Values.MainCharData.IsItemEquipped(GetType()))
@@ -199,8 +199,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-24, -2), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         MenuItem.OnSelect = () =>
@@ -245,7 +245,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             if (!ItemPrice.CanBuy(ownedAmount))
                 color = CustomColor.Gray;
 
-            Drawer.DrawOutlinedString(Drawer.PicoFont, priceString, Position.Pixel + (-12, 22), color);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, priceString, Position.Pixel + (-12, 22), color);
             ColorShader ??= new ColorShader(this);
             ColorShader.GrayscaleOn = color == CustomColor.Gray;
             Sprite.Color = color;
@@ -258,8 +258,8 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-24, -2), CustomColor.White);
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-24, -2), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, MenuItem?.Label, new IntVector2(64, 128 + 64 + 32 + 16), CustomColor.White);
         };
 
         // ReSharper disable once ComplexConditionExpression

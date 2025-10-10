@@ -12,6 +12,7 @@ using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -490,19 +491,19 @@ public abstract partial class Entity
     }
 
     // Pointed Label Menu
-    public void AddPointedLabelMenuComponents()
+    public void AddPointedLabelMenuComponents(SpriteFont font)
     {
         AddBasicMenuComponents();
 
         MenuItem.Draw = () =>
         {
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem.Label, Position.Pixel, CustomColor.MegaManWhite);
+            StringDrawer.DrawStringOutlinedAndShadowed(font, MenuItem.Label, Position.Pixel, CustomColor.MegaManWhite, false);
         };
 
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition - (10, 0), Color.White);
+            StringDrawer.DrawStringOutlinedAndShadowed(font, ">", cursorPosition - (10, 0), Color.White, false);
         };
     }
 }

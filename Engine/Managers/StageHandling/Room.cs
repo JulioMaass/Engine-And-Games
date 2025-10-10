@@ -275,13 +275,13 @@ public class Room
             {
                 var texture = Path.GetFileName(tileLayout.Tileset.Texture.Name);
                 var layerId = tileLayout.LayerId.ToString();
-                Drawer.DrawOutlinedString(Drawer.PicoFont, $"{texture} {layerId}", PositionInPixels + (0, line * 8), Color.White);
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, $"{texture} {layerId}", PositionInPixels + (0, line * 8), Color.White);
                 line++;
             }
             else if (layer is EntityLayout entityLayout)
             {
                 var totalEntities = entityLayout.List.Count;
-                Drawer.DrawOutlinedString(Drawer.PicoFont, $"Entities: {totalEntities}", PositionInPixels + (0, line * 8), Color.White);
+                StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, $"Entities: {totalEntities}", PositionInPixels + (0, line * 8), Color.White);
                 line++;
             }
         }

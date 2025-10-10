@@ -64,7 +64,7 @@ public class EntityInstance
             if (string.IsNullOrEmpty(customValue?.ValueName))
                 continue;
             var position = PositionAbsolute + entity.Sprite.Size - entity.Sprite.Origin;
-            Drawer.DrawOutlinedString(Drawer.PicoFont, customValue.ValueName + ": " + CustomValues[i], position + (0, i * 8), Color.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, customValue.ValueName + ": " + CustomValues[i], position + (0, i * 8), Color.White);
         }
     }
 }

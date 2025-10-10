@@ -142,7 +142,7 @@ public static class StringInput
         var color = IsOn ? Color.Yellow : Color.White;
         if (Overwrite)
             color = Color.Red;
-        Drawer.DrawOutlinedString(Drawer.PicoFont, inputString, position, color);
+        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, inputString, position, color);
     }
 
     private static char GetKeyChar(Keys key)

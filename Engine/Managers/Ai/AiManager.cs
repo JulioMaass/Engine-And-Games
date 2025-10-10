@@ -57,7 +57,7 @@ public static class AiManager
 
                 var position = IntVector2.New(x * 16, y * 16) + StageManager.CurrentRoom.PositionInPixels;
                 var text = DistanceMap[x, y].ToString();
-                Video.SpriteBatch.DrawString(Drawer.HpFontMap, text, position, CustomColor.White);
+                StringDrawer.DrawString(StringDrawer.TinyUnicodeFont, text, position, CustomColor.White);
             }
         }
     }

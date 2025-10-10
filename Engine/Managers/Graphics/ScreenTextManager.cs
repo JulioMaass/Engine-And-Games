@@ -41,6 +41,6 @@ public static class ScreenTextManager
         if (OffDuration == 0) return;
         var lightFrame = (Frame - TextDelay) % (OnDuration + OffDuration);
         if ((Frame - TextDelay) % (OnDuration + OffDuration) < OnDuration)
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, Text, IntVector2.New(173, 88), Color.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, Text, IntVector2.New(173, 88), Color.White);
     }
 }

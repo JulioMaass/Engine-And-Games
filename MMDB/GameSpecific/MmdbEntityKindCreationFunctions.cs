@@ -114,7 +114,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             Sprite.DrawId(5, (112, 0));
 
             var cursorPosition = Position.Pixel + labelOffset;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem.Label, cursorPosition, CustomColor.MegaManWhite);
+            StringDrawer.DrawString(StringDrawer.MegaManFont, MenuItem.Label, cursorPosition, CustomColor.MegaManWhite);
         };
 
         MenuItem.OnSelectDraw = () =>
@@ -123,7 +123,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             Sprite.DrawId(1, (112, 0));
 
             var cursorPosition = Position.Pixel + labelOffset;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem.Label, cursorPosition,
+            StringDrawer.DrawStringOutlined(StringDrawer.MegaManFont, MenuItem.Label, cursorPosition,
                 CustomColor.MegaManWeaponSelect);
         };
     }

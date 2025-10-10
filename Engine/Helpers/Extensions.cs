@@ -1,4 +1,5 @@
 ﻿using Engine.Types;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -251,4 +252,13 @@ public static class Extensions // TODO - ARCHITECTURE: Move each extension to a 
         //return string.Join("\n", _lines);
         return string.Join(lineBreak, lines);
     }
+
+    // COLOR EXTENSIONS
+    public static Color DefaultTo(this Color color, Color defaultOverwrite)
+    {
+        if (color == default)
+            return defaultOverwrite;
+        return color;
+    }
+
 }

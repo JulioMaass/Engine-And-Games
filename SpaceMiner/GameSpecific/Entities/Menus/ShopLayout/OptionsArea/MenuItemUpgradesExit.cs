@@ -14,17 +14,17 @@ public class MenuItemUpgradesExit : Entity
         AddBasicComponents();
         MenuItem = new(this);
 
-        MenuItem.Label = "Exit";
+        MenuItem.Label = "EXIT";
 
         MenuItem.Draw = () =>
         {
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, MenuItem.Label, Position.Pixel + (0, 10), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.CutePixelFont, MenuItem.Label, Position.Pixel + (0, 10), CustomColor.White);
         };
 
         MenuItem.OnSelectDraw = () =>
         {
             var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
-            Video.SpriteBatch.DrawString(Drawer.MegaManFont, ">", cursorPosition + (-10, 10), CustomColor.White);
+            StringDrawer.DrawStringOutlined(StringDrawer.CutePixelFont, ">", cursorPosition + (-10, 10), CustomColor.White);
         };
 
         MenuItem.OnSelect = () =>
