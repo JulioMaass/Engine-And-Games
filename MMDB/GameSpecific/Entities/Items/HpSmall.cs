@@ -12,7 +12,7 @@ public class HpSmall : Entity
 
         // Basic, Sprite, EntityKind
         AddBasicComponents();
-        AddSpriteCenteredOrigin("SmallHp", 8);
+        AddSpriteCenteredOrigin("HpSmall", 8);
         AddItemComponents(ResourceType.Hp, 2);
 
         // States
