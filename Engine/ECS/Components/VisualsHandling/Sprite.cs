@@ -16,7 +16,8 @@ public class Sprite : Component
 
     // Flipping
     public bool FlippedFacing => Owner.Facing.X == -1;
-    public bool IsFlipped => OwnerState.GetFlipAnimation() != FlippedFacing && !AutoRotation; // XOR
+    public bool IsFlipped => OwnerState.GetFlipAnimation() != FlippedFacing && !DoesntFlip; // XOR
+    public bool DoesntFlip => AutoRotation || DirectionOffset != default;
 
     // Sizes
     public bool Resizable { get; set; }
@@ -26,6 +27,7 @@ public class Sprite : Component
 
     // Rotation
     public bool AutoRotation { get; set; }
+    public (int DirectionsAmount, int FrameOffset) DirectionOffset { get; set; } // Ex.: (8, 3) means that the sprite sheet has 8 directions, and each direction sheet starts 3 frames after the other
 
     // Origin
     public IntVector2 Origin { get; set; }
@@ -40,7 +42,6 @@ public class Sprite : Component
     private IntVector2 OwnerPosition => Owner.Position.Pixel;
     public bool IsVisible { get; set; } = true;
     public bool HudSprite { get; set; } = false;
-    public (int DirectionsAmount, int FrameOffset) DirectionOffset { get; set; } // Ex.: (8, 3) means that the sprite sheet has 8 directions, and each direction sheet starts 3 frames after the other
     public bool ApplyJitterCorrection { get; set; } // Only use for entities that move at speeds similar to player/camera speed, and don't have complex physics (carry/push) Ex.: Suzy moving at 1.5 speed, slow shots, etc
     public int VariationOffset { get; set; }
 

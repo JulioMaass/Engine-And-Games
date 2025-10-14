@@ -47,6 +47,8 @@ public class BunbyTank : Entity
         var stateMove = NewState(new StateDefault("Move"), 0, 4, 3)
             .AddBehavior(new BehaviorMoveToXFacing())
             .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingCollides())
+            .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingLedge())
+            .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingOutOfRoom())
             .AddToAutomaticStatesList();
 
         // Command States

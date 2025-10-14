@@ -42,6 +42,8 @@ public class Spine : Entity
             .AddBehavior(new BehaviorMoveToXFacing())
             .AddBehaviorWithConditions(new BehaviorDashToXFacing(), new ConditionPlayerYDistanceRange(0, 16))
             .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingCollides())
+            .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingLedge())
+            .AddBehaviorWithConditions(new BehaviorMirrorXFacing(), new ConditionFacingOutOfRoom())
             .AddToAutomaticStatesList();
     }
 }

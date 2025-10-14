@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
+using Engine.ECS.Entities.EntityCreation;
 using MMDB.GameSpecific.States.Enemy;
 
 namespace MMDB.GameSpecific.Entities.EnemyShots;
@@ -13,18 +14,23 @@ public class BunbyMissile : Entity
         AddBasicComponents();
         AddSpriteCenteredOrigin("BunbyMissile", 25, 25);
         AddMmdbEnemyShotComponents(2);
+        AddDamageTaker(1);
         AddSolidBehavior();
         AddCollisionBox(11, 11, 5, 5);
 
-        // TODO: Make it destructible
+        // Sprite rotation
+        Sprite.DirectionOffset = (8, 2);
+
         // Enemy specific components
         AddMoveDirection();
-        AddTurnSpeed(2000); // TODO: 1.5f turn speed
+        AddTurnSpeed(2000);
+        AddFrameCounter(300, true);
+        AddDeathHandler(new BehaviorCreateEntity(typeof(ExplosionSmall)));
 
         // States
         AddStateManager();
         // Auto States
-        var state = NewStateWithTimedPattern(new StateEnemyTurnAngleAndMove(), (0, 4), (8, 4)) // TODO: Use DirectionFrames to draw it in different directions
+        var state = NewStateWithTimedPattern(new StateEnemyTurnAngleAndMove(), (0, 4), (1, 4))
             .AddToAutomaticStatesList();
     }
 }
