@@ -146,7 +146,7 @@ public static class MenuManager
 
         // Select and Cancel
         if (GameInput.Confirm.Pressed)
-            SelectedItem.MenuItem.OnSelect?.Invoke();
+            SelectedItem.MenuItem.Select();
         else if (GameInput.Cancel.Pressed)
             GoBackOneMenu();
     }

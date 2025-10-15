@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Entities;
 using Engine.ECS.Entities.Shared;
+using Engine.GameSpecific;
 using Engine.Helpers;
 using Engine.Main;
 using Engine.Managers.Audio;
@@ -123,7 +124,8 @@ public static class StageManager // Used to show current room (tiles and entitie
 
         // Fade in screen and text
         ScreenDimmer.DimScreen(0f, 1f, 20, 5);
-        ScreenTextManager.CreateTemporaryText("ready", 120, 30, 6, 6);
+        if (GameManager.GameSpecificSettings.CurrentGame == GameId.Mmdb)
+            ScreenTextManager.CreateTemporaryText("READY", 120, 30, 6, 6);
 
         // Delete all entities
         CurrentRoom?.ResetAllSpawners();

@@ -17,13 +17,17 @@ public class MenuItemMagnet : Entity
         Sprite.HudSprite = true;
         AddFrameSprite("MenuSocketNineSlice", 2, 2);
         AddEquipmentItemStats(EquipKind.None);
-        EquipmentItemStats.Stats.ExtraItemAttractionRadius = 32;
+        EquipmentItemStats.Stats.ExtraItemAttractionRadius = 16;
 
-        AddItemComponents(ResourceType.Hp, 1000000);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreOrange, 100, 1000, 10000, 100000, 1000000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreOrange, ResourceType.OreGray,
+            (10, 100),
+            (100, 1000),
+            (1000, 10000),
+            (10000, 100000),
+            (100000, 1000000));
 
         MenuItem.Label = "Magnet";
-        AddSpaceMinerMissileItemComponents();
+        AddSpaceMinerShipUpgradeItemComponents();
     }
 }

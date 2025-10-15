@@ -20,9 +20,20 @@ public class MenuItemSocketBlueShotSpeed : Entity
         EquipmentItemStats.Stats.ExtraSpeed = 0.25f;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreBlue, 100, 150, 250, 500, 750, 1000, 1500, 2000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreBlue, ResourceType.OreGray,
+            (25, 250),
+            (50, 500),
+            (100, 1000),
+            (150, 1500),
+            (250, 250),
+            (500, 500),
+            (750, 750),
+            (1000, 1000),
+            (1500, 1500),
+            (2000, 2000)
+            );
 
         MenuItem.Label = "Shot Speed";
-        AddSpaceMinerUpgradeItemComponents();
+        AddSpaceMinerWeaponUpgradeItemComponents();
     }
 }

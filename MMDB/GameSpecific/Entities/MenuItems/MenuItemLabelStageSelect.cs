@@ -9,7 +9,6 @@ public class MenuItemLabelStageSelect : Entity
     {
         AddPointedLabelMenuComponents(StringDrawer.MegaManFont);
         MenuItem.Label = "STAGE SELECT";
-        MenuItem.OnSelect = MenuItem.OpenContainedMenuLayout;
         MenuItem.ContainedMenuLayoutType = typeof(MenuLayoutStageSelect);
     }
 }

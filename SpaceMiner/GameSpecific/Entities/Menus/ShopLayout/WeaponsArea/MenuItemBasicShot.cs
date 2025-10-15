@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Types;
 using SpaceMiner.GameSpecific.Shooters;
 
 namespace SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
@@ -19,8 +20,8 @@ public class MenuItemBasicShot : Entity
         AddEquipmentItemStats(EquipKind.Weapon);
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterBasic);
 
-        //ItemPrice = new ItemPrice(this);
-        //ItemPrice.AddPrice((ResourceType.OreRed, 150));
+        ItemPrice = new ItemPrice(this);
+        ItemPrice.AddUnlockPrice((ResourceType.OreGray, 0));
 
         MenuItem.Label = "Basic";
         AddSpaceMinerWeaponItemComponents();

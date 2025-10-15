@@ -20,9 +20,14 @@ public class MenuItemSocketYellowStraightMulti : Entity
         EquipmentItemStats.Stats.ExtraSpawnPointShots = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 100, 250, 500, 1000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreYellow, ResourceType.OreGray,
+            (100, 1000),
+            (250, 2500),
+            (500, 5000),
+            (1000, 10000)
+            );
 
         MenuItem.Label = "Straight Multi";
-        AddSpaceMinerUpgradeItemComponents();
+        AddSpaceMinerWeaponUpgradeItemComponents();
     }
 }

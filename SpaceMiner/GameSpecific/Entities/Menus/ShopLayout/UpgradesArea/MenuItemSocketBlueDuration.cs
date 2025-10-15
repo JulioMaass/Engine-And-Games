@@ -20,9 +20,26 @@ public class MenuItemSocketBlueDuration : Entity
         EquipmentItemStats.Stats.ExtraDuration = 10;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreBlue, 100, 150, 250, 500, 750, 1000, 1500, 2000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreBlue, ResourceType.OreGray,
+            (10, 100),
+            (20, 200),
+            (30, 300),
+            (40, 400),
+            (50, 50),
+            (75, 75),
+            (100, 100),
+            (150, 150),
+            (200, 200),
+            (250, 250),
+            (350, 350),
+            (500, 500),
+            (750, 750),
+            (1000, 1000),
+            (1500, 1500),
+            (2000, 2000)
+            );
 
         MenuItem.Label = "Shot Duration";
-        AddSpaceMinerUpgradeItemComponents();
+        AddSpaceMinerWeaponUpgradeItemComponents();
     }
 }

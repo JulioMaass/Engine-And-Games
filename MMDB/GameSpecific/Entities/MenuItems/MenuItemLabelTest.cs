@@ -9,7 +9,6 @@ public class MenuItemLabelTest : Entity
     {
         AddPointedLabelMenuComponents(StringDrawer.MegaManFont);
         MenuItem.Label = "TEST";
-        MenuItem.OnSelect = MenuItem.OpenContainedMenuLayout;
         MenuItem.ContainedMenuLayoutType = typeof(MenuLayoutTest);
     }
 }

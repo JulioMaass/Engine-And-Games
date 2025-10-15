@@ -20,9 +20,14 @@ public class MenuItemSocketGreenPierce : Entity
         EquipmentItemStats.Stats.ExtraPierceAmount = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 150, 300, 500, 1000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreGreen, ResourceType.OreGray,
+            (150, 1500),
+            (300, 3000),
+            (500, 5000),
+            (1000, 10000)
+            );
 
         MenuItem.Label = "Pierce";
-        AddSpaceMinerUpgradeItemComponents();
+        AddSpaceMinerWeaponUpgradeItemComponents();
     }
 }

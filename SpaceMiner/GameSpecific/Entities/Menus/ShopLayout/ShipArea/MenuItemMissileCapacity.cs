@@ -21,12 +21,29 @@ public class MenuItemMissileCapacity : Entity
 
         foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
             if (resourceType.ToString().StartsWith("Missile", StringComparison.OrdinalIgnoreCase))
-                AddResourceItemStats(resourceType, 10, IncreaseKind.Max);
+                AddResourceItemStats(resourceType, 1, IncreaseKind.Max);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreYellow, 100, 1000, 10000, 100000, 1000000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreYellow, ResourceType.OreGray,
+            (10, 100),
+            (25, 250),
+            (50, 500),
+            (150, 1500),
+            (200, 200),
+            (250, 250),
+            (300, 300),
+            (400, 400),
+            (500, 500),
+            (750, 750),
+            (1000, 1000),
+            (1500, 1500),
+            (2000, 2000),
+            (2500, 2500),
+            (3000, 3000),
+            (5000, 5000)
+            );
 
         MenuItem.Label = "Missiles";
-        AddSpaceMinerMissileItemComponents();
+        AddSpaceMinerShipUpgradeItemComponents();
     }
 }

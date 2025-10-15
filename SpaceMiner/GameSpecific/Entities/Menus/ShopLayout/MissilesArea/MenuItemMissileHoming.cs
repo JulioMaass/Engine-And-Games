@@ -22,7 +22,7 @@ public class MenuItemMissileHoming : Entity
 
         AddItemComponents(ResourceType.MissileHoming, 1);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreOrange, 10);
+        ItemPrice.AddBuyPrices(ResourceType.OreOrange, 10);
 
         MenuItem.Label = "Homing";
         AddSpaceMinerMissileItemComponents();

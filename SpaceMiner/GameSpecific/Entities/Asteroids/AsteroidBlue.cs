@@ -10,15 +10,15 @@ public class AsteroidBlue : Asteroid
     public AsteroidBlue()
     {
         // Sprite
-        AddSpriteCenteredOrigin("AsteroidBlue", 32);
+        AddSpriteCenteredOrigin("AsteroidBlue0", 24);
         AddSpriteVariation(4, 1);
-        AddCenteredCollisionBox(16);
+        AddCenteredCollisionBox(12);
         BloomSource = new BloomSource(this, 0.75f);
 
         // Properties
         AddSpaceMinerEnemyComponents(30, 50);
         AddItemDropper(8, (typeof(OreBlue), 1), (typeof(OreGray), 2));
-        AddRandomMoveSpeed(1.5f, 2.0f);
+        AddRandomMoveSpeed(1.25f, 1.75f);
 
         // States
         AddStateManager();

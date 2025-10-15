@@ -17,7 +17,7 @@ public class ShipShooterBasic : Shooter
         ShotType = typeof(ResizableShot);
         EntityKind = EntityKind.PlayerShot;
         // Blue
-        AutoFireRate = 40;
+        AutoFireRate = 30;
         ShotSpeed = 3.5f;
         ShotDuration = 30;
         // Green

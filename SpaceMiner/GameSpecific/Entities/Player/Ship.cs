@@ -19,12 +19,12 @@ public class Ship : Entity
 
         AddAlignment(AlignmentType.Friendly);
         AddDamageDealer(10);
-        AddDamageTaker(25000);
+        AddDamageTaker(250);
         DamageTaker.SetInvincibilityFrames(60);
 
         AddPlayerComponents();
         AddCollisionBox(12, 12, 6, 6);
-        AddMoveSpeed(2f);
+        AddMoveSpeed(1.25f);
         Speed.DashSpeed = 0f;
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 

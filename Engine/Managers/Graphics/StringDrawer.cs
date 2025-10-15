@@ -31,8 +31,8 @@ public static class StringDrawer
     public static SpriteFont MegaManFont { get; private set; }              // 7x7 Bold Shadowed
     public static SpriteFont PressStart2PShadowFont { get; private set; }   // 7x7 Bold Shadowed
     // Edited fonts
-    public static SpriteFont TinyUnicodeSoftFont { get; private set; }          // 4x5 Thin
-    public static SpriteFont PressStartEditedFont { get; private set; }         // 7x7 Bold
+    public static SpriteFont TinyUnicodeSoftFont { get; private set; }      // 4x5 Thin
+    public static SpriteFont PressStartEditedFont { get; private set; }     // 7x7 Bold
 
     public static void LoadFonts()
     {

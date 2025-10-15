@@ -139,6 +139,22 @@ public class CharData
         return Equipment.Count(e => e.Type == equipmentType);
     }
 
+    public bool IsResourceFull(Type type)
+    {
+        var entity = CollectionManager.GetEntityFromType(type);
+        if (entity == null || entity.ResourceItemStatsList == null)
+            return false;
+        var resource = CollectionManager.GetEntityFromType(type).ResourceItemStatsList[0];
+
+        // Check max amount
+        if (resource.IncreaseKind != IncreaseKind.Current) // Check if it increases max amount
+            return false;
+        if (resource.ResourceType == ResourceType.Hp) // Special check for HP because it's handled differently (held in DamageTaker)
+            return Char.DamageTaker.CurrentHp.Amount >= Char.DamageTaker.CurrentHp.MaxAmount;
+        var maxAmount = Resources.GetResource(resource.ResourceType).MaxAmount; // Normal resource check
+        return Resources.GetResource(resource.ResourceType).Amount >= maxAmount;
+    }
+
     public Type GetCurrentEquippedTypeOnSlot(EquipKind equipKind)
     {
         return EquipmentSlotList.FirstOrDefault(s => s.EquipKind == equipKind)?.Equipment

@@ -20,9 +20,18 @@ public class MenuItemSocketGreenSize : Entity
         EquipmentItemStats.Stats.ExtraSize = 1;
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 150, 300, 500, 1000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreGreen, ResourceType.OreGray,
+            (50, 500),
+            (150, 1500),
+            (200, 2000),
+            (300, 3000),
+            (400, 400),
+            (500, 500),
+            (750, 750),
+            (1000, 1000)
+            );
 
         MenuItem.Label = "Size";
-        AddSpaceMinerUpgradeItemComponents();
+        AddSpaceMinerWeaponUpgradeItemComponents();
     }
 }

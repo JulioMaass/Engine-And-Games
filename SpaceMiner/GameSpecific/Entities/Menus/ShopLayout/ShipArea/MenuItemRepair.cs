@@ -20,9 +20,9 @@ public class MenuItemRepair : Entity
 
         AddItemComponents(ResourceType.Hp, 1000000);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 100, 1000, 10000, 100000, 1000000);
+        ItemPrice.AddBuyPrices(ResourceType.OreGreen, 100, 1000, 10000, 100000);
 
         MenuItem.Label = "Repair";
-        AddSpaceMinerMissileItemComponents();
+        AddSpaceMinerShipUpgradeItemComponents();
     }
 }

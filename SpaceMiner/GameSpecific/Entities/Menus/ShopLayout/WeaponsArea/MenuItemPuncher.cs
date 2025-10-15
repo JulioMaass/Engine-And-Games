@@ -21,7 +21,7 @@ public class MenuItemPuncher : Entity
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterPuncher);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreYellow, 250));
+        ItemPrice.AddUnlockPrice((ResourceType.OreYellow, 250));
 
         MenuItem.Label = "Puncher";
         AddSpaceMinerWeaponItemComponents();

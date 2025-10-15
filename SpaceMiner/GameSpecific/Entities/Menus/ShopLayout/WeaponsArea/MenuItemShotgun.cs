@@ -21,7 +21,7 @@ public class MenuItemShotgun : Entity
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterShotgun);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreYellow, 100));
+        ItemPrice.AddUnlockPrice((ResourceType.OreYellow, 100));
 
         MenuItem.Label = "Shotgun";
         AddSpaceMinerWeaponItemComponents();

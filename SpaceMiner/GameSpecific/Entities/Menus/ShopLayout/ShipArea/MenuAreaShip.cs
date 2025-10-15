@@ -10,8 +10,8 @@ public class MenuAreaShip : MenuArea
     {
         MenuItemTypes = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemRepair), typeof(MenuItemMaxHp), typeof(MenuItemDefense), typeof(MenuItemSpeed), typeof(MenuItemDash), typeof(MenuItemMissileCapacity) },
-            { typeof(MenuItemMagnet), null, null, null, null, null },
+            { typeof(MenuItemRepair), typeof(MenuItemMaxHp), typeof(MenuItemDefense), typeof(MenuItemSpeed), typeof(MenuItemDash), null },
+            { typeof(MenuItemMissileCapacity), typeof(MenuItemMagnet), null, null, null, null },
             { null, null, null, null, null, null },
         });
         Position = IntVector2.New(64 + 16, 64 - 4);

@@ -20,9 +20,14 @@ public class MenuItemMaxHp : Entity
 
         AddItemComponents(ResourceType.Hp, 50, IncreaseKind.CurrentAndMax);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreGreen, 100, 1000, 10000, 100000, 1000000);
+        ItemPrice.AddUpgradePrices(ResourceType.OreGreen, ResourceType.OreGray,
+            (10, 100),
+            (100, 1000),
+            (1000, 10000),
+            (10000, 100000),
+            (100000, 1000000));
 
         MenuItem.Label = "Max Hp";
-        AddSpaceMinerMissileItemComponents();
+        AddSpaceMinerShipUpgradeItemComponents();
     }
 }

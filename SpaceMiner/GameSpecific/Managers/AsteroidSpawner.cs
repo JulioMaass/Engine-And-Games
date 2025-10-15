@@ -85,8 +85,8 @@ public static class AsteroidSpawner
             UpdateSpawnPool();
         if (ItIsAsteroidSpawnTime())
             SpawnAsteroid();
-        if (ItIsShipSpawnTime())
-            SpawnShip();
+        //if (ItIsShipSpawnTime())
+        //    SpawnShip();
         Timer++;
         Hud.FrameDebugInfoToPrint.Add(("Level = " + CurrentLevel, null));
     }

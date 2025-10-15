@@ -21,7 +21,7 @@ public class MenuItemWarper : Entity
         EquipmentItemStats.Stats.Shooter = typeof(ShipShooterWarper);
 
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrice((ResourceType.OreBlue, 250));
+        ItemPrice.AddUnlockPrice((ResourceType.OreBlue, 250));
 
         MenuItem.Label = "Warper";
         AddSpaceMinerWeaponItemComponents();

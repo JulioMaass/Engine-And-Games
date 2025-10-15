@@ -22,7 +22,7 @@ public class MenuItemMissileAtomic : Entity
 
         AddItemComponents(ResourceType.MissileAtomic, 1);
         ItemPrice = new ItemPrice(this);
-        ItemPrice.AddPrices(ResourceType.OreRed, 5);
+        ItemPrice.AddBuyPrices(ResourceType.OreRed, 5);
 
         MenuItem.Label = "Atomic";
         AddSpaceMinerMissileItemComponents();
