@@ -7,5 +7,6 @@ public class BehaviorDestroy : Behavior
     public override void Action()
     {
         EntityManager.DeleteEntity(Owner);
+        Owner.DeathHandler?.RunDeathProcess();
     }
 }

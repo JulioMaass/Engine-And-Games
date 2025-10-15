@@ -25,13 +25,17 @@ public class ShotProperties : Component
     public void SetShotBasicData(EntityKind entityKind, Entity owningEntity)
     {
         Owner.AssignEntityKind(entityKind);
-        Owner.Alignment.OwningEntity = owningEntity;
+        if (Owner.Alignment == null)
+            Owner.AddAlignment(owningEntity.Alignment.Type);
+        Owner.Alignment!.OwningEntity = owningEntity;
     }
 
     public void ApplyShotModifiers(int baseDamage, int extraDamage, IntVector2 size, int pierce, float speed, (int Duration, int Damage, int Size) blastData, int splitLevel, int duration, List<Action<Entity>> shotModifiers)
     {
         // Damage
-        Owner.DamageDealer.BaseDamage = baseDamage;
+        if (Owner.DamageDealer == null)
+            Owner.AddDamageDealer(baseDamage);
+        Owner.DamageDealer!.BaseDamage = baseDamage;
         Owner.DamageDealer.AddExtraDamage(extraDamage);
 
         // Size

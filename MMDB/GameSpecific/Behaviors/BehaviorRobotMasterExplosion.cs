@@ -1,7 +1,7 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Entities;
 using Microsoft.Xna.Framework;
-using MMDB.GameSpecific.Entities;
+using MMDB.GameSpecific.Entities.Explosions;
 
 namespace MMDB.GameSpecific.Behaviors;
 

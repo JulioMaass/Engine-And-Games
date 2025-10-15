@@ -7,6 +7,7 @@ using Engine.Managers.Graphics;
 using Engine.Types;
 using MMDB.GameSpecific.Behaviors;
 using MMDB.GameSpecific.Entities;
+using MMDB.GameSpecific.Entities.Explosions;
 using MMDB.GameSpecific.Entities.Items;
 
 namespace MMDB.GameSpecific;

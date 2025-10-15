@@ -1,10 +1,12 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors.Directions;
+using Engine.ECS.Components.ControlHandling.Behaviors.Facing;
 using Engine.ECS.Components.ControlHandling.Behaviors.Shoot;
 using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
 using Engine.ECS.Components.ControlHandling.Conditions;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
+using Microsoft.Xna.Framework;
 using MMDB.GameSpecific.Entities.EnemyShots;
 
 namespace MMDB.GameSpecific.Entities.Enemies;
@@ -30,9 +32,9 @@ public class Cannopeller : Entity
 
         // Shooter Manager
         Shooter = new Shooter(this);
-        Shooter.AddShootAction(() => Shooter.ShootAtPlayer());
-        Shooter.RelativeSpawnPosition = IntVector2.New(13, 3);
-        Shooter.ShotType = typeof(EnemyBullet);
+        Shooter.AddShootAction(() => Shooter.ShootAtSpeed(new Vector2(3f, -0.5f)));
+        Shooter.RelativeSpawnPosition = IntVector2.New(8, -2);
+        Shooter.ShotType = typeof(CannonBomb);
         Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 3f);
 
         // States
@@ -50,7 +52,7 @@ public class Cannopeller : Entity
         // 64 to 82 frames to shoot (average 73)
 
         // Ai Control
-        //AiControl.AddPermanentBehavior(new BehaviorFacePlayer());
+        AiControl.AddPermanentBehavior(new BehaviorFacePlayer());
 
 
         //// Auto States

@@ -1,5 +1,6 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors.EntityCreation;
 using Engine.ECS.Entities.EntityCreation;
+using MMDB.GameSpecific.Entities.Explosions;
 using MMDB.GameSpecific.States.Enemy;
 
 namespace MMDB.GameSpecific.Entities.EnemyShots;

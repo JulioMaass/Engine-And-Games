@@ -1,6 +1,6 @@
 ﻿using Engine.ECS.Entities.EntityCreation;
 
-namespace MMDB.GameSpecific.Entities;
+namespace MMDB.GameSpecific.Entities.Explosions;
 
 public class ExplosionSmall : Entity
 {
