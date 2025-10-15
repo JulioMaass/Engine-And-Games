@@ -34,12 +34,17 @@ public class BunbyTank : Entity
         AddMoveSpeed(1.0f);
         AddMoveDirection();
 
-        // Shooter Manager // TODO: Mirror shot's direction
+        // Shooter Manager
         Shooter = new Shooter(this);
         Shooter.AddShootAction(() => Shooter.ShootStraight());
-        Shooter.RelativeSpawnPosition = IntVector2.New(28, -6); // TODO: Add secondary spawn point
+        Shooter.RelativeSpawnPosition = IntVector2.New(28, -6);
         Shooter.ShotType = typeof(BunbyMissile);
         Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 1.8f);
+        SecondaryShooter = new Shooter(this);
+        SecondaryShooter.AddShootAction(() => SecondaryShooter.ShootStraight());
+        SecondaryShooter.RelativeSpawnPosition = IntVector2.New(9, -2);
+        SecondaryShooter.ShotType = typeof(BunbyMissile);
+        SecondaryShooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 1.8f);
 
         // States
         AddStateManager();
@@ -56,7 +61,7 @@ public class BunbyTank : Entity
             .AddKeepCondition(new ConditionFrameSmaller(70))
             .AddBehavior(new BehaviorStop())
             .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(20))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(50));
+            .AddBehaviorWithConditions(new BehaviorShootSecondary(), new ConditionFrameEqual(50));
 
         //Ai Control
         AiControl = new(this);
