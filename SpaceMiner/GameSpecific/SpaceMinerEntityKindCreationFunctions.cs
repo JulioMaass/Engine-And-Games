@@ -143,9 +143,12 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         var i = 0;
         foreach (var resourceCost in itemPrice.ResourceCosts)
         {
-            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, resourceCost.Amount.ToString(), Position.Pixel + (-4, 21 + i * 10), color);
+            var priceColor = CustomColor.White;
+            if (!GlobalManager.Values.MainCharData.Resources.HasResource(resourceCost.ResourceType, resourceCost.Amount))
+                priceColor = CustomColor.Gray;
+            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeSoftFont, resourceCost.Amount.ToString(), Position.Pixel + (-4, 21 + i * 10), priceColor);
             if (itemPrice != null)
-                DrawOreIcon(resourceCost.ResourceType, Position.Pixel + (-14, 20 + i * 10), color);
+                DrawOreIcon(resourceCost.ResourceType, Position.Pixel + (-14, 20 + i * 10), priceColor);
             i++;
         }
     }
