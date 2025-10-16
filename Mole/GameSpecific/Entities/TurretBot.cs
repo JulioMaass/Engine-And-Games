@@ -33,7 +33,7 @@ public class TurretBot : Entity
         AddStateManager();
         // Auto States
         var stateIdle = NewStateWithTimedPattern(new StateDefault("Idle"), (0, 180), (1, 5), (0, 5), (1, 5), (0, 5), (1, 5), (0, 5))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(210))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(210))
             .AddToAutomaticStatesList();
     }
 }

@@ -60,8 +60,8 @@ public class BunbyTank : Entity
         var stateShoot = NewStateWithTimedPattern(new StateDefault("Shoot"), (3, 10), (4, 5), (5, 10), (4, 5), (3, 10), (6, 5), (7, 10), (6, 5), (3, 10))
             .AddKeepCondition(new ConditionFrameSmaller(70))
             .AddBehavior(new BehaviorStop())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(20))
-            .AddBehaviorWithConditions(new BehaviorShootSecondary(), new ConditionFrameEqual(50));
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(20))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShootSecondary(), new ConditionFrameEqual(50));
 
         //Ai Control
         AiControl = new(this);

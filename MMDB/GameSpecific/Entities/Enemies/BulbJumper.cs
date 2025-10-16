@@ -44,7 +44,7 @@ public class BulbJumper : Entity
         var stateFall = NewState(new StateFall())
             .AddToAutomaticStatesList();
         var stateIdle = NewState(new StateEnemyIdleGround())
-            .AddStateSettingBehavior(new BehaviorShoot())
+            .AddPostProcessingStateSettingBehavior(new BehaviorShoot())
             .AddToAutomaticStatesList();
         // Command States
         var stateJump = NewState(new StateEnemyJump());

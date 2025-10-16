@@ -42,7 +42,7 @@ public class SpikeFlower : Entity
         // Auto States
         stateIdle.AddToAutomaticStatesList();
         stateFocus.AddToAutomaticStatesList();
-        stateShoot.AddStateSettingBehavior(new BehaviorShoot())
+        stateShoot.AddPostProcessingStateSettingBehavior(new BehaviorShoot())
             .AddToAutomaticStatesList();
         MakeStateDurationLoop(true, (stateIdle, 120),
             (stateFocus, 30),

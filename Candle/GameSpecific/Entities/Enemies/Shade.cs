@@ -41,7 +41,7 @@ public class Shade : Entity
             .AddBehavior(new BehaviorCircleMovement(Engine.Helpers.Axes.Y, 5, 60, 180000))
             .AddKeepCondition(new ConditionFrame(60, ComparisonType.LessOrEqual));
         var stateAttack = NewState(default, 1)
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrame(0, ComparisonType.Equal))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrame(0, ComparisonType.Equal))
             .AddBehavior(new BehaviorStop())
             .AddKeepCondition(new ConditionFrame(30, ComparisonType.LessOrEqual));
 

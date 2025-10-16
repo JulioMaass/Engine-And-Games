@@ -51,10 +51,14 @@ public abstract class State : Component
     public virtual void StateSettingBehavior() { } // Frame 0
     public virtual void StartUpBehavior() { } // Frame < StartUpDuration
     public abstract void Behavior(); // Frame >= StartUpDuration
-    public virtual void PostProcessingBehavior() { } // Behaviors that work better post movement (like making a vfx that takes entity's new position into account)
     public List<Behavior> AddedStateSettingBehaviors { get; } = new();
     public List<Behavior> AddedBehaviors { get; } = new();
     public List<Behavior> AddedStateExitBehaviors { get; } = new();
+    // Post-processing behaviors - Behaviors that work better post movement (like making a vfx that takes entity's new position into account)
+    public virtual void PostProcessingStateSettingBehavior() { }
+    public virtual void PostProcessingBehavior() { }
+    public List<Behavior> AddedPostProcessingStateSettingBehaviors { get; } = new();
+    public List<Behavior> AddedPostProcessingBehaviors { get; } = new();
 
     public int GetSpriteId()
     {
@@ -167,9 +171,34 @@ public abstract class State : Component
         return this;
     }
 
+    public State AddPostBehavior(Behavior behavior)
+    {
+        AddedPostProcessingBehaviors.Add(behavior);
+        behavior.Owner = Owner;
+        return this;
+    }
+
+    public State AddPostProcessingBehaviorWithConditions(Behavior behavior, params Condition[] conditions)
+    {
+        AddPostBehavior(behavior);
+        foreach (var condition in conditions)
+        {
+            condition.Owner = Owner;
+            behavior.AddCondition(condition);
+        }
+        return this;
+    }
+
     public State AddStateSettingBehavior(Behavior behavior)
     {
         AddedStateSettingBehaviors.Add(behavior);
+        behavior.Owner = Owner;
+        return this;
+    }
+
+    public State AddPostProcessingStateSettingBehavior(Behavior behavior)
+    {
+        AddedPostProcessingStateSettingBehaviors.Add(behavior);
         behavior.Owner = Owner;
         return this;
     }

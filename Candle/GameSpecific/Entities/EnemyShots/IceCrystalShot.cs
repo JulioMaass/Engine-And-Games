@@ -36,7 +36,7 @@ public class IceCrystalShot : Entity
         AddStateManager();
         var stateExploding = NewState()
             .AddStartCondition(new ConditionCustom(() => Speed.Value == Vector2.Zero))
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorDestroy()), new ConditionFrame(30, ComparisonType.GreaterOrEqual))
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorDestroy()), new ConditionFrame(30, ComparisonType.GreaterOrEqual))
             .AddToAutomaticStatesList();
         var state = NewState()
             .AddBehaviorWithConditions(new BehaviorDecelerateMomentum(30), new ConditionFrame(45, ComparisonType.Greater))

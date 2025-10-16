@@ -29,7 +29,7 @@ public class FireBouncerSpawner : Entity
         AddStateManager();
         // Auto States
         var state = NewState()
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(180))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(180))
             .AddToAutomaticStatesList();
 
         AddCustomValueHandler();

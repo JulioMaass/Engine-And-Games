@@ -47,7 +47,7 @@ public class MetShooter : Entity
         // Command States
         var stateShoot = NewStateWithTimedPattern(new StateEnemyKeepForDuration(60), (1, 4), (2, 52), (1, 4))
             .AddStateSettingBehavior(new BehaviorChangeBodyType(BodyType.Vulnerable))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30));
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30));
 
         // Ai Control
         // Get up

@@ -43,7 +43,7 @@ public class Firefly : Entity
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
             .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(10))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(10))
             .AddToAutomaticStatesList();
 
         // Ai Control

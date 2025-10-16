@@ -33,7 +33,7 @@ public class DrippingCeiling : Entity
         // Auto States
         var idleState = NewState(new StateIdleAndFall())
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(150, 180), ComparisonType.Equal))
             .AddToAutomaticStatesList();
     }

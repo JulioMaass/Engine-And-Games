@@ -39,7 +39,7 @@ public class Death : Entity
         // Auto States
         var idleState = NewState()
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(150, 180), ComparisonType.Equal))
             .AddToAutomaticStatesList();
     }

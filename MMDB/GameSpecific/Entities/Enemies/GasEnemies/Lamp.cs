@@ -47,7 +47,7 @@ public class Lamp : Entity
         var stateFall = NewState(new StateFall())
             .AddToAutomaticStatesList();
         var stateIdle = NewState(new StateEnemyIdleGround())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30))
             .AddToAutomaticStatesList();
         // Command States
         var stateJump = NewState(new StateEnemyJump());

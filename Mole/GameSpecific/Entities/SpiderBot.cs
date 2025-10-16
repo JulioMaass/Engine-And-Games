@@ -35,7 +35,7 @@ public class SpiderBot : Entity
         AddStateManager();
         // Auto States
         var state = NewStateWithTimedPattern(new StateWalkAwayFromPlayer(1.0f), (0, 150), (1, 5), (0, 5), (1, 5), (0, 5), (1, 5), (0, 5))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(180))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(180))
             .AddToAutomaticStatesList();
     }
 }

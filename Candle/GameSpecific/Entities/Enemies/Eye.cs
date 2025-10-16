@@ -33,7 +33,7 @@ public class Eye : Entity
         // Auto States
         var state = NewState()
             .AddBehavior(new BehaviorFacePlayer())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(90))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(90))
             .AddToAutomaticStatesList();
     }
 }

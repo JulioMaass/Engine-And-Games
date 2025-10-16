@@ -63,6 +63,25 @@ public class StatePlayerControl : State
             Owner.Speed.SetYSpeed(Owner.Speed.Y * 0.70710678118f);
         }
 
+        // Dash
+        DashFrame--;
+        var isMoving = (Owner.Speed.X != 0 || Owner.Speed.Y != 0);
+        if (StatsManager.CheckForUnlock(Owner, stats => stats.Dash)
+            && Owner.PlayerControl.Button3Press && isMoving && DashFrame < -20)
+        {
+            DashFrame = 10;
+            DashDirection = Angle.GetAngleFromDistanceCoordinates(new Vector2(Owner.Speed.X, Owner.Speed.Y)).Value;
+        }
+        if (DashFrame > 0)
+        {
+            var dashSpeed = moveSpeed + Owner.Speed.DashSpeed + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraDashSpeed, true, false, false);
+            Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * dashSpeed);
+            Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * dashSpeed);
+        }
+    }
+
+    public override void PostProcessingBehavior()
+    {
         // Attack
         if (EntityManager.PlayerEntity.Shooter == null)
             GlobalManager.Values.MainCharData.TryToEquipItem(typeof(MenuItemBasicShot));
@@ -88,25 +107,6 @@ public class StatePlayerControl : State
         if (Owner.PlayerControl.Button4Press)
             Owner.SuperShooter?.CheckToShoot();
 
-        // Dash
-        DashFrame--;
-        var isMoving = (Owner.Speed.X != 0 || Owner.Speed.Y != 0);
-        if (StatsManager.CheckForUnlock(Owner, stats => stats.Dash)
-            && Owner.PlayerControl.Button3Press && isMoving && DashFrame < -20)
-        {
-            DashFrame = 10;
-            DashDirection = Angle.GetAngleFromDistanceCoordinates(new Vector2(Owner.Speed.X, Owner.Speed.Y)).Value;
-        }
-        if (DashFrame > 0)
-        {
-            var dashSpeed = moveSpeed + Owner.Speed.DashSpeed + StatsManager.GetAddedFloatStats(Owner, stats => stats.ExtraDashSpeed, true, false, false);
-            Owner.Speed.SetXSpeed(Angle.GetXLength(DashDirection) * dashSpeed);
-            Owner.Speed.SetYSpeed(Angle.GetYLength(DashDirection) * dashSpeed);
-        }
-    }
-
-    public override void PostProcessingBehavior()
-    {
         //if (Owner.FrameHandler.CurrentFrame % 60 != 0)
         //    return; // Only run every second
 

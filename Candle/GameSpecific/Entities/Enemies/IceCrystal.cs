@@ -51,7 +51,7 @@ public class IceCrystal : Entity
         // Auto States
         var idleState = NewState(new StateIdleAndFall())
             .AddStateSettingBehavior(new BehaviorStop())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(90, 150), ComparisonType.Equal))
             .AddBehavior(new BehaviorCircleMovement(Engine.Helpers.Axes.Y, 3, 100, 180000))
             .AddToAutomaticStatesList();

@@ -44,7 +44,7 @@ public class Cannopeller : Entity
             .AddBehavior(new BehaviorAccelerateToDirection())
             .AddBehaviorWithConditions(new BehaviorReverseAngleDirection(MoveDirection), new ConditionCollidesAtDistanceWithCurrentDirection(48),
                 new ConditionYSpeedBiggerThan(1.0f))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(90))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(90))
             .AddToAutomaticStatesList();
 
         // Mega Man 6 Cannopeller:

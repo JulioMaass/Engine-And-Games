@@ -43,9 +43,9 @@ public class SniperJoe : Entity
         // Command States
         var stateShoot = NewStateWithTimedPattern(new StateDefault("Shoot"), (8, 8), (9, 104), (8, 8))
             .AddKeepCondition(new ConditionFrameSmaller(120))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(20))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(60))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(100));
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(20))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(60))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(100));
 
         //Ai Control
         AiControl = new(this);

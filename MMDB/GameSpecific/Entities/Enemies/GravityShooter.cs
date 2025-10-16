@@ -36,7 +36,7 @@ public class GravityShooter : Entity
         AddStateManager();
         // Auto States
         var idleState = NewState(new StateIdleAndFall())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(100, 2, 30))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(100, 2, 30))
             .AddToAutomaticStatesList();
     }
 }

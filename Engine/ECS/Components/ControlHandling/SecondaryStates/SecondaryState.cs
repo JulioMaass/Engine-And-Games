@@ -15,5 +15,6 @@ public abstract class SecondaryState : Component
 
     // Behaviors
     public virtual void StateSettingBehavior() { } // Frame 0
+    public virtual void PostProcessingStateSettingBehavior() { } // Frame 0
     public abstract void Behavior(); // Frame >= StartUpDuration
 }

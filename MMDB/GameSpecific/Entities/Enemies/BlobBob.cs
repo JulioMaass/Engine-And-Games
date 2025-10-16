@@ -32,7 +32,7 @@ public class BlobBob : Entity
         AddStateManager();
         // Auto States
         var crawlState = NewState(new StateEnemyCrawl())
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(60))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(60))
             .AddToAutomaticStatesList();
     }
 }

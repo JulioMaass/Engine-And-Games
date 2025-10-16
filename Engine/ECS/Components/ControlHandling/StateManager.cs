@@ -149,7 +149,7 @@ public class StateManager : Component
 
     public void PostProcessing()
     {
-        CurrentState.PostProcessingBehavior();
+        RunPostProcessingBehaviors();
         UpdateHitbox();
 
         if (CurrentState.PostProcessingKeepCondition())
@@ -160,6 +160,19 @@ public class StateManager : Component
         CurrentState.AddedStateSettingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
 
         CurrentState.UpdateAnimationFrame();
+    }
+
+    private void RunPostProcessingBehaviors()
+    {
+        // State setting behaviors
+        if (CurrentState.Frame == 0)
+            CurrentState.PostProcessingStateSettingBehavior();
+        if (CurrentSecondaryState?.Frame == 0)
+            CurrentSecondaryState.PostProcessingStateSettingBehavior();
+
+        // Normal behaviors
+        CurrentState.PostProcessingBehavior();
+        CurrentState.AddedPostProcessingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
     }
 
     private bool CheckToSetState(State state)
@@ -227,7 +240,8 @@ public class StateManager : Component
 
     private void RunSecondaryState()
     {
-        if (CurrentSecondaryState?.Frame == 0) CurrentSecondaryState.StateSettingBehavior();
+        if (CurrentSecondaryState?.Frame == 0)
+            CurrentSecondaryState.StateSettingBehavior();
         CurrentSecondaryState?.Behavior();
     }
 

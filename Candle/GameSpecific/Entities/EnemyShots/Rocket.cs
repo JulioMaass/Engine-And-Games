@@ -35,7 +35,7 @@ public class Rocket : Entity
         AddStateManager();
         var state = NewState()
             .AddBehavior(new BehaviorAccelerateToDirection())
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorDestroy()), new ConditionFacingCollides());
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorDestroy()), new ConditionFacingCollides());
         StateManager.AutomaticStatesList.Add(state);
     }
 }

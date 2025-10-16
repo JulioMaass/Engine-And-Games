@@ -45,7 +45,7 @@ public class ShotJumper : Entity
 
         // Auto States
         var stateFall = NewState(new StateFall())
-            .AddStateSettingBehavior(new BehaviorShoot())
+            .AddPostProcessingStateSettingBehavior(new BehaviorShoot())
             .AddToAutomaticStatesList();
         // Idle
         var stateIdle = NewState(new StateEnemyIdleGround())

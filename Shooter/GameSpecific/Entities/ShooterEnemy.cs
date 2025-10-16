@@ -48,7 +48,7 @@ public class ShooterEnemy : Entity
             .AddBehavior(new BehaviorTargetNearestEntity(AlignmentType.Friendly, EntityKind.Player))
             .AddBehavior(new BehaviorSetDirectionToTarget(MoveDirection))
             .AddBehavior(new BehaviorAccelerateToDirection(Engine.Helpers.Axes.X))
-            .AddBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
+            .AddPostProcessingBehaviorWithConditions(GroupedBehaviors(new BehaviorShoot(), new BehaviorResetStateFrame()),
                 new ConditionFrame(new RandomInt(50, 70), ComparisonType.Equal))
             .AddToAutomaticStatesList();
     }

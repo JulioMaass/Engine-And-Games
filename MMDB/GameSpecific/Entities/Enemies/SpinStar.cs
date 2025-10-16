@@ -61,14 +61,14 @@ public class SpinStar : Entity
             .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20))
             .AddStateSettingBehaviorWithConditions(new BehaviorMirrorDirection(ShootDirection), new ConditionCustom(() => Facing.IsXMirrored))
             .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
             .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
         var stateShootFront = NewState()
             .AddStateSettingBehavior(new BehaviorFacePlayer())
             .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20, (48, 0)))
             .AddStateSettingBehaviorWithConditions(new BehaviorMirrorDirection(ShootDirection), new ConditionCustom(() => Facing.IsXMirrored))
             .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
             .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
 
         // Ai Control

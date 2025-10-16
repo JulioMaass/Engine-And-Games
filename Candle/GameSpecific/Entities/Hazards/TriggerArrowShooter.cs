@@ -30,7 +30,7 @@ public class TriggerArrowShooter : Entity
         AddStateManager();
         var stateTriggered = NewState()
             .AddKeepCondition(new ConditionFrameSmaller(60))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30))
             .AddToAutomaticStatesList();
         var stateIdle = NewState()
             .AddToAutomaticStatesList();

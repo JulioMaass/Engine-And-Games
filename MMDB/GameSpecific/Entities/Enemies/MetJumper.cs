@@ -58,7 +58,7 @@ public class MetJumper : Entity
         var stateShootAndGetDown = NewStateWithTimedPattern(new StateDefault("ShootAndGetDown"), (2, 56), (1, 4))
             .AddStateSettingBehavior(new BehaviorStop())
             .AddKeepCondition(new ConditionFrameSmaller(60))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30));
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(30));
 
         // Ai Control
         // Get up

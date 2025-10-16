@@ -23,7 +23,7 @@ public class SecondaryStateShoot : SecondaryState
     }
 
     // Behaviors
-    public override void StateSettingBehavior() // TODO - BUG: Shooting before moving makes the shot spawn in the wrong position (past frame)
+    public override void PostProcessingStateSettingBehavior()
     {
         Owner.WeaponManager.CurrentWeapon?.ShootPrimary();
     }

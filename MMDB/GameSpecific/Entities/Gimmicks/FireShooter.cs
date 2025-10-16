@@ -30,7 +30,7 @@ public class FireShooter : Entity
         AddStateManager();
         // Auto States
         var state = NewState()
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(100))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(100))
             .AddToAutomaticStatesList();
 
         AddCustomValueHandler();

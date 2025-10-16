@@ -61,12 +61,12 @@ public class EnemyShip : Entity
         var stateShootPerfect = NewState()
             .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20))
             .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
             .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
         var stateShootFront = NewState()
             .AddStateSettingBehavior(new BehaviorSetDirectionToTarget(ShootDirection, 20, (0, -64)))
             .AddStateSettingBehavior(new BehaviorSetSpriteId(() => (ShootDirection.Angle.Value - 270000 + 360000) / 18000 % 4))
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameEqual(shootFrame))
             .AddKeepCondition(new ConditionFrameSmaller(shootStateDuration));
 
         // Ai Control

@@ -37,7 +37,7 @@ public class PoliceHeli : Entity
         AddStateManager();
         // Auto States
         var state = NewState()
-            .AddBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(120, 4, 30))
+            .AddPostProcessingBehaviorWithConditions(new BehaviorShoot(), new ConditionFrameLoop(120, 4, 30))
             .AddBehavior(new BehaviorCustom(() =>
             {
                 if (!StageManager.IsTransitioning)
