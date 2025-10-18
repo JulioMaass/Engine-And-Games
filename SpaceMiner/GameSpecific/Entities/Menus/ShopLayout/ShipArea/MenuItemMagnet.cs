@@ -21,11 +21,11 @@ public class MenuItemMagnet : Entity
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddUpgradePrices(ResourceType.OreOrange, ResourceType.OreGray,
-            (10, 100),
-            (100, 1000),
-            (1000, 10000),
-            (10000, 100000),
-            (100000, 1000000));
+            (50, 100),
+            (100, 200),
+            (250, 500),
+            (500, 1000),
+            (1000, 2000));
 
         MenuItem.Label = "Magnet";
         AddSpaceMinerShipUpgradeItemComponents();

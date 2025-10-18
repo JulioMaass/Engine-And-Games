@@ -60,13 +60,13 @@ public class AsteroidOrange : Asteroid
         // Set turn speed (turns slower when further away)
         Speed.TurnSpeed = 100;
         if (IntVector2.GetDistance(Position.Pixel, EntityManager.PlayerEntity.Position.Pixel) < 128)
-            Speed.TurnSpeed = 500;
+            Speed.TurnSpeed = 250;
         if (IntVector2.GetDistance(Position.Pixel, EntityManager.PlayerEntity.Position.Pixel) < 64)
-            Speed.TurnSpeed = 1000;
+            Speed.TurnSpeed = 500;
         if (IntVector2.GetDistance(Position.Pixel, EntityManager.PlayerEntity.Position.Pixel) < 32 + 16)
-            Speed.TurnSpeed = 1500;
+            Speed.TurnSpeed = 750;
         if (IntVector2.GetDistance(Position.Pixel, EntityManager.PlayerEntity.Position.Pixel) < 32)
-            Speed.TurnSpeed = 2000;
+            Speed.TurnSpeed = 1000;
         // Turn towards the player
         //if (IntVector2.GetDistance(Position.Pixel, EntityManager.PlayerEntity.Position.Pixel) < 64 + 32)
         //{

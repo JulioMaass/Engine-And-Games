@@ -21,10 +21,10 @@ public class MenuItemDefense : Entity
 
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddUpgradePrices(ResourceType.OreGreen, ResourceType.OreGray,
-            (100, 1000),
-            (1000, 10000),
-            (10000, 100000),
-            (100000, 1000000));
+            (100, 500),
+            (250, 1000),
+            (500, 2500),
+            (1000, 5000));
 
 
         MenuItem.Label = "Defense";

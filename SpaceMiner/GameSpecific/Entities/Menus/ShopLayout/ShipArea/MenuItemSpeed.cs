@@ -22,10 +22,10 @@ public class MenuItemSpeed : Entity
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddUpgradePrices(ResourceType.OreBlue, ResourceType.OreGray,
             (10, 10),
-            (100, 100),
-            (1000, 1000),
-            (10000, 10000),
-            (100000, 100000));
+            (50, 50),
+            (250, 250),
+            (500, 500),
+            (1000, 1000));
 
         MenuItem.Label = "Speed";
         AddSpaceMinerShipUpgradeItemComponents();

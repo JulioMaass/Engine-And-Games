@@ -23,9 +23,9 @@ public class MenuItemDash : Entity
         ItemPrice = new ItemPrice(this);
         ItemPrice.AddUpgradePrices(ResourceType.OreBlue, ResourceType.OreGray,
             (100, 100),
-            (1000, 1000),
-            (10000, 10000),
-            (100000, 100000));
+            (250, 250),
+            (500, 500),
+            (1000, 1000));
 
         MenuItem.Label = "Dash";
         AddSpaceMinerShipUpgradeItemComponents();
