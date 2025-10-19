@@ -41,6 +41,7 @@ public class CrawlingMovement : Component
     private void CrawlStraight()
     {
         // TODO: May lose some travel distance when it turns (both inwards and outwards). May want to fix this if crawlers move together, since it's more visible
+        Owner.Speed.ApplyMoveSpeedToCurrentVectorSpeed();
 
         // If it won't touch a solid at the end of movement, turn on edge
         CheckToCrawlOutwards();

@@ -1,4 +1,5 @@
-﻿using Engine.ECS.Components.ControlHandling.States;
+﻿using Engine.ECS.Components.ControlHandling.Behaviors.Speed;
+using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Entities.EntityCreation;
 
@@ -18,7 +19,8 @@ public class BulbSpark : Entity
 
         // States
         AddStateManager();
-        var crawlState = NewState();
+        var crawlState = NewState()
+            .AddBehavior(new BehaviorAccelerateMoveSpeed());
         crawlState.MovementType = MovementType.Crawling;
         StateManager.AutomaticStatesList.Add(crawlState);
     }

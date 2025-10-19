@@ -1,6 +1,9 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using System;
+using Engine.ECS.Entities.EntityCreation;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Engine.ECS.Components.PositionHandling;
+using Engine.Types;
 
 namespace Engine.ECS.Components.PhysicsHandling;
 
@@ -13,6 +16,7 @@ public class Speed : Component
 
     // Properties
     public float MoveSpeed { get; set; }
+    public (float Acceleration, float MaxMoveSpeed) MoveSpeedAcceleration { get; set; }
     public float JumpSpeed { get; set; }
     public float DashSpeed { get; set; }
     public float KnockbackSpeed { get; set; } = 1.25f;
@@ -24,6 +28,12 @@ public class Speed : Component
     public Speed(Entity owner)
     {
         Owner = owner;
+    }
+
+    public void AccelerateMoveSpeed()
+    {
+        MoveSpeed += MoveSpeedAcceleration.Acceleration;
+        MoveSpeed = Math.Min(MoveSpeed, MoveSpeedAcceleration.MaxMoveSpeed);
     }
 
     public void SetSpeed(float xSpeed, float ySpeed)
@@ -73,6 +83,12 @@ public class Speed : Component
     public void TurnCounterClockwise()
     {
         Value = Value with { X = Y, Y = -X };
+    }
+
+    public void ApplyMoveSpeedToCurrentVectorSpeed()
+    {
+        var angle = Angle.GetAngleFromDistanceCoordinates(Value);
+        Value = angle.GetVectorLength() * MoveSpeed;
     }
 
     public void SetMoveSpeedToCurrentDirection()
