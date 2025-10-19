@@ -21,13 +21,13 @@ public class BulbJumper : Entity
         // Basic, Sprite, EntityKind
         AddBasicComponents();
         AddSpriteCenteredOrigin("BulbJumper", 20, 31);
-        AddMmdbEnemyComponents(4, 4);
+        AddMmdbEnemyComponents(6, 4);
         AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         // Enemy specific components
         SpawnManager.AddSpawnBehavior(new BehaviorSnapToFloor());
         AddMoveDirection();
-        AddMoveSpeed(1.5f);
+        AddMoveSpeed(1.0f);
         AddJumpSpeed(5f);
         AddGravity();
 

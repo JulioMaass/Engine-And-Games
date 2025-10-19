@@ -149,24 +149,27 @@ public class StateManager : Component
 
     public void PostProcessing()
     {
-        RunPostProcessingBehaviors();
         UpdateHitbox();
 
-        if (CurrentState.PostProcessingKeepCondition())
-            return;
+        if (!CurrentState.PostProcessingKeepCondition())
+        {
+            UpdateState();
+            CurrentState.StateSettingBehavior();
+            CurrentState.AddedStateSettingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
 
-        UpdateState();
-        CurrentState.StateSettingBehavior();
-        CurrentState.AddedStateSettingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
-
-        CurrentState.UpdateAnimationFrame();
+            CurrentState.UpdateAnimationFrame();
+        }
+        RunPostProcessingBehaviors();
     }
 
     private void RunPostProcessingBehaviors()
     {
         // State setting behaviors
         if (CurrentState.Frame == 0)
+        {
             CurrentState.PostProcessingStateSettingBehavior();
+            CurrentState.AddedPostProcessingStateSettingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
+        }        
         if (CurrentSecondaryState?.Frame == 0)
             CurrentSecondaryState.PostProcessingStateSettingBehavior();
 
