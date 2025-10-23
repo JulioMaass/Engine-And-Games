@@ -36,8 +36,8 @@ public class BulbJumper : Entity
         Shooter.AddShootAction(() => Shooter.ShootLeftAndRight());
         Shooter.RelativeSpawnPosition = IntVector2.New(0, 10);
         Shooter.ShotType = typeof(BulbSpark);
-        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 0.5f);
-        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeedAcceleration = (0.25f, 2.5f));
+        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeed = 0.25f);
+        Shooter.ShotModifiers.Add(e => e.Speed.MoveSpeedAcceleration = (0.25f, 3f));
 
         // States
         AddStateManager();
