@@ -8,6 +8,7 @@ using MMDB.GameSpecific.Entities.Bosses.Disco;
 using MMDB.GameSpecific.Entities.Chars;
 using MMDB.GameSpecific.Entities.Enemies;
 using MMDB.GameSpecific.Entities.Enemies.GasEnemies;
+using MMDB.GameSpecific.Entities.Enemies.PoliceEnemies;
 using MMDB.GameSpecific.Entities.Gimmicks;
 using MMDB.GameSpecific.Entities.Paralax;
 using MMDB.GameSpecific.Tilesets;
@@ -95,6 +96,8 @@ public class GameSpecificSettings : Engine.GameSpecific.GameSpecificSettings
         EditorEntityTypes.Add(typeof(FireShooter));
 
         EditorEntityTypes.Add(typeof(SpinStar));
+
+        EditorEntityTypes.Add(typeof(PoliceJoe));
 
         // Gimmicks
         EditorEntityTypes.Add(typeof(SwingPlat));

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 
 namespace Engine.ECS.Components.ShootingHandling;
 
@@ -52,8 +53,10 @@ public class Shooter : Component
     public int BlastBaseDamage { get; set; }
     public int BlastDamageScaling { get; set; }
     public int BlastDuration { get; set; }
-    // Other
+    // Aim
     public (int Step, int MaxAngle) InaccuracyAngle { get; set; } // Step 5 max 15 means angles 0, 5, 10, 15 are allowed
+    public int AngleRounding { get; set; } // Round to multiples of this angle
+    public bool RoundSpeed { get; set; }
 
     public Shooter(Entity owner) => Owner = owner;
     public void AddShootAction(Action shootAction) => ShootAction = shootAction;
@@ -197,8 +200,15 @@ public class Shooter : Component
         var shot = NewShot();
         shot.AddMoveDirection();
         shot.MoveDirection.SetAngleDirectionToPosition(position);
+        if (AngleRounding != 0)
+            shot.MoveDirection.Angle = (shot.MoveDirection.Angle.Value + AngleRounding / 2) / AngleRounding * AngleRounding;
         shot.Facing.CopyFacingFrom(Owner);
         shot.Speed.SetMoveSpeedToCurrentDirection();
+        if (RoundSpeed)
+        {
+            shot.Speed.SetXSpeed((int)Math.Round(shot.Speed.X));
+            shot.Speed.SetYSpeed((int)Math.Round(shot.Speed.Y));
+        }
     }
 
     public void ShootAtPlayer()
