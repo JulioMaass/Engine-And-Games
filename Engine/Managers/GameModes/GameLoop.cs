@@ -35,7 +35,7 @@ public abstract class GameLoop
     {
         for (var kindIndex = 0; kindIndex <= (int)entityKind; kindIndex++)
         {
-            List<Engine.ECS.Entities.EntityCreation.Entity> unupdatedEntities;
+            List<Entity> unupdatedEntities;
             while ((unupdatedEntities = EntityManager.GetFilteredEntitiesFrom((EntityKind)kindIndex)
                        .Where(entity => !entity.Updated)
                        .ToList()).Count > 0)

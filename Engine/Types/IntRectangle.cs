@@ -162,4 +162,14 @@ public struct IntRectangle
     {
         return new IntRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
     }
+
+    public static IntRectangle GetRectangleCombination(IntRectangle intRectangle1, IntRectangle intRectangle2)
+    {
+        // Get the smallest rectangle that contains both rectangles
+        var x1 = Math.Min(intRectangle1.Left, intRectangle2.Left);
+        var y1 = Math.Min(intRectangle1.Top, intRectangle2.Top);
+        var x2 = Math.Max(intRectangle1.Right, intRectangle2.Right);
+        var y2 = Math.Max(intRectangle1.Bottom, intRectangle2.Bottom);
+        return new IntRectangle(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
+    }
 }

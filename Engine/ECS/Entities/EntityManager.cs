@@ -24,6 +24,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
         var entity = CreateEntity(entityType);
         entity.Position.StartingPosition = position;
         entity.Position.Pixel = position;
+        entity.LinkedEntitiesManager?.UpdatePositions();
         return entity;
     }
 
@@ -106,6 +107,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
     {
         if (entity == null) return;
         RemoveEntityFromLists(entity);
+        entity.LinkedEntitiesManager?.DeleteLinkedEntities();
         entity.EntityInstance?.ResetSpawnedEntity();
     }
 

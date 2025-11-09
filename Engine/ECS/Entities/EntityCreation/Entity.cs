@@ -2,6 +2,7 @@
 using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ControlHandling;
 using Engine.ECS.Components.ItemsHandling;
+using Engine.ECS.Components.LinkedEntities;
 using Engine.ECS.Components.MenuHandling;
 using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.PositionHandling;
@@ -50,6 +51,9 @@ public abstract partial class Entity
     public Gravity Gravity { get; protected set; }
     public SolidBehavior SolidBehavior { get; protected set; }
     public TileDestructor TileDestructor { get; protected set; }
+
+    // Linked entities
+    public LinkedEntitiesManager LinkedEntitiesManager { get; set; }
 
     // Sprite components
     public Sprite Sprite { get; protected set; }
@@ -124,12 +128,6 @@ public abstract partial class Entity
         EntityManager.AddEntityToSubList(this);
     }
 
-    public Entity GetCopy()
-    {
-        var type = GetType();
-        return EntityManager.CreateEntity(type);
-    }
-
     public void Update()
     {
         if (CodeBreaker.UpdateBreakEntityName == GetType().Name)
@@ -149,6 +147,7 @@ public abstract partial class Entity
         // TODO: 1st: Calculate each object's intended origin and destiny.
         // TODO: 2nd: Check for collisions and resolve them (Including pushing and carrying).
         Physics?.Update();
+        LinkedEntitiesManager?.UpdatePositions();
         // State Pos Processing
         StateManager?.PostProcessing();
         // Visual Components
@@ -201,6 +200,7 @@ public enum EntityKind // Also works as a draw order
     Gimmick,
     Item,
     Enemy,
+    EnemyEffect,
     Boss,
     Player,
     PlayerShot,

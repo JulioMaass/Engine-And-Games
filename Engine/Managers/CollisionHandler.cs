@@ -76,10 +76,10 @@ public static class CollisionHandler
         }
     }
 
-    public static void EntityTypeGetItems(EntityKind entityType)
+    public static void EntityTypeGetItems(EntityKind entityKind)
     {
         // TODO: Check item getter and item stats instead. Check if ItemGetter has the type of resource before deleting the entity.
-        foreach (var entity in EntityManager.GetFilteredEntitiesFrom(entityType))
+        foreach (var entity in EntityManager.GetFilteredEntitiesFrom(entityKind))
         {
             foreach (var entity2 in EntityManager.GetFilteredEntitiesFrom(EntityKind.Item).ToList())
             {

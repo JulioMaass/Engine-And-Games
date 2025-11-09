@@ -19,6 +19,9 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
     private int InvincibilityFrames { get; set; }
     private int InvincibilityCounter { get; set; }
 
+    // Damage limiting
+    public int MaxDamagePerHit { get; set; } = int.MaxValue;
+
     public DamageTaker(Entity owner, int maxHp)
     {
         Owner = owner;
@@ -43,6 +46,8 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
 
     public void BufferDamage(int amount)
     {
+        amount = Math.Min(amount, MaxDamagePerHit);
+
         var defensePercentage = StatsManager.GetAddedFloatStats(Owner, stats => stats.DefensePercentage, true, true, false);
         amount -= (int)(amount * defensePercentage);
 
@@ -83,8 +88,11 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
         return InvincibilityCounter < InvincibilityFrames;
     }
 
-    public bool CanBeDamaged() =>
-        !IsInvincible();
+    public bool CanBeDamaged()
+    {
+        return !IsInvincible()
+               && Owner.LinkedEntitiesManager?.HasShield() != true;
+    }
 
     public bool IsFlickering()
     {

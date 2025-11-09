@@ -151,7 +151,7 @@ public static class AsteroidSpawner
         Type asteroidType = null;
         if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Blue) asteroidType = typeof(AsteroidBlue);
         else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Yellow) asteroidType = typeof(AsteroidYellow);
-        else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Green) asteroidType = typeof(AsteroidGreen);
+        else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Green) asteroidType = typeof(AsteroidGreenShield);
         else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Red) asteroidType = typeof(AsteroidRed);
         else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Purple) asteroidType = typeof(AsteroidPurple);
         else if (size == AsteroidSize.Small && stage == AsteroidStage.Stone && color == AsteroidColor.Orange) asteroidType = typeof(AsteroidOrange);

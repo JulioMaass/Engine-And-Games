@@ -1,7 +1,6 @@
 ﻿using Engine.ECS.Components.ControlHandling.Behaviors;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.Main;
 using Engine.Managers;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
@@ -33,8 +32,8 @@ public class SpawnManager : Component
         if (Permanent)
             return;
         DespawnCounter++;
-        var screenLimits = Camera.GetSpawnScreenLimitsWithBorder(Settings.TileSize);
-        var collisionRectangle = new IntRectangle(Owner.Position.Pixel - Owner.Sprite.FinalOrigin, Owner.Sprite.FinalSize);
+        var screenLimits = Camera.GetSpawnScreenLimits();
+        var collisionRectangle = GetDespawnRectangle();
         if (!DespawnOnScreenExit || EarlySpawn)
             return;
 
@@ -46,6 +45,21 @@ public class SpawnManager : Component
         }
         else
             DespawnCounter = 0;
+    }
+
+    private IntRectangle GetDespawnRectangle()
+    {
+        var entityRectangle = new IntRectangle(Owner.Position.Pixel - Owner.Sprite.FinalOrigin, Owner.Sprite.FinalSize);
+
+        // Shield rectangle
+        IntRectangle? shieldRectangle = null;
+        var shield = Owner.LinkedEntitiesManager?.ShieldEntity;
+        if (shield == null)
+            return entityRectangle;
+        shieldRectangle = new IntRectangle(shield.Position.Pixel - shield.Sprite.FinalOrigin, shield.Sprite.FinalSize);
+
+        // Combine entity and shield rectangles
+        return IntRectangle.GetRectangleCombination(entityRectangle, shieldRectangle.Value);
     }
 
     public void AddSpawnBehavior(Behavior spawnBehavior)
