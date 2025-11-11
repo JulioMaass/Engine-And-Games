@@ -36,5 +36,7 @@ public class BehaviorSplit : Behavior
         splitShot2.Speed.SetMoveSpeedToCurrentDirection();
         splitShot1.Alignment.OwningEntity = Owner.Alignment.OwningEntity;
         splitShot2.Alignment.OwningEntity = Owner.Alignment.OwningEntity;
+
+        EntityManager.DeleteEntity(Owner);
     }
 }

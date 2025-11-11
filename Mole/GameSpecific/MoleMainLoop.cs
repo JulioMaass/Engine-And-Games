@@ -2,8 +2,8 @@
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
 using Engine.Main;
-using Engine.Managers;
 using Engine.Managers.Ai;
+using Engine.Managers.CollisionSystem;
 using Engine.Managers.GameModes;
 using Engine.Managers.GlobalManagement;
 using Engine.Managers.StageEditing;

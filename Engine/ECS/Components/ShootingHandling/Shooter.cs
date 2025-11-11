@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection.Metadata;
 
 namespace Engine.ECS.Components.ShootingHandling;
 

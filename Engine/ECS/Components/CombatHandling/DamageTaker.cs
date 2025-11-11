@@ -3,6 +3,7 @@ using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
 using System;
+using System.Collections.Generic;
 
 namespace Engine.ECS.Components.CombatHandling;
 
@@ -21,6 +22,9 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
 
     // Damage limiting
     public int MaxDamagePerHit { get; set; } = int.MaxValue;
+    // Hit tracking (to avoid making shots split both on main entity and on its debris, for example) 
+    public List<Entity> HitterList { get; } = new();
+
 
     public DamageTaker(Entity owner, int maxHp)
     {
@@ -112,5 +116,14 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
         InvincibilityFrames = invincibilityFrames;
         InvincibleOnHit = true;
         InvincibilityCounter = InvincibilityFrames;
+    }
+
+    public void InheritHitterListFrom(Entity entity)
+    {
+        foreach (var hitterEntity in entity.DamageTaker.HitterList)
+        {
+            HitterList.Add(hitterEntity);
+            hitterEntity.DamageDealer.AddToHitList(Owner);
+        }
     }
 }

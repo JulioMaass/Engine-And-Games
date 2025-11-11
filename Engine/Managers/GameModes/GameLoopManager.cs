@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Entities;
 using Engine.Helpers;
 using Engine.Main;
+using Engine.Managers.CollisionSystem;
 using Engine.Managers.GlobalManagement;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageEditing;
@@ -119,6 +120,7 @@ public static class GameLoopManager
             entity.CollisionBox?.DrawBox();
             entity.Sprite?.DrawOrigin();
         }
+        CollisionHandler.Draw();
 
         // Entity layouts
         StageManager.CurrentRoom.GetEntityLayout().DrawEntityLayout();

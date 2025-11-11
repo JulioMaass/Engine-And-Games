@@ -9,7 +9,7 @@ public class ConditionAttractedToPlayer : Condition
     {
         if (EntityManager.PlayerEntity == null)
             return false;
-        var attractionRadius = EntityManager.PlayerEntity.ItemGetter.GetAttractionRadius();
+        var attractionRadius = EntityManager.PlayerEntity.ItemGetter.TotalAttractionRadius;
         var currentDistance = IntVector2.GetDistance(
             Owner.Position.Pixel,
             EntityManager.PlayerEntity.Position.Pixel

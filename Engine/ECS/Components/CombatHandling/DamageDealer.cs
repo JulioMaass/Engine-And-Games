@@ -31,7 +31,7 @@ public class DamageDealer : Component
 
     public void RunEffects(Entity damagedEntity)
     {
-        AddToHitList(damagedEntity);
+        CheckToAddToHitList(damagedEntity);
         DeleteIfCantPierce(damagedEntity);
         RunOnHitBehaviors();
         RunOnHitTargetBehaviors(damagedEntity);
@@ -42,16 +42,23 @@ public class DamageDealer : Component
         ExtraDamage += extraDamage;
     }
 
+    public void CheckToAddToHitList(Entity entity)
+    {
+        if (HitType != HitType.HitOnce)
+            return;
+        AddToHitList(entity);
+    }
+
     public void AddToHitList(Entity entity)
     {
-        if (HitType == HitType.HitOnce)
-            HitList.Add(entity);
+        HitList.Add(entity);
+        entity.DamageTaker.HitterList.Add(Owner);
     }
 
     public void CopyHitListFrom(Entity entity)
     {
-        if (HitType == HitType.HitOnce)
-            HitList.AddRange(entity.DamageDealer.HitList);
+        foreach (var hitEntity in entity.DamageDealer.HitList)
+            AddToHitList(hitEntity);
     }
 
     public bool IsInHitList(Entity entity)

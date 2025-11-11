@@ -138,6 +138,7 @@ public abstract partial class Entity
         EquipmentHolder?.Update();
         WeaponManager?.Update();
         ChargeManager?.Update();
+        ItemGetter?.Update();
         // Control and State
         FrameHandler.CheckDurationEnd();
         PlayerControl?.Update();

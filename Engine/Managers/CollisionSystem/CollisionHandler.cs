@@ -6,10 +6,17 @@ using Engine.Managers.StageHandling;
 using System;
 using System.Linq;
 
-namespace Engine.Managers;
+namespace Engine.Managers.CollisionSystem;
 
 public static class CollisionHandler
 {
+    public static SpatialGrid CollisionSpatialGrid { get; private set; } = new();
+
+    public static void UpdateSpatialGrids()
+    {
+        CollisionSpatialGrid.Update();
+    }
+
     public static void AlignedEntitiesDealDamage(AlignmentType damageDealerAlignment) // TODO: Simplify this function
     {
         var allEntities = EntityManager.GetAllEntities().ToList();
@@ -20,16 +27,21 @@ public static class CollisionHandler
             .Where(e => e.DamageDealer?.DealsDamage == true)
             .ToList();
 
-        var damagedEntities = allEntities
-            .Where(e => e.CollisionBox?.BodyTypeGetsDamaged() == true)
-            .Where(e => e.Alignment?.IsHostileTo(damageDealerAlignment) == true)
-            .Where(e => e.DamageTaker?.CanBeDamaged() == true)
-            .ToList();
+        //var damagedEntities = allEntities
+        //    .Where(e => e.CollisionBox?.BodyTypeGetsDamaged() == true)
+        //    .Where(e => e.Alignment?.IsHostileTo(damageDealerAlignment) == true)
+        //    .Where(e => e.DamageTaker?.CanBeDamaged() == true)
+        //    .ToList();
 
         foreach (var damagingEntity in damagingEntities)
         {
-            foreach (var damagedEntity in damagedEntities)
+            var overlappingEntities = CollisionSpatialGrid.GetOverlappingEntities(damagingEntity);
+
+            foreach (var damagedEntity in overlappingEntities)
             {
+                if (damagedEntity.CollisionBox?.BodyTypeGetsDamaged() != true) continue;
+                if (damagedEntity.Alignment?.IsHostileTo(damageDealerAlignment) != true) continue;
+                if (damagedEntity.DamageTaker?.CanBeDamaged() != true) continue;
                 if (damagingEntity.DamageDealer?.HitType == HitType.HitOnce
                     && damagingEntity.DamageDealer.IsInHitList(damagedEntity)) continue;
                 if (damagingEntity.CollisionBox?.CollidesWithEntityPixel(damagedEntity) != true) continue;
@@ -55,6 +67,11 @@ public static class CollisionHandler
                 damagedEntity.KnockbackReceiver?.TriggerKnockback();
             }
         }
+    }
+
+    public static void Draw()
+    {
+        CollisionSpatialGrid.Draw();
     }
 
     public static void EntitiesCollideWithTiles()

@@ -1,7 +1,7 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
-using Engine.Managers;
+using Engine.Managers.CollisionSystem;
 using Engine.Managers.GameModes;
 using Engine.Managers.StageHandling;
 using System.Linq;
@@ -23,6 +23,7 @@ public class MmdbMainLoop : GameLoop
             entity.StateManager?.AddFrame();
 
         // Collision handling (it happens 1 frame later, so the player can see the hit before the outcome)
+        CollisionHandler.UpdateSpatialGrids();
         CollisionHandler.EntityTypeGetItems(EntityKind.Player);
         CollisionHandler.AlignedEntitiesDealDamage(AlignmentType.Friendly);
         CollisionHandler.AlignedEntitiesDealDamage(AlignmentType.Hostile);

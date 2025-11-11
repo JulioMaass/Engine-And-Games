@@ -26,7 +26,6 @@ public class Ship : Entity
         AddCollisionBox(12, 12, 6, 6);
         AddMoveSpeed(1.25f);
         Speed.DashSpeed = 0f;
-        AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         //Shooter = new ShipShooterBasic(this);
         AddShootDirection(270000);

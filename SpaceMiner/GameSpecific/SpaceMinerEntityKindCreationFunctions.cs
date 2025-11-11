@@ -1,7 +1,6 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Components.ItemsHandling;
 using Engine.ECS.Components.MenuHandling;
-using Engine.ECS.Components.PhysicsHandling;
 using Engine.ECS.Components.VisualsHandling;
 using Engine.ECS.Entities;
 using Engine.Helpers;
@@ -33,8 +32,6 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
 
         // Physics components
         AddSpeed();
-        AddGravity();
-        AddSolidBehavior(SolidType.NotSolid, SolidInteractionType.StopOnSolids);
 
         // Item components
         AddResourceItemStats(resource, amount, increaseKind);

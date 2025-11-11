@@ -31,6 +31,7 @@ public class AsteroidYellow : Asteroid
                     var asteroid = EntityManager.CreateEntityAt(typeof(AsteroidShard), Position.Pixel);
                     asteroid.AddMoveDirection(angle);
                     asteroid.Speed.SetMoveSpeedToCurrentDirection();
+                    asteroid.DamageTaker.InheritHitterListFrom(this);
                 }
             }
         );

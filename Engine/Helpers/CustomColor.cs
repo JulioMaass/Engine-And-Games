@@ -22,6 +22,7 @@ public static class CustomColor
     public static Color White = new(255, 255, 255, 255);
     public static Color Black = new(0, 0, 0, 255);
     public static Color Red = new(255, 0, 0, 255);
+    public static Color Yellow = new(255, 255, 0, 255);
     public static Color Gray = new(127, 127, 127, 255);
     public static Color DarkGray = new(63, 63, 63, 255);
 

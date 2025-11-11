@@ -76,6 +76,7 @@ public static class AsteroidSpawner
     public static void LevelUp()
     {
         CurrentLevel++;
+        CurrentLevel = Math.Min(CurrentLevel, LevelDataList.Count - 1);
         Timer = 0;
     }
 
