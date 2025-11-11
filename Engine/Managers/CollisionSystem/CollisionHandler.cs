@@ -2,46 +2,71 @@
 using Engine.ECS.Components.PositionHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Main;
+using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Engine.Managers.CollisionSystem;
 
 public static class CollisionHandler
 {
-    public static SpatialGrid CollisionSpatialGrid { get; private set; } = new();
+    public static SpatialGrid FriendlyHitterSpatialGrid { get; } = new(AlignmentType.Friendly, HittingRole.Hitter);
+    public static SpatialGrid HostileHitterSpatialGrid { get; } = new(AlignmentType.Hostile, HittingRole.Hitter);
+    public static SpatialGrid NeutralHitterSpatialGrid { get; } = new(AlignmentType.Neutral, HittingRole.Hitter);
+    public static SpatialGrid FriendlyHittableSpatialGrid { get; } = new(AlignmentType.Friendly, HittingRole.Hittable);
+    public static SpatialGrid HostileHittableSpatialGrid { get; } = new(AlignmentType.Hostile, HittingRole.Hittable);
+    public static SpatialGrid NeutralHittableSpatialGrid { get; } = new(AlignmentType.Neutral, HittingRole.Hittable);
 
     public static void UpdateSpatialGrids()
     {
-        CollisionSpatialGrid.Update();
+        var position = Camera.GetSpawnScreenLimitsWithBorder(Settings.TileSize).Position
+            .RoundDownToTileCoordinate();
+        FriendlyHitterSpatialGrid.Update(position);
+        HostileHitterSpatialGrid.Update(position);
+        NeutralHitterSpatialGrid.Update(position);
+        FriendlyHittableSpatialGrid.Update(position);
+        HostileHittableSpatialGrid.Update(position);
+        NeutralHittableSpatialGrid.Update(position);
     }
 
-    public static void AlignedEntitiesDealDamage(AlignmentType damageDealerAlignment) // TODO: Simplify this function
+    private static List<SpatialGrid> GetGridsOpposingTo(AlignmentType alignmentType, HittingRole hittingRole)
     {
-        var allEntities = EntityManager.GetAllEntities().ToList();
+        var allGrids = new List<SpatialGrid>
+        {
+            FriendlyHitterSpatialGrid,
+            HostileHitterSpatialGrid,
+            NeutralHitterSpatialGrid,
+            FriendlyHittableSpatialGrid,
+            HostileHittableSpatialGrid,
+            NeutralHittableSpatialGrid
+        };
+        var grids = allGrids.Where(g => g.HittingRole != hittingRole).ToList();
+        if (alignmentType != AlignmentType.Neutral)
+            grids = grids.Where(g => g.AlignmentType != alignmentType).ToList();
+        return grids;
+    }
 
-        var damagingEntities = allEntities
-            .Where(e => e.CollisionBox?.BodyTypeDealsDamage() == true)
-            .Where(e => e.Alignment?.Type == damageDealerAlignment)
-            .Where(e => e.DamageDealer?.DealsDamage == true)
-            .ToList();
-
-        //var damagedEntities = allEntities
-        //    .Where(e => e.CollisionBox?.BodyTypeGetsDamaged() == true)
-        //    .Where(e => e.Alignment?.IsHostileTo(damageDealerAlignment) == true)
-        //    .Where(e => e.DamageTaker?.CanBeDamaged() == true)
-        //    .ToList();
+    public static void AlignedEntitiesDealDamage(AlignmentType damageDealerAlignment)
+    {
+        var damagingEntities = EntityManager.GetEntities(damageDealerAlignment, HittingRole.Hitter);
+        var opposingGrids = GetGridsOpposingTo(damageDealerAlignment, HittingRole.Hitter);
 
         foreach (var damagingEntity in damagingEntities)
         {
-            var overlappingEntities = CollisionSpatialGrid.GetOverlappingEntities(damagingEntity);
+            List<Entity> overlappingEntities = new();
+            foreach (var grid in opposingGrids)
+                overlappingEntities.AddRange(grid.GetOverlappingEntities(damagingEntity));
 
             foreach (var damagedEntity in overlappingEntities)
             {
-                if (damagedEntity.CollisionBox?.BodyTypeGetsDamaged() != true) continue;
-                if (damagedEntity.Alignment?.IsHostileTo(damageDealerAlignment) != true) continue;
-                if (damagedEntity.DamageTaker?.CanBeDamaged() != true) continue;
+#if DEBUG
+                if (damagedEntity == damagingEntity)
+                    throw new Exception("Entity cannot damage itself.");
+#endif
+
                 if (damagingEntity.DamageDealer?.HitType == HitType.HitOnce
                     && damagingEntity.DamageDealer.IsInHitList(damagedEntity)) continue;
                 if (damagingEntity.CollisionBox?.CollidesWithEntityPixel(damagedEntity) != true) continue;
@@ -71,21 +96,24 @@ public static class CollisionHandler
 
     public static void Draw()
     {
-        CollisionSpatialGrid.Draw();
+        FriendlyHitterSpatialGrid.Draw();
+        HostileHitterSpatialGrid.Draw();
+        NeutralHitterSpatialGrid.Draw();
+        FriendlyHittableSpatialGrid.Draw();
+        HostileHittableSpatialGrid.Draw();
+        NeutralHittableSpatialGrid.Draw();
     }
 
     public static void EntitiesCollideWithTiles()
     {
-        foreach (var damagedEntity in EntityManager.GetAllEntities())
-        {
-            if (damagedEntity.CollisionBox == null) continue; // TODO: Move these checks inside a function, so it's reusable
-            if (damagedEntity.CollisionBox?.BodyType == BodyType.Bypass) continue;
-            if (damagedEntity.CollisionBox?.BodyType == BodyType.Invincible) continue;
-            if (damagedEntity.DamageTaker == null) continue;
-            if (damagedEntity.DamageTaker?.IsInvincible() == true) continue;
+        var damageableEntities = EntityManager.GetAllEntities()
+            .Where(e => e.DamageTaker?.CanBeDamaged() == true)
+            .ToList();
 
+        foreach (var damagedEntity in damageableEntities)
+        {
             var position = damagedEntity.Position.Pixel;
-            if (damagedEntity.Physics.TileCollisionChecking.OverlapsWithTileWithPropertyAtPixel(position, TileProperty.Spikes, StageManager.CurrentRoom))
+            if (damagedEntity.Physics.TileCollisionChecking.OverlapsWithTileWithPropertyAtPixel(damagedEntity.Position.Pixel, TileProperty.Spikes, StageManager.CurrentRoom))
             {
                 damagedEntity.DamageTaker?.BufferDamage(10);
                 damagedEntity.KnockbackReceiver?.TriggerKnockback();

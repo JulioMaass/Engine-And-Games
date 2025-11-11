@@ -95,6 +95,7 @@ public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional c
     public bool CanBeDamaged()
     {
         return !IsInvincible()
+               && Owner.CollisionBox?.BodyTypeGetsDamaged() == true
                && Owner.LinkedEntitiesManager?.HasShield() != true;
     }
 

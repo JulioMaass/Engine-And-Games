@@ -1,4 +1,6 @@
-﻿using Engine.ECS.Entities.EntityCreation;
+﻿using Engine.ECS.Components.CombatHandling;
+using Engine.ECS.Entities.EntityCreation;
+using Engine.Managers.CollisionSystem;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using System;
@@ -151,5 +153,28 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
     {
         CheckToCreateSubList(subListId);
         return KindLists[(int)subListId];
+    }
+
+    public static List<Entity> GetEntities(AlignmentType alignmentType, HittingRole hittingRole)
+    {
+        var entities = GetAllEntities()
+            .Where(e => e.CollisionBox != null)
+            .ToList();
+
+        // Filter alignment
+        entities = entities
+            .Where(e => e.Alignment?.Type == alignmentType)
+            .ToList();
+
+        // Filter hitting role
+        if (hittingRole == HittingRole.Hitter)
+            entities = entities
+                .Where(e => e.DamageDealer?.CanDealDamage() == true)
+                .ToList();
+        else
+            entities = entities
+                .Where(e => e.DamageTaker?.CanBeDamaged() == true)
+                .ToList();
+        return entities;
     }
 }

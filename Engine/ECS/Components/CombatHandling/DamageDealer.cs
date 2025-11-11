@@ -8,7 +8,6 @@ namespace Engine.ECS.Components.CombatHandling;
 public class DamageDealer : Component
 {
     // Damage dealing
-    public bool DealsDamage => Damage > 0;
     public int Damage => BaseDamage + ExtraDamage;
     public int BaseDamage { get; set; }
     public int ExtraDamage { get; private set; }
@@ -27,6 +26,12 @@ public class DamageDealer : Component
         BaseDamage = damage;
         PiercingType = piercingType;
         HitType = hitType;
+    }
+
+    public bool CanDealDamage()
+    {
+        return Damage > 0
+               && Owner.CollisionBox?.BodyTypeDealsDamage() == true;
     }
 
     public void RunEffects(Entity damagedEntity)

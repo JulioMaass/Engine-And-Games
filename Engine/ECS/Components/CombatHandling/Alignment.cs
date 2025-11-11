@@ -14,7 +14,7 @@ public class Alignment : Component
     }
 
     public bool IsHostileTo(AlignmentType alignmentType) =>
-        Type != alignmentType;
+        Type != alignmentType || alignmentType == AlignmentType.Neutral;
 }
 
 public enum AlignmentType

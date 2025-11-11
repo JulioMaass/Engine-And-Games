@@ -1,4 +1,4 @@
-﻿using Engine.ECS.Components.PositionHandling;
+﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Entities;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Helpers;
@@ -18,30 +18,29 @@ public class SpatialGrid
     private List<Entity>[,] Grid { get; }
     private IntVector2 PositionInTiles { get; set; }
 
-    public SpatialGrid()
+    // Entities properties
+    public AlignmentType AlignmentType { get; }
+    public HittingRole HittingRole { get; }
+
+    public SpatialGrid(AlignmentType alignmentType, HittingRole hittingRole)
     {
         Size = Settings.RoomSizeInTiles + 3;
         CellSize = Settings.TileSize;
         Grid = new List<Entity>[Size.Width, Size.Height];
+        AlignmentType = alignmentType;
+        HittingRole = hittingRole;
 
         for (var x = 0; x < Size.Width; x++)
             for (var y = 0; y < Size.Height; y++)
                 Grid[x, y] = new List<Entity>();
     }
 
-    public void Update()
+    public void Update(IntVector2 position)
     {
-        PositionInTiles = Camera.GetSpawnScreenLimitsWithBorder(Settings.TileSize).Position
-            .RoundDownToTileCoordinate();
-
+        PositionInTiles = position;
         Clear();
-        foreach (var entity in EntityManager.GetAllEntities().ToList())
-        {
-            if (entity.CollisionBox == null) continue;
-            if (entity.CollisionBox?.BodyType == BodyType.Bypass) continue;
-            if (entity.CollisionBox?.BodyType == BodyType.Invincible) continue;
+        foreach (var entity in EntityManager.GetEntities(AlignmentType, HittingRole))
             AddEntity(entity);
-        }
     }
 
     public void Clear()
@@ -103,22 +102,20 @@ public class SpatialGrid
 
     public List<Entity> GetOverlappingEntities(Entity entity)
     {
-        var position = entity.Position.Pixel;
-        var collisionBox = entity.CollisionBox;
-
-        if (collisionBox == null)
-            return new List<Entity>();
-
-        var overlappingEntitiesList = new List<Entity>();
+        var overlappingEntitiesList = new HashSet<Entity>();
         var (minX, maxX, minY, maxY) = GetEntityGridRectangle(entity);
 
         for (var x = minX; x <= maxX; x++)
             for (var y = minY; y <= maxY; y++)
                 foreach (var overlappingEntity in Grid[x, y])
-                    if (overlappingEntity != entity) // Don't include self
-                        overlappingEntitiesList.Add(overlappingEntity);
+                    overlappingEntitiesList.Add(overlappingEntity);
 
-        overlappingEntitiesList = overlappingEntitiesList.Distinct().ToList();
-        return overlappingEntitiesList;
+        return overlappingEntitiesList.ToList();
     }
+}
+
+public enum HittingRole
+{
+    Hitter,
+    Hittable
 }
