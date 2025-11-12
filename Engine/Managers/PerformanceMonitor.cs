@@ -29,10 +29,13 @@ public static class PerformanceMonitor
     {
         // Stress test mode (each frame takes 16 ms)
         // Set to 15 to use only ~10% processing power
+        // DESKTOP
         // Set to 12 to use ~25% processing power (phone-like)
         // Set to 10 to use ~40% processing power (old computer-like)
+        // LAPTOP
+        // Set to 6 to use ~62,5% processing power (phone-like)
 #if DEBUG
-        System.Threading.Thread.Sleep(12);
+        System.Threading.Thread.Sleep(6);
 #endif
 
         UpdateLineCounters();
