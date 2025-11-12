@@ -134,8 +134,10 @@ public struct IntRectangle
 
     public IntVector2 GetEdgePosition(IntVector2 dir)
     {
+#if DEBUG
         if (dir.X == 0 || dir.Y == 0) // Values should be 1 or -1
             Debugger.Break();
+#endif
 
         var edgeX = dir.X == 1 ? Right : Left;
         var edgeY = dir.Y == 1 ? Bottom : Top;

@@ -275,11 +275,13 @@ public class Shooter : Component
 
     private void ShootFromExtraSpawnPoints(int shotAngle)
     {
+#if DEBUG
         if (ExtraSpawnAngleAndDistance.Angle == 0)
         {
             Debugger.Break(); // Not implemented for this weapon, need to check it
             ExtraSpawnAngleAndDistance = (45000, 10);
         }
+#endif
 
         var initialAngle = GetInitialAngle(shotAngle, ExtraSpawnAngleAndDistance.Angle, TotalSpawnPoints);
         for (var i = 0; i < TotalSpawnPoints; i++)

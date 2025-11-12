@@ -123,8 +123,10 @@ public abstract partial class Entity
     {
         if (entityNewKind == EntityKind.None)
             return;
+#if DEBUG
         if (EntityKind != EntityKind.None)
             Debugger.Break(); // EntityKind already assigned, this should not happen
+#endif
         EntityManager.RemoveEntityFromSubList(this);
         EntityKind = entityNewKind;
         EntityManager.AddEntityToSubList(this);
@@ -132,8 +134,10 @@ public abstract partial class Entity
 
     public void Update()
     {
+#if DEBUG
         if (CodeBreaker.UpdateBreakEntityName == GetType().Name)
             Debugger.Break();
+#endif
         CustomUpdate();
 
         // Special Components
@@ -165,8 +169,10 @@ public abstract partial class Entity
 
     public void Draw() // TODO - ARCHITECTURE: Simplify this method // TODO - DEBUG: Show total calls per frame and list of entities drawn
     {
+#if DEBUG
         if (CodeBreaker.DrawBreakEntityName == GetType().Name)
             Debugger.Break();
+#endif
         if (Sprite == null)
             return;
         if (Sprite.IsVisible == false)

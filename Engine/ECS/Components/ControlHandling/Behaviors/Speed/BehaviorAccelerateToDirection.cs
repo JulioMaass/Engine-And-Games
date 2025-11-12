@@ -22,8 +22,10 @@ public class BehaviorAccelerateToDirection : Behavior
             accelerateX = true;
         if (AccelerateAxes.HasFlag(Axes.Y))
             accelerateY = true;
+#if DEBUG
         if (Owner.Speed.Acceleration == 0)
             Debugger.Break(); // No acceleration was added
+#endif
         Owner.MoveDirection.AddSpeedTowardsAngle(Owner.Speed.Acceleration, accelerateX, accelerateY);
         Owner.MoveDirection.ClampSpeedToAngle(MaxSpeed);
     }

@@ -63,8 +63,10 @@ public class StateManager : Component
         if (CurrentState != null)
             return;
         SetCurrentState(DefaultState.State, DefaultState.InitialFrame);
+#if DEBUG
         if (CurrentState == null)
             Debugger.Break(); // No state was set, add a default one?
+#endif
     }
 
     private void OverrideStateUpdate()

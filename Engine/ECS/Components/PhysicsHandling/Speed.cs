@@ -1,9 +1,8 @@
-﻿using System;
-using Engine.ECS.Entities.EntityCreation;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
-using Engine.ECS.Components.PositionHandling;
+﻿using Engine.ECS.Entities.EntityCreation;
 using Engine.Types;
+using Microsoft.Xna.Framework;
+using System;
+using System.Diagnostics;
 
 namespace Engine.ECS.Components.PhysicsHandling;
 
@@ -93,8 +92,10 @@ public class Speed : Component
 
     public void SetMoveSpeedToCurrentDirection()
     {
+#if DEBUG
         if (MoveSpeed == 0)
             Debugger.Break(); // No move speed was added
+#endif
         SetSpeedToCurrentDirection(MoveSpeed);
     }
 

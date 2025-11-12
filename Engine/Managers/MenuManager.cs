@@ -106,8 +106,10 @@ public static class MenuManager
     public static void CheckToSwapMenuArea(Type newMenuAreaType)
     {
         var currentArea = CurrentMenuLayout.MenuAreas.FirstOrDefault(area => CurrentMenuLayout.SwappableAreaTypes.Contains(area.GetType()));
+#if DEBUG
         if (currentArea == null)
             Debugger.Break(); // Current area should be one of the target types
+#endif
         if (currentArea!.GetType() == newMenuAreaType)
             return;
         SwapMenuArea(currentArea.GetType(), newMenuAreaType);

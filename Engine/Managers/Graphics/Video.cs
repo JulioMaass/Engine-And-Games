@@ -82,8 +82,10 @@ public abstract class Video // Role: Draw game screen, HUD, and editing menu
 
     private static void ResetSpriteSortModeSwitchCount()
     {
+#if DEBUG
         if (SpriteSortModeSwitchCount > 20)
             Debugger.Break(); // Too many sprite sort mode switches in one frame, try to optimize
+#endif
         SpriteSortModeSwitchCount = 0;
     }
 

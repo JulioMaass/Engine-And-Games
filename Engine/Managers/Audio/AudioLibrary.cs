@@ -47,8 +47,10 @@ public static class AudioLibrary
         var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content", folder);
         var filePath = Path.Combine(folderPath, fileName + ".ogg");
 
+#if DEBUG
         if (!File.Exists(filePath))
             Debugger.Break();
+#endif
 
         var audio = new Audio { LoopPoint = loopPoint, LoopLength = loopLength };
         if (audioType == AudioType.Sound)

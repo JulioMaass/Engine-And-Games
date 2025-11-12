@@ -45,8 +45,10 @@ public struct Angle
     // Instance
     public Angle GetAngleTurnedTo(int intendedAngle, int turnSpeed)
     {
+#if DEBUG
         if (turnSpeed == 0)
             Debugger.Break(); // Turn speed is not set
+#endif
         return GetAngleTurnedTo(Value, intendedAngle, turnSpeed);
     }
 

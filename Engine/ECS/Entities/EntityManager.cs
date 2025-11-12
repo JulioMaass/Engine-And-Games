@@ -42,6 +42,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
 
     private static void RunComponentEnforcerCheckingList()
     {
+#if DEBUG
         foreach (var entity in ComponentEnforcerCheckingList.ToList())
         {
             entity.ComponentEnforcer.FullCheck(true);
@@ -49,6 +50,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
             if (entity.EntityKind == EntityKind.None) // EntityKind.None should be temporary
                 Debugger.Break();
         }
+#endif
     }
 
     public static Entity CreateEntity(Type entityType)

@@ -32,7 +32,7 @@ public static class PerformanceMonitor
         // Set to 12 to use ~25% processing power (phone-like)
         // Set to 10 to use ~40% processing power (old computer-like)
 #if DEBUG
-        //System.Threading.Thread.Sleep(12);
+        System.Threading.Thread.Sleep(12);
 #endif
 
         UpdateLineCounters();
