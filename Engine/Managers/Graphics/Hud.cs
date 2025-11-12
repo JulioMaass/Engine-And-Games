@@ -221,22 +221,22 @@ public static class Hud
 
 
 
-    private static void DrawStateChecker()
-    {
-        var debugTextPosition = IntVector2.New(2, 2); //176);
-        var entity = EntityManager.GetFilteredEntitiesFrom(EntityKind.Enemy).FirstOrDefault();
+    //private static void DrawStateChecker()
+    //{
+    //    var debugTextPosition = IntVector2.New(2, 2); //176);
+    //    var entity = EntityManager.GetFilteredEntitiesFrom(EntityKind.Enemy).FirstOrDefault();
 
-        var currentState = entity?.StateManager?.CurrentState?.Name;
-        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current state: " + currentState, debugTextPosition + (0, 0), Color.White);
+    //    var currentState = entity?.StateManager?.CurrentState?.Name;
+    //    StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current state: " + currentState, debugTextPosition + (0, 0), Color.White);
 
-        var currentCommandedState = entity?.StateManager?.CurrentCommandedState?.Name;
-        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current commanded state: " + currentCommandedState, debugTextPosition + (0, 8), Color.White);
+    //    var currentCommandedState = entity?.StateManager?.CurrentCommandedState?.Name;
+    //    StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, "current commanded state: " + currentCommandedState, debugTextPosition + (0, 8), Color.White);
 
-        var stateQueue = entity?.StateManager?.CommandedStatesQueue;
-        if (stateQueue != null)
-        {
-            var stateQueueString = stateQueue.Aggregate("state queue: ", (current, state) => current + state.Name + ", ");
-            StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, stateQueueString, debugTextPosition + (0, 16), Color.White);
-        }
-    }
+    //    var stateQueue = entity?.StateManager?.CommandedStatesQueue;
+    //    if (stateQueue != null)
+    //    {
+    //        var stateQueueString = stateQueue.Aggregate("state queue: ", (current, state) => current + state.Name + ", ");
+    //        StringDrawer.DrawStringOutlined(StringDrawer.TinyUnicodeFont, stateQueueString, debugTextPosition + (0, 16), Color.White);
+    //    }
+    //}
 }

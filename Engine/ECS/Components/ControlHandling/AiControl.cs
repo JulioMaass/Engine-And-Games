@@ -29,7 +29,7 @@ public class AiControl : Component
             var patternPool = filteredPatternPools.GetRandom();
             var filteredPatterns = patternPool.Patterns.FindAll(pattern => pattern.Conditions.TrueForAll(condition => condition.AllConditionsAreTrue()));
             var pattern = filteredPatterns.GetRandom();
-            Owner.StateManager.CommandedStatesQueue.AddRange(pattern.States);
+            Owner.StateManager.AddStatesToCommandedStatesQueue(pattern.States);
         }
 
         foreach (var behavior in PermanentBehaviors)

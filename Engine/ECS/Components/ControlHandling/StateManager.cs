@@ -15,7 +15,7 @@ public class StateManager : Component
     // Override states
     public List<State> OverrideStatesList { get; set; }
     // Commanded states
-    public List<State> CommandedStatesQueue { get; } = new();
+    private List<State> CommandedStatesQueue { get; set; }
     public State CurrentCommandedState { get; private set; }
     // Automatic states
     public List<State> AutomaticStatesList { get; } = new();
@@ -24,7 +24,7 @@ public class StateManager : Component
     public State PreviousState { get; private set; }
     public State CurrentState { get; private set; }
     // Secondary states
-    public List<SecondaryState> SecondaryStateList { get; } = new();
+    private List<SecondaryState> SecondaryStateList { get; set; }
     public SecondaryState CurrentSecondaryState { get; private set; }
 
     public StateManager(Entity owner)
@@ -81,9 +81,15 @@ public class StateManager : Component
         }
     }
 
+    public void AddStatesToCommandedStatesQueue(List<State> states)
+    {
+        CommandedStatesQueue ??= new List<State>();
+        CommandedStatesQueue.AddRange(states);
+    }
+
     private void CommandedStateUpdate()
     {
-        var stateToCommand = CommandedStatesQueue.FirstOrDefault();
+        var stateToCommand = CommandedStatesQueue?.FirstOrDefault();
         if (stateToCommand == null && CurrentCommandedState == null)
             return;
 
@@ -218,6 +224,8 @@ public class StateManager : Component
 
     private void UpdateSecondaryState()
     {
+        if (SecondaryStateList == null)
+            return;
         if (!CurrentState.AllowSecondaryState)
         {
             CurrentSecondaryState = null;
@@ -278,6 +286,7 @@ public class StateManager : Component
         // CUSTOM VALUES
         setProperties?.Invoke(secondaryState);
 
+        SecondaryStateList ??= new List<SecondaryState>();
         SecondaryStateList.Add(secondaryState);
     }
 

@@ -12,7 +12,6 @@ public class StateSlide : State
     public StateSlide(int duration)
     {
         Duration = duration;
-        SetCustomHitbox(new IntRectangle(8, 0, 16, 16));
     }
 
     public override bool StartCondition()

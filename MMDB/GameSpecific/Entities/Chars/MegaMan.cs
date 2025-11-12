@@ -3,6 +3,7 @@ using Engine.ECS.Components.ControlHandling.SecondaryStates;
 using Engine.ECS.Components.ControlHandling.States;
 using Engine.ECS.Components.ShootingHandling;
 using Engine.ECS.Entities.EntityCreation;
+using Engine.Types;
 using MMDB.GameSpecific.States;
 using MMDB.GameSpecific.States.Player;
 using MMDB.GameSpecific.Weapons;
@@ -56,6 +57,7 @@ public class MegaMan : Entity
         var stateFall = NewState(new StateFall(), 10);
         // Ground states
         var stateSlide = NewState(new StateSlide(25), 11);
+        stateSlide.SetCustomHitbox(new IntRectangle(8, 0, 16, 16));
         var stateStepWalk = NewStateWithStartUp(new StateStepWalk(), 2, 4, 8, 6, 1);
         var stateIdle = NewStateWithTimedPattern(new StateIdle(), (0, 90), (17, 8), (0, 120), (17, 8));
         AddStateManager();
