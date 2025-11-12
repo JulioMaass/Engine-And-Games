@@ -35,7 +35,7 @@ public static class PerformanceMonitor
         // LAPTOP
         // Set to 6 to use ~62,5% processing power (phone-like)
 #if DEBUG
-        System.Threading.Thread.Sleep(6);
+        System.Threading.Thread.Sleep(10);
 #endif
 
         UpdateLineCounters();
