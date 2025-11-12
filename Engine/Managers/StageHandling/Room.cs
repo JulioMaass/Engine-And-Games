@@ -233,7 +233,8 @@ public class Room
     {
         foreach (var entity in EntityManager.GetAllEntities()
             .Where(entity => entity.SpawnManager.Room == this))
-            EntityManager.DeleteEntity(entity);
+            EntityManager.MarkEntityForDeletion(entity);
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     public void ResetAllSpawners()

@@ -130,7 +130,8 @@ public static class StageManager // Used to show current room (tiles and entitie
         // Delete all entities
         CurrentRoom?.ResetAllSpawners();
         foreach (var entity in EntityManager.GetAllEntities())
-            EntityManager.DeleteEntity(entity);
+            EntityManager.MarkEntityForDeletion(entity);
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Set room and player position
         var spawningPosition = GetPlayerRespawnPosition();
@@ -292,7 +293,8 @@ public static class StageManager // Used to show current room (tiles and entitie
             .Where(entity => entity.SpawnManager.Room != CurrentRoom)
             .Where(entity => !entity.SpawnManager.PersistsOnTransitions)
             .Where(entity => !entity.SpawnManager.Permanent))
-            EntityManager.DeleteEntity(entity);
+            EntityManager.MarkEntityForDeletion(entity);
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     public static List<Room> GetRoomsToDraw()

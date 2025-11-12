@@ -193,9 +193,10 @@ public class MoleMainLoop : GameLoop
             {
                 if (enemy.CollisionBox?.CollidesWithEntityPixel(slash) != true) continue;
                 if (slash.FrameHandler.CurrentFrame != 0) continue;
-                EntityManager.DeleteEntity(enemy);
+                EntityManager.MarkEntityForDeletion(enemy);
             }
         }
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Go to next stage
         var playerTilePosition = PlayerEntity!.Position.Pixel.RoundDownToTileCoordinate() - StageManager.CurrentRoom.PositionInTiles;

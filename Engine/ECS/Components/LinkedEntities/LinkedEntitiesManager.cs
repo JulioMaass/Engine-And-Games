@@ -27,12 +27,12 @@ public class LinkedEntitiesManager : Component
     public bool HasShield()
     {
         return ShieldEntity != null
-               && EntityManager.GetAllEntities().Contains(ShieldEntity);
+               && ShieldEntity.MarkedForDeletion == false;
     }
 
-    public void DeleteLinkedEntities()
+    public void MarkLinkedEntitiesForDeletion()
     {
-        EntityManager.DeleteEntity(ShieldEntity);
+        EntityManager.MarkEntityForDeletion(ShieldEntity);
         ShieldEntity = null;
     }
 }

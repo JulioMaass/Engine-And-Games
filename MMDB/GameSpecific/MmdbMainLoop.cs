@@ -4,7 +4,6 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Managers.CollisionSystem;
 using Engine.Managers.GameModes;
 using Engine.Managers.StageHandling;
-using System.Linq;
 
 namespace MMDB.GameSpecific;
 
@@ -16,6 +15,7 @@ public class MmdbMainLoop : GameLoop
         StageManager.CheckToRespawnPlayer();
         foreach (var entity in EntityManager.GetAllEntities())
             entity.SpawnManager?.CheckToDespawn();
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Update duration counters
         AdvanceDurationCounter();
@@ -46,11 +46,5 @@ public class MmdbMainLoop : GameLoop
     {
         foreach (var entity in EntityManager.GetAllEntities())
             entity.FrameHandler?.AdvanceFrameCounter();
-    }
-
-    private void UpdateEntitiesOfType(EntityKind entityKind)
-    {
-        EntityManager.GetFilteredEntitiesFrom(entityKind).ToList()
-            .ForEach(entity => entity.Update());
     }
 }

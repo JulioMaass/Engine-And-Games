@@ -35,7 +35,12 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
         return CreateEntityAt(typeof(T), position);
     }
 
-    public static void RunComponentEnforcerCheckingList()
+    public static void Update()
+    {
+        RunComponentEnforcerCheckingList();
+    }
+
+    private static void RunComponentEnforcerCheckingList()
     {
         foreach (var entity in ComponentEnforcerCheckingList.ToList())
         {
@@ -100,36 +105,32 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
 
     public static void TriggerDeath(Entity entity)
     {
-        DeleteEntity(entity);
+        MarkEntityForDeletion(entity);
         entity.ItemDropper?.DropItem();
         entity.DeathHandler?.RunDeathProcess();
     }
 
-    public static void DeleteEntity(Entity entity)
+    public static void MarkEntityForDeletion(Entity entity)
     {
-        if (entity == null) return;
-        RemoveEntityFromLists(entity);
-        entity.LinkedEntitiesManager?.DeleteLinkedEntities();
+        if (entity == null)
+            return;
+        entity.MarkedForDeletion = true;
+        entity.LinkedEntitiesManager?.MarkLinkedEntitiesForDeletion();
         entity.EntityInstance?.ResetSpawnedEntity();
-    }
-
-    public static void DeleteEntities(List<Entity> entities)
-    {
-        foreach (var entity in entities.ToList())
-            DeleteEntity(entity);
-    }
-
-    private static void RemoveEntityFromLists(Entity entity)
-    {
-        AllEntities.Remove(entity);
-        RemoveEntityFromSubList(entity);
-        EntityListManager.RemoveEntityFromLists(entity);
     }
 
     public static void RemoveEntityFromSubList(Entity entity)
     {
         CheckToCreateSubList(entity.EntityKind);
         KindLists[(int)entity.EntityKind].Remove(entity);
+    }
+
+    public static void RemoveEntitiesMarkedForDeletionFromLists()
+    {
+        AllEntities.RemoveAll(e => e.MarkedForDeletion);
+        foreach (var kindList in KindLists)
+            kindList.RemoveAll(e => e.MarkedForDeletion);
+        EntityListManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     public static void AddEntityToSubList(Entity entity)

@@ -21,7 +21,7 @@ public class CollisionBox : Component
     public int MaskRight { get; private set; }
     public IntRectangle CurrentHitbox => new(Origin, Size); // Readable as a rectangle for easy comparisons
     public IntRectangle DefaultHitbox { get; }
-
+    public bool Dynamic { get; set; } // If true, hitbox size/origin can be changed during gameplay (e.g., Mega Man slide)
 
     public CoordinateType CoordinateType { get; set; } // TODO - ARCHITECTURE: Both collisions and visuals should take this into account. Marge and put into a component that makes sense (Position?)
 

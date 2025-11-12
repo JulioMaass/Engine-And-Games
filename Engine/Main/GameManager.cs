@@ -54,7 +54,7 @@ public static class GameManager // Role: Control game states and main loop
 
     public static void Update()
     {
-        EntityManager.RunComponentEnforcerCheckingList();
+        EntityManager.Update();
         InputHandler.Update();
 
         // Audio

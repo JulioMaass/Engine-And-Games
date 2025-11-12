@@ -21,7 +21,7 @@ public abstract class State : Component
     public virtual bool CanUpdateFacing { get; set; } = true;
 
     // Hitbox and collision
-    public virtual IntRectangle CustomHitbox { get; set; }
+    public IntRectangle? CustomHitbox { get; private set; }
     public virtual bool IsInvincible { get; set; } = false;
 
     // Movement type
@@ -229,8 +229,15 @@ public abstract class State : Component
 
     public State AddToOverrideStatesList()
     {
+        Owner.StateManager.OverrideStatesList ??= new List<State>();
         Owner.StateManager.OverrideStatesList.Add(this);
         return this;
+    }
+
+    public void SetCustomHitbox(IntRectangle hitboxRectangle) // Ensures entity has dynamic collision box
+    {
+        CustomHitbox = hitboxRectangle;
+        Owner.CollisionBox.Dynamic = true;
     }
 }
 

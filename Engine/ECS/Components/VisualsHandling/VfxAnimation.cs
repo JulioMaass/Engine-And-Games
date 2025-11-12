@@ -59,7 +59,7 @@ public class VfxAnimation : Component
 
         // Delete if size <= 0
         if (CurrentSize.X <= 0 || CurrentSize.Y <= 0)
-            EntityManager.DeleteEntity(Owner);
+            EntityManager.MarkEntityForDeletion(Owner);
     }
 
     public void SetInitialSize(int size)

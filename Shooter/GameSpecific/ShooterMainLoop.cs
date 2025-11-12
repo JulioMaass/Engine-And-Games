@@ -4,7 +4,6 @@ using Engine.ECS.Entities.EntityCreation;
 using Engine.Managers.CollisionSystem;
 using Engine.Managers.GameModes;
 using Engine.Managers.StageHandling;
-using System.Linq;
 
 namespace ShooterGame.GameSpecific;
 
@@ -21,6 +20,7 @@ public class ShooterMainLoop : GameLoop
         StageManager.CheckToRespawnPlayer();
         foreach (var entity in EntityManager.GetAllEntities())
             entity.SpawnManager?.CheckToDespawn();
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Update duration counters
         AdvanceDurationCounter();
@@ -56,11 +56,5 @@ public class ShooterMainLoop : GameLoop
         {
             entity.FrameHandler?.AdvanceFrameCounter();
         }
-    }
-
-    private void UpdateEntitiesOfType(EntityKind entityKind)
-    {
-        EntityManager.GetFilteredEntitiesFrom(entityKind).ToList()
-            .ForEach(entity => entity.Update());
     }
 }

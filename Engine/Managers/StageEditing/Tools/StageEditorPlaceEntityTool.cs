@@ -60,7 +60,8 @@ class StageEditorPlaceEntityTool : StageEditorTool
         StageEditor.CurrentStage.PlayerStartingPosition = magnetMousePosition;
 
         // Delete player entity if it exists
-        EntityManager.DeleteEntity(EntityManager.PlayerEntity);
+        EntityManager.MarkEntityForDeletion(EntityManager.PlayerEntity);
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     private void HandlePlacingRespawnPoint()
@@ -82,7 +83,8 @@ class StageEditorPlaceEntityTool : StageEditorTool
             return;
 
         positionRoom.GetEntityLayout().List.Remove(entityInstance);
-        EntityManager.DeleteEntity(entityInstance.SpawnedEntity);
+        EntityManager.MarkEntityForDeletion(entityInstance.SpawnedEntity);
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     public override void Draw()

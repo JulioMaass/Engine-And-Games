@@ -13,7 +13,7 @@ public class StateManager : Component
     // TODO: Add EngineStates(?) for states like hurt and teleport, that are higher priority than other states, and their cause are external to the entity
 
     // Override states
-    public List<State> OverrideStatesList { get; } = new();
+    public List<State> OverrideStatesList { get; set; }
     // Commanded states
     public List<State> CommandedStatesQueue { get; } = new();
     public State CurrentCommandedState { get; private set; }
@@ -46,7 +46,8 @@ public class StateManager : Component
     private void UpdateState()
     {
         OverrideStateUpdate();
-        if (OverrideStatesList.Contains(CurrentState))
+        if (OverrideStatesList != null &&
+            OverrideStatesList.Contains(CurrentState))
             return;
 
         CommandedStateUpdate();
@@ -68,6 +69,9 @@ public class StateManager : Component
 
     private void OverrideStateUpdate()
     {
+        if (OverrideStatesList == null)
+            return;
+
         foreach (var state in OverrideStatesList)
         {
             if (CheckToSetState(state))
@@ -169,7 +173,7 @@ public class StateManager : Component
         {
             CurrentState.PostProcessingStateSettingBehavior();
             CurrentState.AddedPostProcessingStateSettingBehaviors.ForEach(behavior => behavior.ExecuteIfConditionsAreMet());
-        }        
+        }
         if (CurrentSecondaryState?.Frame == 0)
             CurrentSecondaryState.PostProcessingStateSettingBehavior();
 
@@ -233,11 +237,12 @@ public class StateManager : Component
 
     public void UpdateHitbox()
     {
-        if (Owner.CollisionBox == null)
+        if (Owner.CollisionBox?.Dynamic != true)
             return;
-        var intendedHitbox = CurrentState!.CustomHitbox == Types.IntRectangle.Empty
+
+        var intendedHitbox = CurrentState!.CustomHitbox == null
             ? Owner.CollisionBox.DefaultHitbox
-            : CurrentState!.CustomHitbox;
+            : CurrentState!.CustomHitbox.Value;
         Owner.CollisionBox.SetNewHitboxIfFree(intendedHitbox);
     }
 

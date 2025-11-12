@@ -62,7 +62,7 @@ public class PushAndCarryMovement : Component
             {
                 if (entity.Physics.SolidCollisionChecking.CollidesWithAnySolidAtPixel(entity.Position.Pixel + (0, dir), entity.Position.Pixel))
                     break;
-                entity.Physics.FreeMovement.MoveInPixelsAndFraction(0, dir);
+                entity.Physics.FreeMovement.MoveYInPixelsAndFraction(dir);
             }
         }
     }

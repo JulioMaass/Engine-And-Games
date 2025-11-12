@@ -42,7 +42,7 @@ public class VfxEmitter : Component
             Frame++;
         }
         else
-            EntityManager.DeleteEntity(Owner);
+            EntityManager.MarkEntityForDeletion(Owner);
     }
 
     private void SetSpeedFromDistance(Entity entity, IntVector2 distance)

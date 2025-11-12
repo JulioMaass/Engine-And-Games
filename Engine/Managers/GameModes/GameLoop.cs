@@ -19,6 +19,7 @@ public abstract class GameLoop
             UpdateEntitiesOfKind((EntityKind)i);
             UpdateOutOfOrderEntitiesUpTo((EntityKind)i);
         }
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     private void UpdateEntitiesOfKind(EntityKind entityKind)

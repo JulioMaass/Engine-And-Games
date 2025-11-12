@@ -21,4 +21,10 @@ public static class EntityListManager
         SolidEntities.Remove(entity);
         SolidTopEntities.Remove(entity);
     }
+
+    public static void RemoveEntitiesMarkedForDeletionFromLists()
+    {
+        SolidEntities.RemoveAll(e => e.MarkedForDeletion);
+        SolidTopEntities.RemoveAll(e => e.MarkedForDeletion);
+    }
 }

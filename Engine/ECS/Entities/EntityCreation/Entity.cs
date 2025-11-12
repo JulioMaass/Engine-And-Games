@@ -24,6 +24,8 @@ namespace Engine.ECS.Entities.EntityCreation;
 
 public abstract partial class Entity
 {
+    public bool MarkedForDeletion { get; set; }
+
     // Entity typing
     public EntityInstance EntityInstance { get; set; }
     public EntityKind EntityKind { get; protected set; }

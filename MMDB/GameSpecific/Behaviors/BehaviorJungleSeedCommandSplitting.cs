@@ -19,7 +19,7 @@ public class BehaviorJungleSeedCommandSplitting : Behavior
         if (((JungleSeed)Owner).SplitLevel <= 0)
             return;
 
-        EntityManager.DeleteEntity(Owner);
+        EntityManager.MarkEntityForDeletion(Owner);
 
         var seed1 = (JungleSeed)EntityManager.CreateEntityAt(typeof(JungleSeed), Owner.Position.Pixel);
         var seed2 = (JungleSeed)EntityManager.CreateEntityAt(typeof(JungleSeed), Owner.Position.Pixel);

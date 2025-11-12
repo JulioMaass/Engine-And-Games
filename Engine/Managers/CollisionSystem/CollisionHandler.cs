@@ -74,15 +74,15 @@ public static class CollisionHandler
                 // TODO: Move shield checks elsewhere
                 if (damagedEntity.CollisionBox.BodyType == BodyType.Shield)
                 {
-                    EntityManager.DeleteEntity(damagingEntity);
+                    EntityManager.MarkEntityForDeletion(damagingEntity);
                     continue;
                 }
-                if (damagedEntity.CollisionBox.BodyType == BodyType.Shield)
+                if (damagedEntity.CollisionBox.BodyType == BodyType.FrontShield)
                 {
                     var damageDirection = Math.Sign(damagedEntity.Position.Pixel.X - damagingEntity.Position.Pixel.X);
                     if (damageDirection != damagedEntity.Facing.X)
                     {
-                        EntityManager.DeleteEntity(damagingEntity);
+                        EntityManager.MarkEntityForDeletion(damagingEntity);
                         continue;
                     }
                 }
@@ -90,6 +90,8 @@ public static class CollisionHandler
                 damagingEntity.DamageDealer.RunEffects(damagedEntity);
                 damagedEntity.DamageTaker!.BufferDamage(damagingEntity.DamageDealer.Damage);
                 damagedEntity.KnockbackReceiver?.TriggerKnockback();
+                if (damagingEntity.MarkedForDeletion)
+                    break;
             }
         }
     }
@@ -129,9 +131,10 @@ public static class CollisionHandler
             foreach (var entity2 in EntityManager.GetFilteredEntitiesFrom(EntityKind.Item).ToList())
             {
                 if (entity.CollisionBox?.CollidesWithEntityPixel(entity2) != true) continue;
+                if (entity2.MarkedForDeletion) continue;
 
                 entity.ItemGetter.GetItem(entity2);
-                EntityManager.DeleteEntity(entity2);
+                EntityManager.MarkEntityForDeletion(entity2);
             }
         }
     }

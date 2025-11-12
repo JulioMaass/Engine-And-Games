@@ -12,7 +12,7 @@ public class BehaviorJungleSeedWallSplitting : Behavior
     {
         if (Owner.Speed.X == 0 && Owner.Speed.Y == 0)
         {
-            EntityManager.DeleteEntity(Owner);
+            EntityManager.MarkEntityForDeletion(Owner);
             if (((JungleSeed)Owner).SplitLevel <= 0)
                 return;
 

@@ -56,8 +56,9 @@ public static class MenuManager
     {
         if (AvailableMenuItems == null) return;
         foreach (var item in AvailableMenuItems)
-            EntityManager.DeleteEntity(item);
+            EntityManager.MarkEntityForDeletion(item);
         AvailableMenuItems = null;
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     private static void SetSelectedItem(Entity item, IntVector2 dir) // Updates both LastIntentionalPosition and LastMoveDirection

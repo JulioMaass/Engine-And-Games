@@ -11,7 +11,6 @@ using SpaceMiner.GameSpecific.Entities.Background;
 using SpaceMiner.GameSpecific.Entities.Menus.ShopLayout.WeaponsArea;
 using SpaceMiner.GameSpecific.Managers;
 using SpaceMiner.GameSpecific.Shooters;
-using System.Linq;
 
 namespace SpaceMiner.GameSpecific;
 
@@ -64,6 +63,7 @@ public class SpaceMinerMainLoop : GameLoop
         StageManager.CheckToRespawnPlayer();
         foreach (var entity in EntityManager.GetAllEntities())
             entity.SpawnManager?.CheckToDespawn();
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Update duration counters
         AdvanceDurationCounter();
@@ -78,6 +78,7 @@ public class SpaceMinerMainLoop : GameLoop
         CollisionHandler.AlignedEntitiesDealDamage(AlignmentType.Hostile);
         CollisionHandler.EntitiesCollideWithTiles();
         ApplyBufferedDamage();
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         CheckToGoToShop();
 
@@ -118,11 +119,5 @@ public class SpaceMinerMainLoop : GameLoop
         {
             entity.FrameHandler?.AdvanceFrameCounter();
         }
-    }
-
-    private void UpdateEntitiesOfType(EntityKind entityKind)
-    {
-        EntityManager.GetFilteredEntitiesFrom(entityKind).ToList()
-            .ForEach(entity => entity.Update());
     }
 }

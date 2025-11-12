@@ -50,9 +50,11 @@ public static class GameLoopManager
 
         // Run gameplay loop
         GameCurrentLoop?.Update();
+#if DEBUG
         var notUpdatedEntities = EntityManager.GetAllEntities().Where(entity => entity.Updated == false).ToList();
         if (EntityManager.GetAllEntities().Any(entity => entity.Updated == false))
             Debugger.Break(); // All entities should be updated after creation, before being drawn
+#endif
 
         // Check to trigger transitions
         StageManager.UpdatePlayerRoom();
@@ -89,25 +91,24 @@ public static class GameLoopManager
     {
         foreach (var room in StageManager.GetRoomsToDraw())
             room?.DrawTileLayer(layerId);
-        EntityManager.GetAllEntities()
+        var orderedEntities = EntityManager.GetAllEntities()
             .Where(entity => entity.LayerId == layerId)
             .OrderBy(entity => entity.DrawingOrder)
             .ThenBy(entity => entity.DrawOrder)
-            .ToList()
-            .ForEach(entity => entity.Draw());
+            .ToList();
+        foreach (var entity in orderedEntities)
+            entity.Draw();
     }
 
     private static void DrawSpriteVfxs()
     {
-        EntityManager.GetAllEntities()
+        var orderedEntities = EntityManager.GetAllEntities()
             .OrderBy(entity => entity.LayerId)
-            .ThenBy(entity => entity.EntityKind)
+            .ThenBy(entity => entity.DrawingOrder)
             .ThenBy(entity => entity.DrawOrder)
-            .ToList()
-            .ForEach(entity =>
-            {
-                entity.SpriteVfxs?.Draw();
-            });
+            .ToList();
+        foreach (var entity in orderedEntities)
+            entity.SpriteVfxs?.Draw();
     }
 
     private static void DrawMasks()

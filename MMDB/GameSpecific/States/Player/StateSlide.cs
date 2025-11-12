@@ -8,11 +8,11 @@ namespace MMDB.GameSpecific.States.Player;
 public class StateSlide : State
 {
     private int Duration { get; }
-    public override IntRectangle CustomHitbox { get; set; } = new(8, 0, 16, 16);
 
     public StateSlide(int duration)
     {
         Duration = duration;
+        SetCustomHitbox(new IntRectangle(8, 0, 16, 16));
     }
 
     public override bool StartCondition()

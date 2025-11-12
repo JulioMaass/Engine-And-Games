@@ -41,7 +41,7 @@ public class SpawnManager : Component
         if (!collisionRectangle.Overlaps(screenLimits))
         {
             if (DespawnCounter > DespawnDelay)
-                EntityManager.DeleteEntity(Owner);
+                EntityManager.MarkEntityForDeletion(Owner);
         }
         else
             DespawnCounter = 0;

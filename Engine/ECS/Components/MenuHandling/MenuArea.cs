@@ -51,8 +51,9 @@ public class MenuArea
             .Where(menuItemEntity => menuItemEntity.MenuItem.OwningMenuArea == this))
         {
             MenuManager.AvailableMenuItems.Remove(menuItemEntity);
-            EntityManager.DeleteEntity(menuItemEntity);
+            EntityManager.MarkEntityForDeletion(menuItemEntity);
         }
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
     }
 
     private IntRectangle GetMenuAreaRectangle() =>

@@ -24,10 +24,22 @@ public class FreeMovement : Component
         MoveInPixelsAndFraction(Owner.Speed.X, Owner.Speed.Y);
     }
 
-    public void MoveInPixelsAndFraction(float xSpeed, float ySpeed)
+    public void MoveInPixelsAndFraction(float xSpeed, float ySpeed) // moves both X and Y at once for performance
     {
-        MoveXInPixelsAndFraction(xSpeed);
-        MoveYInPixelsAndFraction(ySpeed);
+        var xPixelDestiny = Pixel.X;
+        var yPixelDestiny = Pixel.Y;
+
+        if (xSpeed != 0)
+        {
+            (var xFloatDestiny, xPixelDestiny) = GetDestinyCoordinate(xSpeed, Pixel.X, Fraction.X);
+            SetFractionX(xFloatDestiny - xPixelDestiny);
+        }
+        if (ySpeed != 0)
+        {
+            (var yFloatDestiny, yPixelDestiny) = GetDestinyCoordinate(ySpeed, Pixel.Y, Fraction.Y);
+            SetFractionY(yFloatDestiny - yPixelDestiny);
+        }
+        Owner.Position.Pixel = new IntVector2(xPixelDestiny, yPixelDestiny);
     }
 
     public void MoveXInPixelsAndFraction(float xSpeed)

@@ -37,6 +37,6 @@ public class BehaviorSplit : Behavior
         splitShot1.Alignment.OwningEntity = Owner.Alignment.OwningEntity;
         splitShot2.Alignment.OwningEntity = Owner.Alignment.OwningEntity;
 
-        EntityManager.DeleteEntity(Owner);
+        EntityManager.MarkEntityForDeletion(Owner);
     }
 }

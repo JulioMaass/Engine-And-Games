@@ -5,7 +5,6 @@ using Engine.Managers.CollisionSystem;
 using Engine.Managers.GameModes;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
-using System.Linq;
 
 namespace Candle.GameSpecific;
 
@@ -22,6 +21,7 @@ public class CandleMainLoop : GameLoop
         StageManager.CheckToRespawnPlayer();
         foreach (var entity in EntityManager.GetAllEntities())
             entity.SpawnManager?.CheckToDespawn();
+        EntityManager.RemoveEntitiesMarkedForDeletionFromLists();
 
         // Update duration counters
         AdvanceDurationCounter();
@@ -57,11 +57,5 @@ public class CandleMainLoop : GameLoop
         {
             entity.FrameHandler?.AdvanceFrameCounter();
         }
-    }
-
-    private void UpdateEntitiesOfType(EntityKind entityKind)
-    {
-        EntityManager.GetFilteredEntitiesFrom(entityKind).ToList()
-            .ForEach(entity => entity.Update());
     }
 }

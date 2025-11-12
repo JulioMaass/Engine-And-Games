@@ -37,6 +37,6 @@ public class FrameHandler : Component
         if (TriggerDeathAtDurationEnd)
             EntityManager.TriggerDeath(Owner);
         else
-            EntityManager.DeleteEntity(Owner);
+            EntityManager.MarkEntityForDeletion(Owner);
     }
 }

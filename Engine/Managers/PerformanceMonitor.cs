@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Engine.Managers;
 
@@ -12,9 +13,17 @@ public static class PerformanceMonitor
     private static int FrameSkips { get; set; }
 
     // Properties to check performance in other parts of the code
-    private static int LineCounter1 { get; set; }
-    private static int LineCounter2 { get; set; }
-    private static int LineCounter3 { get; set; }
+    private static List<LineCounter> LineCounters { get; } = new();
+
+    private class LineCounter
+    {
+        public string Name { get; set; }
+        public int Frames { get; set; }
+        public int LineCount { get; set; }
+        public int TotalLineCount { get; set; }
+        public int PeakLineCount { get; set; }
+        public int AverageLineCount { get; set; }
+    }
 
     public static void Start(bool isActive)
     {
@@ -23,12 +32,10 @@ public static class PerformanceMonitor
         // Set to 12 to use ~25% processing power (phone-like)
         // Set to 10 to use ~40% processing power (old computer-like)
 #if DEBUG
-        System.Threading.Thread.Sleep(12);
-#endif        
+        //System.Threading.Thread.Sleep(12);
+#endif
 
-        LineCounter1 = 0;
-        LineCounter2 = 0;
-        LineCounter3 = 0;
+        UpdateLineCounters();
 
         // Update counters
         FrameCount++;
@@ -40,12 +47,29 @@ public static class PerformanceMonitor
         DidDrawCall = false;
     }
 
-    public static void AddLineCount1() =>
-        LineCounter1++;
-    public static void AddLineCount2() =>
-        LineCounter2++;
-    public static void AddLineCount3() =>
-        LineCounter3++;
+    private static void UpdateLineCounters()
+    {
+        foreach (var counter in LineCounters)
+        {
+            counter.Frames++;
+            counter.TotalLineCount += counter.LineCount;
+            if (counter.LineCount > counter.PeakLineCount)
+                counter.PeakLineCount = counter.LineCount;
+            counter.LineCount = 0;
+            counter.AverageLineCount = counter.TotalLineCount / counter.Frames;
+        }
+    }
+
+    public static void AddLineCount(string name)
+    {
+        var counter = LineCounters.Find(c => c.Name == name);
+        if (counter == null)
+        {
+            counter = new LineCounter { Name = name };
+            LineCounters.Add(counter);
+        }
+        counter.LineCount++;
+    }
 
     public static void End(bool isActive)
     {
