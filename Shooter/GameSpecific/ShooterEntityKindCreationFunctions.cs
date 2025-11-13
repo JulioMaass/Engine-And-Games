@@ -12,7 +12,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         AddDamageDealer(damage);
     }
 
-    public void AddShooterEnemyShotComponents(int damage, int hp = 0) // TODO: Copied from MMDB. Turn into a game generic function?
+    public void AddShooterEnemyShotComponents(int damage, int hp = 0)
     {
         // Position components
         AddCenteredOutlinedCollisionBox();

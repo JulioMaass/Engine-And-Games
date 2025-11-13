@@ -15,7 +15,7 @@ public class AsteroidBlue2 : AsteroidBlue
 
         // Properties
         AddSpaceMinerEnemyComponents(120, 50);
-        AddItemDropper(typeof(OreBlue), 10, 8);
+        AddItemDropper(8, (typeof(OreBlue), 3), (typeof(OreGray), 4));
 
         // States
         AddStateManager();

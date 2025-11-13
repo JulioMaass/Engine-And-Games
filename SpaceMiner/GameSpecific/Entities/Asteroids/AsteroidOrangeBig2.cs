@@ -15,6 +15,6 @@ public class AsteroidOrangeBig2 : AsteroidOrange
 
         // Properties
         AddSpaceMinerEnemyComponents(400, 50);
-        AddItemDropper(typeof(OreOrange), 30, 8);
+        AddItemDropper(8, (typeof(OreOrange), 4), (typeof(OreGray), 5));
     }
 }

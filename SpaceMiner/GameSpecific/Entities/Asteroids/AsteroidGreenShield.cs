@@ -17,7 +17,7 @@ public class AsteroidGreenShield : Asteroid
 
         // Properties
         AddSpaceMinerEnemyComponents(50, 50);
-        AddItemDropper(12, (typeof(OreGreen), 2), (typeof(OreGray), 3));
+        AddItemDropper(8, (typeof(OreGreen), 1), (typeof(OreGray), 2));
         AddRandomMoveSpeed(0.3f, 0.5f);
 
         // Shield

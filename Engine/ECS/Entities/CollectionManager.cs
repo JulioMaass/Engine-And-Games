@@ -12,9 +12,8 @@ namespace Engine.ECS.Entities;
 
 /// <summary>
 /// Creates and handles entities lists. These entities don't exist in the game world, they are used for searching, comparisons, etc.
-/// These lists are stored in their respective managers.
 /// </summary>
-public static class CollectionManager // TODO: rename to EntityListGenerator? (also change summary)
+public static class CollectionManager
 {
     private static Dictionary<Type, Entity> CollectionDictionary { get; } = new();
 

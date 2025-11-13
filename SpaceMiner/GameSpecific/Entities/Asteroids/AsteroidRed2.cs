@@ -18,7 +18,7 @@ public class AsteroidRed2 : AsteroidRed
 
         // Properties
         AddSpaceMinerEnemyComponents(200, 50);
-        AddItemDropper(typeof(OreRed), 10, 8);
+        AddItemDropper(8, (typeof(OreRed), 3), (typeof(OreGray), 4));
 
         var duration = 30;
         var damage = 50;

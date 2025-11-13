@@ -18,7 +18,7 @@ public class AsteroidYellow2 : AsteroidYellow
 
         // Properties
         AddSpaceMinerEnemyComponents(200, 50);
-        AddItemDropper(typeof(OreYellow), 10, 8);
+        AddItemDropper(8, (typeof(OreYellow), 3), (typeof(OreGray), 4));
 
         var deathBehavior = new BehaviorCustom(
             () =>

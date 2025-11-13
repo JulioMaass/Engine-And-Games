@@ -1,6 +1,7 @@
 ﻿using Engine.ECS.Components.CombatHandling;
 using Engine.ECS.Entities.EntityCreation;
 using Engine.Managers.CollisionSystem;
+using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 using Engine.Types;
 using System;
@@ -37,6 +38,7 @@ public static class EntityManager // TODO - DEBUG: Show total entities per frame
 
     public static void Update()
     {
+        Hud.FrameDebugInfoToPrint.Add(("Total Entities = " + AllEntities.Count, null));
         RunComponentEnforcerCheckingList();
     }
 

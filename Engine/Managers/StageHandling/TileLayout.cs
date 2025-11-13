@@ -9,7 +9,7 @@ using System;
 
 namespace Engine.Managers.StageHandling;
 
-public class TileLayout : Layer // TODO: Rename to layout?
+public class TileLayout : Layer
 {
     public int[,] Layout { get; private set; }
     public Tileset Tileset { get; set; }

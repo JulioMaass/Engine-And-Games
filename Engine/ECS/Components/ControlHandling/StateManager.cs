@@ -10,8 +10,6 @@ namespace Engine.ECS.Components.ControlHandling;
 
 public class StateManager : Component
 {
-    // TODO: Add EngineStates(?) for states like hurt and teleport, that are higher priority than other states, and their cause are external to the entity
-
     // Override states
     public List<State> OverrideStatesList { get; set; }
     // Commanded states

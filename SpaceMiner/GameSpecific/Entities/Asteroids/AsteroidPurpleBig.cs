@@ -17,7 +17,7 @@ public class AsteroidPurpleBig : AsteroidPurple
 
         // Properties
         AddSpaceMinerEnemyComponents(100, 50);
-        AddItemDropper(12, (typeof(OrePurple), 3), (typeof(OreGray), 5));
+        AddItemDropper(8, (typeof(OrePurple), 2), (typeof(OreGray), 3));
 
         var deathBehavior = new BehaviorCustom(
             () =>

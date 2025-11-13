@@ -247,8 +247,6 @@ public static class StageManager // Used to show current room (tiles and entitie
     {
         if (!IsTransitioning) return;
 
-        // TODO: On transition start, delete entities outside of screen
-
         // End transition
         if (TransitionFrame >= CurrentTransitionFrames)
         {

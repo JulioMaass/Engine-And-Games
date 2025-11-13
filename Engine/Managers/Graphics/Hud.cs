@@ -18,7 +18,7 @@ public static class Hud
     public static List<(string String, object Object)> DebugInfoToPrint { set; get; } = new(); // keep it for the whole game
     public static List<(string String, object Object)> FrameDebugInfoToPrint { set; get; } = new(); // reset every frame
 
-    public static void Draw() // TODO - ARCHITECTURE: Simplify this, and check the whole class
+    public static void Draw() // TODO: - ARCHITECTURE: Simplify this, and check the whole class
     {
         if (GameLoopManager.GameCurrentLoop != null)
         {
@@ -179,11 +179,14 @@ public static class Hud
         //DrawDebugLine("shot x", xSpeed);
         //DrawDebugLine("shot y", ySpeed);
 
-        foreach (var value in DebugInfoToPrint)
-            DrawDebugLine(value.String, value.Object);
+        if (DebugMode.IsOn)
+        {
+            foreach (var value in DebugInfoToPrint)
+                DrawDebugLine(value.String, value.Object);
 
-        foreach (var value in FrameDebugInfoToPrint)
-            DrawDebugLine(value.String, value.Object);
+            foreach (var value in FrameDebugInfoToPrint)
+                DrawDebugLine(value.String, value.Object);
+        }
         FrameDebugInfoToPrint.Clear();
 
         //// Draw resource amounts

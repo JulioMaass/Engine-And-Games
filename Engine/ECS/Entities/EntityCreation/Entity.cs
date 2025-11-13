@@ -151,8 +151,6 @@ public abstract partial class Entity
         AiControl?.Update();
         StateManager?.Update();
         // Physics
-        // TODO: 1st: Calculate each object's intended origin and destiny.
-        // TODO: 2nd: Check for collisions and resolve them (Including pushing and carrying).
         Physics?.Update();
         LinkedEntitiesManager?.UpdatePositions();
         // State Pos Processing

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Engine.ECS.Components.CombatHandling;
 
-public class DamageTaker : Component // TODO: ARCHITECTURE: Remove conditional compilation, and make it options based (invincibility, flickering, buffer). Make invincibility a component/class?
+public class DamageTaker : Component
 {
     // Hp
     public Resource CurrentHp { get; }

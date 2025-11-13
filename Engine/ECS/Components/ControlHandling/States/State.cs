@@ -210,7 +210,7 @@ public abstract class State : Component
         return this;
     }
 
-    public State AddStateSettingBehaviorWithConditions(Behavior behavior, params Condition[] conditions) // TODO: Make this an overload of AddStateSettingBehavior
+    public State AddStateSettingBehaviorWithConditions(Behavior behavior, params Condition[] conditions)
     {
         AddStateSettingBehavior(behavior);
         foreach (var condition in conditions)

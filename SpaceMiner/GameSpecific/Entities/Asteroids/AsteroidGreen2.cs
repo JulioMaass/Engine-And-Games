@@ -13,6 +13,6 @@ public class AsteroidGreen2 : AsteroidGreen
 
         // Properties
         AddSpaceMinerEnemyComponents(400, 50);
-        AddItemDropper(typeof(OreGreen), 20, 8);
+        AddItemDropper(8, (typeof(OreGreen), 3), (typeof(OreGray), 4));
     }
 }

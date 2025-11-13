@@ -11,7 +11,7 @@ public static class DebugMode
 {
     public static bool Paused { get; private set; }
     public static bool PauseNextFrame { get; private set; }
-    private static bool IsOn { get; set; } // = true;
+    public static bool IsOn { get; private set; } // = true;
     public static bool ShowMasks { get; private set; }
     public static int EntityCollisionCounter { get; set; }
     public static int SpawnCollisionCounter { get; set; }
