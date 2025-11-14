@@ -3,14 +3,14 @@ using Engine.Managers.GameModes;
 using Engine.Managers.Graphics;
 using Engine.Managers.StageHandling;
 
-namespace SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
+namespace SpaceMiner.GameSpecific.Entities.Menus.GameLayout;
 
-public class MenuItemStageIntro : Entity
+public class MenuItemPermanentUpgrades : Entity
 {
-    public MenuItemStageIntro()
+    public MenuItemPermanentUpgrades()
     {
         AddPointedLabelMenuComponents(StringDrawer.CutePixelFont);
-        MenuItem.Label = "START";
+        MenuItem.Label = "PERMANENT UPGRADES";
         MenuItem.OnSelect = () =>
         {
             MenuManager.Clear();

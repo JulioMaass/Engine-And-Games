@@ -49,7 +49,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
             DrawSlot(MenuItem.OwnerAmountGetter(), ItemPrice.GetCurrentPrice(MenuItem.OwnerAmountGetter()));
 
         MenuItem.OnSelectDraw =
-            OnSelectDraw;
+            ShopOnSelectDraw;
     }
 
     public void AddSpaceMinerWeaponItemComponents()
@@ -73,7 +73,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         };
 
         MenuItem.OnSelectDraw =
-            OnSelectDraw;
+            ShopOnSelectDraw;
     }
 
     public void AddSpaceMinerShipUpgradeItemComponents()
@@ -96,7 +96,7 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         };
 
         MenuItem.OnSelectDraw =
-            OnSelectDraw;
+            ShopOnSelectDraw;
     }
 
     public void AddSpaceMinerMissileItemComponents()
@@ -119,7 +119,15 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         };
 
         MenuItem.OnSelectDraw =
-            OnSelectDraw;
+            ShopOnSelectDraw;
+    }
+
+    public void AddSpaceMinerStageSelectItemComponents()
+    {
+        //MenuItem.OnSelect = () =>
+        //    GlobalManager.Values.MainCharData.TryToEquipItem(GetType());
+        MenuItem.Draw = Draw;
+        MenuItem.OnSelectDraw = StageSelectOnSelectDraw;
     }
 
     private void DrawSlot(int ownedAmount, ItemPrice.Price itemPrice, bool isResourceFull = false)
@@ -150,7 +158,13 @@ public abstract class Entity : Engine.ECS.Entities.EntityCreation.Entity
         }
     }
 
-    private void OnSelectDraw()
+    private void StageSelectOnSelectDraw()
+    {
+        var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
+        StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-24, -2), CustomColor.White);
+    }
+
+    private void ShopOnSelectDraw()
     {
         var cursorPosition = MenuManager.SelectedItem.Position.Pixel;
         StringDrawer.DrawStringOutlined(StringDrawer.PressStart2PShadowFont, ">", cursorPosition + (-24, -2), CustomColor.White);

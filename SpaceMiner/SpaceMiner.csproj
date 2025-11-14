@@ -27,4 +27,7 @@
 		<None Include="Content\Sounds\**\*" CopyToOutputDirectory="PreserveNewest" />
 		<None Include="Content\Stages\**\*" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="GameSpecific\Entities\Menus\PermanentUpgradesLayout\" />
+	</ItemGroup>
 </Project>

@@ -2,15 +2,16 @@
 using Engine.Helpers;
 using Engine.Types;
 
-namespace SpaceMiner.GameSpecific.Entities.Menus.MainLayout;
+namespace SpaceMiner.GameSpecific.Entities.Menus.GameLayout;
 
-public class MenuLayoutMain : MenuLayout
+public class MenuLayoutGame : MenuLayout
 {
-    public MenuLayoutMain()
+    public MenuLayoutGame()
     {
         var array = Extensions.NewTransposedArray(new[,]
         {
-            { typeof(MenuItemStart) },
+            { typeof(MenuItemPermanentUpgrades) },
+            { typeof(MenuItemStageSelect) },
         });
         var position = IntVector2.New(100, 100);
         var spacing = IntVector2.New(20, 10);
